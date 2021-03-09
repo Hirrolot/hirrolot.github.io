@@ -43,3 +43,5 @@ M_eval(M_appl3(v(S), v(K), v(S), v(K)))
 ## Self-application and Recursion
 
 ## Boolean Logic
+
+## Conclusion
