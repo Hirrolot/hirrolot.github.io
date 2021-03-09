@@ -1,4 +1,4 @@
-# Metasodomic Etude №1: SKI Combinator Calculus
+# Metasodomic Etude No. 1: SKI Combinator Calculus
 
 This article opens a series of so-called "metasodomic" etudes, written in a functional language of mine, [Metalang99]. The goal is to have a fun contemplating rather cumbersome, sophisticated code using only the C/C++ macro system. Today we are about to implement a syntactically reduced version of the untyped lambda calculus, the [SKI combinator calculus].
 
