@@ -7,7 +7,7 @@ This article opens a series of so-called "metasodomic" etudes, written in a func
 
 ## The Core Calculus
 
-Believe or not, we can achieve functional programming even without lambda abstractions as a reified software building block; our approach is to represent code in terms of compositions of a couple of built-in combinators -- this is what the SKI calculus about. Being a [Turing tarpit], the SKI calculus is enough powerful to express all computations which can be expressed by the Turing machine or the untyped lambda calculus.
+Believe or not, we can achieve functional programming even without lambda abstractions as a reified software building block; our approach is to represent code as a composition of a couple of built-in combinators -- this is what the SKI calculus about. Being a [Turing tarpit], the SKI calculus is enough powerful to express all computations which can be expressed by the Turing machine or the untyped lambda calculus.
 
 [Turing tarpit]: https://en.wikipedia.org/wiki/Turing_tarpit
 
