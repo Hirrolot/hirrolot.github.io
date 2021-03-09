@@ -1,13 +1,15 @@
 # Metasodomic Etude №1: SKI Combinator Calculus
 
-This article opens a series of so-called "metasodomic" etudes, written in a functional language of mine, [Metalang99]. The goal is to have a fun contemplating rather cumbersome, sophisticated code using only the C/C++ macro system. Today we are about to implement a reduced version of the untyped lambda calculus, the [SKI combinator calculus].
-
-Believe or not, we can achieve functional programming even without lambda abstractions as a reified software building block; our approach is to define a couple of built-in combinators  and then express all possible computations in terms of their composition -- this is what the SKI calculus about.
+This article opens a series of so-called "metasodomic" etudes, written in a functional language of mine, [Metalang99]. The goal is to have a fun contemplating rather cumbersome, sophisticated code using only the C/C++ macro system. Today we are about to implement a syntactically reduced version of the untyped lambda calculus, the [SKI combinator calculus].
 
 [Metalang99]: https://github.com/Hirrolot/metalang99
 [SKI combinator calculus]: https://en.wikipedia.org/wiki/SKI_combinator_calculus
 
 ## The Core Calculus
+
+Believe or not, we can achieve functional programming even without lambda abstractions as a reified software building block; our approach is to define a couple of built-in combinators and then express all possible computations in terms of their composition -- this is what the SKI calculus about. Being a [Turing tarpit], the SKI calculus is enough powerful to express all computations which can be expressed by the Turing machine or the untyped lambda calculus.
+
+[Turing tarpit]: https://en.wikipedia.org/wiki/Turing_tarpit
 
 So the first combinator is called `K`. It merely reduces to its first argument, ignoring the second one:
 
