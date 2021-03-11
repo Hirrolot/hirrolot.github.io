@@ -21,7 +21,7 @@ So the first combinator is called `K`. It merely reduces to its first argument, 
 The second combinator is `S`, also referred to as the "substitution combinator". It applies its third argument and the application of the second and the third ones to its first argument, or more formally:
 
 ```c
-#define S_IMPL(x, y, z) M_appl(M_appl(v(x), v(z)), M_appl(v(y), v(z)))
+#define S_IMPL(x, y, z) M_appl2(v(x), v(z), M_appl(v(y), v(z)))
 #define S_ARITY 3
 ```
 
