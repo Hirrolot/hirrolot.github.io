@@ -1,1 +1,1 @@
- - [_Metasodomic Etude №1: SKI Combinator Calculus_](/metasodomic-edute-1.md)
+
