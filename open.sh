@@ -1,3 +1,3 @@
 #!/bin/bash
 
-firefox docs/index.html
+firefox index.html
