@@ -1,16 +1,12 @@
-.me {
-    display: flex;
-    flex-direction: row;
-}
-
-.about-me {
-    margin-left: 20px;
-    font-size: 22px;
-    text-align: left !important;
-}
-
+.about-me,
 .badges {
-    margin-left: 20px;
+    text-align: center;
+}
+
+.austin-powers {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body {

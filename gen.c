@@ -14,22 +14,25 @@
 #define POSTS_MAX 512
 
 #define EXCELLENT_ME                                                           \
-    "<div class=\"me\">"                                                       \
-    "<img src=\"Austin-Powers.jpeg\" width=300px />"                           \
-    "<div><p class=\"about-me\">I'm a 16 y/o software engineer, most known "   \
-    "for my work on [teloxide] and preprocessor metaprogramming: "             \
-    "[Metalang99], [Datatype99], and [Interface99]. This is my blog about "    \
-    "programming and all the stuff.<br><br></p>" BADGES "</div>"               \
-    "</div>\n"                                                                 \
+    "<div center=\"me\">" AUSTIN_POWERS MY_DESCRIPTION BADGES "</div>\n"       \
     "[teloxide]: https://github.com/teloxide/teloxide\n"                       \
     "[Metalang99]: https://github.com/Hirrolot/metalang99\n"                   \
     "[Datatype99]: https://github.com/Hirrolot/datatype99\n"                   \
     "[Interface99]: https://github.com/Hirrolot/interface99\n"                 \
     "<hr>\n"
 
+#define AUSTIN_POWERS                                                          \
+    "<img class=\"austin-powers\" src=\"Austin-Powers.jpeg\" width=300px />"
+
+#define MY_DESCRIPTION                                                         \
+    "<p class=\"about-me\">I'm a 16 y/o software engineer, most known for my " \
+    "work on [teloxide] and preprocessor metaprogramming: [Metalang99], "      \
+    "[Datatype99], and [Interface99]. This is my blog about programming and "  \
+    "all the stuff.</p>"
+
 #define BADGES                                                                 \
     "<div class=\"badges\">" GITHUB_BADGE TWITTER_BADGE REDDIT_BADGE           \
-    "<br>" TELEGRAM_BADGE GMAIL_BADGE "</div>"
+        TELEGRAM_BADGE GMAIL_BADGE "</div>"
 
 #define GITHUB_BADGE                                                           \
     "<a href=\"https://github.com/Hirrolot\"><img "                            \
