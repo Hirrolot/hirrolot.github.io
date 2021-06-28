@@ -15,17 +15,51 @@
 
 #define EXCELLENT_ME                                                           \
     "<div class=\"me\">"                                                       \
-    "<img src=\"Austin-Powers.jpeg\" width=300px />\n"                         \
+    "<img src=\"Austin-Powers.jpeg\" width=300px />"                           \
     "<div><p class=\"about-me\">I'm a 16 y/o software engineer, most known "   \
     "for my work on [teloxide] and preprocessor metaprogramming: "             \
     "[Metalang99], [Datatype99], and [Interface99]. This is my blog about "    \
-    "programming and all the stuff.</p></div>"                                 \
-    "</div>\n\n"                                                               \
+    "programming and all the stuff.<br><br></p>" BADGES "</div>"               \
+    "</div>\n"                                                                 \
     "[teloxide]: https://github.com/teloxide/teloxide\n"                       \
     "[Metalang99]: https://github.com/Hirrolot/metalang99\n"                   \
     "[Datatype99]: https://github.com/Hirrolot/datatype99\n"                   \
     "[Interface99]: https://github.com/Hirrolot/interface99\n"                 \
-    "<hr>"
+    "<hr>\n"
+
+#define BADGES                                                                 \
+    "<div class=\"badges\">" GITHUB_BADGE TWITTER_BADGE REDDIT_BADGE           \
+    "<br>" TELEGRAM_BADGE GMAIL_BADGE "</div>"
+
+#define GITHUB_BADGE                                                           \
+    "<a href=\"https://github.com/Hirrolot\"><img "                            \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "GitHub-100000?style=for-the-badge&logo=github&logoColor=white\" "         \
+    "/></a>"
+
+#define TWITTER_BADGE                                                          \
+    "<a href=\"https://twitter.com/hirrolot\"><img "                           \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white\" "       \
+    "/></a>"
+
+#define REDDIT_BADGE                                                           \
+    "<a href=\"https://www.reddit.com/user/Hirrolot/\"><img "                  \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white\" "         \
+    "/></a>"
+
+#define TELEGRAM_BADGE                                                         \
+    "<a href=\"https://t.me/hirrolot\"><img "                                  \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white\" "     \
+    "/></a>"
+
+#define GMAIL_BADGE                                                            \
+    "<a href=\"https://mailto:hirrolot@gmail.com\"><img "                      \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white\" "           \
+    "/></a>"
 
 static void collect_post_names(size_t *restrict posts_count,
                                char *post_names[POSTS_MAX]);
