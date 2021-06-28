@@ -26,6 +26,9 @@ static void gen_phony_all(FILE *makefile, size_t posts_count,
                           const char *post_names[static posts_count]);
 static void gen_phony_clean(FILE *makefile);
 
+static char *find_post_title(const char *str);
+static char *find_post_date(const char *str);
+
 static char *file_base(const char *filename);
 
 int main(void) {
@@ -94,10 +97,34 @@ static void gen_index_md(size_t posts_count,
                    "---\n\n");
 
     for (size_t i = 0; i < posts_count; i++) {
-        if (strcmp(post_names[i], "index") != 0) {
-            fprintf(index, " - [%s](" OUTPUT_DIR "/%s.html)\n", post_names[i],
-                    post_names[i]);
+        if (strcmp(post_names[i], "index") == 0) {
+            continue;
         }
+
+        char post_path[128] = {0};
+        snprintf(post_path, sizeof post_path, CONTENT_DIR "/%s.md",
+                 post_names[i]);
+
+        FILE *post_fp = fopen(post_path, "r");
+        assert(post_fp);
+
+        char post_beginning[512] = {0};
+        const size_t chars_read =
+            fread(post_beginning, sizeof post_beginning[0],
+                  sizeof post_beginning - 1, post_fp);
+        assert(sizeof post_beginning - 1 == chars_read);
+
+        char *title = find_post_title(post_beginning),
+             *date = find_post_date(post_beginning);
+
+        fprintf(index, " - [%s](" OUTPUT_DIR "/%s.html)<br>%s<br>\n", title,
+                post_names[i], date);
+
+        free(title);
+        free(date);
+
+        const bool post_fp_closed = fclose(post_fp) == 0;
+        assert(post_fp_closed);
     }
 
     const bool index_closed = fclose(index) == 0;
@@ -132,6 +159,28 @@ static void gen_phony_all(FILE *makefile, size_t posts_count,
 
 static void gen_phony_clean(FILE *makefile) {
     fprintf(makefile, "clean:\n\trm " OUTPUT_DIR "/*.html\n\n");
+}
+
+static char *find_post_title(const char *str) {
+    char *title_start = strstr(str, "title: \"");
+    assert(title_start);
+    title_start += strlen("title: \"");
+
+    char *title_end = strchr(title_start, '\"');
+    assert(title_end);
+
+    return strndup(title_start, title_end - title_start);
+}
+
+static char *find_post_date(const char *str) {
+    char *date_start = strstr(str, "date: ");
+    assert(date_start);
+    date_start += strlen("date: ");
+
+    char *date_end = strchr(date_start, '\n');
+    assert(date_end);
+
+    return strndup(date_start, date_end - date_start);
 }
 
 static char *file_base(const char *filename) {
