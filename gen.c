@@ -8,7 +8,7 @@
 #include <dirent.h>
 
 #define POSTS_DIR   "posts"
-#define OUTPUT_DIR  "."
+#define OUTPUT_DIR  "docs"
 #define PANDOC_ARGS "--standalone --css style.css -H header.html --toc"
 
 #define POSTS_MAX 512
