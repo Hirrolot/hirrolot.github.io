@@ -13,6 +13,20 @@
 
 #define POSTS_MAX 512
 
+#define EXCELLENT_ME                                                           \
+    "<div class=\"me\"><div class=\"austin-powers\"><img "                     \
+    "src=\"Austin-Powers.jpeg\" width=300px/></div>\n"                         \
+    "<div class=\"about-me\">I'm a 16 y/o software engineer, most known for "  \
+    "my work on [teloxide] and preprocessor metaprogramming: [Metalang99], "   \
+    "[Datatype99], and [Interface99]. This is my blog about programming and "  \
+    "all the stuff.\n"                                                         \
+    "</div></div>\n\n"                                                         \
+    "[teloxide]: https://github.com/teloxide/teloxide\n"                       \
+    "[Metalang99]: https://github.com/Hirrolot/metalang99\n"                   \
+    "[Datatype99]: https://github.com/Hirrolot/datatype99\n"                   \
+    "[Interface99]: https://github.com/Hirrolot/interface99\n"                 \
+    "<hr>"
+
 static void collect_post_names(size_t *restrict posts_count,
                                char *post_names[POSTS_MAX]);
 
@@ -95,6 +109,7 @@ static void gen_index_md(size_t posts_count,
     fprintf(index, "---\n"
                    "title: Hirrolot's Blog\n"
                    "---\n\n");
+    fprintf(index, "%s", EXCELLENT_ME);
 
     for (size_t i = 0; i < posts_count; i++) {
         if (strcmp(post_names[i], "index") == 0) {
