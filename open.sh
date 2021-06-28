@@ -1,3 +1,3 @@
 #!/bin/bash
 
-firefox output/index.html
+firefox index.html
