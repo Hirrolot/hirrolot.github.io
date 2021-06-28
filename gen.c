@@ -14,13 +14,13 @@
 #define POSTS_MAX 512
 
 #define EXCELLENT_ME                                                           \
-    "<div class=\"me\"><div class=\"austin-powers\"><img "                     \
-    "src=\"Austin-Powers.jpeg\" width=300px/></div>\n"                         \
-    "<div class=\"about-me\">I'm a 16 y/o software engineer, most known for "  \
-    "my work on [teloxide] and preprocessor metaprogramming: [Metalang99], "   \
-    "[Datatype99], and [Interface99]. This is my blog about programming and "  \
-    "all the stuff.\n"                                                         \
-    "</div></div>\n\n"                                                         \
+    "<div class=\"me\">"                                                       \
+    "<img src=\"Austin-Powers.jpeg\" width=300px />\n"                         \
+    "<div><p class=\"about-me\">I'm a 16 y/o software engineer, most known "   \
+    "for my work on [teloxide] and preprocessor metaprogramming: "             \
+    "[Metalang99], [Datatype99], and [Interface99]. This is my blog about "    \
+    "programming and all the stuff.</p></div>"                                 \
+    "</div>\n\n"                                                               \
     "[teloxide]: https://github.com/teloxide/teloxide\n"                       \
     "[Metalang99]: https://github.com/Hirrolot/metalang99\n"                   \
     "[Datatype99]: https://github.com/Hirrolot/datatype99\n"                   \

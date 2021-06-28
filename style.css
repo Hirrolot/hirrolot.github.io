@@ -4,9 +4,9 @@
 }
 
 .about-me {
-    margin-left: 5px;
+    margin-left: 20px;
     font-size: 22px;
-    text-align: right;
+    text-align: left !important;
 }
 
 body {
