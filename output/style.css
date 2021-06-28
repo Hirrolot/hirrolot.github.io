@@ -1,0 +1,79 @@
+body {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+    font-family: 'Rokkitt', serif;
+}
+
+p {
+    font-size: 22px;
+    text-align: justify;
+}
+
+code {
+    font-size: 16px;
+}
+
+.sourceCode {
+    background-color: beige;
+}
+
+pre code {
+    display: block;
+    background-color: beige;
+    padding: 16px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2:before {
+    content: '¶ ';
+    color: gray;
+}
+
+h2:after {
+    content: ' ';
+    position: absolute;
+    right: 0px;
+    display: block;
+    border: 1px solid gray;
+    width: 100vw;
+}
+
+li {
+    font-size: 22px;
+}
+
+#TOC {
+    background-color: #f2f2f2;
+    padding: 1px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 3px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Spectral SC', serif;
+}
+
+h1 {
+    text-align: right;
+}
+
+.date {
+    color: gray;
+    font-style: italic;
+}
+
+.author {
+    color: gray;
+    font-style: italic;
+}

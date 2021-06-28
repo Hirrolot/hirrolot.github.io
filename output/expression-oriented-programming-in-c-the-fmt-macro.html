@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Hirrolot’s Blog" />
+  <meta name="dcterms.date" content="2021-05-14" />
+  <title>Expression-Oriented Programming in C: The FMT Macro</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@300&display=swap" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Expression-Oriented Programming in C: The FMT Macro</h1>
+<p class="author"><a href="..">Hirrolot’s Blog</a></p>
+<p class="date">May 14, 2021</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#sprintf">sprintf</a></li>
+<li><a href="#superior-sprintf">Superior sprintf</a></li>
+<li><a href="#the-snprintf-counterpart">The snprintf counterpart</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#links">Links</a></li>
+</ul>
+</nav>
+<p>Have you ever created useless intermediate variables like this?</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="dt">int</span> fee = <span class="dv">500</span>;</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="dt">char</span> response[<span class="dv">128</span>] = {<span class="dv">0</span>};</span>
+<span id="cb1-4"><a href="#cb1-4"></a>sprintf(response, <span class="st">&quot;Your fee is %d USD&quot;</span>, fee);</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>reply_to_user(response);</span></code></pre></div>
+<p>If you programmed in C before, the answer should be “yes”. This language design drawback arises from the fact that C is a <em>statement-oriented</em> language, meaning that if you want to perform some simple task, big chances that you need to allocate a separate variable and manipulate its pointer here and there.</p>
+<p>This blog post explains how to overcome this unpleasantness by designing APIs which facilitate <em>expression-oriented</em> programming. In the end, we will come up with a handy <code>FMT</code> string formatting macro that mimics <a href="https://doc.rust-lang.org/std/macro.format.html"><code>std::format!</code></a> of Rust:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="dt">int</span> fee = <span class="dv">500</span>;</span>
+<span id="cb2-2"><a href="#cb2-2"></a>reply_to_user(FMT((<span class="dt">char</span>[<span class="dv">128</span>]){<span class="dv">0</span>}, <span class="st">&quot;Your fee is %d USD&quot;</span>, fee));</span></code></pre></div>
+<h2 id="sprintf">sprintf</h2>
+<p>Why <code>sprintf</code> (and its friends) requires a named variable to store a formatted string? Well, let us envision <code>sprintf</code> in an ideal world where every meaningful operation fits in a single line – how would then the signature look? Something like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">char</span> *sprintf(<span class="dt">const</span> <span class="dt">char</span> *<span class="dt">restrict</span> format, ...);</span></code></pre></div>
+<p>(Note: <a href="https://en.cppreference.com/w/c/language/restrict"><code>restrict</code></a> here means that an object referenced by <code>format</code> will be accessed only through <code>format</code>.)</p>
+<p>But the gross truth is that it is completely unviable in C: this <code>sprintf</code> then needs to allocate memory by itself, whilst many use cases require caller-allocated memory. Let’s fix it:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a><span class="dt">char</span> *sprintf(<span class="dt">char</span> *<span class="dt">restrict</span> buffer, <span class="dt">const</span> <span class="dt">char</span> *<span class="dt">restrict</span> format, ...);</span></code></pre></div>
+<p>Now the signature is the same as the standard library counterpart, except that we return the passed buffer instead of how many bytes have been written so far. Good. But no one uses it anyway, so we can freely get rid of it. Let’s then define our superior <code>sprintf</code> wrapper.</p>
+<h2 id="superior-sprintf">Superior sprintf</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#include </span><span class="im">&lt;stdarg.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="pp">#define FMT(buffer, fmt, ...) fmt_str((buffer), (fmt), __VA_ARGS__)</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">inline</span> <span class="dt">static</span> <span class="dt">char</span> *fmt_str(<span class="dt">char</span> *<span class="dt">restrict</span> buffer, <span class="dt">const</span> <span class="dt">char</span> *<span class="dt">restrict</span> fmt, ...) {</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="dt">va_list</span> ap;</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    va_start(ap, fmt);</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    vsprintf(buffer, fmt, ap);</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    va_end(ap);</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="cf">return</span> buffer;</span>
+<span id="cb5-13"><a href="#cb5-13"></a>}</span></code></pre></div>
+<p>See? What we have done is just paraphrasing the old but not obsolete <code>sprintf</code>: now we can obtain the resulting string immediately from an invocation of <code>FMT</code>, without auxiliary variables:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="dt">char</span> *s = FMT((<span class="dt">char</span>[<span class="dv">128</span>]){<span class="dv">0</span>}, <span class="st">&quot;%s %d %f&quot;</span>, <span class="st">&quot;hello world&quot;</span>, <span class="dv">123</span>, <span class="fl">89.209</span>);</span></code></pre></div>
+<p>If you are curious about <code>(char[128]){0}</code>, it is called a <a href="https://en.cppreference.com/w/c/language/compound_literal">compound literal</a>: it represents an lvalue with the automatic storage duration that is needed only once. Here, the type of the compound literal is <code>char[128]</code>, a <code>char</code> array of 128 elements, all initialised to zero.</p>
+<h2 id="the-snprintf-counterpart">The snprintf counterpart</h2>
+<p>We can modify our <code>FMT</code> and <code>fmt_str</code> to use the safe alternative to <code>sprintf</code>, <code>snprintf</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a><span class="pp">#include </span><span class="im">&lt;stddef.h&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="pp">#include </span><span class="im">&lt;stdarg.h&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="pp">#define FMT(buffer, fmt, ...) fmt_str(sizeof(buffer), (buffer), (fmt), __VA_ARGS__)</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="kw">inline</span> <span class="dt">static</span> <span class="dt">char</span> *fmt_str(</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="dt">size_t</span> len, <span class="dt">char</span> buffer[<span class="dt">restrict</span> <span class="dt">static</span> len], <span class="dt">const</span> <span class="dt">char</span> fmt[<span class="dt">restrict</span>],</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    ...) {</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="dt">va_list</span> ap;</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    va_start(ap, fmt);</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    vsnprintf(buffer, len, fmt, ap);</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    va_end(ap);</span>
+<span id="cb7-14"><a href="#cb7-14"></a></span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="cf">return</span> buffer;</span>
+<span id="cb7-16"><a href="#cb7-16"></a>}</span></code></pre></div>
+<p>Now if the passed buffer is not sufficient to hold the formatted data, we will not write past the end of it. Notice how beautiful <code>sizeof(buffer)</code> inside <code>FMT</code> works: provided it is an array type, its size will be computed correctly, contrary to just a pointer to the first element of an array.</p>
+<p>If you are curious about the <code>char buffer[restrict static len]</code> syntax, it defines a <code>restrict</code> pointer parameter that points to the first element of some array <a href="https://en.cppreference.com/w/c/language/array">whose length is at least <code>len</code> bytes long</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>What can we learn from it? At least, there is a certain kind of functions that write to a memory area, and their invocation naturally expresses the whole result of an operation. In order to be suitable for expression-oriented programming, these must return the passed memory area. <code>FMT</code> is a perfect example.</p>
+<p>Compound literals facilitate expression-oriented programming too. They represent arbitrary values that need to be accessed only once. I encourage you to use them in all cases where a separate variable is superfluous. (Although you might still prefer to give descriptive names to program entities in certain cases.)</p>
+<p>I hope you enjoyed the post. Looking forward to any feedback!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://dev.to/hirrolot/expression-oriented-programming-in-c-the-fmt-macro-43jo">The original post</a></li>
+</ul>
+</body>
+</html>
