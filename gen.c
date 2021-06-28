@@ -31,8 +31,14 @@
     "all the stuff.</p>"
 
 #define BADGES                                                                 \
-    "<div class=\"badges\">" GITHUB_BADGE TWITTER_BADGE REDDIT_BADGE           \
-        TELEGRAM_BADGE GMAIL_BADGE "</div>"
+    "<div class=\"badges\">" PATREON_BADGE GITHUB_BADGE TWITTER_BADGE          \
+        REDDIT_BADGE TELEGRAM_BADGE GMAIL_BADGE "</div>"
+
+#define PATREON_BADGE                                                          \
+    "<a href=\"https://patreon.com/hirrolot\"><img "                           \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white\" "       \
+    "/></a>"
 
 #define GITHUB_BADGE                                                           \
     "<a href=\"https://github.com/Hirrolot\"><img "                            \
