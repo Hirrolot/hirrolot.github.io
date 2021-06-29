@@ -31,8 +31,8 @@
     "all the stuff.</p>"
 
 #define BADGES                                                                 \
-    "<div class=\"badges\">" PATREON_BADGE GITHUB_BADGE TWITTER_BADGE          \
-        REDDIT_BADGE TELEGRAM_BADGE GMAIL_BADGE "</div>"
+    "<div class=\"badges\">" GITHUB_BADGE PATREON_BADGE TWITTER_BADGE          \
+        REDDIT_BADGE "<br>" TELEGRAM_BADGE GMAIL_BADGE "</div>"
 
 #define PATREON_BADGE                                                          \
     "<a href=\"https://patreon.com/hirrolot\"><img "                           \
