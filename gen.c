@@ -251,7 +251,8 @@ static void gen_target(FILE *makefile, const char *post_name) {
     fprintf(makefile,
             "%s: " CONTENT_DIR "/%s.md\n\t"
             "pandoc " CONTENT_DIR "/%s.md -o " OUTPUT_DIR
-            "/%s.html " PANDOC_ARGS " --css ../style.css\n\n",
+            "/%s.html " PANDOC_ARGS
+            " --css ../style.css --include-after-body utterances.html \n\n",
             post_name, post_name, post_name, post_name);
 }
 
