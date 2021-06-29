@@ -113,18 +113,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-11"><a href="#cb1-11"></a>        } block;</span>
 <span id="cb1-12"><a href="#cb1-12"></a>    };</span>
 <span id="cb1-13"><a href="#cb1-13"></a>} TIFFEntryValue;</span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">inline</span> <span class="dt">static</span> TIFFEntryValue TIFFEntryValueSmall(<span class="dt">uint32_t</span> value) {</span>
-<span id="cb1-15"><a href="#cb1-15"></a>    <span class="cf">return</span> (TIFFEntryValue){</span>
-<span id="cb1-16"><a href="#cb1-16"></a>        .tag = TIFFEntryValueTagSmall,</span>
-<span id="cb1-17"><a href="#cb1-17"></a>        .small_value = value,</span>
-<span id="cb1-18"><a href="#cb1-18"></a>    };</span>
-<span id="cb1-19"><a href="#cb1-19"></a>}</span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="kw">inline</span> <span class="dt">static</span> TIFFEntryValue TIFFEntryValueBlock(<span class="dt">size_t</span> size, <span class="dt">const</span> <span class="dt">void</span> *ptr) {</span>
-<span id="cb1-21"><a href="#cb1-21"></a>    <span class="cf">return</span> (TIFFEntryValue){</span>
-<span id="cb1-22"><a href="#cb1-22"></a>        .tag = TIFFEntryValueTagBlock,</span>
-<span id="cb1-23"><a href="#cb1-23"></a>        .block = {.data = ptr, .size = size},</span>
-<span id="cb1-24"><a href="#cb1-24"></a>    };</span>
-<span id="cb1-25"><a href="#cb1-25"></a>}</span></code></pre></div>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">inline</span> <span class="dt">static</span> TIFFEntryValue TIFFEntryValueSmall(<span class="dt">uint32_t</span> value) {</span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="cf">return</span> (TIFFEntryValue){</span>
+<span id="cb1-17"><a href="#cb1-17"></a>        .tag = TIFFEntryValueTagSmall,</span>
+<span id="cb1-18"><a href="#cb1-18"></a>        .small_value = value,</span>
+<span id="cb1-19"><a href="#cb1-19"></a>    };</span>
+<span id="cb1-20"><a href="#cb1-20"></a>}</span>
+<span id="cb1-21"><a href="#cb1-21"></a></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="kw">inline</span> <span class="dt">static</span> TIFFEntryValue TIFFEntryValueBlock(<span class="dt">size_t</span> size, <span class="dt">const</span> <span class="dt">void</span> *ptr) {</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    <span class="cf">return</span> (TIFFEntryValue){</span>
+<span id="cb1-24"><a href="#cb1-24"></a>        .tag = TIFFEntryValueTagBlock,</span>
+<span id="cb1-25"><a href="#cb1-25"></a>        .block = {.data = ptr, .size = size},</span>
+<span id="cb1-26"><a href="#cb1-26"></a>    };</span>
+<span id="cb1-27"><a href="#cb1-27"></a>}</span></code></pre></div>
 <p>Well, clearly not the best code I ever wrote. The pattern here is called a <a href="https://medium.com/r/?url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FTagged_union">tagged union</a> – a structure consisting of a tag and a payload. Here, the tag is the enumeration of <code>TIFFEntryValueTagSmall</code> and <code>TIFFEntryValueTagBlock</code>, both of which correspond to <code>small_value</code> and <code>block</code>, respectively: if <code>tag</code> is <code>TIFFEntryValueTagSmall</code>, then <code>small_value</code> must be present, and if <code>TIFFEntryValueTagBlock</code>, then block must be present.</p>
 <p>Below the structure itself, the two functions are called <em>value constructors</em> – they construct values of <code>TIFFEntryValue</code>.</p>
 <p>To match a TIFF value, a switch statement is used:</p>

@@ -22,12 +22,14 @@ typedef struct {
         } block;
     };
 } TIFFEntryValue;
+
 inline static TIFFEntryValue TIFFEntryValueSmall(uint32_t value) {
     return (TIFFEntryValue){
         .tag = TIFFEntryValueTagSmall,
         .small_value = value,
     };
 }
+
 inline static TIFFEntryValue TIFFEntryValueBlock(size_t size, const void *ptr) {
     return (TIFFEntryValue){
         .tag = TIFFEntryValueTagBlock,
