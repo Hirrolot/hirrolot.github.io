@@ -5,6 +5,21 @@
         <description>Hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
+            <title>Compiling Algebraic Data Types in Pure C99</title>
+            <link>https://hirrolot.github.io/posts/compiling-algebraic-data-types-in-pure-c99.html</link>
+            <pubDate>May 25, 2021</pubDate>
+        </item>
+        <item>
+            <title>Expression-Oriented Programming in C: The FMT Macro</title>
+            <link>https://hirrolot.github.io/posts/expression-oriented-programming-in-c-the-fmt-macro.html</link>
+            <pubDate>May 14, 2021</pubDate>
+        </item>
+        <item>
+            <title>Compile-Time Introspection of Sum Types in Pure C99</title>
+            <link>https://hirrolot.github.io/posts/compile-time-introspection-of-sum-types-in-pure-c99.html</link>
+            <pubDate>Apr 25, 2021</pubDate>
+        </item>
+        <item>
             <title>Unleashing Sum Types in Pure C99</title>
             <link>https://hirrolot.github.io/posts/unleashing-sum-types-in-pure-c99.html</link>
             <pubDate>Feb 6, 2021</pubDate>
