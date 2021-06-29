@@ -32,7 +32,7 @@
 
 #define BADGES                                                                 \
     "<div class=\"badges\">" GITHUB_BADGE PATREON_BADGE TWITTER_BADGE          \
-        REDDIT_BADGE "<br>" TELEGRAM_BADGE GMAIL_BADGE "</div>"
+        REDDIT_BADGE "<br>" TELEGRAM_BADGE RSS_BADGE GMAIL_BADGE "</div>"
 
 #define PATREON_BADGE                                                          \
     "<a href=\"https://patreon.com/hirrolot\"><img "                           \
@@ -68,6 +68,12 @@
     "<a href=\"https://mailto:hirrolot@gmail.com\"><img "                      \
     "src=\"https://img.shields.io/badge/"                                      \
     "Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white\" "           \
+    "/></a>"
+
+#define RSS_BADGE                                                              \
+    "<a href=\"rss.xml\"><img "                                                \
+    "src=\"https://img.shields.io/badge/"                                      \
+    "RSS-FFA500?style=for-the-badge&logo=rss&logoColor=white\" "               \
     "/></a>"
 
 typedef enum {
