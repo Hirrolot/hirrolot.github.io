@@ -358,7 +358,7 @@ I suggest you to start at a popular article of Simon Tatham [^metaprog-structure
 
 ## Final words
 
-Some languages are more malleable to user extension than the others. Some employ adaptive grammars ([Idris]), some employ syntax-aware macros (Rust), some employ Lisp-style s-expressions. Surely, there are a lot of alternatives in the design space, each of which with its own benefits and downsides.
+Some languages are more malleable to user extension than the others. Some employ adaptive grammars ([Idris]), some employ syntax-aware macros (Rust), some employ Lisp-style s-expressions. Surely, there are a lot of alternatives in the design space, each has its own benefits and downsides.
 
 The intent of this blog post was to advocate the principle of syntactical consistency.
 
