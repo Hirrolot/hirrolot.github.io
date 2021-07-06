@@ -7,74 +7,76 @@
   <meta name="author" content="Hirrolot’s Blog" />
   <title>Compile-Time Introspection of Sum Types in Pure C99</title>
   <style>
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <style>
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../style.css" />
   <!--[if lt IE 9]>
@@ -83,7 +85,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@300&display=swap" rel="stylesheet">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alata&family=Passion+One&family=Ultra&display=swap" rel="stylesheet">
@@ -102,119 +104,125 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Recently I’ve published a <a href="https://hirrolot.medium.com/unleashing-sum-types-in-pure-c99-31544302d2ba">blog post</a> about <a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library implementing sum types in pure C99 with preprocessor macros only. Today I’m going to present its new metaprogramming ability: introspection of sum types at compilation time, also with preprocessor macros only.</p>
 <p>First of all, what is type introspection? For our purposes, type introspection means the retrieval and manipulation of a type representation: imagine for a second that you could gather all variants of a sum type and automatically implement some interface for it! Sounds seditiously? Let me show you how you can achieve it.</p>
 <p>Type the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>datatype(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    MyType,</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    (Foo, <span class="dt">const</span> <span class="dt">char</span> *),</span>
-<span id="cb1-4"><a href="#cb1-4"></a>    (Bar, <span class="dt">int</span>, <span class="dt">int</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>);</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    MyType<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*),</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
 <p>This code defines a sum type <code>MyType</code> with two variants: <code>Foo</code> and <code>Bar</code>. So far so good. Now our goal is to generate a function called <code>MyType_say_hello</code> which prints <code>"hello"</code> to <code>stdout</code>. This can be achieved via a <em>deriver macro</em>, a macro which accepts the representation of <code>MyType</code> and outputs something global for it, like a function definition:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="pp">#define DATATYPE99_DERIVE_SayHello_IMPL(name, variants) \</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="pp">    v(inline static void name##_say_hello(void) { puts(&quot;hello&quot;); })</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DATATYPE99_DERIVE_SayHello_IMPL(name, variants) \</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">    v(inline static void name##_say_hello(void) { puts(&quot;hello&quot;); })</span></span></code></pre></div>
 <p>And prepend <code>derive(SayHello)</code> to our <code>datatype</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>datatype(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    derive(SayHello),</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    MyType,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    (Foo, <span class="dt">const</span> <span class="dt">char</span> *),</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    (Bar, <span class="dt">int</span>, <span class="dt">int</span>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>);</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    derive<span class="op">(</span>SayHello<span class="op">),</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    MyType<span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*),</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
 <p>Finally, test <code>MyType_say_hello</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a><span class="dt">int</span> main(<span class="dt">void</span>) {</span>
-<span id="cb4-2"><a href="#cb4-2"></a>    MyType_say_hello();</span>
-<span id="cb4-3"><a href="#cb4-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    MyType_say_hello<span class="op">();</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>This outputs <code>hello</code>, as expected. The <code>DATATYPE99_DERIVE_SayHello_IMPL</code> macro is written in <a href="https://github.com/Hirrolot/metalang99">Metalang99</a>, an underlying metaprogramming framework upon which Datatype99 works. According to Metalang99, a Metalang99-compliant macro has the <code>_IMPL</code> postfix and results in one or more language expressions; here, the only expression is <code>v(...)</code>, which evaluates to <code>...</code>. The parameters <code>name, variants</code> stand for the name of a sum type and a list of variants, respectively.</p>
 <p>So how to manipulate this list of variants? The answer is: use Metalang99’s <a href="https://metalang99.readthedocs.io/en/latest/list.html">list manipulation metafunctions</a>. Let’s do something more involved, for example, generating a pretty-printer:</p>
 <p>[<a href="https://github.com/Hirrolot/datatype99/blob/efd7831929140377b6c3a22040b636d01c3839cc/examples/derive/print.c"><code>example/print.c</code></a>]</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#define DATATYPE99_DERIVE_Print_IMPL(name, variants) \</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="pp">    ML99_prefixedBlock( \</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="pp">        v(inline static void name##_print(name self, FILE *stream)), \</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="pp">        ML99_prefixedBlock( \</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="pp">            v(match(self)), \</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="pp">            ML99_listMapInPlace(ML99_compose(v(GEN_ARM), v(ML99_untuple)), v(variants))))</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="pp">#define GEN_ARM_IMPL(tag, sig) \</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="pp">    ML99_TERMS( \</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="pp">        DATATYPE99_assertAttrIsPresent(v(tag##_Print_fmt)), \</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="pp">        ML99_prefixedBlock( \</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="pp">            DATATYPE99_of(v(tag), ML99_indexedArgs(ML99_listLen(v(sig)))), \</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="pp">            ML99_invokeStmt(v(fprintf), v(stream), DATATYPE99_attrValue(v(tag##_Print_fmt)))))</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="pp">#define GEN_ARM_ARITY 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DATATYPE99_DERIVE_Print_IMPL(name, variants) \</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">    ML99_prefixedBlock( \</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">        v(inline static void name##_print(name self, FILE *stream)), \</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">        ML99_prefixedBlock( \</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="pp">            v(match(self)), \</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="pp">            ML99_listMapInPlace(ML99_compose(v(GEN_ARM), v(ML99_untuple)), v(variants))))</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GEN_ARM_IMPL(tag, sig) \</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="pp">    ML99_TERMS( \</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="pp">        DATATYPE99_assertAttrIsPresent(v(tag##_Print_fmt)), \</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="pp">        ML99_prefixedBlock( \</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="pp">            DATATYPE99_of(v(tag), ML99_indexedArgs(ML99_listLen(v(sig)))), \</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="pp">            ML99_invokeStmt(v(fprintf), v(stream), DATATYPE99_attrValue(v(tag##_Print_fmt)))))</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GEN_ARM_ARITY 1</span></span></code></pre></div>
 <p>Looks scary, ain’t it? 😳🙊😱😱🤭</p>
 <p>Don’t panic, I’ll explain everything to you.</p>
 <p>The <code>ML99_prefixedBlock</code> macro evaluates to <code>prefix { your code... }</code>, the <code>ML99_invokeStmt</code> macro evaluates to <code>f(args...);</code>, <code>DATATYPE99_assertAttrIsPresent</code> and <code>DATATYPE99_attrValue</code> are a means to deal with attributes (named arguments to a deriver): as you might have already guessed, the former simply asserts the presence of an attribute, and the latter extracts its value, respectively.</p>
 <p>The heart of our deriver is <code>ML99_listMapInPlace</code>, which walks through all variants and calls <code>GEN_ARM</code> for each one. Notice that each variant is represented as a <a href="https://metalang99.readthedocs.io/en/latest/tuple.html">tuple</a>, so in order to access its fields, one must untuple it; this is achieved by <code>ML99_compose</code> and <code>ML99_untuple</code>, a sort of functional programming!</p>
 <p>As usual, define a sum type and test the new deriver:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#define Foo_Print_fmt attr(&quot;Foo(\&quot;%s\&quot;)&quot;, *_0)</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="pp">#define Bar_Print_fmt attr(&quot;Bar(%d, %d)&quot;, *_0, *_1)</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a>datatype(</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    derive(Print),</span>
-<span id="cb6-6"><a href="#cb6-6"></a>    MyType,</span>
-<span id="cb6-7"><a href="#cb6-7"></a>    (Foo, <span class="dt">const</span> <span class="dt">char</span> *),</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    (Bar, <span class="dt">int</span>, <span class="dt">int</span>)</span>
-<span id="cb6-9"><a href="#cb6-9"></a>);</span>
-<span id="cb6-10"><a href="#cb6-10"></a></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">// `#undef`s omitted...</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="dt">int</span> main(<span class="dt">void</span>) {</span>
-<span id="cb6-14"><a href="#cb6-14"></a>    MyType_print(Foo(<span class="st">&quot;hello world&quot;</span>), stdout);</span>
-<span id="cb6-15"><a href="#cb6-15"></a>    puts(<span class="st">&quot;&quot;</span>);</span>
-<span id="cb6-16"><a href="#cb6-16"></a>    MyType_print(Bar(<span class="dv">3</span>, <span class="dv">5</span>), stdout);</span>
-<span id="cb6-17"><a href="#cb6-17"></a>    puts(<span class="st">&quot;&quot;</span>);</span>
-<span id="cb6-18"><a href="#cb6-18"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Foo_Print_fmt attr(&quot;Foo(\&quot;%s\&quot;)&quot;, *_0)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Bar_Print_fmt attr(&quot;Bar(%d, %d)&quot;, *_0, *_1)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    derive<span class="op">(</span>Print<span class="op">),</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    MyType<span class="op">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*),</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">// `#undef`s omitted...</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    MyType_print<span class="op">(</span>Foo<span class="op">(</span><span class="st">&quot;hello world&quot;</span><span class="op">),</span> stdout<span class="op">);</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    puts<span class="op">(</span><span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    MyType_print<span class="op">(</span>Bar<span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">),</span> stdout<span class="op">);</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    puts<span class="op">(</span><span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <details>
-<p><summary>Output</summary></p>
+<summary>
+Output
+</summary>
 <pre><code>Foo(&quot;hello world&quot;)
 Bar(3, 5)</code></pre>
 </details>
 <p>Works as expected either. Moving towards more sophisticated derivers, you can generate a command menu printer:</p>
 <p>[<a href="https://github.com/Hirrolot/datatype99/blob/efd7831929140377b6c3a22040b636d01c3839cc/examples/derive/command_menu.c"><code>examples/command_menu.c</code></a>]</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a><span class="pp">#define SendMessage_Menu_description        attr(&quot;Send a private message to someone&quot;)</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="pp">#define SubscribeToChannel_Menu_description attr(&quot;Subscribe to channel&quot;)</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="pp">#define DeleteAccount_Menu_description      attr(&quot;Delete my account&quot;)</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="pp">#define DeleteAccount_Menu_note             attr(&quot;DANGEROUS&quot;)</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a>datatype(</span>
-<span id="cb8-7"><a href="#cb8-7"></a>    derive(Menu),</span>
-<span id="cb8-8"><a href="#cb8-8"></a>    UserCommand,</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    (SendMessage, MessageContent, UserId),</span>
-<span id="cb8-10"><a href="#cb8-10"></a>    (SubscribeToChannel, ChannelId),</span>
-<span id="cb8-11"><a href="#cb8-11"></a>    (DeleteAccount)</span>
-<span id="cb8-12"><a href="#cb8-12"></a>);</span>
-<span id="cb8-13"><a href="#cb8-13"></a></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">// `#undef`s omitted...</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="dt">int</span> main(<span class="dt">void</span>) {</span>
-<span id="cb8-17"><a href="#cb8-17"></a>    UserCommand_print_menu();</span>
-<span id="cb8-18"><a href="#cb8-18"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define SendMessage_Menu_description        attr(&quot;Send a private message to someone&quot;)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define SubscribeToChannel_Menu_description attr(&quot;Subscribe to channel&quot;)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DeleteAccount_Menu_description      attr(&quot;Delete my account&quot;)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DeleteAccount_Menu_note             attr(&quot;DANGEROUS&quot;)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    derive<span class="op">(</span>Menu<span class="op">),</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    UserCommand<span class="op">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>SendMessage<span class="op">,</span> MessageContent<span class="op">,</span> UserId<span class="op">),</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>SubscribeToChannel<span class="op">,</span> ChannelId<span class="op">),</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>DeleteAccount<span class="op">)</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">// `#undef`s omitted...</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    UserCommand_print_menu<span class="op">();</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <details>
-<p><summary>Output</summary></p>
+<summary>
+Output
+</summary>
 <pre><code>SendMessage: Send a private message to someone.
 SubscribeToChannel: Subscribe to channel.
 (DANGEROUS) DeleteAccount: Delete my account.</code></pre>
 </details>
 <p>Or even reify the representation of variants into metadata variables:</p>
 <p>[<a href="https://github.com/Hirrolot/datatype99/blob/efd7831929140377b6c3a22040b636d01c3839cc/examples/derive/metadata.c"><code>examples/metadata.c</code></a>]</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>datatype(</span>
-<span id="cb10-2"><a href="#cb10-2"></a>    derive(Metadata),</span>
-<span id="cb10-3"><a href="#cb10-3"></a>    Num,</span>
-<span id="cb10-4"><a href="#cb10-4"></a>    (Char, <span class="dt">char</span>),</span>
-<span id="cb10-5"><a href="#cb10-5"></a>    (Int, <span class="dt">int</span>),</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    (Double, <span class="dt">double</span>)</span>
-<span id="cb10-7"><a href="#cb10-7"></a>);</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    derive<span class="op">(</span>Metadata<span class="op">),</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    Num<span class="op">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Char<span class="op">,</span> <span class="dt">char</span><span class="op">),</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Int<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Double<span class="op">,</span> <span class="dt">double</span><span class="op">)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
 <details>
-<p><summary>The generated metadata</summary></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a><span class="dt">static</span> <span class="dt">const</span> VariantMetadata Num_variants_metadata[] = {</span>
-<span id="cb11-2"><a href="#cb11-2"></a>    {.name = <span class="st">&quot;Char&quot;</span>, .arity = <span class="dv">1</span>, .size = <span class="kw">sizeof</span>(NumChar)},</span>
-<span id="cb11-3"><a href="#cb11-3"></a>    {.name = <span class="st">&quot;Int&quot;</span>, .arity = <span class="dv">1</span>, .size = <span class="kw">sizeof</span>(NumInt)},</span>
-<span id="cb11-4"><a href="#cb11-4"></a>    {.name = <span class="st">&quot;Double&quot;</span>, .arity = <span class="dv">1</span>, .size = <span class="kw">sizeof</span>(NumDouble)},</span>
-<span id="cb11-5"><a href="#cb11-5"></a>};</span>
-<span id="cb11-6"><a href="#cb11-6"></a></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="dt">static</span> <span class="dt">const</span> DatatypeMetadata Num_metadata = {</span>
-<span id="cb11-8"><a href="#cb11-8"></a>    .name = <span class="st">&quot;Num&quot;</span>,</span>
-<span id="cb11-9"><a href="#cb11-9"></a>    .variants = (<span class="dt">const</span> VariantMetadata *)&amp;Num_variants_metadata,</span>
-<span id="cb11-10"><a href="#cb11-10"></a>    .variants_count = <span class="dv">3</span>,</span>
-<span id="cb11-11"><a href="#cb11-11"></a>};</span></code></pre></div>
+<summary>
+The generated metadata
+</summary>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> VariantMetadata Num_variants_metadata<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">{.</span>name <span class="op">=</span> <span class="st">&quot;Char&quot;</span><span class="op">,</span> <span class="op">.</span>arity <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> <span class="op">.</span>size <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>NumChar<span class="op">)},</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">{.</span>name <span class="op">=</span> <span class="st">&quot;Int&quot;</span><span class="op">,</span> <span class="op">.</span>arity <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> <span class="op">.</span>size <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>NumInt<span class="op">)},</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{.</span>name <span class="op">=</span> <span class="st">&quot;Double&quot;</span><span class="op">,</span> <span class="op">.</span>arity <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> <span class="op">.</span>size <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>NumDouble<span class="op">)},</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> DatatypeMetadata Num_metadata <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>name <span class="op">=</span> <span class="st">&quot;Num&quot;</span><span class="op">,</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>variants <span class="op">=</span> <span class="op">(</span><span class="dt">const</span> VariantMetadata <span class="op">*)&amp;</span>Num_variants_metadata<span class="op">,</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>variants_count <span class="op">=</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </details>
 <p>If you’re acquainted with Rust, you probably already know a plenty of use cases. Possible practical applications include strongly typed JSON (as in <a href="https://github.com/serde-rs/json">serde-json</a>), strongly typed command-line arguments (as in <a href="https://github.com/clap-rs/clap">CLAP</a>), and even finite-state machine management (as in <a href="https://github.com/teloxide/teloxide/tree/8d8041ad6d73efd00a15943093413912704ecd14#dialogues-management">teloxide</a>).</p>
 <p>Of course, not only sum types can be introspected but also product types, more commonly known as <em>record types</em>, but Datatype99 doesn’t provide them at the time of publishing this post.</p>

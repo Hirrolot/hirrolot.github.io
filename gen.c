@@ -9,7 +9,7 @@
 
 #define CONTENT_DIR "content"
 #define OUTPUT_DIR  "posts"
-#define PANDOC_ARGS "--standalone -H header.html --toc"
+#define PANDOC_ARGS "--citeproc --standalone -H header.html --toc"
 
 #define POSTS_MAX 512
 

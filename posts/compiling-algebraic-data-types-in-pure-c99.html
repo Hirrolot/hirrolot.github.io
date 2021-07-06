@@ -8,74 +8,76 @@
   <meta name="dcterms.date" content="2021-05-25" />
   <title>Compiling Algebraic Data Types in Pure C99</title>
   <style>
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <style>
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../style.css" />
   <!--[if lt IE 9]>
@@ -84,7 +86,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@300&display=swap" rel="stylesheet">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alata&family=Passion+One&family=Ultra&display=swap" rel="stylesheet">
@@ -99,7 +101,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><a href="#data-layout">Data layout</a></li>
 <li><a href="#value-constructors">Value constructors</a></li>
-<li><a href="#pattern-matching">Pattern matching</a><ul>
+<li><a href="#pattern-matching">Pattern matching</a>
+<ul>
 <li><a href="#match"><code>match</code></a></li>
 <li><a href="#of"><code>of</code></a></li>
 <li><a href="#type-deduction">Type deduction</a></li>
@@ -110,18 +113,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </nav>
 <p>Lots of people have been constantly asking me how <a href="https://github.com/Hirrolot/datatype99">Datatype99</a> works:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>datatype(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    BinaryTree,</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    (Leaf, <span class="dt">int</span>),</span>
-<span id="cb1-4"><a href="#cb1-4"></a>    (Node, BinaryTree *, <span class="dt">int</span>, BinaryTree *)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>);</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="dt">int</span> sum(<span class="dt">const</span> BinaryTree *tree) {</span>
-<span id="cb1-8"><a href="#cb1-8"></a>    match(*tree) {</span>
-<span id="cb1-9"><a href="#cb1-9"></a>        of(Leaf, x) <span class="cf">return</span> *x;</span>
-<span id="cb1-10"><a href="#cb1-10"></a>        of(Node, lhs, x, rhs) <span class="cf">return</span> sum(*lhs) + *x + sum(*rhs);</span>
-<span id="cb1-11"><a href="#cb1-11"></a>    }</span>
-<span id="cb1-12"><a href="#cb1-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>This library implements <a href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data types (ADT)</a> for pure C99. This allows you to design convenient, type-safe interfaces while sticking to plain old C with zero runtime dependencies. Today I would like to explain what the hell it does under the hood!</p>
 <p>If you are not acquainted with the concept of algebraic data types, please read <a href="https://medium.com/@hirrolot/unleashing-sum-types-in-pure-c99-31544302d2ba"><em>Unleashing Sum Types in Pure C99</em></a> first.</p>
 <p>To study the formal system on a concrete example, it is helpful to read this post along with the <a href="https://godbolt.org/z/zda5Ysr6W">generated output</a> of <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"><code>examples/binary_tree.c</code></a>.</p>
@@ -193,9 +196,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>If two <code>match</code> constructions in the same lexical scope output <code>datatype99_priv_matched_val</code>, compilation will fail.</li>
 </ul>
 <p>How can we overcome this? The following pattern will help:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">for</span> (<span class="dt">void</span> *datatype99_priv_matched_val = ((<span class="dt">void</span> *)&amp;(val));</span>
-<span id="cb8-2"><a href="#cb8-2"></a>         datatype99_priv_matched_val != (<span class="dt">void</span> *)<span class="dv">0</span>;</span>
-<span id="cb8-3"><a href="#cb8-3"></a>         datatype99_priv_matched_val = (<span class="dt">void</span> *)<span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*</span>datatype99_priv_matched_val <span class="op">=</span> <span class="op">((</span><span class="dt">void</span> <span class="op">*)&amp;(</span>val<span class="op">));</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>         datatype99_priv_matched_val <span class="op">!=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         datatype99_priv_matched_val <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">)</span></span></code></pre></div>
 <p>(<code>datatype99_priv_matched_val</code> is named in such a way to respect <a href="https://en.wikipedia.org/wiki/Hygienic_macro">macro hygiene</a>, i.e. not to conflict with user-defined variables.)</p>
 <p>This single-iteration loop is a statement prefix. In order to avoid name clashes, it opens a new lexical scope and introduces <code>datatype99_priv_matched_val</code> into it. After it, we put <code>switch</code>:</p>
 <pre><code>switch ((val).tag)</code></pre>
@@ -247,10 +250,10 @@ typedef &lt;type&gt;0 &lt;variant-name&gt;_0;
 ...
 typedef &lt;type&gt;N &lt;variant-name&gt;_N;</code></pre>
 <p>Finally, inside <code>of</code>, this is how each binding is generated:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span> (</span>
-<span id="cb13-2"><a href="#cb13-2"></a>tag_##_##i *x = &amp;((tag_##SumT *)datatype99_priv_matched_val)-&gt;data.tag_._##i, *ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">0</span>;</span>
-<span id="cb13-3"><a href="#cb13-3"></a>ml99_priv_break != (<span class="dt">void</span> *)<span class="dv">1</span>;</span>
-<span id="cb13-4"><a href="#cb13-4"></a>ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>tag_##_##i <span class="op">*</span>x <span class="op">=</span> <span class="op">&amp;((</span>tag_##SumT <span class="op">*)</span>datatype99_priv_matched_val<span class="op">)-&gt;</span>data<span class="op">.</span>tag_<span class="op">.</span>_##i<span class="op">,</span> <span class="op">*</span>ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ml99_priv_break <span class="op">!=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li><code>x</code> stands for the binding name.</li>
 <li><code>tag_##_##i</code> stands for the type alias <code>&lt;variant-name&gt;_I</code>. This is the type of the binding.</li>
@@ -259,55 +262,55 @@ typedef &lt;type&gt;N &lt;variant-name&gt;_N;</code></pre>
 <p>As you might have already noticed, this is a single-iteration loop too. But it has quite different structure than the previous one: instead of using <code>x</code> to terminate the cycle, we employ the second variable <code>ml99_priv_break</code> (originated from <a href="https://github.com/Hirrolot/metalang">Metalang99</a>, the underlying metaprogramming library). Why? Because otherwise, if <code>x</code> is leaved unused by a user, a compiler will not emit a warning, which is undesirable in our case.</p>
 <p>Why we generate the long chains of statement prefix loops instead of plain variable definitions? Because all <code>case</code> branches in <code>switch</code> share a single lexical scope, meaning that two variables with the same name cannot be defined in two different <code>case</code> branches. In contrast to this, <code>for (...)</code> opens a new lexical scope, thus allowing for the same binding names in two distinct <code>of</code> branches.</p>
 <p>So what we have in summary? Consider this code snippet:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a>datatype(</span>
-<span id="cb14-2"><a href="#cb14-2"></a>    BinaryTree,</span>
-<span id="cb14-3"><a href="#cb14-3"></a>    (Leaf, <span class="dt">int</span>),</span>
-<span id="cb14-4"><a href="#cb14-4"></a>    (Node, BinaryTree *, <span class="dt">int</span>, BinaryTree *)</span>
-<span id="cb14-5"><a href="#cb14-5"></a>);</span>
-<span id="cb14-6"><a href="#cb14-6"></a></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="dt">int</span> sum(<span class="dt">const</span> BinaryTree *tree) {</span>
-<span id="cb14-8"><a href="#cb14-8"></a>    match(*tree) {</span>
-<span id="cb14-9"><a href="#cb14-9"></a>        of(Leaf, x) <span class="cf">return</span> *x;</span>
-<span id="cb14-10"><a href="#cb14-10"></a>        of(Node, lhs, x, rhs) <span class="cf">return</span> sum(*lhs) + *x + sum(*rhs);</span>
-<span id="cb14-11"><a href="#cb14-11"></a>    }</span>
-<span id="cb14-12"><a href="#cb14-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Here, <code>of(Leaf, x)</code> expands to</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1"></a><span class="cf">for</span> (Leaf_0 *x = &amp;((LeafSumT *)datatype99_priv_matched_val)-&gt;data.Leaf._0,</span>
-<span id="cb15-2"><a href="#cb15-2"></a>            *ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">0</span>;</span>
-<span id="cb15-3"><a href="#cb15-3"></a>     ml99_priv_break != (<span class="dt">void</span> *)<span class="dv">1</span>; ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>Leaf_0 <span class="op">*</span>x <span class="op">=</span> <span class="op">&amp;((</span>LeafSumT <span class="op">*)</span>datatype99_priv_matched_val<span class="op">)-&gt;</span>data<span class="op">.</span>Leaf<span class="op">.</span>_0<span class="op">,</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span>ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>     ml99_priv_break <span class="op">!=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">;</span> ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">)</span></span></code></pre></div>
 <p>, while <code>of(Node, lhs, x, rhs)</code> expands to</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a><span class="cf">for</span> (Node_0 *lhs = &amp;((NodeSumT *)datatype99_priv_matched_val)-&gt;data.Node._0,</span>
-<span id="cb16-2"><a href="#cb16-2"></a>            *ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">0</span>;</span>
-<span id="cb16-3"><a href="#cb16-3"></a>     ml99_priv_break != (<span class="dt">void</span> *)<span class="dv">1</span>; ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">1</span>)</span>
-<span id="cb16-4"><a href="#cb16-4"></a>    <span class="cf">for</span> (Node_1 *x = &amp;((NodeSumT *)datatype99_priv_matched_val)-&gt;data.Node._1,</span>
-<span id="cb16-5"><a href="#cb16-5"></a>                *ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">0</span>;</span>
-<span id="cb16-6"><a href="#cb16-6"></a>         ml99_priv_break != (<span class="dt">void</span> *)<span class="dv">1</span>; ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">1</span>)</span>
-<span id="cb16-7"><a href="#cb16-7"></a>        <span class="cf">for</span> (Node_2 *rhs = &amp;((NodeSumT *)datatype99_priv_matched_val)-&gt;data.Node._2,</span>
-<span id="cb16-8"><a href="#cb16-8"></a>                    *ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">0</span>;</span>
-<span id="cb16-9"><a href="#cb16-9"></a>             ml99_priv_break != (<span class="dt">void</span> *)<span class="dv">1</span>; ml99_priv_break = (<span class="dt">void</span> *)<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>Node_0 <span class="op">*</span>lhs <span class="op">=</span> <span class="op">&amp;((</span>NodeSumT <span class="op">*)</span>datatype99_priv_matched_val<span class="op">)-&gt;</span>data<span class="op">.</span>Node<span class="op">.</span>_0<span class="op">,</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span>ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>     ml99_priv_break <span class="op">!=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">;</span> ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>Node_1 <span class="op">*</span>x <span class="op">=</span> <span class="op">&amp;((</span>NodeSumT <span class="op">*)</span>datatype99_priv_matched_val<span class="op">)-&gt;</span>data<span class="op">.</span>Node<span class="op">.</span>_1<span class="op">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                <span class="op">*</span>ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         ml99_priv_break <span class="op">!=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">;</span> ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>Node_2 <span class="op">*</span>rhs <span class="op">=</span> <span class="op">&amp;((</span>NodeSumT <span class="op">*)</span>datatype99_priv_matched_val<span class="op">)-&gt;</span>data<span class="op">.</span>Node<span class="op">.</span>_2<span class="op">,</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                    <span class="op">*</span>ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>             ml99_priv_break <span class="op">!=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">;</span> ml99_priv_break <span class="op">=</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)</span><span class="dv">1</span><span class="op">)</span></span></code></pre></div>
 <p>After both of them, a <code>return</code> statement follows, thus completing the statement prefixes chain.</p>
 <h2 id="exhaustive-pattern-matching">Exhaustive pattern matching</h2>
 <p>Datatype99 has yet another neat feature: a sane compiler will emit a warning if not all variants are handled in <code>match</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a>match(*tree) {</span>
-<span id="cb17-2"><a href="#cb17-2"></a>    of(Leaf, x) <span class="cf">return</span> *x;</span>
-<span id="cb17-3"><a href="#cb17-3"></a>    <span class="co">// of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <pre><code>playground.c: In function ‘sum’:
 playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]
     6 |     match(*tree) {
       |     ^~~~~</code></pre>
 <p>This is called exhaustive pattern matching. In fact, Datatype99 does nothing to achieve it – provided that we desugar <code>match</code> into a proper <code>switch</code>, a C compiler can do case analysis for us! For example, the following code compiles with a warning as well:</p>
 <p>[<a href="https://godbolt.org/z/MeY3bbY1a">godbolt</a>]</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">typedef</span> <span class="kw">enum</span> {</span>
-<span id="cb19-2"><a href="#cb19-2"></a>    Foo, Bar</span>
-<span id="cb19-3"><a href="#cb19-3"></a>} MyEnum;</span>
-<span id="cb19-4"><a href="#cb19-4"></a></span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="dt">const</span> MyEnum foo = Foo;</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="cf">switch</span> (foo) {</span>
-<span id="cb19-8"><a href="#cb19-8"></a>    <span class="cf">case</span> Foo:</span>
-<span id="cb19-9"><a href="#cb19-9"></a>        <span class="cf">break</span>;</span>
-<span id="cb19-10"><a href="#cb19-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    Foo<span class="op">,</span> Bar</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> MyEnum<span class="op">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> MyEnum foo <span class="op">=</span> Foo<span class="op">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>foo<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> Foo<span class="op">:</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <pre><code>&lt;source&gt;:8:5: warning: enumeration value &#39;Bar&#39; not handled in switch [-Wswitch]
     8 |     switch (foo) {
       |     ^~~~~~</code></pre>
