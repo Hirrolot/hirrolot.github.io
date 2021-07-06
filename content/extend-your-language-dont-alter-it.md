@@ -98,7 +98,7 @@ references:
     title: "Type-Driven Development with Idris"
     type: book
     author: Edwin Brady
-    URL: "https://www.manning.com/books/type-driven-development-with-idris?gclid=CjwKCAjw_o-HBhAsEiwANqYhp6RegQAn4bMBAEI27QrVbmCG1Bp5cw8aXQZo8XyJIlSpj2x3BlOSPxoCldIQAvD_BwE"
+    URL: "https://www.manning.com/books/type-driven-development-with-idris"
 ---
 
 Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
