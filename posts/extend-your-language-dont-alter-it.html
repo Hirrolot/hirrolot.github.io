@@ -223,7 +223,7 @@
 <p>Here, <code>Serialize</code> &amp; <code>Deserialize</code> are indeed macros. They parse the contents of <code>struct Person</code> and derive the corresponding traits for it. You do not need to adjust the definition of the structure because the syntax is shared, and this is awesome. If I was designing a new language of mine and there was a need in macros, I would definitely endeavour to make them work nicely with the ordinary syntax.</p>
 <h2 id="the-bliss-of-lisp-why-s-expressions-are-so-hot">The bliss of Lisp: Why S-expressions are so hot</h2>
 <blockquote>
-<p>Are you quite sure that all those bells and whistles, all those wonderful facilities of your so-called powerful programming languages, belong to the solution set rather than the problem set? <br>    – Edsger Dijkstra</p>
+<p>Are you quite sure that all those bells and whistles, all those wonderful facilities of your so-called powerful programming languages, belong to the solution set rather than the problem set? <br>        – Edsger Dijkstra</p>
 </blockquote>
 <p>The Rust’s syntax is not simple. As quite often happens in software engineering, a programming language grammar is a trade-off:</p>
 <ul>
@@ -232,7 +232,7 @@
 </ul>
 <p>Citing <a href="https://github.com/dtolnay">David Tolnay</a> (adapted from <a href="https://github.com/dtolnay/reflect">dtolnay/reflect</a>):</p>
 <blockquote>
-<p>The macro author is responsible for the placement of every single angle bracket, lifetime, type parameter, trait bound, and phantom data. There is a large amount of domain knowledge involved and very few people can reliably produce robust macros with this approach. <br>    – David Tolnay</p>
+<p>The macro author is responsible for the placement of every single angle bracket, lifetime, type parameter, trait bound, and phantom data. There is a large amount of domain knowledge involved and very few people can reliably produce robust macros with this approach. <br>        – David Tolnay</p>
 </blockquote>
 <p>As opposed to Rust, we have a solution in a completely different direction – <a href="https://en.wikipedia.org/wiki/S-expression">s-expressions</a>. Instead of oversophisticating the language grammar by each subsequent release, some people decide to keep the grammar always trivial. This approach has a bunch of far-reaching implications, including simplified IDE support and language analysis in general. Metaprogramming becomes more malleable too, because you only need to handle a single homogenous structure (a list); you do not need to deal with an intimidating variety of syntactic forms your host language accomodates.</p>
 <p>To come back to our muttons, s-expressions facilitate syntactical consistency too. Consider this: everything is composed of s-expressions, and your macros perfectly deal with them; therefore, you can easily imitate any language construction. Everything will look the same. Even with so-called powerful Rusty macros, we cannot do this:</p>
@@ -265,7 +265,7 @@
 <p>(Adapted from <a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">the chapter of TRPL about pattern matching</a>.)</p>
 <p>Even if it could be fixed, this example still demonstrates the white holes of communication of the main syntax and user-defined macros in Rust: sometimes, due to its multifaceted grammar, it just does not allow us to express things naturally. One possible solution is an <a href="https://en.wikipedia.org/wiki/Adaptive_grammar">adaptive grammar</a>:</p>
 <blockquote>
-<p>An adaptive grammar is a formal grammar that explicitly provides mechanisms within the formalism to allow its own production rules to be manipulated. <br>    – Wikipedia</p>
+<p>An adaptive grammar is a formal grammar that explicitly provides mechanisms within the formalism to allow its own production rules to be manipulated. <br>        – Wikipedia</p>
 </blockquote>
 <p>Basically what it means is that you can specify your own syntactic forms (like <code>match</code> or <code>if</code>) right inside a source file, and a built-in parser will do the trick. <a href="https://www.idris-lang.org/">Idris</a> supports the feature called <a href="http://docs.idris-lang.org/en/latest/tutorial/syntax.html">syntax extensions</a>, which is, to the best of my understanding, is pretty much like an adaptive grammar; believe or not, the <code>if ... then ...  else</code> syntax is not built into the Idris compiler, but is rather defined via the <code>ifThenElse</code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode idris"><code class="sourceCode idris"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifThenElse</span> <span class="ot">:</span> (x<span class="ot">:</span><span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> a;</span>

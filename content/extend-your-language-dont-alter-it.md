@@ -257,7 +257,7 @@ Here, `Serialize` & `Deserialize` are indeed macros. They parse the contents of 
 ## The bliss of Lisp: Why S-expressions are so hot
 
 > Are you quite sure that all those bells and whistles, all those wonderful facilities of your so-called powerful programming languages, belong to the solution set rather than the problem set?
-<br>&nbsp;&nbsp;&nbsp;&nbsp;-- Edsger Dijkstra
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- Edsger Dijkstra
 
 The Rust's syntax is not simple. As quite often happens in software engineering, a programming language grammar is a trade-off:
 
@@ -272,7 +272,7 @@ Citing [David Tolnay](https://github.com/dtolnay) (adapted from [dtolnay/reflect
 [dtolnay/reflect]: https://github.com/dtolnay/reflect
 
 > The macro author is responsible for the placement of every single angle bracket, lifetime, type parameter, trait bound, and phantom data. There is a large amount of domain knowledge involved and very few people can reliably produce robust macros with this approach.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;-- David Tolnay
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- David Tolnay
 
 As opposed to Rust, we have a solution in a completely different direction -- [s-expressions]. Instead of oversophisticating the language grammar by each subsequent release, some people decide to keep the grammar always trivial. This approach has a bunch of far-reaching implications, including simplified IDE support and language analysis in general. Metaprogramming becomes more malleable too, because you only need to handle a single homogenous structure (a list); you do not need to deal with an intimidating variety of syntactic forms your host language accomodates.
 
@@ -327,7 +327,7 @@ Even if it could be fixed, this example still demonstrates the white holes of co
 [adaptive grammar]: https://en.wikipedia.org/wiki/Adaptive_grammar
 
 > An adaptive grammar is a formal grammar that explicitly provides mechanisms within the formalism to allow its own production rules to be manipulated.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;-- Wikipedia
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- Wikipedia
 
 Basically what it means is that you can specify your own syntactic forms (like `match` or `if`) right inside a source file, and a built-in parser will do the trick. [Idris] supports the feature called [syntax extensions], which is, to the best of my understanding, is pretty much like an adaptive grammar; believe or not, the `if ... then ...  else` syntax is not built into the Idris compiler, but is rather defined via the `ifThenElse` function:
 
