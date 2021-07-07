@@ -101,7 +101,7 @@ references:
     URL: "https://www.manning.com/books/type-driven-development-with-idris"
 ---
 
-Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
+Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or are not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
 
 Generally, you have two approaches: first, you can continue living an utterly miserable and hopeless life without the feature, and second, you can implement the feature by means of some kind of _meta-abstraction_.
 
