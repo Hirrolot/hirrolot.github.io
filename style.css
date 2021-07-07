@@ -98,3 +98,9 @@ h1 {
     color: gray;
     font-style: italic;
 }
+
+blockquote {
+    font-style: italic;
+    font-weight: 600;
+    color: dimgray;
+}
