@@ -1,6 +1,14 @@
-.about-me,
 .badges {
     text-align: center;
+}
+
+.about-me,
+.posts-history {
+    font-family: 'Mate', serif;
+}
+
+.about-me {
+    text-align: left;
 }
 
 .austin-powers {

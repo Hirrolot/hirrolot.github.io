@@ -205,6 +205,7 @@ static void gen_index_md(size_t posts_count,
                    "title: Hirrolot's Blog\n"
                    "---\n\n");
     fprintf(index, "%s", EXCELLENT_ME);
+    fprintf(index, "<div class=\"posts-history\">\n");
 
     PostMetadata *metadata = PostMetadata_collect_all(posts_count, post_names);
 
@@ -236,6 +237,8 @@ static void gen_index_md(size_t posts_count,
             }
         }
     }
+
+    fprintf(index, "</div>\n"); // class="posts-history"
 
     for (size_t i = 0; i < posts_count; i++) {
         PostMetadata_free(&metadata[i]);
