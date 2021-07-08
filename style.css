@@ -92,3 +92,7 @@ blockquote {
     font-style: italic;
     color: dimgray;
 }
+
+#refs {
+    font-size: 16px;
+}
