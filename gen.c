@@ -22,7 +22,7 @@
     "<hr>\n"
 
 #define AUSTIN_POWERS                                                          \
-    "<img class=\"austin-powers\" src=\"Austin-Powers.jpeg\" width=300px />"
+    "<img class=\"austin-powers\" src=\"Austin-Powers.png\" width=300px />"
 
 #define MY_DESCRIPTION                                                         \
     "<p class=\"about-me\">I'm a 16 y/o software engineer, most known for my " \
