@@ -135,8 +135,9 @@ static char *PostDate_str(PostDate self);
 static PostMetadata PostMetadata_parse(const char *str);
 static void PostMetadata_free(PostMetadata *self);
 
-static char *find_post_title(const char *str);
-static char *find_post_date(const char *str);
+static char *find_post_metadata_field(const char *str, const char *field_name);
+static char *find_post_metadata_quoted_field(const char *str,
+                                             const char *field_name);
 
 static char *file_base(const char *filename);
 
@@ -396,7 +397,7 @@ static const char *Month_str(Month self) {
 static PostDate PostDate_parse(const char *str) {
     PostDate self;
 
-    char *date = find_post_date(str);
+    char *date = find_post_metadata_field(str, "date");
 
     char month[16];
     const int items_read =
@@ -419,33 +420,45 @@ static char *PostDate_str(PostDate self) {
 
 static PostMetadata PostMetadata_parse(const char *str) {
     return (PostMetadata){
-        .title = find_post_title(str),
+        .title = find_post_metadata_quoted_field(str, "title"),
         .date = PostDate_parse(str),
     };
 }
 
-static void PostMetadata_free(PostMetadata *self) { free(self->title); }
-
-static char *find_post_title(const char *str) {
-    char *title_start = strstr(str, "title: \"");
-    assert(title_start);
-    title_start += strlen("title: \"");
-
-    char *title_end = strchr(title_start, '\"');
-    assert(title_end);
-
-    return strndup(title_start, title_end - title_start);
+static void PostMetadata_free(PostMetadata *self) {
+    char *title_start = self->title - strlen("\"");
+    free(title_start);
 }
 
-static char *find_post_date(const char *str) {
-    char *date_start = strstr(str, "date: ");
-    assert(date_start);
-    date_start += strlen("date: ");
+static char *find_post_metadata_field(const char *str, const char *field_name) {
+    char *start = strstr(str, field_name);
+    assert(start);
 
-    char *date_end = strchr(date_start, '\n');
-    assert(date_end);
+    start += strlen(field_name);
+    assert(':' == start[0]);
 
-    return strndup(date_start, date_end - date_start);
+    start += strlen(":");
+    assert(' ' == start[0]);
+
+    start += strlen(" ");
+
+    char *end = strchr(start, '\n');
+    assert(end);
+
+    return strndup(start, end - start);
+}
+
+static char *find_post_metadata_quoted_field(const char *str,
+                                             const char *field_name) {
+    char *start = find_post_metadata_field(str, field_name);
+    assert('"' == start[0]);
+    start++;
+
+    char *quote_end = strchr(start, '"');
+    assert(quote_end);
+    quote_end[0] = '\0';
+
+    return start;
 }
 
 static char *file_base(const char *filename) {
