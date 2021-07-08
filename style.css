@@ -3,15 +3,6 @@
     text-align: center;
 }
 
-.about-me,
-.posts-history {
-    font-family: 'Spectral', serif;
-}
-
-.posts-history {
-    font-size: 20px;
-}
-
 .austin-powers {
     display: block;
     margin-left: auto;
@@ -24,11 +15,12 @@ body {
     margin-left: auto;
     margin-right: auto;
     max-width: 800px;
-    font-family: 'Spectral', serif;
+    font-family: 'Source Serif Pro', serif;
+    font-size: 20px;
+    line-height: 1.6;
 }
 
 p {
-    font-size: 20px;
     text-align: justify;
 }
 
@@ -62,10 +54,6 @@ h2:after {
     display: block;
     border: 1px solid gray;
     width: 100vw;
-}
-
-li {
-    font-size: 20px;
 }
 
 #TOC {
