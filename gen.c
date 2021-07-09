@@ -65,10 +65,9 @@
     "/></a>"
 
 #define GMAIL_BADGE                                                            \
-    "<a href=\"https://mailto:hirrolot@gmail.com\"><img "                      \
+    "<a href=\"mailto:hirrolot@gmail.com\"><img "                              \
     "src=\"https://img.shields.io/badge/"                                      \
-    "Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white\" "           \
-    "/></a>"
+    "Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white\" /></a>"
 
 #define RSS_BADGE                                                              \
     "<a href=\"rss.xml\"><img "                                                \
@@ -230,7 +229,8 @@ static void gen_index_md(size_t posts_count,
                     char *date = PostDate_str(metadata[i].date);
 
                     fprintf(index,
-                            " - [%s](" OUTPUT_DIR "/%s.html)<br>%s<br>\n",
+                            " - [%s](" OUTPUT_DIR "/%s.html)<br><span "
+                            "class=\"post-date\">%s</span><br>\n",
                             metadata[i].title, post_names[i], date);
 
                     free(date);

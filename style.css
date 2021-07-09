@@ -3,6 +3,11 @@
     text-align: center;
 }
 
+.post-date {
+    font-style: italic;
+    color: gray;
+}
+
 .austin-powers {
     display: block;
     margin-left: auto;
