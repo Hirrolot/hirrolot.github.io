@@ -93,6 +93,23 @@ blockquote {
     color: dimgray;
 }
 
+blockquote p {
+    position: relative;
+    top: 30px;
+    margin-left: 50px;
+}
+
+blockquote::before {
+    position: absolute;
+    content: '\201C';
+    font-size: 60px;
+}
+
+.quote-author {
+    text-align: right;
+    font-style: italic;
+}
+
 #refs {
     font-size: 16px;
 }
