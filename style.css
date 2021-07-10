@@ -70,6 +70,10 @@ h2:after {
     border-radius: 3px;
 }
 
+.popup-note {
+    padding: 5px;
+}
+
 h1,
 h2,
 h3,
@@ -115,7 +119,56 @@ blockquote::before {
     font-style: italic;
 }
 
-#refs,
-.footnotes {
+#refs {
     font-size: 18px;
+}
+
+.popup-note {
+    position: absolute;
+    display: inline-block;
+    visibility: hidden;
+    width: 400px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #f2f2f2;
+    padding: 5px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 3px;
+    right: -202px;
+    bottom: 30px;
+    z-index: 1;
+}
+
+
+/* A popup note bottom cursor. */
+
+.popup-note::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: gray transparent transparent transparent;
+}
+
+.popup-note-container {
+    position: relative;
+}
+
+.popup-note-sub {
+    color: blue;
+    cursor: pointer;
+    font-size: smaller;
+}
+
+.show-popup-note {
+    visibility: visible;
+}
+
+.hide-popup-note {
+    visibility: hidden;
 }

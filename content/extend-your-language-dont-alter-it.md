@@ -105,25 +105,29 @@ Sometimes your programming language lacks a specific feature that will make your
 
 Generally, you have two approaches: first, you can continue living an utterly miserable and hopeless life without the feature, and second, you can implement the feature by means of some kind of _meta-abstraction_.
 
-The first approach would introduce additional [technical debt] to your architecture. Given that sufficiently large codebases written in such languages as C already have a considerable amount of debt in them [^greenspun], this would make the situation even worse. On the other hand, the second approach, when you roll up your sleeves and implement a new linguistic abstraction by yourself, relieves much more potential: now you do not need to wait for a new language release with the desired functionality (which might never happen), and your codebase then going to suffer less because you are becoming able to express something important to sustain code elegance.
+The first approach would introduce additional [technical debt] to your architecture. Given that sufficiently large codebases written in such languages as C already have a considerable amount of debt in them <span class="popup-note-container"><sup class="popup-note-sub" id="greenspun">^</sup><span class="popup-note" id="greenspun-expanded">"Any sufficiently complicated C or Fortran program contains an ad hoc, informally-specified, bug-ridden, slow implementation of half of Common Lisp."_ -- [Greenspun's tenth rule], an amusing quote with which I agree a lot.</span></span>, this would make the situation even worse. On the other hand, the second approach, when you roll up your sleeves and implement a new linguistic abstraction by yourself, relieves much more potential: now you do not need to wait for a new language release with the desired functionality (which might never happen), and your codebase then going to suffer less because you are becoming able to express something important to sustain code elegance.
 
 [technical debt]: https://en.wikipedia.org/wiki/Technical_debt
+[Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
 
-However, when you find yourself engineering a custom linguistic abstraction, you are in the position of a language designer. What it practically means is that the affairs can go especially tricky because your feature ought to fit well with all the other features your host language already has. In particular, the desired ability must look _natural_: it is when you feel like you continue programming in that general-purpose PL, but with the new feature added; it should not feel like an alien spacecraft fallen to Earth. In this post, I am to elaborate on the example of three PLs supporting user extension, C, Rust, and Common Lisp [^wish-knew-lisp]. I will show you how to _extend_ the language, not to _alter_ it.
+However, when you find yourself engineering a custom linguistic abstraction, you are in the position of a language designer. What it practically means is that the affairs can go especially tricky because your feature ought to fit well with all the other features your host language already has. In particular, the desired ability must look _natural_: it is when you feel like you continue programming in that general-purpose PL, but with the new feature added; it should not feel like an alien spacecraft fallen to Earth. In this post, I am to elaborate on the example of three PLs supporting user extension, C, Rust, and Common Lisp <span class="popup-note-container"><sup class="popup-note-sub" id="wish-knew-lisp">^</sup><span class="popup-note" id="wish-knew-lisp-expanded">I wish I had more experience with limitless user extension, as in [Racket] or Common Lisp. Maybe my post would have been more profound then.</span></span>. I will show you how to _extend_ the language, not to _alter_ it.
+
+[Racket]: https://racket-lang.org/
 
 ## Establishing the terminology
 
-What do I mean by that gorgeous word, linguistic abstraction, to which I have referred two times in the introduction part? Basically, it is any language "feature": a variable, an interface, a function. And guess what a _metalinguistic abstraction_ means? Recall that the prefix "meta" simply means that the thing is used to deal with something of a similar nature: a metaprogram manipulates other programs, metadata describe other data, a [metagrammar] specifies other grammars, and so on. From this point we conclude that a metalinguistic abstraction is a linguistic abstraction used to deal with other linguistic abstractions. I am only aware of two types of them: code generation (or macros, or metaprogramming, whichever term you prefer [^thoughts-on-reflection]) and a type system.
+What do I mean by that gorgeous word, linguistic abstraction, to which I have referred two times in the introduction part? Basically, it is any language "feature": a variable, an interface, a function. And guess what a _metalinguistic abstraction_ means? Recall that the prefix "meta" simply means that the thing is used to deal with something of a similar nature: a metaprogram manipulates other programs, metadata describe other data, a [metagrammar] specifies other grammars, and so on. From this point we conclude that a metalinguistic abstraction is a linguistic abstraction used to deal with other linguistic abstractions. I am only aware of two types of them: code generation (or macros, or metaprogramming, whichever term you prefer <span class="popup-note-container"><sup class="popup-note-sub" id="thoughts-on-reflection">^</sup><span class="popup-note" id="thoughts-on-reflection-expanded">There is also runtime reflection, though I am not sure whether it is a special kind of metaprogramming or not. Maybe JIT macros could outperform Java-style runtime reflection? Oh my god, that is insane...</span></span>) and a type system.
 
 [metagrammar]: https://en.wikipedia.org/wiki/Metasyntax
 
-**Why macros are "meta"?** Well, macros can do pretty much anything with the code: they can accept it, they can transform it, they can emit the code... remember how Rust allows you to execute arbitrary instructions inside [procedural macros], remember the [incremental TT muncher pattern], or how you can brutally imitate type polymorphism through the C preprocessor [@mlib; @STC; @C-Macro-Collections]. Whilst macros can manipulate other code, other code cannot manipulate macros [^macros-macros] -- this is the reason why macros are "meta".
+**Why macros are "meta"?** Well, macros can do pretty much anything with the code: they can accept it, they can transform it, they can emit the code... remember how Rust allows you to execute arbitrary instructions inside [procedural macros], remember the [incremental TT muncher pattern], or how you can brutally imitate type polymorphism through the C preprocessor [@mlib; @STC; @C-Macro-Collections]. Whilst macros can manipulate other code, other code cannot manipulate macros <span class="popup-note-container"><sup class="popup-note-sub" id="macros-macros">^</sup><span class="popup-note" id="macros-macros-expanded">Unless macros generate other macros! C/C++ macros cannot do that, while Rusty and Lispy macros can.</span></span> -- this is the reason why macros are "meta".
 
 [procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
 [incremental TT muncher pattern]: https://danielkeep.github.io/tlborm/book/pat-incremental-tt-munchers.html
 
-**Why types are "meta"?** Consider this: what you usually accomplish with metaprogramming, you can leverage to enough expressive types [^expressive-types-leverage]. Returning back to our poor C preprocessor, in Rust you can simply use generics instead of instantiating type-specific code by hand. Or you can go insane and play with heterogenous lists [@frunk] instead of (ab)using compile-time macro collections of [Boost/Preprocessor]. So types are capable of metaprogramming to some extent [@typeclass-metaprogramming; @hoas; @gadt-for-dummies; @type-level-rust-1; @type-level-rust-2; @rust-type-system-turing-complete; @type-operators-rust; @typenum; @fortraith; @idris-book] -- this is why they are "meta".
+**Why types are "meta"?** Consider this: what you usually accomplish with metaprogramming, you can leverage to enough expressive types <span class="popup-note-container"><sup class="popup-note-sub" id="expressive-types-leverage">^</sup><span class="popup-note" id="expressive-types-leverage-expanded">It might not be formally correct... if your metaprogramming system is Turing-complete, how would you leverage everything to a logically consistent type system, as of [Idris]? Surely, this is out of the scope of this blog post.</span></span>. Returning back to our poor C preprocessor, in Rust you can simply use generics instead of instantiating type-specific code by hand. Or you can go insane and play with heterogenous lists [@frunk] instead of (ab)using compile-time macro collections of [Boost/Preprocessor]. So types are capable of metaprogramming to some extent [@typeclass-metaprogramming; @hoas; @gadt-for-dummies; @type-level-rust-1; @type-level-rust-2; @rust-type-system-turing-complete; @type-operators-rust; @typenum; @fortraith; @idris-book] -- this is why they are "meta".
 
+[Idris]: https://www.idris-lang.org/
 [Boost/Preprocessor]: https://github.com/boostorg/preprocessor
 
 The presence of either of these tools in our language makes us able to extend it with custom concepts in an embedded manner, i.e., without intervention of third-party utilities. However, today I will discuss only the syntax business -- macros.
@@ -165,7 +169,7 @@ int sum(const BinaryTree *tree) {
 
 I ask you the same question: does it feel alright? Does it feel natural, like it has always been there? Absolutely **NOT**. While it might look fine in another language, it looks utterly weird in C. But actually, what is the essential difference between these two code snippets, the difference that makes the former look properly, well-formedly, whereas the latter one look like a disformed creature? The **syntactical consistency**.
 
-By syntactical consistency, I understand the degree by which the grammar of a particular meta-abstraction (in our case, the macros `match` & `of`) conforms to/coincides with the grammar of a host language. Recall that in C-like languages, we quite often see syntactical constructions of the form `<keyword> (...) <compound-statement>` [^compound-statement]:
+By syntactical consistency, I understand the degree by which the grammar of a particular meta-abstraction (in our case, the macros `match` & `of`) conforms to/coincides with the grammar of a host language. Recall that in C-like languages, we quite often see syntactical constructions of the form `<keyword> (...) <compound-statement>` <span class="popup-note-container"><sup class="popup-note-sub" id="compound-statement">^</sup><span class="popup-note" id="compound-statement-expanded">A sequence of statements put into curly braces ([cppref](https://en.cppreference.com/w/c/language/statements)).</span></span>:
 
  - `for (int i = 0; i < 10; i++) { printf("%d\n", i); }`
  - `while (i < 10) { printf("%d\n", i); i++; }`
@@ -223,7 +227,9 @@ impl(
 
 This macro `impl` does not follow the syntax of C. This is why it looks so odd.
 
-Both alternatives have the same semantics and the same functionality. The difference is only in the syntax part. Always try to mimic to the syntax of your host language, and you should be fine. Do not try to alter the common syntactical forms like a function/variable definition. This is what I call syntactical consistency [^c99-lambda].
+Both alternatives have the same semantics and the same functionality. The difference is only in the syntax part. Always try to mimic to the syntax of your host language, and you should be fine. Do not try to alter the common syntactical forms like a function/variable definition. This is what I call syntactical consistency <span class="popup-note-container"><sup class="popup-note-sub" id="c99-lambda">^</sup><span class="popup-note" id="c99-lambda-expanded">[C99-Lambda] is yet another terrifying example of abusing the preprocessor. It attempts to _alter_ the function definition syntax, and therefore it looks odd.</span></span>.
+
+[C99-Lambda]: https://github.com/Leushenko/C99-Lambda
 
 ## The bliss of Rust: Syntax-aware macros
 
@@ -351,13 +357,16 @@ Which is invoked by the following syntactic rule:
 syntax if [test] then [t] else [e] = ifThenElse test t e;
 ```
 
-Similar syntactical constructions can be defined in the same way. No need to wait for a couple of years till language designers decide to ship a new release, do it right here and right now. Yes, you will be right if you say that Rust is extensible, but the thing is that its extensibility is still very limited [^limited-extensibility], sometimes unpleasant [^or-patterns].
+Similar syntactical constructions can be defined in the same way. No need to wait for a couple of years till language designers decide to ship a new release, do it right here and right now. Yes, you will be right if you say that Rust is extensible, but the thing is that its extensibility is still very limited <span class="popup-note-container"><sup class="popup-note-sub" id="limited-extensibility">^</sup><span class="popup-note" id="limited-extensibility-expanded">On the other hand, limitless extensibility tied up with a complicated syntax would make mean developers mess up with reliable macros again. What a disappointment! Returning back to s-expressions...</span></span>, sometimes unpleasant <span class="popup-note-container"><sup class="popup-note-sub" id="or-patterns">^</sup><span class="popup-note" id="or-patterns-expanded">For example, the syntax of `match` is gradually evolving over time. Not so long time ago the core team announced ["or" patterns]. With an adaptive grammar, this feature could be implemented in libraries.</span></span>.
+
+["or" patterns]: https://blog.rust-lang.org/2021/06/17/Rust-1.53.0.html#or-patterns
+
 
 ## Extending good old C
 
 This is all exciting and fun, but how to apply this knowledge in practice? I have an answer. Rather a long answer, full of peculiar details and techniques.
 
-I suggest you to start at a popular article of Simon Tatham [^metaprog-structures-c] about metaprogramming custom control structures in C. If you are only interested in a working solution, consider [Metalang99] [^metalang99] with its [statement chaining macros]. Seeing how pattern matching works in [Datatype99] [@compiling-adt-c] can also give you some insight.
+I suggest you to start with a popular article of Simon Tatham [@metaprog-structures-c-article] about metaprogramming custom control structures in C <span class="popup-note-container"><sup class="popup-note-sub" id="metaprog-structures-c">^</sup><span class="popup-note" id="metaprog-structures-c-expanded">To the best of my knowledge, Simon Tatham was first to formulate the term _statement prefix_. He described precisely how to build custom control flow operators via regular `#define` macros, and make them look natural.</span></span>. If you are only interested in a working solution, consider [Metalang99] <span class="popup-note-container"><sup class="popup-note-sub" id="metalang99">^</sup><span class="popup-note" id="metalang99-expanded">[Metalang99] is an advanced metaprogramming system for C99. It is implemented as a purely functional programming language, with partial applications, recursion, algebraic data types, cons-lists, and all the stuff.</span></span> with its [statement chaining macros]. Seeing how pattern matching works in [Datatype99] [@compiling-adt-c] can also give you some insight.
 
 [Metalang99]: https://github.com/Hirrolot/metalang99
 [statement chaining macros]: https://metalang99.readthedocs.io/en/latest/gen.html
@@ -380,30 +389,3 @@ I encourage you to **extend, not to alter**.
    - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/oexnl6/extend_your_language_dont_alter_it/)
 
 ## References
-
-[^greenspun]: _"Any sufficiently complicated C or Fortran program contains an ad hoc, informally-specified, bug-ridden, slow implementation of half of Common Lisp."_ -- [Greenspun's tenth rule], an amusing quote with which I agree a lot.
-
-[^wish-knew-lisp]: I wish I had more experience with limitless user extension, as in [Racket] or Common Lisp. Maybe my post would have been more profound then.
-
-[^thoughts-on-reflection]: There is also runtime reflection, though I am not sure whether it is a special kind of metaprogramming or not. Maybe JIT macros could outperform Java-style runtime reflection? Oh my god, that is insane...
-
-[^macros-macros]: Unless macros generate other macros! C/C++ macros cannot do that, while Rusty and Lispy macros can.
-
-[^expressive-types-leverage]: It might not be formally correct... if your metaprogramming system is Turing-complete, how would you leverage everything to a logically consistent type system, as of [Idris]? Surely, this is out of the scope of this blog post.
-
-[^compound-statement]: A sequence of statements put into curly braces ([cppref](https://en.cppreference.com/w/c/language/statements)).
-
-[^c99-lambda]: [C99-Lambda](https://github.com/Leushenko/C99-Lambda) is yet another terrifying example of abusing the preprocessor. It attempts to _alter_ the function definition syntax, and therefore it looks odd.
-
-[^limited-extensibility]: On the other hand, limitless extensibility tied up with a complicated syntax would make mean developers mess up with reliable macros again. What a disappointment! Returning back to s-expressions...
-
-[^or-patterns]: For example, the syntax of `match` is gradually evolving over time. Not so long time ago the core team announced ["or" patterns]. With an adaptive grammar, this feature could be implemented in libraries.
-
-[^metaprog-structures-c]: To the best of my knowledge, Simon Tatham was first to formulate the term _statement prefix_, in his article [@metaprog-structures-c-article] well-known among C programmers. He described precisely how to build custom control flow operators via regular `#define` macros, and make them look natural.
-
-[^metalang99]: [Metalang99] is an advanced metaprogramming system for C99. It is implemented as a purely functional programming language, with partial applications, recursion, algebraic data types, cons-lists, and all the stuff.
-
-[Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
-[Racket]: https://racket-lang.org/
-[Idris]: https://www.idris-lang.org/
-["or" patterns]: https://blog.rust-lang.org/2021/06/17/Rust-1.53.0.html#or-patterns

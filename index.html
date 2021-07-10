@@ -25,6 +25,20 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+
+  <script>
+      window.addEventListener("load", function(event) {
+          for (let x of document.getElementsByClassName("popup-note-sub")) {
+              x.addEventListener("mouseover", function() {
+                  document.getElementById(this.id + "-expanded").classList.toggle("show-popup-note");
+              });
+
+              x.addEventListener("mouseout", function() {
+                  document.getElementById(this.id + "-expanded").classList.toggle("hide-popup-note");
+              });
+          }
+      });
+  </script>
 </head>
 <body>
 <header id="title-block-header">
