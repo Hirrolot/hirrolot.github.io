@@ -168,7 +168,3 @@ blockquote::before {
 .show-popup-note {
     visibility: visible;
 }
-
-.hide-popup-note {
-    visibility: hidden;
-}

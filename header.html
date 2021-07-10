@@ -8,13 +8,13 @@
 
 <script>
     window.addEventListener("load", function(event) {
-        for (let x of document.getElementsByClassName("popup-note-sub")) {
+        for (let x of document.getElementsByClassName("popup-note-container")) {
             x.addEventListener("mouseover", function() {
                 document.getElementById(this.id + "-expanded").classList.toggle("show-popup-note");
             });
 
             x.addEventListener("mouseout", function() {
-                document.getElementById(this.id + "-expanded").classList.toggle("hide-popup-note");
+                document.getElementById(this.id + "-expanded").classList.remove("show-popup-note");
             });
         }
     });
