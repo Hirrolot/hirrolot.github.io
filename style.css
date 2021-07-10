@@ -115,6 +115,7 @@ blockquote::before {
     font-style: italic;
 }
 
-#refs {
-    font-size: 17px;
+#refs,
+.footnotes {
+    font-size: 18px;
 }
