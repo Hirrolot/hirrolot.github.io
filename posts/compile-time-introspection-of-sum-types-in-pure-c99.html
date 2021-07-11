@@ -101,21 +101,19 @@
 
               var noteText = document.createElement("span");
               noteText.className = "note-text";
-              noteText.id = notes[i].id + "-expanded";
               noteText.innerHTML = notes[i].innerHTML;
 
               var noteContainer = document.createElement("span");
               noteContainer.className = "note-container";
-              noteContainer.id = notes[i].id;
               noteContainer.appendChild(sup);
               noteContainer.appendChild(noteText);
 
               noteContainer.addEventListener("mouseover", function() {
-                  document.getElementById(this.id + "-expanded").classList.toggle("show-note");
+                  this.getElementsByClassName("note-text")[0].classList.toggle("show-note");
               });
 
               noteContainer.addEventListener("mouseout", function() {
-                  document.getElementById(this.id + "-expanded").classList.remove("show-note");
+                  this.getElementsByClassName("note-text")[0].classList.remove("show-note");
               });
 
               notes[i].replaceWith(noteContainer);
