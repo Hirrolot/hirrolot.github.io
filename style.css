@@ -70,7 +70,7 @@ h2:after {
     border-radius: 3px;
 }
 
-.popup-note {
+.note {
     padding: 5px;
 }
 
@@ -123,7 +123,7 @@ blockquote::before {
     font-size: 18px;
 }
 
-.popup-note {
+.note-text {
     position: absolute;
     display: inline-block;
     visibility: hidden;
@@ -144,7 +144,7 @@ blockquote::before {
 
 /* A popup note bottom cursor. */
 
-.popup-note::after {
+.note-text::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -155,16 +155,16 @@ blockquote::before {
     border-color: gray transparent transparent transparent;
 }
 
-.popup-note-container {
+.note-container {
     position: relative;
 }
 
-.popup-note-sub {
+.note-sup {
     color: blue;
     cursor: pointer;
     font-size: smaller;
 }
 
-.show-popup-note {
+.show-note {
     visibility: visible;
 }

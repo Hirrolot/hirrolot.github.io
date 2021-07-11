@@ -92,14 +92,33 @@
 
   <script>
       window.addEventListener("load", function(event) {
-          for (let x of document.getElementsByClassName("popup-note-container")) {
-              x.addEventListener("mouseover", function() {
-                  document.getElementById(this.id + "-expanded").classList.toggle("show-popup-note");
+          var notes = document.getElementsByClassName("note");
+
+          for (var i = notes.length - 1; i >= 0; i--) {
+              var sup = document.createElement("sup");
+              sup.className = "note-sup";
+              sup.textContent = "^";
+
+              var noteText = document.createElement("span");
+              noteText.className = "note-text";
+              noteText.id = notes[i].id + "-expanded";
+              noteText.innerHTML = notes[i].innerHTML;
+
+              var noteContainer = document.createElement("span");
+              noteContainer.className = "note-container";
+              noteContainer.id = notes[i].id;
+              noteContainer.appendChild(sup);
+              noteContainer.appendChild(noteText);
+
+              noteContainer.addEventListener("mouseover", function() {
+                  document.getElementById(this.id + "-expanded").classList.toggle("show-note");
               });
 
-              x.addEventListener("mouseout", function() {
-                  document.getElementById(this.id + "-expanded").classList.remove("show-popup-note");
+              noteContainer.addEventListener("mouseout", function() {
+                  document.getElementById(this.id + "-expanded").classList.remove("show-note");
               });
+
+              notes[i].replaceWith(noteContainer);
           }
       });
   </script>
