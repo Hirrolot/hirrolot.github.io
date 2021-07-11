@@ -229,7 +229,7 @@ impl(
 
 This macro `impl` does not follow the syntax of C. This is why it looks so odd.
 
-Both alternatives have the same semantics and the same functionality. The difference is only in the syntax part. Always try to mimic to the syntax of your host language, and you should be fine. Do not try to alter the common syntactical forms like a function/variable definition. This is what I call syntactical consistency <span class="note" id="c99-lambda">[C99-Lambda] is yet another terrifying example of abusing the preprocessor. It attempts to _alter_ the function definition syntax, and therefore it looks odd.</span>.
+Both alternatives have the same semantics and the same functionality. The difference is only in the syntax part. Always try to mimic to the syntax of your host language, and you should be fine. Do not try to alter the common syntactical forms like a function/variable definition. This is what I call syntactical consistency <span class="note" id="c99-lambda">[C99-Lambda] is yet another terrifying example of abusing the preprocessor. It attempts to _alter_ the native function definition syntax, and therefore it looks so odd.</span>.
 
 [C99-Lambda]: https://github.com/Leushenko/C99-Lambda
 
@@ -359,7 +359,7 @@ Which is invoked by the following syntactic rule:
 syntax if [test] then [t] else [e] = ifThenElse test t e;
 ```
 
-Similar syntactical constructions can be defined in the same way. No need to wait for a couple of years till language designers decide to ship a new release, do it right here and right now. Yes, you will be right if you say that Rust is extensible, but the thing is that its extensibility is still very limited <span class="note" id="limited-extensibility">On the other hand, limitless extensibility tied up with a complicated syntax would make mean developers mess up with reliable macros again. What a disappointment! Returning back to s-expressions...</span>, sometimes unpleasant <span class="note" id="or-patterns">For example, the syntax of `match` is gradually evolving over time. Not so long time ago the core team announced ["or" patterns]. With an adaptive grammar, this feature could be implemented in libraries.</span>.
+Similar syntactical constructions can be defined in the same way. No need to wait for a couple of years till language designers decide to ship a new release, do it right here and right now. Yes, you will be right if you say that Rust is extensible, but the thing is that its extensibility is still very limited <span class="note" id="limited-extensibility">On the other hand, limitless extensibility tied up with a complicated syntax would make mean developers mess up with reliable macros again. What a disappointment! Returning back to s-expressions...</span>, sometimes unpleasant <span class="note" id="or-patterns">For example, the syntax of `match` is gradually evolving over time. Not so long time ago the core team has announced ["or" patterns]. With an adaptive grammar, this feature could be implemented in libraries.</span>.
 
 ["or" patterns]: https://blog.rust-lang.org/2021/06/17/Rust-1.53.0.html#or-patterns
 
