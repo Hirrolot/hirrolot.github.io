@@ -123,6 +123,10 @@ blockquote::before {
     font-size: 18px;
 }
 
+.note {
+    visibility: hidden;
+}
+
 .note-text {
     position: absolute;
     display: inline-block;
