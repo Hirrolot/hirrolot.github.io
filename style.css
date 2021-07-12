@@ -70,10 +70,6 @@ h2:after {
     border-radius: 3px;
 }
 
-.note {
-    padding: 5px;
-}
-
 h1,
 h2,
 h3,
@@ -124,6 +120,7 @@ blockquote::before {
 }
 
 .note {
+    position: absolute;
     visibility: hidden;
 }
 
