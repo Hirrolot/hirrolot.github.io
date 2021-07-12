@@ -83,6 +83,11 @@ h1 {
     text-align: right;
 }
 
+.header-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .date {
     color: gray;
     font-style: italic;

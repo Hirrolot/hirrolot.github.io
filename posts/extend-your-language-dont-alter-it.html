@@ -110,34 +110,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
 
   <script>
-      window.addEventListener("load", function(event) {
-          var notes = document.getElementsByClassName("note");
+      createClickableHeaders();
+      createPopupNotes();
 
-          for (var i = notes.length - 1; i >= 0; i--) {
-              var sup = document.createElement("sup");
-              sup.className = "note-sup";
-              sup.textContent = "^";
+      function createClickableHeaders() {
+          window.addEventListener("load", function(event) {
+              var headers = document.querySelectorAll("h2, h3");
 
-              var noteText = document.createElement("span");
-              noteText.className = "note-text";
-              noteText.innerHTML = notes[i].innerHTML;
+              for (var i = headers.length - 1; i >= 0; i--) {
+                  var headerLink = document.createElement("a");
+                  headerLink.className = "header-link";
+                  headerLink.href = "#" + headers[i].id;
+                  headerLink.appendChild(headers[i].cloneNode(true));
 
-              var noteContainer = document.createElement("span");
-              noteContainer.className = "note-container";
-              noteContainer.appendChild(sup);
-              noteContainer.appendChild(noteText);
+                  headers[i].replaceWith(headerLink);
+              }
+          });
+      }
 
-              noteContainer.addEventListener("mouseover", function() {
-                  this.getElementsByClassName("note-text")[0].classList.toggle("show-note");
-              });
+      function createPopupNotes() {
+          window.addEventListener("load", function(event) {
+              var notes = document.getElementsByClassName("note");
 
-              noteContainer.addEventListener("mouseout", function() {
-                  this.getElementsByClassName("note-text")[0].classList.remove("show-note");
-              });
+              for (var i = notes.length - 1; i >= 0; i--) {
+                  var sup = document.createElement("sup");
+                  sup.className = "note-sup";
+                  sup.textContent = "^";
 
-              notes[i].replaceWith(noteContainer);
-          }
-      });
+                  var noteText = document.createElement("span");
+                  noteText.className = "note-text";
+                  noteText.innerHTML = notes[i].innerHTML;
+
+                  var noteContainer = document.createElement("span");
+                  noteContainer.className = "note-container";
+                  noteContainer.appendChild(sup);
+                  noteContainer.appendChild(noteText);
+
+                  noteContainer.addEventListener("mouseover", function() {
+                      this.getElementsByClassName("note-text")[0].classList.toggle("show-note");
+                  });
+
+                  noteContainer.addEventListener("mouseout", function() {
+                      this.getElementsByClassName("note-text")[0].classList.remove("show-note");
+                  });
+
+                  notes[i].replaceWith(noteContainer);
+              }
+          });
+      }
   </script>
 </head>
 <body>
