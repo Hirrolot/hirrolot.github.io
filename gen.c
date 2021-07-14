@@ -6,6 +6,10 @@
 #include <string.h>
 
 #include <dirent.h>
+#include <unistd.h>
+
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #define CONTENT_DIR "content"
 #define OUTPUT_DIR  "posts"
@@ -13,67 +17,7 @@
 
 #define POSTS_MAX 512
 
-#define EXCELLENT_ME                                                           \
-    "<div center=\"me\">" AUSTIN_POWERS MY_DESCRIPTION BADGES "</div>\n"       \
-    "[teloxide]: https://github.com/teloxide/teloxide\n"                       \
-    "[Metalang99]: https://github.com/Hirrolot/metalang99\n"                   \
-    "[Datatype99]: https://github.com/Hirrolot/datatype99\n"                   \
-    "[Interface99]: https://github.com/Hirrolot/interface99\n"                 \
-    "<hr>\n"
-
-#define AUSTIN_POWERS                                                          \
-    "<img class=\"austin-powers\" src=\"Austin-Powers.png\" width=300px />"
-
-#define MY_DESCRIPTION                                                         \
-    "<p class=\"about-me\">I'm a 16 y/o software engineer, most known for my " \
-    "work on [teloxide] and preprocessor metaprogramming: [Metalang99], "      \
-    "[Datatype99], and [Interface99]. This is my blog about programming and "  \
-    "all the stuff.</p>"
-
-#define BADGES                                                                 \
-    "<div class=\"badges\">" GITHUB_BADGE PATREON_BADGE TWITTER_BADGE          \
-        REDDIT_BADGE "<br>" TELEGRAM_BADGE RSS_BADGE GMAIL_BADGE "</div>"
-
-#define PATREON_BADGE                                                          \
-    "<a href=\"https://patreon.com/hirrolot\"><img "                           \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white\" "       \
-    "/></a>"
-
-#define GITHUB_BADGE                                                           \
-    "<a href=\"https://github.com/Hirrolot\"><img "                            \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "GitHub-100000?style=for-the-badge&logo=github&logoColor=white\" "         \
-    "/></a>"
-
-#define TWITTER_BADGE                                                          \
-    "<a href=\"https://twitter.com/hirrolot\"><img "                           \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white\" "       \
-    "/></a>"
-
-#define REDDIT_BADGE                                                           \
-    "<a href=\"https://www.reddit.com/user/Hirrolot/\"><img "                  \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white\" "         \
-    "/></a>"
-
-#define TELEGRAM_BADGE                                                         \
-    "<a href=\"https://t.me/hirrolot\"><img "                                  \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white\" "     \
-    "/></a>"
-
-#define GMAIL_BADGE                                                            \
-    "<a href=\"mailto:hirrolot@gmail.com\"><img "                              \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white\" /></a>"
-
-#define RSS_BADGE                                                              \
-    "<a href=\"rss.xml\"><img "                                                \
-    "src=\"https://img.shields.io/badge/"                                      \
-    "RSS-FFA500?style=for-the-badge&logo=rss&logoColor=white\" "               \
-    "/></a>"
+#define EXCELLENT_ME "excellent_me.md"
 
 typedef enum {
     Jan = 1,
@@ -106,6 +50,8 @@ static void collect_post_names(size_t *posts_count,
 
 static void gen_index_md(size_t posts_count,
                          const char *post_names[static posts_count]);
+static void gen_posts_history(FILE *index, size_t posts_count,
+                              const char *post_names[static posts_count]);
 
 static void gen_target(FILE *makefile, const char *post_name);
 static void gen_target_index(FILE *makefile);
@@ -139,6 +85,7 @@ static char *find_post_metadata_quoted_field(const char *str,
                                              const char *field_name);
 
 static char *file_base(const char *filename);
+static char *read_file_content(const char *filename);
 
 int main(void) {
     FILE *makefile = fopen("Makefile", "w");
@@ -201,10 +148,18 @@ static void gen_index_md(size_t posts_count,
     FILE *index = fopen(CONTENT_DIR "/index.md", "w");
     assert(index);
 
-    fprintf(index, "---\n"
-                   "title: Hirrolot's Blog\n"
-                   "---\n\n");
-    fprintf(index, "%s", EXCELLENT_ME);
+    char *excellent_me = read_file_content(EXCELLENT_ME);
+    fprintf(index, "%s\n", excellent_me);
+    free(excellent_me);
+
+    gen_posts_history(index, posts_count, post_names);
+
+    const bool index_closed = fclose(index) == 0;
+    assert(index_closed);
+}
+
+static void gen_posts_history(FILE *index, size_t posts_count,
+                              const char *post_names[static posts_count]) {
     fprintf(index, "<div class=\"posts-history\">\n");
 
     PostMetadata *metadata = PostMetadata_collect_all(posts_count, post_names);
@@ -246,9 +201,6 @@ static void gen_index_md(size_t posts_count,
     }
 
     free(metadata);
-
-    const bool index_closed = fclose(index) == 0;
-    assert(index_closed);
 }
 
 static void gen_target(FILE *makefile, const char *post_name) {
@@ -463,4 +415,29 @@ static char *find_post_metadata_quoted_field(const char *str,
 
 static char *file_base(const char *filename) {
     return strndup(filename, strchr(filename, '.') - filename);
+}
+
+static char *read_file_content(const char *filename) {
+    FILE *fp = fopen(filename, "r");
+    assert(fp);
+
+    struct stat file_stat;
+    const bool stat_succeeded = stat(filename, &file_stat) == 0;
+    assert(stat_succeeded);
+    assert(file_stat.st_size > 0);
+
+    char *content = malloc(file_stat.st_size);
+    assert(content);
+
+    size_t i = 0;
+    char c;
+    while ((c = fgetc(fp)) != EOF) {
+        content[i] = c;
+        i++;
+    }
+
+    const bool fp_closed = fclose(fp) == 0;
+    assert(fp_closed);
+
+    return content;
 }
