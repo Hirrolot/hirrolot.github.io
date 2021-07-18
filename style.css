@@ -45,14 +45,8 @@ h1 {
 }
 
 h2:before {
-    content: '';
-    background-image: url('/lollipop.png');
-    background-size: 35px 35px;
-    display: inline-block;
-    margin-right: 5px;
-    margin-bottom: -5px;
-    width: 35px;
-    height: 35px;
+    content: '🍭 ';
+    color: gray;
 }
 
 h2:after {
