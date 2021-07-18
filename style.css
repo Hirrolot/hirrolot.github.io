@@ -33,13 +33,9 @@ code {
     font-size: 16px;
 }
 
-.sourceCode {
-    background-color: beige;
-}
-
 pre code {
     display: block;
-    background-color: beige;
+    background-color: lavenderblush;
     padding: 16px;
     border: 1px dotted LightGray;
 }
@@ -63,7 +59,7 @@ h2:after {
 }
 
 #TOC {
-    background-color: floralwhite;
+    background-color: lavenderblush;
     padding: 1px;
     border-style: solid;
     border-width: 1px;
