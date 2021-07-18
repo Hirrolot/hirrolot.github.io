@@ -90,8 +90,7 @@ h1 {
     font-style: italic;
 }
 
-.author {
-    color: gray;
+.author a {
     font-style: italic;
 }
 

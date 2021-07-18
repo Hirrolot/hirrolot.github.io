@@ -1,6 +1,6 @@
 ---
 title: "Extend Your Language, Don't Alter It"
-author: <a href="..">Hirrolot's Blog</a>
+author: Hirrolot's Blog
 date: Jul 6, 2021
 
 references:
