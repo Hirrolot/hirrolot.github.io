@@ -3,7 +3,7 @@ title: Hirrolot's Blog
 ---
 
 <div class="me">
-<img class="austin-powers" src="Austin-Powers.png" width=300px />
+<img class="selfie" src="myself.png" width=300px />
 <p class="about-me">I'm a 17 y/o software engineer, most known for my work on [teloxide] and preprocessor metaprogramming: [Metalang99], [Datatype99], and [Interface99]. This is my blog about programming and all the stuff.</p>
 <p class="badges">
 <a href="https://github.com/Hirrolot"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
