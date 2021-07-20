@@ -1,6 +1,6 @@
 ---
 title: "Compile-Time Introspection of Sum Types in Pure C99"
-author: <a href="..">Hirrolot's Blog</a>
+author: Hirrolot's Blog
 date: Apr 25, 2021
 ---
 
