@@ -41,6 +41,7 @@ pre code {
 }
 
 h1 {
+    text-align: right;
     font-size: 2.5rem;
 }
 
@@ -58,15 +59,6 @@ h2:after {
     width: 100vw;
 }
 
-#TOC {
-    background-color: lavenderblush;
-    padding: 1px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: gray;
-    border-radius: 3px;
-}
-
 h1,
 h2,
 h3,
@@ -74,10 +66,25 @@ h4,
 h5,
 h6 {
     font-family: 'Alata', sans-serif;
+    transition: 0.1s;
 }
 
-h1 {
-    text-align: right;
+h1:hover,
+h2:hover,
+h3:hover,
+h4:hover,
+h5:hover,
+h6:hover {
+    color: pink;
+}
+
+#TOC {
+    background-color: lavenderblush;
+    padding: 1px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 3px;
 }
 
 .header-link {
