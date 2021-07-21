@@ -139,6 +139,7 @@ blockquote::before {
     width: 400px;
     text-align: center;
     font-size: 18px;
+    font-style: normal;
     background-color: floralwhite;
     padding: 5px;
     border-style: solid;
