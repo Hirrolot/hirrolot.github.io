@@ -5,6 +5,11 @@
         <description>Hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
+            <title>Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming</title>
+            <guid>https://hirrolot.github.io/posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html</guid>
+            <pubDate>Thu, 22 Jul 2021 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title>Extend Your Language, Don't Alter It</title>
             <guid>https://hirrolot.github.io/posts/extend-your-language-dont-alter-it.html</guid>
             <pubDate>Tue, 6 Jul 2021 00:00:00 GMT</pubDate>
