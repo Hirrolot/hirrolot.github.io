@@ -315,6 +315,8 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
       | ^~~~~~~~
 ```
 
+Or this:
+
 \[`playground.c`\]
 ```c
 datatype(A, (Foo, int) (Bar, int));
