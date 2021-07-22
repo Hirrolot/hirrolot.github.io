@@ -430,5 +430,9 @@ The choice is up to you.
 
  - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
  - Buy me a coffee on [my Patreon].
+ - Discussions on Reddit:
+   - [r/programming](https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/)
+   - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/opeez9/macros_on_steroids_or_how_can_pure_c_benefit_from/)
+   - [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/opeeo0/macros_on_steroids_or_how_can_pure_c_benefit_from/)
 
 [my Patreon]: https://patreon.com/hirrolot
