@@ -23,7 +23,7 @@ function createPopupNotes() {
     for (var i = notes.length - 1; i >= 0; i--) {
         var sup = document.createElement("sup");
         sup.className = "note-sup";
-        sup.textContent = "^";
+        sup.textContent = "[^]";
 
         var noteText = document.createElement("span");
         noteText.className = "note-text";
