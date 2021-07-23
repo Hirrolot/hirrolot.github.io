@@ -36,7 +36,7 @@ Have you ever envisioned the C preprocessor as a tool that can improve the corre
 
 I did. And I have done everything dependent on me to make it real.
 
-Meet [Metalang99], a simple functional language that allows you to create complex metaprograms. It represents a header-only macro library, so everything you need to set it up is `-Imetalang99/include` and a C99 compiler <span class="note">Speaking formally, both the C and C++ preprocessors can execute Metalang99 (they are identical except for C++20's [`__VA_OPT__`]).<br>Speaking pragmatically, only pure C can significantly benefit from it.</span>. However, today I shall focus only on two accompanying libraries -- [Datatype99] and [Interface99]. Being implemented atop of Metalang99, they unleash the potential of preprocessor metaprogramming at the full scale, and therefore are more useful for an average C programmer.
+Meet [Metalang99], a simple functional language that allows you to create complex metaprograms. It represents a header-only macro library, so everything you need to set it up is `-Imetalang99/include` and a C99 compiler <span class="note">Speaking formally, both the C and C++ preprocessors can execute Metalang99 (they are identical except for C++20's [`__VA_OPT__`]).<br><br>Speaking pragmatically, only pure C can significantly benefit from it.</span>. However, today I shall focus only on two accompanying libraries -- [Datatype99] and [Interface99]. Being implemented atop of Metalang99, they unleash the potential of preprocessor metaprogramming at the full scale, and therefore are more useful for an average C programmer.
 
 I shall also address a few captious questions regarding compilation times, compilation errors, and applicability of my method to the real world.
 
@@ -397,7 +397,7 @@ The compilation times are not really an issue. Let us see how much it takes to c
 
 [`datatype99/examples/binary_tree.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c
 
-\[`/bin/sh`\] <span class="note">`-ftrack-macro-expansion=0` is a GCC option that tells the compiler not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99. If you use Clang, you can specify `-fmacro-backtrace-limit=1` to achieve approximately the same effect.</span>
+\[`/bin/sh`\] <span class="note">`-ftrack-macro-expansion=0` is a GCC option that tells the compiler not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99.<br><br>If you use Clang, you can specify `-fmacro-backtrace-limit=1` to achieve approximately the same effect.</span>
 ```
 $ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 
