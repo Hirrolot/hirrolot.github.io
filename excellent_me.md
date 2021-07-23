@@ -3,17 +3,16 @@ title: Hirrolot's Blog
 ---
 
 <div class="me">
-<img class="selfie" src="myself.png" width=300px />
+<img class="selfie" src="myself.png" />
 <p class="about-me">I'm a 17 y/o software engineer, most known for my work on [teloxide] and preprocessor metaprogramming: [Metalang99], [Datatype99], and [Interface99]. This is my blog about programming and all the stuff.</p>
 <p class="badges">
-<a href="https://github.com/Hirrolot"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
-<a href="https://patreon.com/hirrolot"><img src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white" /></a>
-<a href="https://twitter.com/hirrolot"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" /></a>
-<a href="https://www.reddit.com/user/Hirrolot/"><img src="https://img.shields.io/badge/Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white" /></a>
-<br>
-<a href="https://t.me/hirrolot"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" /></a>
-<a href="https://hirrolot.github.io/rss.xml"><img src="https://img.shields.io/badge/RSS-FFA500?style=for-the-badge&logo=rss&logoColor=white" /></a>
-<a href="mailto:hirrolot@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+<a href="https://github.com/Hirrolot">GitHub</a> ·
+<a href="https://patreon.com/hirrolot">Patreon</a> ·
+<a href="https://twitter.com/hirrolot">Twitter</a> ·
+<a href="https://www.reddit.com/user/Hirrolot/">Reddit</a> ·
+<a href="https://t.me/hirrolot">Telegram</a> ·
+<a href="https://hirrolot.github.io/rss.xml">RSS</a> ·
+<a href="mailto:hirrolot@gmail.com">Gmail</a>
 </p>
 </div>
 <hr>
