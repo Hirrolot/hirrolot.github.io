@@ -11,13 +11,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define CONTENT_DIR "content"
-#define OUTPUT_DIR  "posts"
-#define PANDOC_ARGS "--citeproc --standalone -H header.html --toc"
-
-#define POSTS_MAX 512
-
+#define CONTENT_DIR  "content"
+#define OUTPUT_DIR   "posts"
 #define EXCELLENT_ME "excellent_me.md"
+#define POSTS_MAX    512
+
+#define PANDOC_COMMON_ARGS "--standalone -H header.html"
 
 typedef enum {
     Jan = 1,
@@ -206,17 +205,20 @@ static void gen_posts_history(FILE *index, size_t posts_count,
 static void gen_target(FILE *makefile, const char *post_name) {
     fprintf(makefile,
             "%s: " CONTENT_DIR "/%s.md\n\t"
-            "pandoc " CONTENT_DIR "/%s.md -o " OUTPUT_DIR
-            "/%s.html " PANDOC_ARGS
-            " --css ../style.css --include-after-body utterances.html \n\n",
+            "pandoc " CONTENT_DIR "/%s.md --output " OUTPUT_DIR
+            "/%s.html " PANDOC_COMMON_ARGS
+            " --table-of-contents --citeproc --css ../style.css "
+            "--include-after-body utterances.html --include-in-header "
+            "post_header_aux.html\n\n",
             post_name, post_name, post_name, post_name);
 }
 
 static void gen_target_index(FILE *makefile) {
     fprintf(makefile,
             "index: " CONTENT_DIR "/index.md\n\t"
-            "pandoc " CONTENT_DIR "/index.md -o index.html " PANDOC_ARGS
-            " --css style.css \n\n");
+            "pandoc " CONTENT_DIR "/index.md " PANDOC_COMMON_ARGS
+            " --output index.html --css style.css --include-in-header "
+            "index_header_aux.html\n\n");
 }
 
 static void gen_phony_all(FILE *makefile, size_t posts_count,
