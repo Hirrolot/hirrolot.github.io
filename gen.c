@@ -74,7 +74,6 @@ static Month Month_parse(const char *str);
 static const char *Month_str(Month self);
 
 static PostDate PostDate_parse(const char *str);
-static char *PostDate_str(PostDate self);
 
 static PostMetadata PostMetadata_parse(const char *str);
 static void PostMetadata_free(PostMetadata *self);
@@ -159,14 +158,16 @@ static void gen_index_md(size_t posts_count,
 
 static void gen_posts_history(FILE *index, size_t posts_count,
                               const char *post_names[static posts_count]) {
-    fprintf(index, "<div class=\"posts-history\">\n");
-
     PostMetadata *metadata = PostMetadata_collect_all(posts_count, post_names);
 
     const unsigned min_year = PostMetadata_min_year(posts_count, metadata),
                    max_year = PostMetadata_max_year(posts_count, metadata);
 
     for (unsigned year = max_year; year >= min_year; year--) {
+        fprintf(index, "<span class=\"posts-year\" id=\"%u\">%u</span>\n", year,
+                year);
+        fprintf(index, "<div class=\"posts-history\">\n");
+
         for (Month month = Dec; month >= Jan; month--) {
             for (unsigned day = 31; day >= 1; day--) {
                 for (size_t i = 0; i < posts_count; i++) {
@@ -180,20 +181,18 @@ static void gen_posts_history(FILE *index, size_t posts_count,
                         continue;
                     }
 
-                    char *date = PostDate_str(metadata[i].date);
-
                     fprintf(index,
                             " - [%s](" OUTPUT_DIR "/%s.html)<br><span "
-                            "class=\"post-date\">%s</span><br>\n",
-                            metadata[i].title, post_names[i], date);
-
-                    free(date);
+                            "class=\"post-date\">%s %u</span><br>\n",
+                            metadata[i].title, post_names[i],
+                            Month_str(metadata[i].date.month),
+                            metadata[i].date.day);
                 }
             }
         }
-    }
 
-    fprintf(index, "</div>\n"); // class="posts-history"
+        fprintf(index, "</div>\n"); // class="posts-history"
+    }
 
     for (size_t i = 0; i < posts_count; i++) {
         PostMetadata_free(&metadata[i]);
@@ -363,13 +362,6 @@ static PostDate PostDate_parse(const char *str) {
     free(date);
 
     return self;
-}
-
-static char *PostDate_str(PostDate self) {
-    char result[16];
-    snprintf(result, sizeof result, "%s %u, %u", Month_str(self.month),
-             self.day, self.year);
-    return strdup(result);
 }
 
 static PostMetadata PostMetadata_parse(const char *str) {

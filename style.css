@@ -51,12 +51,12 @@ h1 {
 }
 
 h2:before {
-    content: '¶ ';
+    content: "¶ ";
     color: gray;
 }
 
 h2:after {
-    content: ' ';
+    content: " ";
     position: absolute;
     right: 0px;
     display: block;
@@ -93,6 +93,15 @@ h6:hover {
     border-radius: 3px;
 }
 
+.posts-history {
+    margin-bottom: 20px;
+}
+
+.posts-year {
+    font-family: 'Indie Flower', cursive;
+    font-size: 24px;
+}
+
 .header-link {
     text-decoration: none;
     color: inherit;
@@ -120,7 +129,7 @@ blockquote p {
 
 blockquote::before {
     position: absolute;
-    content: '\201C';
+    content: "\201C";
     font-size: 60px;
 }
 
