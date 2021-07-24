@@ -83,7 +83,8 @@ h6:hover {
     color: gray;
 }
 
-#TOC {
+#TOC,
+.posts-history {
     background-color: lavenderblush;
     padding: 1px;
     border-style: solid;
