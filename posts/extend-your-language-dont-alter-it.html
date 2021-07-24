@@ -227,7 +227,7 @@
 <p>“Are you quite sure that all those bells and whistles, all those wonderful facilities of your so-called powerful programming languages, belong to the solution set rather than the problem set?”</p>
 </blockquote>
 <p class="quote-author">
-— <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Edsger Dijkstra</a>
+<a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Edsger Dijkstra</a>
 </p>
 <p>The Rust’s syntax is not simple. As quite often happens in software engineering, a programming language grammar is a trade-off:</p>
 <ul>
@@ -239,7 +239,7 @@
 <p>“The macro author is responsible for the placement of every single angle bracket, lifetime, type parameter, trait bound, and phantom data. There is a large amount of domain knowledge involved and very few people can reliably produce robust macros with this approach.”</p>
 </blockquote>
 <p class="quote-author">
-— <a href="https://github.com/dtolnay">David Tolnay</a>
+<a href="https://github.com/dtolnay">David Tolnay</a>
 </p>
 <p>As opposed to Rust, we have a solution in a completely different direction – <a href="https://en.wikipedia.org/wiki/S-expression">s-expressions</a>. Instead of oversophisticating the language grammar by each subsequent release, some people decide to keep the grammar always trivial. This approach has a bunch of far-reaching implications, including simplified IDE support and language analysis in general. Metaprogramming becomes more malleable too, because you only need to handle a single homogenous structure (a list); you do not need to deal with an intimidating variety of syntactic forms your host language accomodates.</p>
 <p>To come back to our muttons, s-expressions facilitate syntactical consistency too. Consider this: everything is composed of s-expressions, and your macros perfectly deal with them; therefore, you can easily imitate any language construction. Everything will look the same. Even with so-called powerful Rusty macros, we cannot do this:</p>
@@ -275,7 +275,7 @@
 <p>“An adaptive grammar is a formal grammar that explicitly provides mechanisms within the formalism to allow its own production rules to be manipulated.”</p>
 </blockquote>
 <p class="quote-author">
-— Wikipedia
+Wikipedia
 </p>
 <p>Basically what it means is that you can specify your own syntactic forms (like <code>match</code> or <code>if</code>) right inside a source file, and a built-in parser will do the trick. <a href="https://www.idris-lang.org/">Idris</a> supports the feature called <a href="http://docs.idris-lang.org/en/latest/tutorial/syntax.html">syntax extensions</a>, which is, to the best of my understanding, is pretty much like an adaptive grammar; believe or not, the <code>if ... then ...  else</code> syntax is not built into the Idris compiler, but is rather defined via the <code>ifThenElse</code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode idris"><code class="sourceCode idris"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifThenElse</span> <span class="ot">:</span> (x<span class="ot">:</span><span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> a;</span>

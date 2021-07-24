@@ -124,6 +124,10 @@ blockquote::before {
     font-style: italic;
 }
 
+.quote-author::before {
+    content: "— ";
+}
+
 #refs {
     font-size: 18px;
 }
