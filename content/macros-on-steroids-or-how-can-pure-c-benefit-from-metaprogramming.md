@@ -36,7 +36,7 @@ Have you ever envisioned the C preprocessor as a tool that can improve the corre
 
 I did. And I have done everything dependent on me to make it real.
 
-Meet [Metalang99], a simple functional language that allows you to create complex metaprograms. It represents a header-only macro library, so everything you need to set it up is `-Imetalang99/include` and a C99 compiler <span class="note">Speaking formally, both the C and C++ preprocessors can execute Metalang99 (they are identical except for C++20's [`__VA_OPT__`]).<br><br>Speaking pragmatically, only pure C can significantly benefit from it.</span>. However, today I shall focus only on two accompanying libraries -- [Datatype99] and [Interface99]. Being implemented atop of Metalang99, they unleash the potential of preprocessor metaprogramming at the full scale, and therefore are more useful for an average C programmer.
+Meet [Metalang99], a simple functional language that allows you to create complex metaprograms. It represents a header-only macro library, so everything you need to set it up is `-Imetalang99/include` and a C99 compiler [^c-or-cpp]. However, today I shall focus only on two accompanying libraries -- [Datatype99] and [Interface99]. Being implemented atop of Metalang99, they unleash the potential of preprocessor metaprogramming at the full scale, and therefore are more useful for an average C programmer.
 
 I shall also address a few captious questions regarding compilation times, compilation errors, and applicability of my method to the real world.
 
@@ -44,13 +44,11 @@ I shall also address a few captious questions regarding compilation times, compi
 [Datatype99]: https://github.com/Hirrolot/datatype99
 [Interface99]: https://github.com/Hirrolot/interface99
 
-[`__VA_OPT__`]: https://en.cppreference.com/w/cpp/preprocessor/replace
-
 Nuff said, let us dive into it!
 
 ## The three kinds of code repetition
 
-There is an important thing called _code repetition_. There are three kinds of it <span class="note">Just for the purposes of this blog post! In reality, there might be many more than three.</span>:
+There is an important thing called _code repetition_. There are three kinds of it [^three-repetition]:
 
  1. The repetition that can be avoided by using functions,
  2. by using trivial macros,
@@ -96,7 +94,7 @@ Going further, sometimes you cannot eliminate repetition through trivial macros 
 FOO(1, 2, 3)
 ```
 
-\[`/bin/sh`\] <span class="note">`-E` stands for "preprocess only", `-P` stands for "do not print included headers".</span>
+\[`/bin/sh`\] [^e-p-flags]
 ```
 $ clang rec.c -E -P -Weverything -std=c99
 rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
@@ -141,7 +139,7 @@ typedef struct {
 } <name>;
 ```
 
-See `<tag>...` and `<type> <tag>...`? These are the little monsters of code repetition. They cannot be generated even by a naive variadic macro <span class="note">A [variadic macro] is a macro that can accept an unbounded sequence of arguments.</span>, since the tags (variant names) and the corresponding types are interleaved with each other. We may want to build some syntax sugar atop of bare tagged unions, but the thing is that _we cannot_. For example, this is how the same `BinaryTree` might look in Rust:
+See `<tag>...` and `<type> <tag>...`? These are the little monsters of code repetition. They cannot be generated even by a naive variadic macro [^variadic-macro], since the tags (variant names) and the corresponding types are interleaved with each other. We may want to build some syntax sugar atop of bare tagged unions, but the thing is that _we cannot_. For example, this is how the same `BinaryTree` might look in Rust:
 
 [variadic macro]: https://en.cppreference.com/w/c/preprocessor/replace
 
@@ -209,9 +207,7 @@ datatype(
 );
 ```
 
-And manipulated as follows <span class="note">This is called [pattern matching], a technique to destructure a sum type (tagged union) into its respective components.</span>:
-
-[pattern matching]: https://en.wikipedia.org/wiki/Pattern_matching
+And manipulated as follows [^pattern-matching]:
 
 ```c
 int sum(const BinaryTree *tree) {
@@ -297,9 +293,7 @@ Both Interface99 and Datatype99 rely on heavy use of macros, which would not be 
 
 This all is good and fun, but what about the compilation errors? How do they look? Are they comprehensible at all?
 
-I know how insane error messages can be with metaprogramming <span class="note">Hello, [Boost/Preprocessor]!</span>, and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this: <span class="note">If you use GCC, you can see such neat errors right from the console. Otherwise, you have to preprocess your file with `-E` and search for Metalang99 errors by yourself.</span>
-
-[Boost/Preprocessor]: http://boost.org/libs/preprocessor
+I know how insane error messages can be with metaprogramming [^hello-boost-pp], and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this: [^gcc-neat-errors]
 
 \[`playground.c`\]
 ```c
@@ -397,7 +391,7 @@ The compilation times are not really an issue. Let us see how much it takes to c
 
 [`datatype99/examples/binary_tree.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c
 
-\[`/bin/sh`\] <span class="note">`-ftrack-macro-expansion=0` is a GCC option that tells the compiler not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99.<br><br>If you use Clang, you can specify `-fmacro-backtrace-limit=1` to achieve approximately the same effect.</span>
+\[`/bin/sh`\] [^ftrack-macro-expansion]
 ```
 $ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 
@@ -412,19 +406,13 @@ This might be an issue only if you have a lot of macro stuff in header files. If
 
 ## Final words
 
-As it usually goes in software engineering, macros are a trade-off: _will you continue writing boilerplate code, thereby slowing down the development process and increasing the risk of bugs, or will you start using powerful macros at the cost of the [great implementation complexity] <span class="note">Do you remember about [the law of leaky abstractions], my friend? 😁</span> and slightly less comprehensible errors?_
+As it usually goes in software engineering, macros are a trade-off: _will you continue writing boilerplate code, thereby slowing down the development process and increasing the risk of bugs, or will you start using powerful macros at the cost of the [great implementation complexity] [^leaky-abstractions] and slightly less comprehensible errors?_
 
 [great implementation complexity]: https://github.com/Hirrolot/metalang99#q-how-does-it-work
-[the law of leaky abstractions]: https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/
 
 If you stick to the first choice, are you sure that it would be easier to figure out what is wrong with the code at runtime rather than at compile-time, especially when unreified abstractions got intertwined with your business logic? Are you okay with the fact that more bugs will end up being hidden in deployed production code instead of being intelligently found by a compiler (as in static vs. dynamic typing)?
 
-If you stick to the second choice, are you sure your team will let you integrate all this metaprogramming machinery into your codebase, even if used indirectly? I have seen several groups of developers that had to review all third-party code they use <span class="note">Except for so-called "trusted" libraries such as OpenSSL or glibc.</span> -- not every programmer can/want to review Metalang99. Not to be misunderstood, I have made Metalang99, Datatype99, and Interface99 in the most simple and clean way I could, but the very nature of the preprocessor really makes itself felt <span class="note">In addition, a reviewer of Metalang99 should has some basic familiarity with [programming language theory]; at least, a reviewer should understand such terms as an [EBNF grammar], [operational semantics], [lambda calculus], and so on, in order to read the [specification](https://github.com/Hirrolot/metalang99/blob/master/spec/spec.pdf).</span>.
-
-[programming language theory]: https://en.wikipedia.org/wiki/Programming_language_theory
-[EBNF grammar]: https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form
-[operational semantics]: https://en.wikipedia.org/wiki/Operational_semantics
-[lambda calculus]: https://en.wikipedia.org/wiki/Lambda_calculus
+If you stick to the second choice, are you sure your team will let you integrate all this metaprogramming machinery into your codebase, even if used indirectly? I have seen several groups of developers that had to review all third-party code they use [^trusted-libs] -- not every programmer can/want to review Metalang99. Not to be misunderstood, I have made Metalang99, Datatype99, and Interface99 in the most simple and clean way I could, but the very nature of the preprocessor really makes itself felt [^metalang99-plt].
 
 The choice is up to you.
 
@@ -442,3 +430,38 @@ The choice is up to you.
  - [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/opeeo0/macros_on_steroids_or_how_can_pure_c_benefit_from/)
 
 ## References
+
+[^c-or-cpp]: Speaking formally, both the C and C++ preprocessors can execute Metalang99 (they are identical except for C++20's [`__VA_OPT__`]). Speaking pragmatically, only pure C can significantly benefit from it.
+
+[`__VA_OPT__`]: https://en.cppreference.com/w/cpp/preprocessor/replace
+
+[^three-repetition]: Just for the purposes of this blog post! In reality, there might be many more than three. 
+
+[^e-p-flags]: `-E` stands for "preprocess only", `-P` stands for "do not print included headers".
+
+[^variadic-macro]: A [variadic macro] is a macro that can accept an unbounded sequence of arguments.
+
+[^pattern-matching]: This is called [pattern matching], a technique to destructure a sum type (tagged union) into its respective components.
+
+[pattern matching]: https://en.wikipedia.org/wiki/Pattern_matching
+
+[^hello-boost-pp]: Hello, [Boost/Preprocessor]!
+
+[Boost/Preprocessor]: http://boost.org/libs/preprocessor
+
+[^gcc-neat-errors]: If you use GCC, you can see such neat errors right from the console. Otherwise, you have to preprocess your file with `-E` and search for Metalang99 errors by yourself.
+
+[^ftrack-macro-expansion]: The GCC option `-ftrack-macro-expansion=0` means not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99. If you use Clang, you can specify `-fmacro-backtrace-limit=1` to achieve approximately the same effect.
+
+[^leaky-abstractions]: Do you remember about [the law of leaky abstractions], my friend? 😁
+
+[the law of leaky abstractions]: https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/
+
+[^trusted-libs]: Except for so-called "trusted" libraries such as OpenSSL or glibc.
+
+[^metalang99-plt]: A reviewer of Metalang99 should also has some basic familiarity with [programming language theory]; at least, a reviewer should understand such terms as an [EBNF grammar], [operational semantics], [lambda calculus], and so on, in order to read the [specification](https://github.com/Hirrolot/metalang99/blob/master/spec/spec.pdf).
+
+[programming language theory]: https://en.wikipedia.org/wiki/Programming_language_theory
+[EBNF grammar]: https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form
+[operational semantics]: https://en.wikipedia.org/wiki/Operational_semantics
+[lambda calculus]: https://en.wikipedia.org/wiki/Lambda_calculus

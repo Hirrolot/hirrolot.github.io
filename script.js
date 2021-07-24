@@ -18,16 +18,20 @@ function createClickableHeaders() {
 }
 
 function createPopupNotes() {
-    var notes = document.getElementsByClassName("note");
+    var notes = document.getElementsByClassName("footnote-ref");
 
     for (var i = notes.length - 1; i >= 0; i--) {
         var sup = document.createElement("sup");
         sup.className = "note-sup";
         sup.textContent = "[^]";
 
+        var fnId = notes[i].href.slice(notes[i].href.lastIndexOf("#") + 1);
+        var fnContent = document.getElementById(fnId).firstChild;
+        fnContent.querySelector(".footnote-back").remove();
+
         var noteText = document.createElement("span");
         noteText.className = "note-text";
-        noteText.innerHTML = notes[i].innerHTML;
+        noteText.innerHTML = fnContent.innerHTML;
 
         var noteContainer = document.createElement("span");
         noteContainer.className = "note-container";
@@ -43,6 +47,11 @@ function createPopupNotes() {
         });
 
         notes[i].replaceWith(noteContainer);
+    }
+
+    var footnotes = document.querySelector(".footnotes");
+    if (footnotes) {
+        footnotes.remove();
     }
 }
 
