@@ -36,9 +36,13 @@ code {
 
 pre code {
     display: block;
-    background-color: lavenderblush;
+    background-color: AliceBlue;
     padding: 16px;
     border: 1px dotted LightGray;
+}
+
+.sourceCode {
+    background-color: lavenderblush;
 }
 
 h1 {
