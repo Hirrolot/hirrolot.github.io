@@ -10,16 +10,22 @@
 
 .selfie {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     width: 300px;
+    border: none;
+}
+
+img {
+    display: block;
+    margin: auto;
+    max-width: 800px;
+    border: 1px dotted gray;
+    padding: 3px;
 }
 
 body {
     padding-left: 10px;
     padding-right: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     max-width: 800px;
     font-family: 'Source Serif Pro', serif;
     font-size: 20px;
@@ -190,4 +196,8 @@ blockquote::before {
 
 .show-note {
     visibility: visible;
+}
+
+details:hover {
+    cursor: pointer;
 }
