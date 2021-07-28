@@ -33,6 +33,11 @@ references:
     title: "A use case for generics in OpenSSL"
     author: OpenSSL
     URL: "https://github.com/openssl/openssl/blob/aff636a4893e24bdc686a00a13ae6199dd38d6aa/include/openssl/safestack.h.in"
+
+  - id: poica
+    title: "A research programming language on top of C macros"
+    author: Hirrolot
+    URL: "https://github.com/Hirrolot/poica"
 ---
 
 "To do stuff that you cannot do with functions" [^preprocessor-early-days] -- virtually every C programmer would say.
@@ -271,15 +276,16 @@ and this is what external codegen cannot suggest, no matter how you try.
 
  - Before I started to implement Datatype99, I searched for prior art. There were only such projects as [adt4c]. The problem with them is that they use external code generation; you can just compare how the same functionality is done using this approach and using Datatype99. Additionally, I made Datatype99 minimalistic, meaning that it provides _only_ ADTs and nothing more -- adt4c, on the contrary, comes with a type polymorphism implementation.
 
-[adt4c]: https://bitbucket.org/Macnaa/adt4c-with-polymorphism/src/master/
+ - Before I started to implement Metalang99, I tried to use [Boost/Preprocessor] [@poica]. Owing to its fundamental limitations, I abandoned the project. These drawbacks include macro bluepainting (when the preprocessor blocks macro recursion) and very poor diagnostics. I fixed both of them in Metalang99.
 
  - Some people state that these macros (Datatype99 & Interface99) are opaque, meaning you do not know what they generate. It is simply not true; from the very beginning, I stated explicitly what they do generate [@dt99-semantics; @if99-semantics]; I do not try to fool you with a nifty interface and a bloody cannibalic massacre under the hood. I designed these libraries in such a way that they even do not require libc, they are FFI-friendly, and they do not impose any restrictions on your environment.
 
- - I do encourage you to use such well-documented and well-tested libraries as Datatype99 & Interface99, but I discourage you from polluting your codebase with fancy macro-based DSLs implemented upon Metalang99. Currently, I do not see much need for Metalang99 except these libraries; they provide a facade for your APIs, _reuse them_, do not try to express something by defining more macros if you can do that with already existent linguistic abstractions.
- 
- - Still, there are examples when the only solution is to use recursive macros -- if so, at least use them sanely; always try to prove to yourself why you need more new macros, and you will thank me one day. Macros can only be a solution when you are "run out of your language"; please, do not.
+ - I do encourage you to use such well-documented and well-tested libraries as Datatype99 & Interface99, but I discourage you from polluting your codebase with fancy macro-based DSLs implemented upon Metalang99. Currently, I do not see much need for Metalang99 except these libraries; they provide a facade for your APIs, _reuse them_, do not try to express something by defining more macros if you can do that with already existent linguistic abstractions. If you nonetheless decided to use recursive macros of Metalang99, at least use them sanely -- always prove to yourself why you need more new macros instead of ordinary functions or/and just simpler macros, and you will thank me one day. Macros can only be a solution when you are "run out of your language"; please, do not.
 
  - If you ask me, "Why use C if there are Zig/Rust/C++/etc?", you can afford another language; this is cool but not always possible -- you can find the information elsewhere in the Internet [@so-why-use-c; @dt99-why-use-c; @devault].
+
+[adt4c]: https://bitbucket.org/Macnaa/adt4c-with-polymorphism/src/master/
+[Boost/Preprocessor]: http://boost.org/libs/preprocessor
 
 ## Links
 
