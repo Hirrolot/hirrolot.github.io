@@ -55,7 +55,9 @@ In C, I quite often find myself writing [virtual tables], writing [tagged unions
 
 We can do it in C too. _Take a look at the preprocessor_.
 
-Perhaps the reason we still do not is that C macros can only work with individual items but cannot operate on sequences of items. Put it simply, macros cannot loop, and macros cannot recurse. Therefore, we cannot generate something from a series of functions comprising some software interface, and we cannot generate something from a series of variants comprising some tagged union. But we can enrich the preprocessor in such a way that it becomes possible. Read on.
+## Macros to the rescue!
+
+In C, the only way to do metaprogramming is to use macros. Perhaps the reason we could not reify such abstractions as tagged unions till this moment is that C macros can only work with individual items but cannot operate on sequences thereof; put it simply, macros cannot loop or recurse. Therefore, without loops or recursion at our disposal, we could not generate something from a series of functions comprising some software interface, or from a series of variants comprising some tagged union. But we can enrich the preprocessor in such a way that it becomes possible. Read on.
 
 [Metalang99] is the solution I came up with.
 
@@ -128,13 +130,15 @@ With native macros, you write code as usual.
 
 With native macros, you do not violate the normal order in which linguistic constructions cooperate with each other. When you write `struct Vect { ... }`, you write it in the same file as `Vect_add`, `Vect_remove`, and so on. Why should you apparently write `datatype(T, ...)` in a separate file when it is also a linguistic construction? Elaborating further, why should we treat software interfaces as an alien spacecraft fallen to Earth?
 
-With [Datatype99] and [Interface99], you generate the stuff in-place. Tagged unions and software interfaces are those kinds of abstractions to be considered as parts of the host language, i.e., C. Therefore, they should be treated in the same way as we treat `struct`, as we treat `union`, and as we treat functions. Got what I am saying?
+With [Datatype99] and [Interface99], you generate the stuff in-place. Tagged unions and software interfaces are those kinds of abstractions to be considered as parts of the host language, i.e., C. Therefore, they should be treated in the same way as we treat `struct`, as we treat `union`, functions, and variables.
 
 No, I am not claiming that external codegen is useless. It has applications in a build process and other areas; for example, sometimes it is perfectly fine to separate files [@openssl-safestack]. What I am trying to convey is to use the right tool for the job. But wait, the suggested libraries rely on [some heavy-duty macros], and it is crystal clear that the vanilla C preprocessor is not meant for such kind of abuse, right?
 
 [some heavy-duty macros]: https://github.com/Hirrolot/metalang99#q-how-does-it-work
 
 This is the turning point of our spontaneous discussion.
+
+## The side effects of aggressive macros
 
 Instead of thinking philosophically, I encourage you to think pragmatically.
 
@@ -258,6 +262,8 @@ Rust exemplifies perfectly that a _system need not be ideal to be practically us
 [cargo-expand]: https://github.com/dtolnay/cargo-expand
 
 Regarding compilation times, they are [just fine](https://hirrolot.github.io/posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html#the-compilation-times).
+
+## Final words
 
 Let me sum up.
 
