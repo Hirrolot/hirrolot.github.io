@@ -1,7 +1,7 @@
 ---
 title: "What's the Point of the C Preprocessor, Actually?"
 author: Hirrolot's Blog
-date: Jul 29, 2021
+date: Aug 3, 2021
 
 references:
   - id: dt99-semantics
