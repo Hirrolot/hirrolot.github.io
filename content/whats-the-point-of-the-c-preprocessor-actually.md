@@ -118,9 +118,7 @@ Everything is correct now.
 
 Everything you need to make it work is a one-liner `#include <interface99.h>`.
 
-Believe it or not, **this little detail is the exact purpose of the preprocessor**. Let me explain it to you: preprocessor macros are _embedded_ into the language for a reason. After all, macros are just a means for code generation, so why cannot we generate code using external tools, provided that they are often more advanced and so on? Because aside from being "advanced and so on", they are also less natural.
-
-Less natural? Yes.
+Believe it or not, **this little detail is the exact purpose of the preprocessor**. Let me explain it to you: preprocessor macros are _embedded_ into the language for a reason. After all, macros are just a means for code generation, so why cannot we generate code using external tools, provided that they are often more advanced and so on? Because aside from being "advanced and so on", they are also _less natural_.
 
 ## What is wrong with external codegen?
 
@@ -298,9 +296,12 @@ and this is what external codegen cannot suggest, no matter how you try.
 ## Links
 
  - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
+ - The [motivational post] for the above libraries.
+
+[motivational post]: ../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html
 
 ## References
 
-[^preprocessor-early-days]: I believe that the C preprocessor was initially put into the language as a temporary workaround. With the preprocessor, you can do conditional compilation, foreach-macros, generics, etc. Nowadays, most of this stuff is done by the right tools but back in the 70's, it was unclear how to solve such problems.
+[^preprocessor-early-days]: I believe that the C preprocessor was initially put into the language as a temporary workaround. With the preprocessor, you can do conditional compilation, foreach-macros, generics, etc. Nowadays, most of this stuff is done by "the right tools" but back in the 70's, it was unclear how to solve such problems.
 
 [^preprocess-only]: `-E` stands for "preprocess only". It is supported at least by GCC and Clang but other compilers should have the same option as well (probably under a different name).

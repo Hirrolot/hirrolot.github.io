@@ -30,6 +30,8 @@ references:
     URL: "https://github.com/Hirrolot/metalang99#q-what-about-compile-time-errors"
 ---
 
+_This post has a [followup](../posts/whats-the-point-of-the-c-preprocessor-actually.html)._
+
 Have you ever envisioned the daily C preprocessor as a tool for some decent metaprogramming?
 
 Have you ever envisioned the C preprocessor as a tool that can improve the correctness, clarity, and overall maintainability of your code, when used sanely?
