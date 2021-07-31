@@ -254,11 +254,8 @@ Bad news: it is impossible to handle all kinds of errors in macros gracefully. B
     <summary>Show more hordes of errors...</summary>
 
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/1.jpg)
-<br>
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg)
-<br>
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/3.jpg)
-<br>
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/4.jpg)
 
 (I believe some of them were on stable Rust.)

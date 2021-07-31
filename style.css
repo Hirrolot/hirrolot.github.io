@@ -20,11 +20,11 @@ img {
     max-width: 800px;
     border: 1px dotted gray;
     padding: 3px;
+    margin-bottom: 20px;
 }
 
 body {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0px 10px 0px 10px;
     margin: auto;
     max-width: 800px;
     font-family: 'Source Serif Pro', serif;
@@ -58,8 +58,7 @@ pre code {
     background-color: BlanchedAlmond;
     padding: 0px 5px 0px 5px;
     margin-bottom: -20px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
 }
 
 pre code,
