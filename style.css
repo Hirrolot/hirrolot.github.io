@@ -50,8 +50,7 @@ pre code {
     background-color: lavenderblush;
 }
 
-.left-code-annotation,
-.right-code-annotation {
+.code-annotation {
     width: auto;
     min-width: min-content;
     max-width: max-content;
@@ -63,15 +62,23 @@ pre code {
     border-top-right-radius: 5px;
 }
 
-.right-code-annotation {
-    position: relative;
-    margin-left: auto;
+pre code,
+.code-annotation {
+    border: 1px dotted LightGray;
 }
 
-pre code,
-.left-code-annotation,
-.right-code-annotation {
-    border: 1px dotted LightGray;
+.adapted-from {
+    position: relative;
+    font-style: italic;
+    text-align: right;
+}
+
+.adapted-from::before {
+    content: "(Adapted from ";
+}
+
+.adapted-from::after {
+    content: ".)";
 }
 
 h1 {

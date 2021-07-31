@@ -67,10 +67,6 @@ In C, the only way to do metaprogramming is to use macros. Perhaps the reason we
 
 What was previously impossible soon became possible:
 
-<p class="right-code-annotation">[Datatype99], a library for tagged unions</p>
-
-[Datatype99]: https://github.com/Hirrolot/datatype99
-
 ```c
 datatype(
     BinaryTree,
@@ -86,11 +82,11 @@ int sum(const BinaryTree *tree) {
 }
 ```
 
+<p class="adapted-from">[Datatype99], a library for tagged unions</p>
+
+[Datatype99]: https://github.com/Hirrolot/datatype99
+
 Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must `#include <datatype99.h>`. Let me mend myself this time:
-
-<p class="right-code-annotation">[Interface99], a library for software interfaces</p>
-
-[Interface99]: https://github.com/Hirrolot/interface99
 
 ```c
 #include <interface99.h>
@@ -115,6 +111,10 @@ void Num_State_set(void *self, int x) {
 
 impl(State, Num);
 ```
+
+<p class="adapted-from">[Interface99], a library for software interfaces</p>
+
+[Interface99]: https://github.com/Hirrolot/interface99
 
 Everything is correct now.
 
@@ -167,13 +167,13 @@ This question is out of the scope bla-bla-bla. I will just show you some real er
 <ul>
 
 <li>
-<p class="left-code-annotation">`playground.c`</p>
+<p class="code-annotation">`playground.c`</p>
 
 ```c
 datatype(A, (Foo, int), Bar(int));
 ```
 
-<p class="left-code-annotation">`/bin/sh`</p>
+<p class="code-annotation">`/bin/sh`</p>
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -185,13 +185,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 </li>
 
 <li>
-<p class="left-code-annotation">`playground.c`</p>
+<p class="code-annotation">`playground.c`</p>
 
 ```c
 datatype(A, (Foo, int) (Bar, int));
 ```
 
-<p class="left-code-annotation">`/bin/sh`</p>
+<p class="code-annotation">`/bin/sh`</p>
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -203,13 +203,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 </li>
 
 <li>
-<p class="left-code-annotation">`playground.c`</p>
+<p class="code-annotation">`playground.c`</p>
 
 ```c
 datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
 ```
 
-<p class="left-code-annotation">`/bin/sh`</p>
+<p class="code-annotation">`/bin/sh`</p>
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -226,12 +226,12 @@ Looks nice?
 
 I know how to break this wonderful world. Look:
 
-<p class="left-code-annotation">`playground.c`</p>
+<p class="code-annotation">`playground.c`</p>
 ```c
 datatype(A, (Foo, int) ~, (Bar, int));
 ```
 
-<p class="left-code-annotation">`/bin/sh`</p>
+<p class="code-annotation">`/bin/sh`</p>
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:

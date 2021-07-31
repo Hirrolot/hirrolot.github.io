@@ -99,6 +99,11 @@ references:
     type: book
     author: Edwin Brady
     URL: "https://www.manning.com/books/type-driven-development-with-idris"
+
+  - id: dtolnay-reflect
+    title: "Compile-time reflection API for developing robust procedural macros (proof of concept)"
+    author: David Tolnay
+    URL: "https://github.com/dtolnay/reflect"
 ---
 
 Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or are not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
@@ -270,14 +275,13 @@ The Rust's syntax is not simple. As quite often happens in software engineering,
 
 [mess up with syntax pecularities]: https://github.com/teloxide/teloxide-macros/pull/12
 
-Citing [David Tolnay] (adapted from [dtolnay/reflect]):
+Citing [David Tolnay]:
 
 [David Tolnay]: https://github.com/dtolnay
-[dtolnay/reflect]: https://github.com/dtolnay/reflect
 
 > "The macro author is responsible for the placement of every single angle bracket, lifetime, type parameter, trait bound, and phantom data. There is a large amount of domain knowledge involved and very few people can reliably produce robust macros with this approach."
 
-<p class="quote-author">[David Tolnay]</p>
+<p class="quote-author">[David Tolnay] [@dtolnay-reflect]</p>
 
 As opposed to Rust, we have a solution in a completely different direction -- [s-expressions]. Instead of oversophisticating the language grammar by each subsequent release, some people decide to keep the grammar always trivial. This approach has a bunch of far-reaching implications, including simplified IDE support and language analysis in general. Metaprogramming becomes more malleable too, because you only need to handle a single homogenous structure (a list); you do not need to deal with an intimidating variety of syntactic forms your host language accomodates.
 
@@ -307,7 +311,7 @@ delegate! {
 }
 ```
 
-(Adapted from [Kobzol/rust-delegate], a library for automatic method delegation in Rust.)
+<p class="adapted-from">[Kobzol/rust-delegate], a library for automatic method delegation in Rust</p>
 
 [Kobzol/rust-delegate]: https://github.com/Kobzol/rust-delegate
 
@@ -325,7 +329,7 @@ match x {
 }
 ```
 
-(Adapted from [the chapter of TRPL about pattern matching](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html).)
+<p class="adapted-from">[the chapter of TRPL about pattern matching](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html)</p>
 
 Even if it could be fixed, this example still demonstrates the white holes of communication of the main syntax and user-defined macros in Rust: sometimes, due to its multifaceted grammar, it just does not allow us to express things naturally. One possible solution is an [adaptive grammar]:
 

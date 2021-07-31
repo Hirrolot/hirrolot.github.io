@@ -139,9 +139,6 @@
 <p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is the solution I came up with.</p>
 <p><del>Metalang99 is a language to write macros.</del> Sorry, it is a language to write recursive macros!</p>
 <p>What was previously impossible soon became possible:</p>
-<p class="right-code-annotation">
-<a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library for tagged unions
-</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
@@ -154,10 +151,10 @@
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must <code>#include &lt;datatype99.h&gt;</code>. Let me mend myself this time:</p>
-<p class="right-code-annotation">
-<a href="https://github.com/Hirrolot/interface99">Interface99</a>, a library for software interfaces
+<p class="adapted-from">
+<a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library for tagged unions
 </p>
+<p>Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must <code>#include &lt;datatype99.h&gt;</code>. Let me mend myself this time:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;interface99.h&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define State_INTERFACE               \</span></span>
@@ -179,6 +176,9 @@
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>State<span class="op">,</span> Num<span class="op">);</span></span></code></pre></div>
+<p class="adapted-from">
+<a href="https://github.com/Hirrolot/interface99">Interface99</a>, a library for software interfaces
+</p>
 <p>Everything is correct now.</p>
 <p>Everything you need to make it work is a one-liner <code>#include &lt;interface99.h&gt;</code>.</p>
 <p>Believe it or not, <strong>this little detail is the exact purpose of the preprocessor</strong>. Let me explain it to you: preprocessor macros are <em>embedded</em> into the language for a reason. After all, macros are just a means for code generation, so why cannot we generate code using external tools, provided that they are often more advanced and so on? Because aside from being “advanced and so on,” they are also <em>less natural</em>.</p>
@@ -205,11 +205,11 @@
 <p>This question is out of the scope bla-bla-bla. I will just show you some real errors you can get from Datatype99 real quick:</p>
 <ul>
 <li>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>playground.c</code>
 </p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>/bin/sh</code>
 </p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -219,11 +219,11 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
       | ^~~~~~~~</code></pre>
 </li>
 <li>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>playground.c</code>
 </p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>/bin/sh</code>
 </p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -233,11 +233,11 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
       | ^~~~~~~~</code></pre>
 </li>
 <li>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>playground.c</code>
 </p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="co">/* trailing comma is prohibited */</span><span class="op">);</span></span></code></pre></div>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>/bin/sh</code>
 </p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -249,11 +249,11 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 </ul>
 <p>Looks nice?</p>
 <p>I know how to break this wonderful world. Look:</p>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>playground.c</code>
 </p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">~,</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p class="left-code-annotation">
+<p class="code-annotation">
 <code>/bin/sh</code>
 </p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
