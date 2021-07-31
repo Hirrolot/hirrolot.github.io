@@ -67,7 +67,8 @@ In C, the only way to do metaprogramming is to use macros. Perhaps the reason we
 
 What was previously impossible soon became possible:
 
-\[[Datatype99]\, a library for tagged unions]
+<span class="code-annotation">[Datatype99], a library for tagged unions</span>
+
 ```c
 datatype(
     BinaryTree,
@@ -87,7 +88,7 @@ int sum(const BinaryTree *tree) {
 
 Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must `#include <datatype99.h>`. Let me mend myself this time:
 
-\[[Interface99]\, a library for software interfaces]
+<span class="code-annotation">[Interface99], a library for software interfaces</span>
 ```c
 #include <interface99.h>
 
@@ -162,12 +163,17 @@ But how to produce errors that people understand?
 
 This question is out of the scope bla-bla-bla. I will just show you some real errors you can get from Datatype99 real quick:
 
-\[`playground.c`\]
+<ul>
+
+<li>
+<span class="code-annotation">`playground.c`</span>
+
 ```c
 datatype(A, (Foo, int), Bar(int));
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
@@ -175,15 +181,17 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
     3 | datatype(A, (Foo, int), Bar(int));
       | ^~~~~~~~
 ```
+</li>
 
-----------
+<li>
+<span class="code-annotation">`playground.c`</span>
 
-\[`playground.c`\]
 ```c
 datatype(A, (Foo, int) (Bar, int));
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
@@ -191,15 +199,17 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
     3 | datatype(A, (Foo, int) (Bar, int));
       | ^~~~~~~~
 ```
+</li>
 
-----------
+<li>
+<span class="code-annotation">`playground.c`</span>
 
-\[`playground.c`\]
 ```c
 datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
@@ -207,19 +217,20 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
     3 | datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
       | ^~~~~~~~
 ```
+</li>
 
-----------
+</ul>
 
 Looks nice?
 
 I know how to break this wonderful world. Look:
 
-\[`playground.c`\]
+<span class="code-annotation">`playground.c`</span>
 ```c
 datatype(A, (Foo, int) ~, (Bar, int));
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:

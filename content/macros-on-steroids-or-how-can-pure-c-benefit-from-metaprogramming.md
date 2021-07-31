@@ -89,14 +89,15 @@ list_for_each(current, &self->items) {
 
 Going further, sometimes you cannot eliminate repetition through trivial macros (macros that cannot loop/recurse). Speaking technically, all macros in C are trivial since the preprocessor blocks macro recursion automatically [@bluepainting; @cloak-rec; @so-rec-macros-1; @so-rec-macros-2]:
 
-\[`rec.c`\]
+<span class="code-annotation">`rec.c`</span>
+
 ```c
 #define FOO(x, ...) x; FOO(__VA_ARGS__)
 
 FOO(1, 2, 3)
 ```
 
-\[`/bin/sh`\] [^e-p-flags]
+<span class="code-annotation">`/bin/sh` [^e-p-flags]</span>
 ```
 $ clang rec.c -E -P -Weverything -std=c99
 rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
@@ -297,12 +298,14 @@ This all is good and fun, but what about the compilation errors? How do they loo
 
 I know how insane error messages can be with metaprogramming [^hello-boost-pp], and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this: [^gcc-neat-errors]
 
-\[`playground.c`\]
+<span class="code-annotation">`playground.c`</span>
+
 ```c
 datatype(A, (Foo, int), Bar(int));
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
@@ -313,12 +316,14 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 
 Or this:
 
-\[`playground.c`\]
+<span class="code-annotation">`playground.c`</span>
+
 ```c
 datatype(A, (Foo, int) (Bar, int));
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
@@ -329,12 +334,14 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 
 If an error is not really in the syntax part, you will see something like this:
 
-\[`playground.c`\]
+<span class="code-annotation">`playground.c`</span>
+
 ```c
 datatype(Foo, (FooA, NonExistingType));
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 playground.c:3:1: error: unknown type name ‘NonExistingType’
     3 | datatype(
@@ -345,7 +352,8 @@ playground.c:3:1: error: unknown type name ‘NonExistingType’
 
 Or this:
 
-\[`playground.c`\]
+<span class="code-annotation">`playground.c`</span>
+
 ```c
 match(*tree) {
     of(Leaf, x) return *x;
@@ -353,7 +361,8 @@ match(*tree) {
 }
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 playground.c: In function ‘sum’:
 playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]
@@ -363,7 +372,8 @@ playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch
 
 Take a look at this example with Interface99:
 
-\[`playground.c`\]
+<span class="code-annotation">`playground.c`</span>
+
 ```c
 #define Foo_INTERFACE iFn(void, foo, int x, int y);
 interface(Foo);
@@ -377,7 +387,8 @@ typedef struct {
 impl(Foo, MyFoo);
 ```
 
-\[`/bin/sh`\]
+<span class="code-annotation">`/bin/sh`</span>
+
 ```
 playground.c:12:1: error: ‘MyFoo_Foo_foo’ undeclared here (not in a function); did you mean ‘MyFoo_Foo_impl’?
    12 | impl(Foo, MyFoo);
@@ -393,7 +404,8 @@ The compilation times are not really an issue. Let us see how much it takes to c
 
 [`datatype99/examples/binary_tree.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c
 
-\[`/bin/sh`\] [^ftrack-macro-expansion]
+<span class="code-annotation">`/bin/sh` [^ftrack-macro-expansion]</span>
+
 ```
 $ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 

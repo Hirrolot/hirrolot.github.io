@@ -44,11 +44,23 @@ pre code {
     display: block;
     background-color: AliceBlue;
     padding: 16px;
-    border: 1px dotted LightGray;
 }
 
 .sourceCode {
     background-color: lavenderblush;
+}
+
+.code-annotation {
+    display: block;
+    font-style: italic;
+    background-color: floralwhite;
+    margin-bottom: -20px;
+    padding-left: 5px;
+}
+
+pre code,
+.code-annotation {
+    border: 1px dotted LightGray;
 }
 
 h1 {
@@ -142,6 +154,8 @@ blockquote::before {
 .quote-author {
     text-align: right;
     font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
 }
 
 .quote-author::before {
