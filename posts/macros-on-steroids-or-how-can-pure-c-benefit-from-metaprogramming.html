@@ -167,11 +167,15 @@
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>(Adapted from <a href="https://github.com/torvalds/linux/blob/master/include/linux/list.h"><code>linux/include/linux/list.h</code></a>.)</p>
 <p>Going further, sometimes you cannot eliminate repetition through trivial macros (macros that cannot loop/recurse). Speaking technically, all macros in C are trivial since the preprocessor blocks macro recursion automatically <span class="citation" data-cites="bluepainting cloak-rec so-rec-macros-1 so-rec-macros-2">(C99 committee, n.d.; Paul Fultz II, n.d.; kokosing, n.d.; Vittorio Romeo, n.d.)</span>:</p>
-<p><span class="code-annotation"><code>rec.c</code></span></p>
+<p class="left-code-annotation">
+<code>rec.c</code>
+</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define FOO(x, ...) x; FOO(__VA_ARGS__)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>FOO<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+</p>
 <pre><code>$ clang rec.c -E -P -Weverything -std=c99
 rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
 FOO(1, 2, 3)
@@ -307,45 +311,63 @@ rec.c:1:24: note: expanded from macro &#39;FOO&#39;
 <h2 id="what-about-the-compilation-errors">What about the compilation errors?</h2>
 <p>This all is good and fun, but what about the compilation errors? How do they look? Are they comprehensible at all?</p>
 <p>I know how insane error messages can be with metaprogramming,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this:<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
 playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)
     3 | datatype(A, (Foo, int), Bar(int));
       | ^~~~~~~~</code></pre>
 <p>Or this:</p>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
 playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?
     3 | datatype(A, (Foo, int) (Bar, int));
       | ^~~~~~~~</code></pre>
 <p>If an error is not really in the syntax part, you will see something like this:</p>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>Foo<span class="op">,</span> <span class="op">(</span>FooA<span class="op">,</span> NonExistingType<span class="op">));</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>playground.c:3:1: error: unknown type name ‘NonExistingType’
     3 | datatype(
       | ^~~~~~~~
 playground.c:3:1: error: unknown type name ‘NonExistingType’
 playground.c:3:1: error: unknown type name ‘NonExistingType’</code></pre>
 <p>Or this:</p>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>playground.c: In function ‘sum’:
 playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]
     6 |     match(*tree) {
       |     ^~~~~</code></pre>
 <p>Take a look at this example with Interface99:</p>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Foo_INTERFACE iFn(void, foo, int x, int y);</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>interface<span class="op">(</span>Foo<span class="op">);</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -356,7 +378,9 @@ playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Missing `void MyFoo_Foo_foo(int x, int y)`.</span></span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>Foo<span class="op">,</span> MyFoo<span class="op">);</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>playground.c:12:1: error: ‘MyFoo_Foo_foo’ undeclared here (not in a function); did you mean ‘MyFoo_Foo_impl’?
    12 | impl(Foo, MyFoo);
       | ^~~~
@@ -364,7 +388,9 @@ playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch
 <p>When a macro failed, and I do not understand what is wrong just by looking at the console or by looking at its invocation (which is very rare), I observe the expansion with <code>-E</code>. This is where the formal specifications of Datatype99 and Interface99 come into play: even in the expanded code, I will not see something unexpected since the code generation semantics are fixed and laid out in their corresponding <code>README.md</code>s.</p>
 <h2 id="the-compilation-times">The compilation times?</h2>
 <p>The compilation times are not really an issue. Let us see how much it takes to compile <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"><code>datatype99/examples/binary_tree.c</code></a>:</p>
-<p><span class="code-annotation"><code>/bin/sh</code><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+</p>
 <pre><code>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 
 real    0m0,121s

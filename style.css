@@ -50,16 +50,27 @@ pre code {
     background-color: lavenderblush;
 }
 
-.code-annotation {
-    display: block;
+.left-code-annotation,
+.right-code-annotation {
+    width: auto;
+    min-width: min-content;
+    max-width: max-content;
     font-style: italic;
-    background-color: floralwhite;
+    background-color: BlanchedAlmond;
+    padding: 0px 5px 0px 5px;
     margin-bottom: -20px;
-    padding: 3px 5px 3px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.right-code-annotation {
+    position: relative;
+    margin-left: auto;
 }
 
 pre code,
-.code-annotation {
+.left-code-annotation,
+.right-code-annotation {
     border: 1px dotted LightGray;
 }
 

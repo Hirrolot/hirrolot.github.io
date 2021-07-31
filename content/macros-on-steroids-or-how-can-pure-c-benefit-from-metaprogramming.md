@@ -89,7 +89,7 @@ list_for_each(current, &self->items) {
 
 Going further, sometimes you cannot eliminate repetition through trivial macros (macros that cannot loop/recurse). Speaking technically, all macros in C are trivial since the preprocessor blocks macro recursion automatically [@bluepainting; @cloak-rec; @so-rec-macros-1; @so-rec-macros-2]:
 
-<span class="code-annotation">`rec.c`</span>
+<p class="left-code-annotation">`rec.c`</p>
 
 ```c
 #define FOO(x, ...) x; FOO(__VA_ARGS__)
@@ -97,7 +97,7 @@ Going further, sometimes you cannot eliminate repetition through trivial macros 
 FOO(1, 2, 3)
 ```
 
-<span class="code-annotation">`/bin/sh` [^e-p-flags]</span>
+<p class="left-code-annotation">`/bin/sh` [^e-p-flags]</p>
 ```
 $ clang rec.c -E -P -Weverything -std=c99
 rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
@@ -298,13 +298,13 @@ This all is good and fun, but what about the compilation errors? How do they loo
 
 I know how insane error messages can be with metaprogramming [^hello-boost-pp], and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this: [^gcc-neat-errors]
 
-<span class="code-annotation">`playground.c`</span>
+<p class="left-code-annotation">`playground.c`</p>
 
 ```c
 datatype(A, (Foo, int), Bar(int));
 ```
 
-<span class="code-annotation">`/bin/sh`</span>
+<p class="left-code-annotation">`/bin/sh`</p>
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -316,13 +316,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 
 Or this:
 
-<span class="code-annotation">`playground.c`</span>
+<p class="left-code-annotation">`playground.c`</p>
 
 ```c
 datatype(A, (Foo, int) (Bar, int));
 ```
 
-<span class="code-annotation">`/bin/sh`</span>
+<p class="left-code-annotation">`/bin/sh`</p>
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
@@ -334,13 +334,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 
 If an error is not really in the syntax part, you will see something like this:
 
-<span class="code-annotation">`playground.c`</span>
+<p class="left-code-annotation">`playground.c`</p>
 
 ```c
 datatype(Foo, (FooA, NonExistingType));
 ```
 
-<span class="code-annotation">`/bin/sh`</span>
+<p class="left-code-annotation">`/bin/sh`</p>
 
 ```
 playground.c:3:1: error: unknown type name ‘NonExistingType’
@@ -352,7 +352,7 @@ playground.c:3:1: error: unknown type name ‘NonExistingType’
 
 Or this:
 
-<span class="code-annotation">`playground.c`</span>
+<p class="left-code-annotation">`playground.c`</p>
 
 ```c
 match(*tree) {
@@ -361,7 +361,7 @@ match(*tree) {
 }
 ```
 
-<span class="code-annotation">`/bin/sh`</span>
+<p class="left-code-annotation">`/bin/sh`</p>
 
 ```
 playground.c: In function ‘sum’:
@@ -372,7 +372,7 @@ playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch
 
 Take a look at this example with Interface99:
 
-<span class="code-annotation">`playground.c`</span>
+<p class="left-code-annotation">`playground.c`</p>
 
 ```c
 #define Foo_INTERFACE iFn(void, foo, int x, int y);
@@ -387,7 +387,7 @@ typedef struct {
 impl(Foo, MyFoo);
 ```
 
-<span class="code-annotation">`/bin/sh`</span>
+<p class="left-code-annotation">`/bin/sh`</p>
 
 ```
 playground.c:12:1: error: ‘MyFoo_Foo_foo’ undeclared here (not in a function); did you mean ‘MyFoo_Foo_impl’?
@@ -404,7 +404,7 @@ The compilation times are not really an issue. Let us see how much it takes to c
 
 [`datatype99/examples/binary_tree.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c
 
-<span class="code-annotation">`/bin/sh` [^ftrack-macro-expansion]</span>
+<p class="left-code-annotation">`/bin/sh` [^ftrack-macro-expansion]</p>
 
 ```
 $ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0

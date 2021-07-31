@@ -139,7 +139,9 @@
 <p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is the solution I came up with.</p>
 <p><del>Metalang99 is a language to write macros.</del> Sorry, it is a language to write recursive macros!</p>
 <p>What was previously impossible soon became possible:</p>
-<p><span class="code-annotation"><a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library for tagged unions</span></p>
+<p class="right-code-annotation">
+<a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library for tagged unions
+</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
@@ -153,7 +155,9 @@
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must <code>#include &lt;datatype99.h&gt;</code>. Let me mend myself this time:</p>
-<p><span class="code-annotation"><a href="https://github.com/Hirrolot/interface99">Interface99</a>, a library for software interfaces</span></p>
+<p class="right-code-annotation">
+<a href="https://github.com/Hirrolot/interface99">Interface99</a>, a library for software interfaces
+</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;interface99.h&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define State_INTERFACE               \</span></span>
@@ -201,9 +205,13 @@
 <p>This question is out of the scope bla-bla-bla. I will just show you some real errors you can get from Datatype99 real quick:</p>
 <ul>
 <li>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
 playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)
@@ -211,9 +219,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
       | ^~~~~~~~</code></pre>
 </li>
 <li>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
 playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?
@@ -221,9 +233,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
       | ^~~~~~~~</code></pre>
 </li>
 <li>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="co">/* trailing comma is prohibited */</span><span class="op">);</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
 playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: must be (x1, ..., xN)
@@ -233,9 +249,13 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 </ul>
 <p>Looks nice?</p>
 <p>I know how to break this wonderful world. Look:</p>
-<p><span class="code-annotation"><code>playground.c</code></span></p>
+<p class="left-code-annotation">
+<code>playground.c</code>
+</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">~,</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
-<p><span class="code-annotation"><code>/bin/sh</code></span></p>
+<p class="left-code-annotation">
+<code>/bin/sh</code>
+</p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c: In function ‘ml99_error_3’:
 playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: invalid term `ML99_PRIV_IF_0 ~(ML99_PRIV_listFromTuplesError, ML99_PRIV_listFromTuplesProgressAux) (DATATYPE99_PRIV_parseVariant, 2, (Foo, int) ~, (Bar, int), ~)`
