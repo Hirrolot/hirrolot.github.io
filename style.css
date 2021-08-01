@@ -72,8 +72,8 @@ pre code,
     position: relative;
     font-style: italic;
     text-align: right;
-    font-family: 'EB Garamond', serif;
-    font-size: 22px;
+    font-family: 'Lancelot', cursive;
+    font-size: 23px;
 }
 
 .adapted-from::before {
@@ -177,8 +177,8 @@ blockquote::before {
 .quote-author {
     text-align: right;
     font-style: italic;
-    font-family: 'EB Garamond', serif;
-    font-size: 22px;
+    font-family: 'Lancelot', cursive;
+    font-size: 23px;
 }
 
 .quote-author::before {
