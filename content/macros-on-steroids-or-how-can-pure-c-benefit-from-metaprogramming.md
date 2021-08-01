@@ -433,6 +433,9 @@ The choice is up to you.
  - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
  - [Q: Why use C instead of Rust/Zig/whatever else?](https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else)
  - [Q: Why not third-party code generators?](https://github.com/Hirrolot/metalang99#q-why-not-third-party-code-generators)
+ - The [mailing list] for the above libraries. Join and talk with us!
+
+[mailing list]: https://lists.sr.ht/~hirrolot/metalang99
 
 ## Discussions
 

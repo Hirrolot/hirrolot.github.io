@@ -302,8 +302,10 @@ and this is what external codegen cannot suggest, no matter how you try.
 
  - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
  - The [motivational post] for the above libraries.
+ - The [mailing list] for the above libraries. Join and talk with us!
 
 [motivational post]: ../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html
+[mailing list]: https://lists.sr.ht/~hirrolot/metalang99
 
 ## References
 
