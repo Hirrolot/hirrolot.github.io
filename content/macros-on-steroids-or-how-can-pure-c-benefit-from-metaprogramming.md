@@ -296,7 +296,7 @@ Both Interface99 and Datatype99 rely on heavy use of macros, which would not be 
 
 This all is good and fun, but what about the compilation errors? How do they look? Are they comprehensible at all?
 
-I know how insane error messages can be with metaprogramming [^hello-boost-pp], and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this: [^gcc-neat-errors]
+I know how insane error messages can be with metaprogramming [^hello-boost-pp], and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this:
 
 <p class="code-annotation">`playground.c`</p>
 
@@ -308,8 +308,7 @@ datatype(A, (Foo, int), Bar(int));
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c: In function ‘ml99_error_3’:
-playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)
+playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), Bar(int));
       | ^~~~~~~~
 ```
@@ -326,8 +325,7 @@ datatype(A, (Foo, int) (Bar, int));
 
 ```
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c: In function ‘ml99_error_3’:
-playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?
+playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?"
     3 | datatype(A, (Foo, int) (Bar, int));
       | ^~~~~~~~
 ```
@@ -462,8 +460,6 @@ The choice is up to you.
 [^hello-boost-pp]: Hello, [Boost/Preprocessor]!
 
 [Boost/Preprocessor]: http://boost.org/libs/preprocessor
-
-[^gcc-neat-errors]: If you use GCC, you can see such neat errors right from the console. Otherwise, you have to preprocess your file with `-E` and search for Metalang99 errors by yourself.
 
 [^ftrack-macro-expansion]: The GCC option `-ftrack-macro-expansion=0` means not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99. If you use Clang, you can specify `-fmacro-backtrace-limit=1` to achieve approximately the same effect.
 

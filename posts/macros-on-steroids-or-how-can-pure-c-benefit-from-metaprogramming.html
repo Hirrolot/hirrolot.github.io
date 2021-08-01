@@ -313,7 +313,7 @@ rec.c:1:24: note: expanded from macro &#39;FOO&#39;
 <p>Both Interface99 and Datatype99 rely on heavy use of macros, which would not be possible without something like Metalang99.</p>
 <h2 id="what-about-the-compilation-errors">What about the compilation errors?</h2>
 <p>This all is good and fun, but what about the compilation errors? How do they look? Are they comprehensible at all?</p>
-<p>I know how insane error messages can be with metaprogramming,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this:<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>I know how insane error messages can be with metaprogramming,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and how frustrating it can be to figure out what do they mean. While it is technically impossible to handle all kinds of syntax mismatches, I have put a huge effort to make most of the diagnostics comprehensible. Let us imagine that you have accidentally made a syntax mistake in a macro invocation. Then you will see something like this:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
@@ -322,8 +322,7 @@ rec.c:1:24: note: expanded from macro &#39;FOO&#39;
 <code>/bin/sh</code>
 </p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c: In function ‘ml99_error_3’:
-playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)
+playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;
     3 | datatype(A, (Foo, int), Bar(int));
       | ^~~~~~~~</code></pre>
 <p>Or this:</p>
@@ -335,8 +334,7 @@ playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute erro
 <code>/bin/sh</code>
 </p>
 <pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c: In function ‘ml99_error_3’:
-playground.c:3:1: error: call to ‘ml99_error_3’ declared with attribute error: ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?
+playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;
     3 | datatype(A, (Foo, int) (Bar, int));
       | ^~~~~~~~</code></pre>
 <p>If an error is not really in the syntax part, you will see something like this:</p>
@@ -392,7 +390,7 @@ playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch
 <h2 id="the-compilation-times">The compilation times?</h2>
 <p>The compilation times are not really an issue. Let us see how much it takes to compile <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"><code>datatype99/examples/binary_tree.c</code></a>:</p>
 <p class="code-annotation">
-<code>/bin/sh</code><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+<code>/bin/sh</code><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>
 </p>
 <pre><code>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 
@@ -401,9 +399,9 @@ user    0m0,107s
 sys     0m0,011s</code></pre>
 <p>This might be an issue only if you have a lot of macro stuff in header files. If so, I suggest to use a widely known technique called <a href="https://en.wikipedia.org/wiki/Precompiled_header">precompiled headers</a> so that they will be transformed into some compiler’s intermediate representation and then put into a cache instead of being unnecessarily re-compiled on each file inclusion.</p>
 <h2 id="final-words">Final words</h2>
-<p>As it usually goes in software engineering, macros are a trade-off: <em>will you continue writing boilerplate code, thereby slowing down the development process and increasing the risk of bugs, or will you start using powerful macros at the cost of the <a href="https://github.com/Hirrolot/metalang99#q-how-does-it-work">great implementation complexity</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> and slightly less comprehensible errors?</em></p>
+<p>As it usually goes in software engineering, macros are a trade-off: <em>will you continue writing boilerplate code, thereby slowing down the development process and increasing the risk of bugs, or will you start using powerful macros at the cost of the <a href="https://github.com/Hirrolot/metalang99#q-how-does-it-work">great implementation complexity</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and slightly less comprehensible errors?</em></p>
 <p>If you stick to the first choice, are you sure that it would be easier to figure out what is wrong with the code at runtime rather than at compile-time, especially when unreified abstractions got intertwined with your business logic? Are you okay with the fact that more bugs will end up being hidden in deployed production code instead of being intelligently found by a compiler (as in static vs. dynamic typing)?</p>
-<p>If you stick to the second choice, are you sure your team will let you integrate all this metaprogramming machinery into your codebase, even if used indirectly? I have seen several groups of developers that had to review all third-party code they use<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> – not every programmer can/want to review Metalang99. Not to be misunderstood, I have made Metalang99, Datatype99, and Interface99 in the most simple and clean way I could, but the very nature of the preprocessor really makes itself felt.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>If you stick to the second choice, are you sure your team will let you integrate all this metaprogramming machinery into your codebase, even if used indirectly? I have seen several groups of developers that had to review all third-party code they use<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> – not every programmer can/want to review Metalang99. Not to be misunderstood, I have made Metalang99, Datatype99, and Interface99 in the most simple and clean way I could, but the very nature of the preprocessor really makes itself felt.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <p>The choice is up to you.</p>
 <h2 id="links">Links</h2>
 <ul>
@@ -442,11 +440,10 @@ Vittorio Romeo. n.d. <span>“Understanding DEFER and OBSTRUCT Macros.”</span>
 <li id="fn4" role="doc-endnote"><p>A <a href="https://en.cppreference.com/w/c/preprocessor/replace">variadic macro</a> is a macro that can accept an unbounded sequence of arguments.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>This is called <a href="https://en.wikipedia.org/wiki/Pattern_matching">pattern matching</a>, a technique to destructure a sum type (tagged union) into its respective components.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6" role="doc-endnote"><p>Hello, <a href="http://boost.org/libs/preprocessor">Boost/Preprocessor</a>!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>If you use GCC, you can see such neat errors right from the console. Otherwise, you have to preprocess your file with <code>-E</code> and search for Metalang99 errors by yourself.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>The GCC option <code>-ftrack-macro-expansion=0</code> means not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99. If you use Clang, you can specify <code>-fmacro-backtrace-limit=1</code> to achieve approximately the same effect.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Do you remember about <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">the law of leaky abstractions</a>, my friend? 😁<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>Except for so-called “trusted” libraries such as OpenSSL or glibc.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>A reviewer of Metalang99 should also has some basic familiarity with <a href="https://en.wikipedia.org/wiki/Programming_language_theory">programming language theory</a>; at least, a reviewer should understand such terms as an <a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">EBNF grammar</a>, <a href="https://en.wikipedia.org/wiki/Operational_semantics">operational semantics</a>, <a href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a>, and so on, in order to read the <a href="https://github.com/Hirrolot/metalang99/blob/master/spec/spec.pdf">specification</a>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>The GCC option <code>-ftrack-macro-expansion=0</code> means not to print a useless bedsheet of macro expansions. Also, it drastically speeds up compilation, so I recommend you to always use it with Metalang99. If you use Clang, you can specify <code>-fmacro-backtrace-limit=1</code> to achieve approximately the same effect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>Do you remember about <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">the law of leaky abstractions</a>, my friend? 😁<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Except for so-called “trusted” libraries such as OpenSSL or glibc.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>A reviewer of Metalang99 should also has some basic familiarity with <a href="https://en.wikipedia.org/wiki/Programming_language_theory">programming language theory</a>; at least, a reviewer should understand such terms as an <a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">EBNF grammar</a>, <a href="https://en.wikipedia.org/wiki/Operational_semantics">operational semantics</a>, <a href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a>, and so on, in order to read the <a href="https://github.com/Hirrolot/metalang99/blob/master/spec/spec.pdf">specification</a>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <script src="https://utteranc.es/client.js" repo="hirrolot/hirrolot.github.io" issue-term="pathname" label="comments" theme="github-light" crossorigin="anonymous" async>
