@@ -71,9 +71,9 @@ pre code,
 .adapted-from {
     position: relative;
     font-style: italic;
+    font-size: 18px;
+    font-family: 'Courier Prime', monospace;
     text-align: right;
-    font-family: 'Lancelot', cursive;
-    font-size: 23px;
 }
 
 .adapted-from::before {
@@ -83,7 +83,7 @@ pre code,
 .adapted-from::after {
     display: inline-block;
     content: ".)";
-    margin-left: -5px;
+    margin-left: -12px;
 }
 
 h1 {
