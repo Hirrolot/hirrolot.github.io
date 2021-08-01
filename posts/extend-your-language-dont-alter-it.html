@@ -106,8 +106,8 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../myself.png" type="image/x-icon">
   <script src="../script.js"></script>
 </head>
@@ -136,7 +136,7 @@
 <h2 id="establishing-the-terminology">Establishing the terminology</h2>
 <p>What do I mean by that gorgeous word, linguistic abstraction, to which I have referred two times in the introduction part? Basically, it is any language “feature”: a variable, an interface, a function. And guess what a <em>metalinguistic abstraction</em> means? Recall that the prefix “meta” simply means that the thing is used to deal with something of a similar nature: a metaprogram manipulates other programs, metadata describe other data, a <a href="https://en.wikipedia.org/wiki/Metasyntax">metagrammar</a> specifies other grammars, and so on. From this point we conclude that a metalinguistic abstraction is a linguistic abstraction used to deal with other linguistic abstractions. I am only aware of two types of them: code generation (or macros, or metaprogramming, whichever term you prefer)<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and a type system.</p>
 <p><strong>Why macros are “meta?”</strong> Well, macros can do pretty much anything with the code: they can accept it, they can transform it, they can emit the code… remember how Rust allows you to execute arbitrary instructions inside <a href="https://doc.rust-lang.org/reference/procedural-macros.html">procedural macros</a>, remember the <a href="https://danielkeep.github.io/tlborm/book/pat-incremental-tt-munchers.html">incremental TT muncher pattern</a>, or how you can brutally imitate type polymorphism through the C preprocessor <span class="citation" data-cites="mlib STC C-Macro-Collections">(Patrick Pelissier, n.d.; Tyge Løvset, n.d.; Leonardo Vencovsky, n.d.)</span>. Whilst macros can manipulate other code, other code cannot manipulate macros<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> – this is the reason why macros are “meta.”</p>
-<p><strong>Why types are “meta?”</strong> Consider this: what you usually accomplish with metaprogramming, you can leverage to enough expressive types.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Returning back to our poor C preprocessor, in Rust you can simply use generics instead of instantiating type-specific code by hand. Or you can go insane and play with heterogenous lists <span class="citation" data-cites="frunk">(Lloyd Chan, n.d.)</span> instead of (ab)using compile-time macro collections of <a href="https://github.com/boostorg/preprocessor">Boost/Preprocessor</a>. So types are capable of metaprogramming to some extent <span class="citation" data-cites="typeclass-metaprogramming hoas gadt-for-dummies type-level-rust-1 type-level-rust-2 rust-type-system-turing-complete type-operators-rust typenum fortraith idris-book">(Alexis King, n.d.; Wikipedia, n.d.; Haskell Wiki, n.d.; Will Crichton, n.d.b, n.d.a; Shea Leffler, n.d.b, n.d.a; Paho Lurie-Gregg and Andre Bogus, n.d.; Szymon Mikulicz, n.d.; Edwin Brady, n.d.)</span> – this is why they are “meta.”</p>
+<p><strong>Why types are “meta?”</strong> Consider this: what you usually accomplish with metaprogramming, you can leverage to enough expressive types.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Returning back to our poor C preprocessor, in Rust you can simply use generics instead of instantiating type-specific code by hand. Or you can go insane and play with heterogenous lists <span class="citation" data-cites="frunk">(Lloyd Chan, n.d.)</span> instead of (ab)using compile-time macro collections of <a href="https://github.com/boostorg/preprocessor">Boost/Preprocessor</a>. So types are capable of metaprogramming to some extent <span class="citation" data-cites="typeclass-metaprogramming hoas gadt-for-dummies type-level-rust-1 type-level-rust-2 rust-type-system-turing-complete type-operators-rust typenum fortraith idris-book">(Alexis King, n.d.; Wikipedia, n.d.b; Haskell Wiki, n.d.; Will Crichton, n.d.b, n.d.a; Shea Leffler, n.d.b, n.d.a; Paho Lurie-Gregg and Andre Bogus, n.d.; Szymon Mikulicz, n.d.; Edwin Brady, n.d.)</span> – this is why they are “meta.”</p>
 <p>The presence of either of these tools in our language makes us able to extend it with custom concepts in an embedded manner, i.e., without intervention of third-party utilities. However, today I will discuss only the syntax business – macros.</p>
 <p>Having the terminology established, let us dive into the pragmatics!</p>
 <h2 id="syntactical-consistency">Syntactical consistency</h2>
@@ -281,7 +281,7 @@
 <p>“An adaptive grammar is a formal grammar that explicitly provides mechanisms within the formalism to allow its own production rules to be manipulated.”</p>
 </blockquote>
 <p class="quote-author">
-Wikipedia
+Wikipedia <span class="citation" data-cites="wikipedia-adaptive-grammar">(Wikipedia, n.d.a)</span>
 </p>
 <p>Basically what it means is that you can specify your own syntactic forms (like <code>match</code> or <code>if</code>) right inside a source file, and a built-in parser will do the trick. <a href="https://www.idris-lang.org/">Idris</a> supports the feature called <a href="http://docs.idris-lang.org/en/latest/tutorial/syntax.html">syntax extensions</a>, which is, to the best of my understanding, is pretty much like an adaptive grammar; believe or not, the <code>if ... then ...  else</code> syntax is not built into the Idris compiler, but is rather defined via the <code>ifThenElse</code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode idris"><code class="sourceCode idris"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifThenElse</span> <span class="ot">:</span> (x<span class="ot">:</span><span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> a;</span>
@@ -351,8 +351,11 @@ Szymon Mikulicz. n.d. <span>“Compile-Time Compiler That Compiles Forth to Comp
 <div id="ref-STC" class="csl-entry" role="doc-biblioentry">
 Tyge Løvset. n.d. <span>“Standard Template Containers for C.”</span> <a href="https://github.com/tylov/STC">https://github.com/tylov/STC</a>.
 </div>
+<div id="ref-wikipedia-adaptive-grammar" class="csl-entry" role="doc-biblioentry">
+Wikipedia. n.d.a. <span>“Adaptive Grammar.”</span> <a href="https://en.wikipedia.org/wiki/Adaptive_grammar">https://en.wikipedia.org/wiki/Adaptive_grammar</a>.
+</div>
 <div id="ref-hoas" class="csl-entry" role="doc-biblioentry">
-Wikipedia. n.d. <span>“Higher-Order Abstract Syntax Through GADTs.”</span> <a href="https://en.wikipedia.org/wiki/Generalized_algebraic_data_type#Higher-order_abstract_syntax">https://en.wikipedia.org/wiki/Generalized_algebraic_data_type#Higher-order_abstract_syntax</a>.
+———. n.d.b. <span>“Higher-Order Abstract Syntax Through GADTs.”</span> <a href="https://en.wikipedia.org/wiki/Generalized_algebraic_data_type#Higher-order_abstract_syntax">https://en.wikipedia.org/wiki/Generalized_algebraic_data_type#Higher-order_abstract_syntax</a>.
 </div>
 <div id="ref-type-level-rust-2" class="csl-entry" role="doc-biblioentry">
 Will Crichton. n.d.a. <span>“Implementing a Type-Safe Printf in Rust.”</span> <a href="https://willcrichton.net/notes/type-safe-printf/">https://willcrichton.net/notes/type-safe-printf/</a>.

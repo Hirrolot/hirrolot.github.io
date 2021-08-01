@@ -104,6 +104,11 @@ references:
     title: "Compile-time reflection API for developing robust procedural macros (proof of concept)"
     author: David Tolnay
     URL: "https://github.com/dtolnay/reflect"
+
+  - id: wikipedia-adaptive-grammar
+    title: "Adaptive grammar"
+    author: Wikipedia
+    URL: "https://en.wikipedia.org/wiki/Adaptive_grammar"
 ---
 
 Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or are not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
@@ -337,7 +342,7 @@ Even if it could be fixed, this example still demonstrates the white holes of co
 
 > "An adaptive grammar is a formal grammar that explicitly provides mechanisms within the formalism to allow its own production rules to be manipulated."
 
-<p class="quote-author">Wikipedia</p>
+<p class="quote-author">Wikipedia [@wikipedia-adaptive-grammar]</p>
 
 Basically what it means is that you can specify your own syntactic forms (like `match` or `if`) right inside a source file, and a built-in parser will do the trick. [Idris] supports the feature called [syntax extensions], which is, to the best of my understanding, is pretty much like an adaptive grammar; believe or not, the `if ... then ...  else` syntax is not built into the Idris compiler, but is rather defined via the `ifThenElse` function:
 
