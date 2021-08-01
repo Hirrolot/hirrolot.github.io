@@ -4,7 +4,7 @@ title: Hirrolot's Blog
 
 <div class="me">
 <img class="selfie" src="myself.png" />
-<p class="about-me">I'm a 17 y/o software engineer, most known for my work on [teloxide] and preprocessor metaprogramming: [Metalang99], [Datatype99], and [Interface99]. This is my blog about programming and all the stuff.</p>
+<p class="about-me">I'm a 17 y/o software engineer, most known for my work on [teloxide] and advanced metaprogramming ([Metalang99] & [Datatype99]). Over the last few years, I've been passionate about programming language design, type theory, formal logic, and related stuff. Welcome to my blog!</p>
 <p class="badges">
 <a href="https://github.com/Hirrolot">GitHub</a> ·
 <a href="https://patreon.com/hirrolot">Patreon</a> ·
@@ -19,4 +19,3 @@ title: Hirrolot's Blog
 [teloxide]: https://github.com/teloxide/teloxide
 [Metalang99]: https://github.com/Hirrolot/metalang99
 [Datatype99]: https://github.com/Hirrolot/datatype99
-[Interface99]: https://github.com/Hirrolot/interface99
