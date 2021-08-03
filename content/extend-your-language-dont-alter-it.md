@@ -316,7 +316,7 @@ delegate! {
 }
 ```
 
-<p class="adapted-from">[Kobzol/rust-delegate], a library for automatic method delegation in Rust</p>
+<p class="adapted-from">Adapted from [Kobzol/rust-delegate], a library for automatic method delegation in Rust.</p>
 
 [Kobzol/rust-delegate]: https://github.com/Kobzol/rust-delegate
 
@@ -334,7 +334,7 @@ match x {
 }
 ```
 
-<p class="adapted-from">[the chapter of TRPL about pattern matching](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html)</p>
+<p class="adapted-from">Adapted from [the chapter of TRPL about pattern matching](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html).</p>
 
 Even if it could be fixed, this example still demonstrates the white holes of communication of the main syntax and user-defined macros in Rust: sometimes, due to its multifaceted grammar, it just does not allow us to express things naturally. One possible solution is an [adaptive grammar]:
 

@@ -82,7 +82,7 @@ int sum(const BinaryTree *tree) {
 }
 ```
 
-<p class="adapted-from">[Datatype99], a library for tagged unions</p>
+<p class="adapted-from">Adapted from [Datatype99], a library for tagged unions.</p>
 
 [Datatype99]: https://github.com/Hirrolot/datatype99
 
@@ -112,7 +112,7 @@ void Num_State_set(void *self, int x) {
 impl(State, Num);
 ```
 
-<p class="adapted-from">[Interface99], a library for software interfaces</p>
+<p class="adapted-from">Adapted from [Interface99], a library for software interfaces.</p>
 
 [Interface99]: https://github.com/Hirrolot/interface99
 

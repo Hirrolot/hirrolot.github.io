@@ -85,7 +85,7 @@ list_for_each(current, &self->items) {
 }
 ```
 
-<p class="adapted-from">[`linux/include/linux/list.h`](https://github.com/torvalds/linux/blob/master/include/linux/list.h)</p>
+<p class="adapted-from">Adapted from [`linux/include/linux/list.h`](https://github.com/torvalds/linux/blob/master/include/linux/list.h).</p>
 
 Going further, sometimes you cannot eliminate repetition through trivial macros (macros that cannot loop/recurse). Speaking technically, all macros in C are trivial since the preprocessor blocks macro recursion automatically [@bluepainting; @cloak-rec; @so-rec-macros-1; @so-rec-macros-2]:
 

@@ -262,7 +262,7 @@
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
-<a href="https://github.com/Kobzol/rust-delegate">Kobzol/rust-delegate</a>, a library for automatic method delegation in Rust
+Adapted from <a href="https://github.com/Kobzol/rust-delegate">Kobzol/rust-delegate</a>, a library for automatic method delegation in Rust.
 </p>
 <p>Clearly less nifty. The <code>match</code> control flow operator can do that, why your “powerful” macros cannot? Look:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="cn">Some</span>(<span class="dv">5</span>)<span class="op">;</span></span>
@@ -275,7 +275,7 @@
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    _ <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Default case, x = {:?}&quot;</span><span class="op">,</span> x)<span class="op">,</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
-<a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">the chapter of TRPL about pattern matching</a>
+Adapted from <a href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">the chapter of TRPL about pattern matching</a>.
 </p>
 <p>Even if it could be fixed, this example still demonstrates the white holes of communication of the main syntax and user-defined macros in Rust: sometimes, due to its multifaceted grammar, it just does not allow us to express things naturally. One possible solution is an <a href="https://en.wikipedia.org/wiki/Adaptive_grammar">adaptive grammar</a>:</p>
 <blockquote>
