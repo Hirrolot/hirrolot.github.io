@@ -2,6 +2,7 @@ window.addEventListener("load", function(event) {
     createClickableHeaders();
     createPopupNotes();
     genAuthorEmoji();
+    decorateToc();
 });
 
 function createClickableHeaders() {
@@ -113,5 +114,17 @@ function genAuthorEmoji() {
 
     if (author) {
         author.replaceWith(fancyAuthor);
+    }
+}
+
+function decorateToc() {
+    var toc = document.querySelector("#TOC");
+
+    var tocTitle = document.createElement("h4");
+    tocTitle.className = "toc-title";
+    tocTitle.textContent = "Contents";
+
+    if (toc) {
+        toc.insertBefore(tocTitle, toc.firstChild);
     }
 }

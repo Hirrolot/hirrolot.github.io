@@ -122,7 +122,17 @@ h3:hover {
     border-style: solid;
     border-width: 1px;
     border-color: gray;
-    border-radius: 3px;
+}
+
+#TOC {
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.toc-title {
+    text-align: center;
+    margin-top: 7px;
 }
 
 .posts-history {
