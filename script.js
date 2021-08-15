@@ -19,7 +19,7 @@ function createClickableHeaders() {
 }
 
 function createPopupNotes() {
-    var notes = document.getElementsByClassName("footnote-ref");
+    var notes = document.querySelectorAll(".footnote-ref");
 
     for (var i = notes.length - 1; i >= 0; i--) {
         var sup = document.createElement("sup");
@@ -40,11 +40,11 @@ function createPopupNotes() {
         noteContainer.appendChild(noteText);
 
         noteContainer.addEventListener("mouseover", function() {
-            this.getElementsByClassName("note-text")[0].classList.toggle("show-note");
+            this.querySelector(".note-text").classList.toggle("show-note");
         });
 
         noteContainer.addEventListener("mouseout", function() {
-            this.getElementsByClassName("note-text")[0].classList.remove("show-note");
+            this.querySelector(".note-text").classList.remove("show-note");
         });
 
         notes[i].replaceWith(noteContainer);
