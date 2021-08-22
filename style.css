@@ -109,12 +109,6 @@ h6 {
     transition: 0.1s;
 }
 
-h1:hover,
-h2:hover,
-h3:hover {
-    color: gray;
-}
-
 #TOC,
 .posts-history {
     background-color: lavenderblush;
