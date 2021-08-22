@@ -17,7 +17,7 @@
 img {
     display: block;
     margin: auto;
-    max-width: 800px;
+    max-width: 100%;
     border: 1px dotted gray;
     padding: 3px;
     margin-bottom: 20px;
