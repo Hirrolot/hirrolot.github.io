@@ -114,18 +114,16 @@ rec.c:1:24: note: expanded from macro 'FOO'
 What you are going to do with the following code snippet then?
 
 ```c
-typedef int BinaryTreeLeaf;
-
 typedef struct {
     struct BinaryTree *lhs;
-    BinaryTreeLeaf x;
+    int x;
     struct BinaryTree *rhs;
 } BinaryTreeNode;
 
 typedef struct {
     enum { Leaf, Node } tag;
     union {
-        BinaryTreeLeaf leaf;
+        int leaf;
         BinaryTreeNode node;
     } data;
 } BinaryTree;
