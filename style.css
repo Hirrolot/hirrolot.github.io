@@ -40,14 +40,25 @@ code {
     font-size: 16px;
 }
 
-pre code {
-    display: block;
+pre code:not([class]) {
     background-color: AliceBlue;
-    padding: 16px;
 }
 
-.sourceCode {
+div.sourceCode {
     background-color: lavenderblush;
+}
+
+pre code:not([class]),
+div.sourceCode {
+    display: block;
+    margin: auto;
+    max-width: 700px;
+    padding: 16px;
+    line-height: 25px;
+}
+
+body pre {
+    margin-top: 16px;
 }
 
 .code-annotation {
@@ -59,11 +70,17 @@ pre code {
     font-size: 16px;
     background-color: BlanchedAlmond;
     padding: 0px 5px 0px 5px;
-    margin-bottom: -20px;
     border-radius: 5px 5px 0px 0px;
 }
 
-pre code,
+.code-annotation-container {
+    margin: auto;
+    max-width: 732px;
+    margin-bottom: -16px;
+}
+
+pre code:not([class]),
+div.sourceCode,
 .code-annotation {
     border: 1px dotted LightGray;
 }

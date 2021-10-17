@@ -3,6 +3,7 @@ window.addEventListener("load", function(event) {
     createPopupNotes();
     genAuthorEmoji();
     decorateToc();
+    createCodeAnnotationContainers();
 });
 
 function createClickableHeaders() {
@@ -126,5 +127,17 @@ function decorateToc() {
 
     if (toc) {
         toc.insertBefore(tocTitle, toc.firstChild);
+    }
+}
+
+function createCodeAnnotationContainers() {
+    var codeAnnotations = document.querySelectorAll(".code-annotation");
+
+    for (var i = codeAnnotations.length - 1; i >= 0; i--) {
+        var container = document.createElement("div");
+        container.className = "code-annotation-container";
+
+        codeAnnotations[i].parentNode.insertBefore(container, codeAnnotations[i]);
+        container.appendChild(codeAnnotations[i]);
     }
 }
