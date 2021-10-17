@@ -169,6 +169,10 @@ h6 {
     font-style: italic;
 }
 
+a:hover {
+    background-color: PaleVioletRed;
+}
+
 blockquote {
     font-style: italic;
     color: dimgray;
