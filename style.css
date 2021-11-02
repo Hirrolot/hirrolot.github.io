@@ -128,11 +128,11 @@ h6 {
 
 #TOC,
 .posts-history {
-    background-color: lavenderblush;
     padding: 1px;
     border-style: solid;
-    border-width: 1px;
-    border-color: gray;
+    border-width: 0px 0px 0px 10px;
+    border-color: PaleVioletRed;
+    margin-bottom: 20px;
 }
 
 #TOC {
@@ -144,10 +144,7 @@ h6 {
 .toc-title {
     text-align: center;
     margin-top: 7px;
-}
-
-.posts-history {
-    margin-bottom: 20px;
+    text-decoration: underline;
 }
 
 .posts-year {
