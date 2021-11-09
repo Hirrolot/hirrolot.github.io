@@ -65,12 +65,10 @@ body pre {
     width: auto;
     min-width: min-content;
     max-width: max-content;
+    background-color: #e8ccd7;
     font-style: italic;
-    font-weight: 600;
     font-size: 16px;
-    background-color: #ffc1cc;
     padding: 0px 5px 0px 5px;
-    border-radius: 5px 5px 0px 0px;
 }
 
 .code-annotation-container {
@@ -80,8 +78,7 @@ body pre {
 }
 
 pre code:not([class]),
-div.sourceCode,
-.code-annotation {
+div.sourceCode {
     border: 1px dotted LightGray;
 }
 
