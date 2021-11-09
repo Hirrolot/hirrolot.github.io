@@ -111,7 +111,16 @@ h4,
 h5,
 h6 {
     font-family: 'Roboto Condensed', sans-serif;
-    transition: 0.1s;
+}
+
+h1:hover,
+h2:hover,
+h3:hover,
+h4:hover,
+h5:hover,
+h6:hover {
+    text-decoration: underline;
+    color: gray;
 }
 
 #TOC,
