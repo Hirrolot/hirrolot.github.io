@@ -104,15 +104,6 @@ h2:before {
     color: gray;
 }
 
-h2:after {
-    content: " ";
-    position: absolute;
-    right: 0px;
-    display: block;
-    border: 1px solid gray;
-    width: 100vw;
-}
-
 h1,
 h2,
 h3,
