@@ -228,22 +228,20 @@ If you want to observe the generated code, please follow [godbolt](https://godbo
 The same holds for the aforementioned `AirplaneVTable`. Here is how easy you can define it with [Interface99]:
 
 ```c
-#include <interface99.h>
-
-#define Airplane_INTERFACE                             \
-    iFn(void, move_forward, void *self, int distance); \
-    iFn(void, move_back, void *self, int distance);    \
-    iFn(void, move_up, void *self, int distance);      \
-    iFn(void, move_down, void *self, int distance);
+#define Airplane_IFACE                             \
+    vfunc(void, move_forward, VSelf, int distance) \
+    vfunc(void, move_back, VSelf, int distance)    \
+    vfunc(void, move_up, VSelf, int distance)      \
+    vfunc(void, move_down, VSelf, int distance)
 
 interface(Airplane);
 
 // The definitions of `MyAirplane_*` methods here...
 
-implPrimary(Airplane, MyAirplane);
+impl(Airplane, MyAirplane);
 ```
 
-`implPrimary(Airplane, MyAirplane)` is the most noticeable part here; it deduces the methods' names from the context, freeing you from the burden of updating the definition each time you add/remove/rename an interface method.
+`impl(Airplane, MyAirplane)` is the most noticeable part here; it deduces the methods' names from the context, freeing you from the burden of updating the definition each time you add/remove/rename an interface method.
 
 At the end of the game, you will end up with this:
 
@@ -253,10 +251,10 @@ typedef struct AirplaneVTable AirplaneVTable;
 typedef struct Airplane Airplane;
 
 struct AirplaneVTable {
-    void (*move_forward)(void *self, int distance);
-    void (*move_back)(void *self, int distance);
-    void (*move_up)(void *self, int distance);
-    void (*move_down)(void *self, int distance);
+    void (*move_forward)(VSelf, int distance);
+    void (*move_back)(VSelf, int distance);
+    void (*move_up)(VSelf, int distance);
+    void (*move_down)(VSelf, int distance);
 };
 
 struct Airplane {
@@ -264,13 +262,14 @@ struct Airplane {
     const AirplaneVTable *vptr;
 };
 
-// implPrimary(Airplane, MyAirplane);
-const AirplaneVTable MyAirplane_Airplane_impl = {
+// impl(Airplane, MyAirplane);
+static const AirplaneVTable MyAirplane_Airplane_impl = {
     .move_forward = MyAirplane_move_forward,
     .move_back = MyAirplane_move_back,
     .move_up = MyAirplane_move_up,
     .move_down = MyAirplane_move_down,
 };
+
 ```
 
 Pretty much the same as if you wrote by hand. [Virtual method tables] are so common that they are used almost in every medium/large-sized project in C:
@@ -371,14 +370,14 @@ Take a look at this example with Interface99:
 <p class="code-annotation">`playground.c`</p>
 
 ```c
-#define Foo_INTERFACE iFn(void, foo, int x, int y);
+#define Foo_IFACE vfunc(void, foo, int x, int y)
 interface(Foo);
 
 typedef struct {
     char dummy;
 } MyFoo;
 
-// Missing `void MyFoo_Foo_foo(int x, int y)`.
+// Missing `void MyFoo_foo(int x, int y)`.
 
 impl(Foo, MyFoo);
 ```
@@ -386,10 +385,10 @@ impl(Foo, MyFoo);
 <p class="code-annotation">`/bin/sh`</p>
 
 ```
-playground.c:12:1: error: ‘MyFoo_Foo_foo’ undeclared here (not in a function); did you mean ‘MyFoo_Foo_impl’?
+playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)
    12 | impl(Foo, MyFoo);
       | ^~~~
-      | MyFoo_Foo_impl
+
 ```
 
 When a macro failed, and I do not understand what is wrong just by looking at the console or by looking at its invocation (which is very rare), I observe the expansion with `-E`. This is where the formal specifications of Datatype99 and Interface99 come into play: even in the expanded code, I will not see something unexpected since the code generation semantics are fixed and laid out in their corresponding `README.md`s.

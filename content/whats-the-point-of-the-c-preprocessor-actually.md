@@ -91,25 +91,29 @@ Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make t
 ```c
 #include <interface99.h>
 
-#define State_INTERFACE               \
-    iFn(int, get, void *self);        \
-    iFn(void, set, void *self, int x);
+#define Shape_IFACE                      \
+    vfunc( int, perim, const VSelf)      \
+    vfunc(void, scale, VSelf, int factor)
 
-interface(State);
+interface(Shape);
 
 typedef struct {
-    int x;
-} Num;
+    int a, b;
+} Rectangle;
 
-int Num_State_get(void *self) {
-    return ((Num *)self)->x;
-}
+int  Rectangle_perim(const VSelf) { /* ... */ }
+void Rectangle_scale(VSelf, int factor) { /* ... */ }
 
-void Num_State_set(void *self, int x) {
-    ((Num *)self)->x = x;
-}
+impl(Shape, Rectangle);
 
-impl(State, Num);
+typedef struct {
+    int a, b, c;
+} Triangle;
+
+int  Triangle_perim(const VSelf) { /* ... */ }
+void Triangle_scale(VSelf, int factor) { /* ... */ }
+
+impl(Shape, Triangle);
 ```
 
 <p class="adapted-from">Adapted from [Interface99], a library for software interfaces.</p>
