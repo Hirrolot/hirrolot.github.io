@@ -126,6 +126,7 @@ h3:hover {
     border-width: 0px 0px 0px 10px;
     border-color: PaleVioletRed;
     margin-bottom: 20px;
+    font-style: italic;
 }
 
 #TOC {
