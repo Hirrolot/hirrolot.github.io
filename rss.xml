@@ -5,6 +5,11 @@
         <description>Hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
+            <title>Why Static Languages Suffer From Complexity</title>
+            <guid>https://hirrolot.github.io/posts/why-static-languages-suffer-from-complexity.html.html</guid>
+            <pubDate>Mon, 3 Jan 2022 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title>Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming</title>
             <guid>https://hirrolot.github.io/posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html</guid>
             <pubDate>Thu, 22 Jul 2021 00:00:00 GMT</pubDate>
