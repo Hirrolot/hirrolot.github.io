@@ -44,9 +44,9 @@ references:
 
 People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.
 
-This is what I call **statics-dynamics biformity**: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, or on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce _inconsistency_ to your language; in the latter case, you inevitably introduce the _feature biformity_.
+This is what I call **statics-dynamics biformity**: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce _inconsistency_ to your language; in the latter case, you inevitably introduce the _feature biformity_.
 
-For our purposes, the **statics level** is where all linguistic machinery is performed at compile-time. Similarly, the **dynamics level** is where code is being executed at run-time. Thence the typical control flow operators, such as `if`/`while`/`for`/`return`, data structures, and procedures, are dynamic, whereas static type system features and syntactical macros are static. In essence, the majority of static linguistic abstractions have their correspondence in the dynamic space and vice versa:
+For our purposes, the **statics level** is where all linguistic machinery is being performed at compile-time. Similarly, the **dynamics level** is where code is being executed at run-time. Thence the typical control operators, such as `if`/`while`/`for`/`return`, data structures, and procedures, are dynamic, whereas static type system features and syntactical macros are static. In essence, the majority of static linguistic abstractions have their correspondence in the dynamic space and vice versa:
 
 | Dynamics | Statics |
 |----------|---------|
@@ -60,7 +60,7 @@ For our purposes, the **statics level** is where all linguistic machinery is per
 [Trait bounds]: https://doc.rust-lang.org/book/ch10-02-traits.html
 [Associated types]: https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html
 
-In the following sections, before elaborating on the problem further, let me demonstrate you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system.
+In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system.
 
 ## Record types -- Hash maps
 
@@ -123,7 +123,7 @@ fn main() {
 }
 ```
 
-Yes, if we specify an incorrect type somewhere near `.get`, we will got a panic. But the very **logic** of the program remains the same, only we elevate type checking to run-time.
+Yes, if we specify an incorrect type somewhere near `.get`, we will get a panic. But the very **logic** of the program remains the same, only we elevate type checking to run-time.
 
 ## Sum types -- Trees
 
@@ -252,7 +252,7 @@ const ThisIsFalse: <Negate<True> as Bool>::Value = False;
 const ThisIsTrue: <Negate<False> as Bool>::Value = True;
 ```
 
-(We could even generalise these two implementations of `Negate` over a generic value `Cond`, but this is impossible due to [this bug in the Rust's type system](https://github.com/rust-lang/rust/issues/20400).)
+(We could even generalise these two implementations of `Negate` over a generic value `Cond`, but this is impossible due to a [known bug in the Rust's type system](https://github.com/rust-lang/rust/issues/20400).)
 
 ## Branching -- Trait bounds
 
@@ -379,13 +379,13 @@ You can clearly see the logical resemblance of the both examples -- because the 
 
 [Edsger Dijkstra]: https://en.wikipedia.org/wiki/Edsger_W._Dijkstra
 
-Programming languages nowadays do not focus on the logic. They focus on the mechanisms inferior to logic; they call boolean negation the most simple operator that must exist from the very beginning but [negative trait bounds] are considered a debatable concept with "a lot of issues". The majority of mainstream PLs support the tree data structure in their standard libraries but sum types [stay unimplemented for decades]. I cannot imagine a single language without the `if` operator but only a few PLs accommodate full-fledged trait bounds, not to mention pattern matching. This is **inconsistency** -- it compels software enginners design low-quality APIs that either go dynamic and expose a very few compile-time checks or go static and try to circumvent the fundamental limitations of a host language, thereby making their usage more and more abstruse. Combining statics and dynamics in a single working solution is also complicated, since you cannot invoke dynamics in a static context. In the terms of [function colors], dynamics is coloured red, whereas statics is blue.
+Programming languages nowadays do not focus on the logic. They focus on the mechanisms inferior to logic; they call boolean negation the most simple operator that must exist from the very beginning but [negative trait bounds] are considered a debatable concept with "a lot of issues". The majority of mainstream PLs support the tree data structure in their standard libraries, but sum types [stay unimplemented for decades]. I cannot imagine a single language without the `if` operator, but only a few PLs accommodate full-fledged trait bounds, not to mention pattern matching. This is **inconsistency** -- it compels software enginners design low-quality APIs that either go dynamic and expose a very few compile-time checks or go static and try to circumvent the fundamental limitations of a host language, thereby making their usage more and more abstruse. Combining statics and dynamics in a single working solution is also complicated since you cannot invoke dynamics in a static context. In terms of [function colors], dynamics is coloured red, whereas statics is blue.
 
 [negative trait bounds]: https://github.com/rust-lang/rfcs/issues/1834
 [stay unimplemented for decades]: https://bitbashing.io/std-visit.html
 [function colors]: https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
 
-In addition to this inconsistency, we have feature **biformity**. In such languages as C++, Haskell, and Rust, this biformity amounts to the most perverse forms; you can think of any so-called "expressive" programming language as of two or more smaller languages put together: C++ the language and C++ templates/macros, Rust the language and type-level Rust + declarative macros, etc. This approach increases the learning curve, hardens language evolution, and finally ends up in feature bloat. Take a look at any production code in Haskell and you will immediately see those numerous GHC `#LANGUAGE` clauses, each of which signifies a separate language extension:
+In addition to this inconsistency, we have the feature **biformity**. In such languages as C++, Haskell, and Rust, this biformity amounts to the most perverse forms; you can think of any so-called "expressive" programming language as of two or more smaller languages put together: C++ the language and C++ templates/macros, Rust the language and type-level Rust + declarative macros, etc. This approach increases the learning curve, hardens language evolution, and finally ends up in feature bloat. Take a look at any production code in Haskell and you will immediately see those numerous GHC `#LANGUAGE` clauses, each of which signifies a separate language extension:
 
 <p class="code-annotation">`feature-bloat.hs`</p>
 
@@ -420,7 +420,7 @@ When a host language does not provide enough static capabilities needed for conv
 <ul>
 
 <li>
-We have such libraries as [Boost/Hana] and [Boost/Preprocessor], which simply the copy functionality of C++ to be used at a meta-level:
+We have such libraries as [Boost/Hana] and [Boost/Preprocessor], which simply copy the functionality of C++ to be used at a meta-level:
 
 <p class="code-annotation">`intersperse.cpp`</p>
 
@@ -466,7 +466,7 @@ ML99_ASSERT_EQ(ack(v(0), v(2)), v(3));
 </li>
 
 <li>
-In Rust, there is a library called [Frunk]. It attempts to express the static concepts of Rust using the language of the type system: using Frunk, we can represent ordinary `enum`s as [coproducts] and `struct`s as [`LabelledGeneric`]s. Moreover, Frunk exposes an API for manipulating with [heterogenous lists]: `map`s, left/right folds, etc:
+In Rust, there is a library called [Frunk]. It attempts to express the static concepts of Rust using the language of the type system: using Frunk, we can represent ordinary `enum`s as [coproducts] and `struct`s as [`LabelledGeneric`]s. Moreover, Frunk exposes an API for manipulating with [heterogenous lists]: `map`s, left/right folds, etc.:
 
 <p class="code-annotation">`reverse-hlist.rs`</p>
 
@@ -561,10 +561,9 @@ With this approach, each time you write some inherently static code at a meta-le
 
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg)
 
+This is woefully to say, but it seems that an "expressive" PL nowadays means "Hey there, I have seriously messed up with the number of features, but that is fine".
 
-This is woefully to say, but it seems that an "expressive" PL nowadays means "Hey there, I have seriously messed up with the number of features but that is fine".
-
-Finally, a word has to be said about metaprogramming in a host language. With such systems as [Template Haskell] and [Rust's procedural macros], we can manipulate an AST of a host language using the same language, which is good in the terms of biformity but unpleasant in the terms of inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function, since they are just different concepts. Personally, I do think that procedural macros in Rust are a giant design mistake that is comparable to `#define` macros in plain C: aside of pure syntax, the macro system simply has no idea about the language being manipulated. E.g., imagine there is an enumeration called `Either`, whose definition is as follows:
+Finally, a word has to be said about metaprogramming in a host language. With such systems as [Template Haskell] and [Rust's procedural macros], we can manipulate an AST of a host language using the same language, which is good in terms of biformity but unpleasant in terms of inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function, since they are just different concepts. Personally, I do think that procedural macros in Rust are a giant design mistake that is comparable to `#define` macros in plain C: aside from pure syntax, the macro system simply has no idea about the language being manipulated. E.g., imagine there is an enumeration called `Either`, whose definition is as follows:
 
 [Template Haskell]: https://wiki.haskell.org/A_practical_Template_Haskell_Tutorial
 [Rust's procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
@@ -582,15 +581,15 @@ pub enum Either<L, R> {
 
 [either::Either]: https://docs.rs/either/latest/either/enum.Either.html
 
-Now imagine we have an arbitrary trait `Foo` and we are willing to implement this trait for `Either<L, R>`, where `L` and `R` both implement `Foo`. It turns out that we cannot apply a derive macro to `Either` that implements this trait, even if the name is known, because in order to do this, this macro must know all the signatures of `Foo`. To make the situation even worse, `Foo` may be defined in a separate library, meaning that we cannot augment its definition with extra meta-information needed for the derivation for `Either<L, R>`. While it may seem as a rare scanario, in fact it is not; I highly encourage you to look at [tokio-util]'s [`Either`](https://docs.rs/tokio-util/latest/tokio_util/either/enum.Either.html), which is **exactly** the same enumeration but it implements Tokio-specific traits, such as `AsyncRead`, `AsyncWrite`, `AsyncSeek`, etc [^my-tokio-either]. Now imagine you have five different `Either`s in your project that came from different libraries -- that would be a true integration headache! While type introspection may be a compromise, it would nonetheless make the language even more complex than it is.
+Now imagine we have an arbitrary trait `Foo`, and we are willing to implement this trait for `Either<L, R>`, where `L` and `R` both implement `Foo`. It turns out that we cannot apply a derive macro to `Either` that implements this trait, even if the name is known because, in order to do this, this macro must know all the signatures of `Foo`. To make the situation even worse, `Foo` may be defined in a separate library, meaning that we cannot augment its definition with extra meta-information needed for the derivation for `Either<L, R>`. While it may seem as a rare scanario, in fact it is not; I highly encourage you to look at [tokio-util]'s [`Either`](https://docs.rs/tokio-util/latest/tokio_util/either/enum.Either.html), which is **exactly** the same enumeration but it implements Tokio-specific traits, such as `AsyncRead`, `AsyncWrite`, `AsyncSeek`, etc [^my-tokio-either]. Now imagine you have five different `Either`s in your project that came from different libraries -- that would be a true integration headache! While type introspection may be a compromise, it would nonetheless make the language even more complex than it is.
 
 [tokio-util]: https://docs.rs/tokio-util/latest/tokio_util/
 
 ## Is there a way out?...
 
-Let us think a little bit on how to workaround the issue. If make our languages fully dynamic, we will win biformity and inconsistency [^terra], but will imminently lose the pleasure of compile-time validation and will end up debugging our programs at mid-nights. The misery of dynamic type systems is widely known.
+Let us think a little bit about how to workaround the issue. If we make our languages fully dynamic, we will win biformity and inconsistency [^terra], but will imminently lose the pleasure of compile-time validation and will end up debugging our programs at mid-nights. The misery of dynamic type systems is widely known.
 
-The only way to approach the problem is to make a language whose features are both static and dynamic, and not to split the same feature into two parts [^dep-types]. Thus, the ideal linguistic abstraction is both static and dynamic; however, it is still a single concept and not two logically similar concepts but with different interfaces [^concept-disorder]. A perfect example is [CTFE], colloquially known as `constexpr`: same code can be executed at compile-time under a static context and at run-time under a dynamic context (e.g., when requesting a user input from `stdin`.); thus, we do not have to write different code for compile-time (statics) and run-time (dynamics), instead we use the same representation.
+The only way to approach the problem is to make a language whose features are both static and dynamic and not to split the same feature into two parts [^dep-types]. Thus, the ideal linguistic abstraction is both static and dynamic; however, it is still a single concept and not two logically similar concepts but with different interfaces [^concept-disorder]. A perfect example is [CTFE], colloquially known as `constexpr`: same code can be executed at compile-time under a static context and at run-time under a dynamic context (e.g., when requesting a user input from `stdin`.); thus, we do not have to write different code for compile-time (statics) and run-time (dynamics), instead we use the same representation.
 
 [CTFE]: https://en.wikipedia.org/wiki/Compile-time_function_execution
 
@@ -600,7 +599,7 @@ Programming languages ought to be rethought.
 
 ## References
 
-[^const-generics]: Some time ago, a small part of [const generics] has been stabilised. In perspective, const generics could replace Typenum by using the same integer representation as in ordinary code.
+[^const-generics]: Some time ago, a small part of [const generics] was stabilised. In perspective, they could replace Typenum by using the same integer representation as in ordinary code.
 
 [const generics]: https://github.com/rust-lang/rust/issues/44580
 
@@ -608,13 +607,13 @@ Programming languages ought to be rethought.
 
 [teloxide]: https://github.com/teloxide/teloxide
 
-[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.
+[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.<br><br>As of Jan. 4 2022, tokio-either has 5,394 downloads total.
 
 [tokio-either]: https://github.com/Hirrolot/tokio-either
 
 [^terra]: Terra is a perfect example of a simple dynamic language. In the ["Simplicity" section](https://terralang.org/#simplicity), they show how features of static PLs can be implemented as libraries in dynamic languages.
 
-[^dep-types]: To achieve so, we could use [dependent types]. For example, when requesting a field value from a hash map, as in one of the examples above, the `get` function will request a _proof_ that the field actually exists in that hash map; this way, the check will be performed at compile-time, using the same hash map that we use at run-time. Dependent types, however, are still too low-level to me, and I hardly believe that they will find their production use in their current form. With such powerful typing facilities, you typically twiddle with your type system instead of focusing on a business logic.
+[^dep-types]: To achieve so, we could use [dependent types]. For example, when requesting a field value from a hash map, as in one of the examples above, the `get` function will request a _proof_ that the field actually exists in that hash map; this way, the check will be performed at compile-time, using the same hash map that we use at run-time. Dependent types, however, are still too low-level to me, and I hardly believe that they will find their production use in their current form. With such powerful typing facilities, you typically twiddle with your type system instead of focusing on business logic.
 
 [dependent types]: https://www.idris-lang.org/
 
