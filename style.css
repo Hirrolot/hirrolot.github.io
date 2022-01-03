@@ -68,6 +68,8 @@ body pre {
     font-style: italic;
     font-size: 16px;
     padding: 0px 5px 0px 5px;
+    border-style: dashed;
+    border-width: 1px;
 }
 
 .code-annotation-container {
@@ -126,6 +128,9 @@ h3:hover {
     border-width: 0px 0px 0px 10px;
     border-color: PaleVioletRed;
     margin-bottom: 20px;
+}
+
+.posts-history {
     font-style: italic;
 }
 
