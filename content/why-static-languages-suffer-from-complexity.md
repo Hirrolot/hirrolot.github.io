@@ -42,12 +42,6 @@ references:
     URL: "https://www.works-hub.com/learn/deriving-inductive-proofs-in-rust-making-compiler-work-for-you-69ed2"
 ---
 
-> Are you quite sure that all those bells and whistles, all those wonderful facilities of your so called powerful programming languages, belong to the solution set rather than the problem set?
-
-<p class="quote-author">[Edsger Dijkstra]</p>
-
-[Edsger Dijkstra]: https://en.wikipedia.org/wiki/Edsger_W._Dijkstra
-
 People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.
 
 This is what I call **statics-dynamics biformity**: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, or on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce _inconsistency_ to your language; in the latter case, you inevitably introduce the _feature biformity_.
@@ -379,6 +373,12 @@ You can clearly see the logical resemblance of the both examples -- because the 
 
 ## The unfortunate consequences of being static
 
+> Are you quite sure that all those bells and whistles, all those wonderful facilities of your so called powerful programming languages, belong to the solution set rather than the problem set?
+
+<p class="quote-author">[Edsger Dijkstra]</p>
+
+[Edsger Dijkstra]: https://en.wikipedia.org/wiki/Edsger_W._Dijkstra
+
 Programming languages nowadays do not focus on the logic. They focus on the mechanisms inferior to logic; they call boolean negation the most simple operator that must exist from the very beginning but [negative trait bounds] are considered a debatable concept with "a lot of issues". The majority of mainstream PLs support the tree data structure in their standard libraries but sum types [stay unimplemented for decades]. I cannot imagine a single language without the `if` operator but only a few PLs accommodate full-fledged trait bounds, not to mention pattern matching. This is **inconsistency** -- it compels software enginners design low-quality APIs that either go dynamic and expose a very few compile-time checks or go static and try to circumvent the fundamental limitations of a host language, thereby making their usage more and more abstruse. Combining statics and dynamics in a single working solution is also complicated, since you cannot invoke dynamics in a static context. In the terms of [function colors], dynamics is coloured red, whereas statics is blue.
 
 [negative trait bounds]: https://github.com/rust-lang/rfcs/issues/1834
@@ -415,12 +415,134 @@ In addition to this inconsistency, we have feature **biformity**. In such langua
 
 [haskell/haskell-language-server]: https://github.com/haskell/haskell-language-server/blob/ee0a0cc78352c961f641443eea89a26b9e1d3974/hls-plugin-api/src/Ide/Types.hs
 
-Some programmers go especially insane and develop whole new compile-time languages atop of existing ones:
+When a host language does not provide enough static capabilities needed for convenient development, some programmers go especially insane and create whole new compile-time metalanguages and eDSLs atop of existing ones. Thus, inconsistency has the treacherous property of transforming into biformity:
 
- - We have such libraries as [Boost/Hana] and [Boost/Preprocessor], which simply the copy functionality of C++ to be used at a meta-level.
- - My own metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor to implement compile-time recursion, collections, data structures, control flow operators, and more.
- - In Rust, there is a library called [Frunk]. It attempts to express the static concepts of Rust using the language of the type system: using Frunk, we can represent ordinary `enum`s as [coproducts] and `struct`s as [`LabelledGeneric`]s. Moreover, Frunk exposes an API for manipulating with [heterogenous lists]: `map`s, left/right folds, etc.
- - Yet another library named [Typenum]: it allows to perform integral calculations at compile-time. Albeit quite different in design, it essentially takes the same approach as we did in the section on type-level induction: it represents numbers as generics, through the abuse of the type system [^const-generics].
+<ul>
+
+<li>
+We have such libraries as [Boost/Hana] and [Boost/Preprocessor], which simply the copy functionality of C++ to be used at a meta-level:
+
+<p class="code-annotation">`intersperse.cpp`</p>
+
+```cpp
+static_assert(
+    hana::intersperse(hana::make_tuple(1, '2', 3.3), 'x')
+    == hana::make_tuple(1, 'x', '2', 'x', 3.3), "");
+BOOST_HANA_CONSTANT_CHECK(
+    hana::intersperse(hana::make_tuple(), 'x')
+    == hana::make_tuple());
+```
+
+<p class="adapted-from">Adapted from [hana/example/intersperse.cpp].</p>
+
+[hana/example/intersperse.cpp]: https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a2f36/example/intersperse.cpp
+
+</li>
+
+<li>
+My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor:
+
+<p class="code-annotation">`ackermann.c`</p>
+
+```c
+#define ack(m, n) ML99_natMatchWithArgs(m, v(ack_), n)
+
+#define ack_Z_IMPL(n)      ML99_inc(v(n))
+#define ack_S_IMPL(m, n)   ML99_natMatchWithArgs(v(n), v(ack_S_), v(m))
+#define ack_S_Z_IMPL(m)    ack(v(m), v(1))
+#define ack_S_S_IMPL(n, m) ack(v(m), ack(ML99_inc(v(m)), v(n)))
+
+ML99_ASSERT_EQ(ack(v(0), v(0)), v(1));
+ML99_ASSERT_EQ(ack(v(0), v(1)), v(2));
+ML99_ASSERT_EQ(ack(v(0), v(2)), v(3));
+
+// ...
+```
+
+<p class="adapted-from">Adapted from [metalang99/examples/ackermann.c].</p>
+
+[metalang99/examples/ackermann.c]: https://github.com/Hirrolot/metalang99/blob/63d20d61fc97736b748c62fc9a95e61122411651/examples/ackermann.c
+
+</li>
+
+<li>
+In Rust, there is a library called [Frunk]. It attempts to express the static concepts of Rust using the language of the type system: using Frunk, we can represent ordinary `enum`s as [coproducts] and `struct`s as [`LabelledGeneric`]s. Moreover, Frunk exposes an API for manipulating with [heterogenous lists]: `map`s, left/right folds, etc:
+
+<p class="code-annotation">`reverse-hlist.rs`</p>
+
+```rust
+assert_eq!(hlist![].into_reverse(), hlist![]);
+
+assert_eq!(
+    hlist![1, "hello", true, 42f32].into_reverse(),
+    hlist![42f32, true, "hello", 1],
+)
+```
+
+<p class="adapted-from">Adapted from the docs of [HCons::into_reverse].</p>
+
+[HCons::into_reverse]: https://beachape.com/frunk/frunk/hlist/struct.HCons.html#method.into_reverse
+
+</li>
+
+<li>
+Yet another library named [Typenum]: it allows to perform integral calculations at compile-time. Albeit quite different in design, it essentially takes the same approach as we did in the section on type-level induction: it represents numbers as generics, through the abuse of the type system [^const-generics]:
+
+<p class="code-annotation">`typenum.rs`</p>
+
+```rust
+use std::ops::{Add, Div, Mul, Rem, Sub};
+use typenum::{Integer, N3, P2};
+
+assert_eq!(<N3 as Add<P2>>::Output::to_i32(), -1);
+assert_eq!(<N3 as Sub<P2>>::Output::to_i32(), -5);
+assert_eq!(<N3 as Mul<P2>>::Output::to_i32(), -6);
+assert_eq!(<N3 as Div<P2>>::Output::to_i32(), -1);
+assert_eq!(<N3 as Rem<P2>>::Output::to_i32(), -1);
+```
+
+<p class="adapted-from">Adapted from the docs of [typenum::int].</p>
+
+[typenum::int]: https://docs.rs/typenum/1.15.0/typenum/int/index.html
+
+</li>
+
+<li>
+The [VLC media player] has a macro-based [plugin API] used to represent media codecs. For example, here is how Opus is defined:
+
+<p class="code-annotation">`opus.c`</p>
+
+```c
+vlc_module_begin ()
+    set_subcategory( SUBCAT_INPUT_ACODEC )
+
+    set_description( N_("Opus audio decoder") )
+    set_capability( "audio decoder", 100 )
+    set_shortname( N_("Opus") )
+    set_callbacks( OpenDecoder, CloseDecoder )
+
+#ifdef ENABLE_SOUT
+    add_submodule ()
+    set_description( N_("Opus audio encoder") )
+    set_capability( "audio encoder", 150 )
+    set_shortname( N_("Opus") )
+    set_callbacks( OpenEncoder, CloseEncoder )
+#endif
+
+vlc_module_end ()
+```
+
+<p class="adapted-from">Adapted from [vlc/modules/codec/opus.c].</p>
+
+[vlc/modules/codec/opus.c]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/modules/codec/opus.c
+
+[Greenspun's tenth rule] now eternalised.
+
+[Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
+
+</li>
+
+</ul>
 
 [Boost/Hana]: https://github.com/boostorg/hana
 [Boost/Preprocessor]: https://github.com/boostorg/preprocessor
@@ -430,12 +552,19 @@ Some programmers go especially insane and develop whole new compile-time languag
 [heterogenous lists]: https://beachape.com/frunk/frunk/hlist/index.html
 [Metalang99]: https://github.com/Hirrolot/metalang99
 [Typenum]: https://github.com/paholg/typenum
+[VLC media player]: https://github.com/videolan/vlc
+[plugin API]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/include/vlc_plugin.h
 
-Even worse, each time you write some inherently static code at a meta-level, you cannot reuse it in the host language and vice versa, thus violating the [DRY principle]. This is woefully to say, but it seems that an "expressive" PL nowadays means "Hey there, I have seriously messed up with the number of features but that is fine".
+With this approach, each time you write some inherently static code at a meta-level, you cannot reuse it in the host language and vice versa, thus violating the [DRY principle]. Even worse, such hand-made metalanguages tend to result in inscrutable compiler diagnostics that can be summarised in the following screenshot [^teloxide-error-message]:
 
 [DRY principle]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself
 
-Also, a word has to be said about metaprogramming in a host language. With such systems as [Template Haskell] and [Rust's procedural macros], we can manipulate an AST of a host language using the same language, which is good in the terms of biformity but unpleasant in the terms of inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function, since they are just different concepts. Personally, I do think that procedural macros in Rust are a giant design mistake that is comparable to `#define` macros in plain C: aside of pure syntax, the macro system simply has no idea about the language being manipulated. E.g., imagine there is an enumeration called `Either`, whose definition is as follows:
+![](../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg)
+
+
+This is woefully to say, but it seems that an "expressive" PL nowadays means "Hey there, I have seriously messed up with the number of features but that is fine".
+
+Finally, a word has to be said about metaprogramming in a host language. With such systems as [Template Haskell] and [Rust's procedural macros], we can manipulate an AST of a host language using the same language, which is good in the terms of biformity but unpleasant in the terms of inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function, since they are just different concepts. Personally, I do think that procedural macros in Rust are a giant design mistake that is comparable to `#define` macros in plain C: aside of pure syntax, the macro system simply has no idea about the language being manipulated. E.g., imagine there is an enumeration called `Either`, whose definition is as follows:
 
 [Template Haskell]: https://wiki.haskell.org/A_practical_Template_Haskell_Tutorial
 [Rust's procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
@@ -474,6 +603,10 @@ Programming languages ought to be rethought.
 [^const-generics]: Some time ago, a small part of [const generics] has been stabilised. In perspective, const generics could replace Typenum by using the same integer representation as in ordinary code.
 
 [const generics]: https://github.com/rust-lang/rust/issues/44580
+
+[^teloxide-error-message]: Got it while working on [teloxide], IIRC.
+
+[teloxide]: https://github.com/teloxide/teloxide
 
 [^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.
 
