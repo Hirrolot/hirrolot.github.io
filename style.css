@@ -35,8 +35,8 @@ p {
     text-align: justify;
 }
 
-code {
-    font-size: 16px;
+code:not([class]) {
+    font-size: 18px;
 }
 
 pre code:not([class]) {
@@ -54,6 +54,7 @@ div.sourceCode {
     max-width: 700px;
     padding: 16px;
     line-height: 25px;
+    font-size: 16px;
 }
 
 body pre {
@@ -76,6 +77,10 @@ body pre {
     margin: auto;
     max-width: 732px;
     margin-bottom: -16px;
+}
+
+.code-annotation code {
+    font-size: 16px;
 }
 
 pre code:not([class]),
