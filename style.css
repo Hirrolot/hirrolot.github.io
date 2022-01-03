@@ -201,7 +201,8 @@ blockquote::before {
     font-size: 18px;
 }
 
-ul {
+ul,
+ol {
     text-align: justify;
 }
 
