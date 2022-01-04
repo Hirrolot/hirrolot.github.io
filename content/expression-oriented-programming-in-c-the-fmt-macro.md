@@ -4,6 +4,8 @@ author: Hirrolot's Blog
 date: May 14, 2021
 ---
 
+<div class="introduction">
+
 Have you ever created useless intermediate variables like this?
 
 ```c
@@ -25,6 +27,8 @@ reply_to_user(FMT((char[128]){0}, "Your fee is %d USD", fee));
 ```
 
 [`std::format!`]: https://doc.rust-lang.org/std/macro.format.html
+
+</div>
 
 ## sprintf
 
@@ -107,6 +111,6 @@ Compound literals facilitate expression-oriented programming too. They represent
 
 I hope you enjoyed the post. Looking forward to any feedback!
 
-## Links
+Links:
 
  - [The original post](https://dev.to/hirrolot/expression-oriented-programming-in-c-the-fmt-macro-43jo)

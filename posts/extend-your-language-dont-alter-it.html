@@ -126,14 +126,15 @@
 <li><a href="#the-bliss-of-lisp-why-s-expressions-are-so-hot">The bliss of Lisp: Why S-expressions are so hot</a></li>
 <li><a href="#extending-good-old-c">Extending good old C</a></li>
 <li><a href="#final-words">Final words</a></li>
-<li><a href="#discussions">Discussions</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 </nav>
+<div class="introduction">
 <p>Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or are not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?</p>
 <p>Generally, you have two approaches: first, you can continue living an utterly miserable and hopeless life without the feature, and second, you can implement the feature by means of some kind of <em>meta-abstraction</em>.</p>
 <p>The first approach would introduce additional <a href="https://en.wikipedia.org/wiki/Technical_debt">technical debt</a> to your architecture. Given that sufficiently large codebases written in such languages as C already have a considerable amount of debt in them,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> this would make the situation even worse. On the other hand, the second approach, when you roll up your sleeves and implement a new linguistic abstraction by yourself, relieves much more potential: now you do not need to wait for a new language release with the desired functionality (which might never happen), and your codebase then going to suffer less because you are becoming able to express something important to sustain code elegance.</p>
 <p>However, when you find yourself engineering a custom linguistic abstraction, you are in the position of a language designer. What it practically means is that the affairs can go especially tricky because your feature ought to fit well with all the other features your host language already has. In particular, the desired ability must look <em>natural</em>: it is when you feel like you continue programming in that general-purpose PL, but with the new feature added; it should not feel like an alien spacecraft fallen to Earth. In this post, I am to elaborate on the example of three PLs supporting user extension, C, Rust, and Common Lisp.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> I will show you how to <em>extend</em> the language, not to <em>alter</em> it.</p>
+</div>
 <h2 id="establishing-the-terminology">Establishing the terminology</h2>
 <p>What do I mean by that gorgeous word, linguistic abstraction, to which I have referred two times in the introduction part? Basically, it is any language “feature”: a variable, an interface, a function. And guess what a <em>metalinguistic abstraction</em> means? Recall that the prefix “meta” simply means that the thing is used to deal with something of a similar nature: a metaprogram manipulates other programs, metadata describe other data, a <a href="https://en.wikipedia.org/wiki/Metasyntax">metagrammar</a> specifies other grammars, and so on. From this point we conclude that a metalinguistic abstraction is a linguistic abstraction used to deal with other linguistic abstractions. I am only aware of two types of them: code generation (or macros, or metaprogramming, whichever term you prefer)<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and a type system.</p>
 <p><strong>Why macros are “meta?”</strong> Well, macros can do pretty much anything with the code: they can accept it, they can transform it, they can emit the code… remember how Rust allows you to execute arbitrary instructions inside <a href="https://doc.rust-lang.org/reference/procedural-macros.html">procedural macros</a>, remember the <a href="https://danielkeep.github.io/tlborm/book/pat-incremental-tt-munchers.html">incremental TT muncher pattern</a>, or how you can brutally imitate type polymorphism through the C preprocessor <span class="citation" data-cites="mlib STC C-Macro-Collections">(Patrick Pelissier, n.d.; Tyge Løvset, n.d.; Leonardo Vencovsky, n.d.)</span>. Whilst macros can manipulate other code, other code cannot manipulate macros<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> – this is the reason why macros are “meta.”</p>
@@ -299,7 +300,7 @@ Wikipedia <span class="citation" data-cites="wikipedia-adaptive-grammar">(Wikipe
 <p>The intent of this blog post was to advocate the principle of syntactical consistency.</p>
 <p>I encourage you to mimic the syntax of a host language when writing macros, to make your code look more eye-pleasing, less like a malevolent beast.</p>
 <p>I encourage you to <strong>extend, not to alter</strong>.</p>
-<h2 id="discussions">Discussions</h2>
+<p>Discussions:</p>
 <ul>
 <li><a href="https://www.reddit.com/r/programming/comments/oexpgf/extend_your_language_dont_alter_it/">r/programming</a></li>
 <li><a href="https://www.reddit.com/r/rust/comments/oexogi/extend_your_language_dont_alter_it/">r/rust</a></li>

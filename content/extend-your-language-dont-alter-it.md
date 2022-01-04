@@ -111,6 +111,8 @@ references:
     URL: "https://en.wikipedia.org/wiki/Adaptive_grammar"
 ---
 
+<div class="introduction">
+
 Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or are not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
 
 Generally, you have two approaches: first, you can continue living an utterly miserable and hopeless life without the feature, and second, you can implement the feature by means of some kind of _meta-abstraction_.
@@ -120,6 +122,8 @@ The first approach would introduce additional [technical debt] to your architect
 [technical debt]: https://en.wikipedia.org/wiki/Technical_debt
 
 However, when you find yourself engineering a custom linguistic abstraction, you are in the position of a language designer. What it practically means is that the affairs can go especially tricky because your feature ought to fit well with all the other features your host language already has. In particular, the desired ability must look _natural_: it is when you feel like you continue programming in that general-purpose PL, but with the new feature added; it should not feel like an alien spacecraft fallen to Earth. In this post, I am to elaborate on the example of three PLs supporting user extension, C, Rust, and Common Lisp [^wish-knew-lisp]. I will show you how to _extend_ the language, not to _alter_ it.
+
+</div>
 
 ## Establishing the terminology
 
@@ -380,7 +384,7 @@ I encourage you to mimic the syntax of a host language when writing macros, to m
 
 I encourage you to **extend, not to alter**.
 
-## Discussions
+Discussions:
 
  - [r/programming](https://www.reddit.com/r/programming/comments/oexpgf/extend_your_language_dont_alter_it/)
  - [r/rust](https://www.reddit.com/r/rust/comments/oexogi/extend_your_language_dont_alter_it/)

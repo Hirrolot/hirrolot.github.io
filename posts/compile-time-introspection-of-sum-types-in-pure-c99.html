@@ -99,12 +99,9 @@
 <p class="author">Hirrolot’s Blog</p>
 <p class="date">Apr 25, 2021</p>
 </header>
-<nav id="TOC" role="doc-toc">
-<ul>
-<li><a href="#links">Links</a></li>
-</ul>
-</nav>
+<div class="introduction">
 <p>Recently I’ve published a <a href="https://hirrolot.medium.com/unleashing-sum-types-in-pure-c99-31544302d2ba">blog post</a> about <a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library implementing sum types in pure C99 with preprocessor macros only. Today I’m going to present its new metaprogramming ability: introspection of sum types at compilation time, also with preprocessor macros only.</p>
+</div>
 <p>First of all, what is type introspection? For our purposes, type introspection means the retrieval and manipulation of a type representation: imagine for a second that you could gather all variants of a sum type and automatically implement some interface for it! Sounds seditiously? Let me show you how you can achieve it.</p>
 <p>Type the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
@@ -230,7 +227,7 @@ The generated metadata
 <p>If you’re acquainted with Rust, you probably already know a plenty of use cases. Possible practical applications include strongly typed JSON (as in <a href="https://github.com/serde-rs/json">serde-json</a>), strongly typed command-line arguments (as in <a href="https://github.com/clap-rs/clap">CLAP</a>), and even finite-state machine management (as in <a href="https://github.com/teloxide/teloxide/tree/8d8041ad6d73efd00a15943093413912704ecd14#dialogues-management">teloxide</a>).</p>
 <p>Of course, not only sum types can be introspected but also product types, more commonly known as <em>record types</em>, but Datatype99 doesn’t provide them at the time of publishing this post.</p>
 <p>I hope you enjoyed this post and will give Datatype99 a try!</p>
-<h2 id="links">Links</h2>
+<p>Links:</p>
 <ul>
 <li><a href="https://github.com/Hirrolot/datatype99#installation">Datatype99 installation instructions</a></li>
 <li><a href="https://hirrolot.medium.com/compile-time-introspection-of-sum-types-in-pure-c99-ffa523b60385">The original post</a></li>

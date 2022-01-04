@@ -99,11 +99,7 @@
 <p class="author">Hirrolot’s Blog</p>
 <p class="date">Feb 6, 2021</p>
 </header>
-<nav id="TOC" role="doc-toc">
-<ul>
-<li><a href="#links">Links</a></li>
-</ul>
-</nav>
+<div class="introduction">
 <p>Some time ago, I was writing a <a href="https://en.wikipedia.org/wiki/Tagged_Image_File_Format">TIFF</a> encoder. A TIFF file consists of a header and a sequence of TIFF entries. To represent a TIFF entry, I wrote this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">enum</span> <span class="op">{</span></span>
@@ -133,6 +129,7 @@
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Well, clearly not the best code I ever wrote. The pattern here is called a <a href="https://medium.com/r/?url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FTagged_union">tagged union</a> – a structure consisting of a tag and a payload. Here, the tag is the enumeration of <code>TIFFEntryValueTagSmall</code> and <code>TIFFEntryValueTagBlock</code>, both of which correspond to <code>small_value</code> and <code>block</code>, respectively: if <code>tag</code> is <code>TIFFEntryValueTagSmall</code>, then <code>small_value</code> must be present, and if <code>TIFFEntryValueTagBlock</code>, then block must be present.</p>
+</div>
 <p>Below the structure itself, the two functions are called <em>value constructors</em> – they construct values of <code>TIFFEntryValue</code>.</p>
 <p>To match a TIFF value, a switch statement is used:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>entry<span class="op">.</span>tag<span class="op">)</span> <span class="op">{</span></span>
@@ -288,7 +285,7 @@ Output
 <pre><code>(x + 123)</code></pre>
 </details>
 <p>I hope that now, the usage and syntax of sum types is perfectly clear, as well as the rationale behind them. The next article will be dedicated to zero-cost, convenient error handling using sum types.</p>
-<h2 id="links">Links</h2>
+<p>Links:</p>
 <ul>
 <li><a href="https://github.com/Hirrolot/datatype99#installation">Datatype99 installation instructions</a></li>
 <li><a href="https://hirrolot.medium.com/unleashing-sum-types-in-pure-c99-31544302d2ba">The original post</a></li>

@@ -110,6 +110,7 @@
 <li><a href="#is-there-a-way-out">Is there a way out?…</a></li>
 </ul>
 </nav>
+<div class="introduction">
 <p><img src="../media/why-static-languages-suffer-from-complexity/preview.jpg" /></p>
 <p>People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.</p>
 <p>This is what I call <strong>statics-dynamics biformity</strong>: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce <em>inconsistency</em> to your language; in the latter case, you inevitably introduce the <em>feature biformity</em>.</p>
@@ -149,6 +150,7 @@
 </tbody>
 </table>
 <p>In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system. If you feel busy, feel free to jump right to the <a href="#the-unfortunate-consequences-of-being-static">main section</a> about the problem explanation.</p>
+</div>
 <h2 id="record-types-hash-maps">Record types – Hash maps</h2>
 <p>Consider your everyday manipulation with record types (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=945f3a2f34937369495b3733718598a5">playground</a>):</p>
 <p class="code-annotation">

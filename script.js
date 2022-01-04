@@ -4,6 +4,7 @@ window.addEventListener("load", function(event) {
     genAuthorEmoji();
     decorateToc();
     createCodeAnnotationContainers();
+    moveTocDown();
 });
 
 function createClickableHeaders() {
@@ -140,4 +141,11 @@ function createCodeAnnotationContainers() {
         codeAnnotations[i].parentNode.insertBefore(container, codeAnnotations[i]);
         container.appendChild(codeAnnotations[i]);
     }
+}
+
+function moveTocDown() {
+    var introduction = document.querySelector(".introduction");
+    var toc = document.querySelector("#TOC");
+
+    toc.parentNode.insertBefore(introduction, toc);
 }

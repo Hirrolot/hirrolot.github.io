@@ -126,11 +126,10 @@
 <li><a href="#what-about-the-compilation-errors">What about the compilation errors?</a></li>
 <li><a href="#the-compilation-times">The compilation times?</a></li>
 <li><a href="#final-words">Final words</a></li>
-<li><a href="#links">Links</a></li>
-<li><a href="#discussions">Discussions</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 </nav>
+<div class="introduction">
 <p><em>This post has a <a href="../posts/whats-the-point-of-the-c-preprocessor-actually.html">followup</a>.</em></p>
 <p>Have you ever envisioned the daily C preprocessor as a tool for some decent metaprogramming?</p>
 <p>Have you ever envisioned the C preprocessor as a tool that can improve the correctness, clarity, and overall maintainability of your code, when used sanely?</p>
@@ -138,6 +137,7 @@
 <p>Meet <a href="https://github.com/Hirrolot/metalang99">Metalang99</a>, a simple functional language that allows you to create complex metaprograms. It represents a header-only macro library, so everything you need to set it up is <code>-Imetalang99/include</code> and a C99 compiler.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> However, today I shall focus only on two accompanying libraries – <a href="https://github.com/Hirrolot/datatype99">Datatype99</a> and <a href="https://github.com/Hirrolot/interface99">Interface99</a>. Being implemented atop of Metalang99, they unleash the potential of preprocessor metaprogramming at the full scale, and therefore are more useful for an average C programmer.</p>
 <p>I shall also address a few captious questions regarding compilation times, compilation errors, and applicability of my method to the real world.</p>
 <p>Nuff said, let us dive into it!</p>
+</div>
 <h2 id="the-three-kinds-of-code-repetition">The three kinds of code repetition</h2>
 <p>There is an important thing called <em>code repetition</em>. There are three kinds of it:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <ol type="1">
@@ -399,14 +399,14 @@ sys     0m0,011s</code></pre>
 <p>If you stick to the first choice, are you sure that it would be easier to figure out what is wrong with the code at runtime rather than at compile-time, especially when unreified abstractions got intertwined with your business logic? Are you okay with the fact that more bugs will end up being hidden in deployed production code instead of being intelligently found by a compiler (as in static vs. dynamic typing)?</p>
 <p>If you stick to the second choice, are you sure your team will let you integrate all this metaprogramming machinery into your codebase, even if used indirectly? I have seen several groups of developers that had to review all third-party code they use<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> – not every programmer can/want to review Metalang99. Not to be misunderstood, I have made Metalang99, Datatype99, and Interface99 in the most simple and clean way I could, but the very nature of the preprocessor really makes itself felt.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <p>The choice is up to you.</p>
-<h2 id="links">Links</h2>
+<p>Links:</p>
 <ul>
 <li>Installation instructions for <a href="https://github.com/Hirrolot/metalang99#getting-started">Metalang99</a>, <a href="https://github.com/Hirrolot/datatype99#installation">Datatype99</a>, <a href="https://github.com/Hirrolot/interface99#installation">Interface99</a>.</li>
 <li><a href="https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">Q: Why use C instead of Rust/Zig/whatever else?</a></li>
 <li><a href="https://github.com/Hirrolot/metalang99#q-why-not-third-party-code-generators">Q: Why not third-party code generators?</a></li>
 <li>The <a href="https://lists.sr.ht/~hirrolot/metalang99">mailing list</a> for the above libraries. Join and talk with us!</li>
 </ul>
-<h2 id="discussions">Discussions</h2>
+<p>Discussions:</p>
 <ul>
 <li><a href="https://news.ycombinator.com/item?id=27919448">HN</a></li>
 <li><a href="https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/">r/programming</a></li>

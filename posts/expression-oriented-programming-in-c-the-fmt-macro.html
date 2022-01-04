@@ -106,9 +106,9 @@
 <li><a href="#superior-sprintf">Superior sprintf</a></li>
 <li><a href="#the-snprintf-counterpart">The snprintf counterpart</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#links">Links</a></li>
 </ul>
 </nav>
+<div class="introduction">
 <p>Have you ever created useless intermediate variables like this?</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fee <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -120,6 +120,7 @@
 <p>This blog post explains how to overcome this unpleasantness by designing APIs which facilitate <em>expression-oriented</em> programming. In the end, we will come up with a handy <code>FMT</code> string formatting macro that mimics <a href="https://doc.rust-lang.org/std/macro.format.html"><code>std::format!</code></a> of Rust:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fee <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>reply_to_user<span class="op">(</span>FMT<span class="op">((</span><span class="dt">char</span><span class="op">[</span><span class="dv">128</span><span class="op">]){</span><span class="dv">0</span><span class="op">},</span> <span class="st">&quot;Your fee is %d USD&quot;</span><span class="op">,</span> fee<span class="op">));</span></span></code></pre></div>
+</div>
 <h2 id="sprintf">sprintf</h2>
 <p>Why <code>sprintf</code> (and its friends) requires a named variable to store a formatted string? Well, let us envision <code>sprintf</code> in an ideal world where every meaningful operation fits in a single line – how would then the signature look? Something like this:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> <span class="op">*</span>sprintf<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span><span class="dt">restrict</span> format<span class="op">,</span> <span class="op">...);</span></span></code></pre></div>
@@ -168,7 +169,7 @@
 <p>What can we learn from it? At least, there is a certain kind of functions that write to a memory area, and their invocation naturally expresses the whole result of an operation. In order to be suitable for expression-oriented programming, these must return the passed memory area. <code>FMT</code> is a perfect example.</p>
 <p>Compound literals facilitate expression-oriented programming too. They represent arbitrary values that need to be accessed only once. I encourage you to use them in all cases where a separate variable is superfluous. (Although you might still prefer to give descriptive names to program entities in certain cases.)</p>
 <p>I hope you enjoyed the post. Looking forward to any feedback!</p>
-<h2 id="links">Links</h2>
+<p>Links:</p>
 <ul>
 <li><a href="https://dev.to/hirrolot/expression-oriented-programming-in-c-the-fmt-macro-43jo">The original post</a></li>
 </ul>

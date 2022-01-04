@@ -112,9 +112,9 @@
 </ul></li>
 <li><a href="#exhaustive-pattern-matching">Exhaustive pattern matching</a></li>
 <li><a href="#final-words">Final words</a></li>
-<li><a href="#links">Links</a></li>
 </ul>
 </nav>
+<div class="introduction">
 <p>Lots of people have been constantly asking me how <a href="https://github.com/Hirrolot/datatype99">Datatype99</a> works:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
@@ -131,6 +131,7 @@
 <p>This library implements <a href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data types (ADT)</a> for pure C99. This allows you to design convenient, type-safe interfaces while sticking to plain old C with zero runtime dependencies. Today I would like to explain what the hell it does under the hood!</p>
 <p>If you are not acquainted with the concept of algebraic data types, please read <a href="https://medium.com/@hirrolot/unleashing-sum-types-in-pure-c99-31544302d2ba"><em>Unleashing Sum Types in Pure C99</em></a> first.</p>
 <p>To study the formal system on a concrete example, it is helpful to read this post along with the <a href="https://godbolt.org/z/zda5Ysr6W">generated output</a> of <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"><code>examples/binary_tree.c</code></a>.</p>
+</div>
 <h2 id="data-layout">Data layout</h2>
 <p>First of all, we want to generate a data layout for a sum type. This is achieved by a tagged union: a union of possible variants data paired with a tag (discriminant). The latter is an integer designating which particular variant is active now.</p>
 <p>Provided that multiple parameters can be specified in a single variant definition, we must gather them all into a separate C structure:</p>
@@ -321,7 +322,7 @@ playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch
 <p>We have not considered some utility macros like <code>ifLet</code> and <code>matches</code> since nothing special lies in them – they are very similar to what we have already seen. For more details, feel free to investigate the <a href="https://github.com/Hirrolot/datatype99/blob/master/datatype99.h">source code</a> of Datatype99. Thanks to the rich functionality of <a href="https://github.com/Hirrolot/metalang">Metalang99</a>, it fits in just ~400 LoC single header file.</p>
 <p>It took me almost a year to figure out how to implement Datatype99 properly. Now it is a well-tested and stable v1.x.y project, so you can use it without fear that something will be broken in the next release.</p>
 <p>Happy hacking!</p>
-<h2 id="links">Links</h2>
+<p>Links:</p>
 <ul>
 <li><a href="https://github.com/Hirrolot/datatype99#installation">Datatype99 installation instructions</a></li>
 <li><a href="https://dev.to/hirrolot/compiling-algebraic-data-types-in-pure-c99-5225">The original post</a></li>

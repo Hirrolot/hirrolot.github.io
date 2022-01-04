@@ -40,6 +40,8 @@ references:
     URL: "https://github.com/Hirrolot/poica"
 ---
 
+<div class="introduction">
+
 "To do stuff that you cannot do with functions" [^preprocessor-early-days] -- virtually every C programmer would say.
 
 Fair. But in fact, it is a bit more complicated.
@@ -54,6 +56,8 @@ In C, I quite often find myself writing [virtual tables], writing [tagged unions
 [tagged unions]: https://en.wikipedia.org/wiki/Tagged_union
 
 We can do it in C too. _Take a look at the preprocessor_.
+
+</div>
 
 ## Macros to the rescue!
 
@@ -285,6 +289,21 @@ The purpose of the preprocessor is not to break the normal order in which lingui
 **The purpose of the preprocessor is to be natural**...<br>
 and this is what external codegen cannot suggest, no matter how you try.
 
+Links:
+
+ - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
+ - The [motivational post] for the above libraries.
+ - The [mailing list] for the above libraries. Join and talk with us!
+
+[motivational post]: ../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html
+[mailing list]: https://lists.sr.ht/~hirrolot/metalang99
+
+Discussions:
+
+ - [r/programming](https://www.reddit.com/r/programming/comments/owj32r/whats_the_point_of_the_c_preprocessor_actually/)
+ - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/owhczm/whats_the_point_of_the_c_preprocessor_actually/)
+ - [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/owhbdy/whats_the_point_of_the_c_preprocessor_actually/)
+ 
 ## Afterword
 
  - I wrote this blog post as a single answer to questions like "Your macros are nice, but the preprocessor is a wrong tool for them". I found it a logical contradiction when people appeal to one unpleasant aspect to ruin the whole approach, provided that we have several examples in the industry when the method works just fine.
@@ -301,21 +320,6 @@ and this is what external codegen cannot suggest, no matter how you try.
 
 [adt4c]: https://bitbucket.org/Macnaa/adt4c-with-polymorphism/src/master/
 [Boost/Preprocessor]: http://boost.org/libs/preprocessor
-
-## Links
-
- - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
- - The [motivational post] for the above libraries.
- - The [mailing list] for the above libraries. Join and talk with us!
-
-[motivational post]: ../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html
-[mailing list]: https://lists.sr.ht/~hirrolot/metalang99
-
-## Discussions
-
- - [r/programming](https://www.reddit.com/r/programming/comments/owj32r/whats_the_point_of_the_c_preprocessor_actually/)
- - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/owhczm/whats_the_point_of_the_c_preprocessor_actually/)
- - [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/owhbdy/whats_the_point_of_the_c_preprocessor_actually/)
 
 ## References
 

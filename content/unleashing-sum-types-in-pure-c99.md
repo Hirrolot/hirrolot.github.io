@@ -4,6 +4,8 @@ author: Hirrolot's Blog
 date: Feb 6, 2021
 ---
 
+<div class="introduction">
+
 Some time ago, I was writing a [TIFF] encoder. A TIFF file consists of a header and a sequence of TIFF entries. To represent a TIFF entry, I wrote this:
 
 [TIFF]: https://en.wikipedia.org/wiki/Tagged_Image_File_Format
@@ -41,6 +43,8 @@ inline static TIFFEntryValue TIFFEntryValueBlock(size_t size, const void *ptr) {
 Well, clearly not the best code I ever wrote. The pattern here is called a [tagged union] -- a structure consisting of a tag and a payload. Here, the tag is the enumeration of `TIFFEntryValueTagSmall` and `TIFFEntryValueTagBlock`, both of which correspond to `small_value` and `block`, respectively: if `tag` is `TIFFEntryValueTagSmall`, then `small_value` must be present, and if `TIFFEntryValueTagBlock`, then block must be present.
 
 [tagged union]: https://medium.com/r/?url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FTagged_union
+
+</div>
 
 Below the structure itself, the two functions are called _value constructors_ -- they construct values of `TIFFEntryValue`.
 
@@ -243,7 +247,7 @@ int main(void) {
 
 I hope that now, the usage and syntax of sum types is perfectly clear, as well as the rationale behind them. The next article will be dedicated to zero-cost, convenient error handling using sum types.
 
-## Links
+Links:
 
  - [Datatype99 installation instructions](https://github.com/Hirrolot/datatype99#installation)
  - [The original post](https://hirrolot.medium.com/unleashing-sum-types-in-pure-c99-31544302d2ba)

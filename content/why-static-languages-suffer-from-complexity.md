@@ -4,6 +4,8 @@ author: Hirrolot's Blog
 date: Jan 3, 2022
 ---
 
+<div class="introduction">
+
 ![](../media/why-static-languages-suffer-from-complexity/preview.jpg)
 
 People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.
@@ -27,6 +29,8 @@ For our purposes, the **statics level** is where all linguistic machinery is bei
 In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system. If you feel busy, feel free to jump right to the [main section] about the problem explanation.
 
 [main section]: #the-unfortunate-consequences-of-being-static
+
+</div>
 
 ## Record types -- Hash maps
 

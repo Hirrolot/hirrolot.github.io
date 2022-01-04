@@ -125,17 +125,17 @@
 <li><a href="#the-side-effects-of-aggressive-macros">The side effects of aggressive macros</a></li>
 <li><a href="#final-words">Final words</a></li>
 <li><a href="#afterword">Afterword</a></li>
-<li><a href="#links">Links</a></li>
-<li><a href="#discussions">Discussions</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 </nav>
+<div class="introduction">
 <p>“To do stuff that you cannot do with functions”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – virtually every C programmer would say.</p>
 <p>Fair. But in fact, it is a bit more complicated.</p>
 <p>As my experience with C and programming in general grew, I recognised more and more code patterns that I write by hand… that I am forced to write by hand. Most of the time, this occurred due to inadequacies of a programming language being used.</p>
 <p>This is especially the case with C.</p>
 <p>In C, I quite often find myself writing <a href="https://en.wikipedia.org/wiki/Virtual_method_table">virtual tables</a>, writing <a href="https://en.wikipedia.org/wiki/Tagged_union">tagged unions</a>… I distribute function pointers to their proper locations, I construct variants explicitly, checking whether data and a tag are consistent. In more high-level languages, these concepts are built-in; you do not need to explicitly state a memory layout, state exact instructions to construct the layout. This all is hidden under a nice interface.</p>
 <p>We can do it in C too. <em>Take a look at the preprocessor</em>.</p>
+</div>
 <h2 id="macros-to-the-rescue">Macros to the rescue!</h2>
 <p>In C, the only way to do metaprogramming is to use macros. Perhaps the reason we could not reify such abstractions as tagged unions till this moment is that C macros can only work with individual items but cannot operate on sequences thereof; put it simply, macros cannot loop or recurse. Therefore, without loops or recursion at our disposal, we could not generate something from a series of functions comprising some software interface, or from a series of variants comprising some tagged union. But we can enrich the preprocessor in such a way that it becomes possible. Read on.</p>
 <p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is the solution I came up with.</p>
@@ -284,6 +284,18 @@ Show more hordes of errors…
 <p>The purpose of the preprocessor is to allow your macros to be conveniently interleaved with the rest of your code.</p>
 <p>The purpose of the preprocessor is not to break the normal order in which linguistic abstractions cooperate with each other.</p>
 <p><strong>The purpose of the preprocessor is to be natural</strong>…<br> and this is what external codegen cannot suggest, no matter how you try.</p>
+<p>Links:</p>
+<ul>
+<li>Installation instructions for <a href="https://github.com/Hirrolot/metalang99#getting-started">Metalang99</a>, <a href="https://github.com/Hirrolot/datatype99#installation">Datatype99</a>, <a href="https://github.com/Hirrolot/interface99#installation">Interface99</a>.</li>
+<li>The <a href="../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html">motivational post</a> for the above libraries.</li>
+<li>The <a href="https://lists.sr.ht/~hirrolot/metalang99">mailing list</a> for the above libraries. Join and talk with us!</li>
+</ul>
+<p>Discussions:</p>
+<ul>
+<li><a href="https://www.reddit.com/r/programming/comments/owj32r/whats_the_point_of_the_c_preprocessor_actually/">r/programming</a></li>
+<li><a href="https://www.reddit.com/r/ProgrammingLanguages/comments/owhczm/whats_the_point_of_the_c_preprocessor_actually/">r/ProgrammingLanguages</a></li>
+<li><a href="https://www.reddit.com/r/C_Programming/comments/owhbdy/whats_the_point_of_the_c_preprocessor_actually/">r/C_Programming</a></li>
+</ul>
 <h2 id="afterword">Afterword</h2>
 <ul>
 <li><p>I wrote this blog post as a single answer to questions like “Your macros are nice, but the preprocessor is a wrong tool for them.” I found it a logical contradiction when people appeal to one unpleasant aspect to ruin the whole approach, provided that we have several examples in the industry when the method works just fine.</p></li>
@@ -292,18 +304,6 @@ Show more hordes of errors…
 <li><p>Some people state that these macros (Datatype99 &amp; Interface99) are opaque, meaning you do not know what they generate. It is simply not true; from the very beginning, I stated explicitly what they do generate <span class="citation" data-cites="dt99-semantics if99-semantics">(Hirrolot, n.d.b, n.d.d)</span>; I do not try to fool you with a nifty interface and a bloody cannibalic massacre under the hood. I designed these libraries in such a way that they even do not require libc, they are FFI-friendly, and they do not impose any restrictions on your environment.</p></li>
 <li><p>I do encourage you to use such well-documented and well-tested libraries as Datatype99 &amp; Interface99, but I discourage you from polluting your codebase with fancy macro-based DSLs implemented upon Metalang99. Currently, I do not see much need for Metalang99 except these libraries; they provide a facade for your APIs, <em>reuse them</em>, do not try to express something by defining more macros if you can do that with already existent linguistic abstractions. If you nonetheless decided to use recursive macros of Metalang99, at least use them sanely – always prove to yourself why you need more new macros instead of ordinary functions or/and just simpler macros, and you will thank me one day. Macros can only be a solution when you are “run out of your language”; please, do not.</p></li>
 <li><p>If you ask me, “Why use C if there are Zig/Rust/C++/etc?” you can afford another language; this is cool but not always possible – you can find the information elsewhere in the Internet <span class="citation" data-cites="so-why-use-c dt99-why-use-c devault">(Simucal, n.d.; Hirrolot, n.d.c; Drew DeVault, n.d.)</span>.</p></li>
-</ul>
-<h2 id="links">Links</h2>
-<ul>
-<li>Installation instructions for <a href="https://github.com/Hirrolot/metalang99#getting-started">Metalang99</a>, <a href="https://github.com/Hirrolot/datatype99#installation">Datatype99</a>, <a href="https://github.com/Hirrolot/interface99#installation">Interface99</a>.</li>
-<li>The <a href="../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html">motivational post</a> for the above libraries.</li>
-<li>The <a href="https://lists.sr.ht/~hirrolot/metalang99">mailing list</a> for the above libraries. Join and talk with us!</li>
-</ul>
-<h2 id="discussions">Discussions</h2>
-<ul>
-<li><a href="https://www.reddit.com/r/programming/comments/owj32r/whats_the_point_of_the_c_preprocessor_actually/">r/programming</a></li>
-<li><a href="https://www.reddit.com/r/ProgrammingLanguages/comments/owhczm/whats_the_point_of_the_c_preprocessor_actually/">r/ProgrammingLanguages</a></li>
-<li><a href="https://www.reddit.com/r/C_Programming/comments/owhbdy/whats_the_point_of_the_c_preprocessor_actually/">r/C_Programming</a></li>
 </ul>
 <h2 class="unnumbered" id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">

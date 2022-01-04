@@ -4,9 +4,13 @@ author: Hirrolot's Blog
 date: Apr 25, 2021
 ---
 
+<div class="introduction">
+
 Recently I’ve published a [blog post](https://hirrolot.medium.com/unleashing-sum-types-in-pure-c99-31544302d2ba) about [Datatype99], a library implementing sum types in pure C99 with preprocessor macros only. Today I’m going to present its new metaprogramming ability: introspection of sum types at compilation time, also with preprocessor macros only.
 
 [Datatype99]: https://github.com/Hirrolot/datatype99
+
+</div>
 
 First of all, what is type introspection? For our purposes, type introspection means the retrieval and manipulation of a type representation: imagine for a second that you could gather all variants of a sum type and automatically implement some interface for it! Sounds seditiously? Let me show you how you can achieve it.
 
@@ -193,7 +197,7 @@ Of course, not only sum types can be introspected but also product types, more c
 
 I hope you enjoyed this post and will give Datatype99 a try!
 
-## Links
+Links:
 
  - [Datatype99 installation instructions](https://github.com/Hirrolot/datatype99#installation)
  - [The original post](https://hirrolot.medium.com/compile-time-introspection-of-sum-types-in-pure-c99-ffa523b60385)

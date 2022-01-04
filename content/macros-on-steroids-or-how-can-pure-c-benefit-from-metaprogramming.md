@@ -30,6 +30,8 @@ references:
     URL: "https://github.com/Hirrolot/metalang99#q-what-about-compile-time-errors"
 ---
 
+<div class="introduction">
+
 _This post has a [followup](../posts/whats-the-point-of-the-c-preprocessor-actually.html)._
 
 Have you ever envisioned the daily C preprocessor as a tool for some decent metaprogramming?
@@ -47,6 +49,8 @@ I shall also address a few captious questions regarding compilation times, compi
 [Interface99]: https://github.com/Hirrolot/interface99
 
 Nuff said, let us dive into it!
+
+</div>
 
 ## The three kinds of code repetition
 
@@ -425,7 +429,7 @@ If you stick to the second choice, are you sure your team will let you integrate
 
 The choice is up to you.
 
-## Links
+Links:
 
  - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
  - [Q: Why use C instead of Rust/Zig/whatever else?](https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else)
@@ -434,7 +438,7 @@ The choice is up to you.
 
 [mailing list]: https://lists.sr.ht/~hirrolot/metalang99
 
-## Discussions
+Discussions:
 
  - [HN](https://news.ycombinator.com/item?id=27919448)
  - [r/programming](https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/)
