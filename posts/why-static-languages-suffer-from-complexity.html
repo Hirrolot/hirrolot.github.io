@@ -110,6 +110,7 @@
 <li><a href="#is-there-a-way-out">Is there a way out?…</a></li>
 </ul>
 </nav>
+<p><img src="../media/why-static-languages-suffer-from-complexity/preview.jpg" /></p>
 <p>People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.</p>
 <p>This is what I call <strong>statics-dynamics biformity</strong>: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce <em>inconsistency</em> to your language; in the latter case, you inevitably introduce the <em>feature biformity</em>.</p>
 <p>For our purposes, the <strong>statics level</strong> is where all linguistic machinery is being performed at compile-time. Similarly, the <strong>dynamics level</strong> is where code is being executed at run-time. Thence the typical control operators, such as <code>if</code>/<code>while</code>/<code>for</code>/<code>return</code>, data structures, and procedures, are dynamic, whereas static type system features and syntactical macros are static. In essence, the majority of static linguistic abstractions have their correspondence in the dynamic space and vice versa:</p>
