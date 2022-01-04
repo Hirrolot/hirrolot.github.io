@@ -50,7 +50,7 @@ For our purposes, the **statics level** is where all linguistic machinery is bei
 
 | Dynamics | Statics |
 |----------|---------|
-| Variables | [Associated types] |
+| Variables | Generics/[Associated types] |
 | `if` | [Trait bounds] |
 | Loop/recursion | Type-level induction [@peano-rust] [@rust-type-system-turing-complete] [@frunk] [@rust-inductive-proofs] |
 | `HashMap<String, &dyn Any>` | Record types |
@@ -385,7 +385,9 @@ Programming languages nowadays do not focus on the logic. They focus on the mech
 [stay unimplemented for decades]: https://bitbashing.io/std-visit.html
 [function colors]: https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
 
-In addition to this inconsistency, we have the feature **biformity**. In such languages as C++, Haskell, and Rust, this biformity amounts to the most perverse forms; you can think of any so-called "expressive" programming language as of two or more smaller languages put together: C++ the language and C++ templates/macros, Rust the language and type-level Rust + declarative macros, etc. This approach increases the learning curve, hardens language evolution, and finally ends up in feature bloat. Take a look at any production code in Haskell and you will immediately see those numerous GHC `#LANGUAGE` clauses, each of which signifies a separate language extension:
+In addition to this inconsistency, we have the feature **biformity**. In such languages as C++, Haskell, and Rust, this biformity amounts to the most perverse forms; you can think of any so-called "expressive" programming language as of two or more smaller languages put together: C++ the language and C++ templates/macros, Rust the language and type-level Rust + declarative macros, etc. With this approach, each time you write something at a meta-level, you cannot reuse it in the host language and vice versa, thus violating the [DRY principle] (as we shall see in a minute). Additionally, biformity increases the learning curve, hardens language evolution, and finally ends up in such a feature bloat that only the initiated can figure out what is happening in the code. Take a look at any production code in Haskell and you will immediately see those numerous GHC `#LANGUAGE` clauses, each of which signifies a separate language extension:
+
+[DRY principle]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself
 
 <p class="code-annotation">`feature-bloat.hs`</p>
 
@@ -417,147 +419,31 @@ In addition to this inconsistency, we have the feature **biformity**. In such la
 
 When a host language does not provide enough static capabilities needed for convenient development, some programmers go especially insane and create whole new compile-time metalanguages and eDSLs atop of existing ones. Thus, inconsistency has the treacherous property of transforming into biformity:
 
-<ul>
+ - We have [template metaprogramming] libraries, such as [Boost/Hana] and [Boost/MPL], which copy the functionality of C++ to be used at a meta-level.
 
-<li>
-We have such libraries as [Boost/Hana] and [Boost/Preprocessor], which simply copy the functionality of C++ to be used at a meta-level:
-
-<p class="code-annotation">`intersperse.cpp`</p>
-
-```cpp
-static_assert(
-    hana::intersperse(hana::make_tuple(1, '2', 3.3), 'x')
-    == hana::make_tuple(1, 'x', '2', 'x', 3.3), "");
-BOOST_HANA_CONSTANT_CHECK(
-    hana::intersperse(hana::make_tuple(), 'x')
-    == hana::make_tuple());
-```
-
-<p class="adapted-from">Adapted from [hana/example/intersperse.cpp].</p>
-
-[hana/example/intersperse.cpp]: https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a2f36/example/intersperse.cpp
-
-</li>
-
-<li>
-My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor:
-
-<p class="code-annotation">`ackermann.c`</p>
-
-```c
-#define ack(m, n) ML99_natMatchWithArgs(m, v(ack_), n)
-
-#define ack_Z_IMPL(n)      ML99_inc(v(n))
-#define ack_S_IMPL(m, n)   ML99_natMatchWithArgs(v(n), v(ack_S_), v(m))
-#define ack_S_Z_IMPL(m)    ack(v(m), v(1))
-#define ack_S_S_IMPL(n, m) ack(v(m), ack(ML99_inc(v(m)), v(n)))
-
-ML99_ASSERT_EQ(ack(v(0), v(0)), v(1));
-ML99_ASSERT_EQ(ack(v(0), v(1)), v(2));
-ML99_ASSERT_EQ(ack(v(0), v(2)), v(3));
-
-// ...
-```
-
-<p class="adapted-from">Adapted from [metalang99/examples/ackermann.c].</p>
-
-[metalang99/examples/ackermann.c]: https://github.com/Hirrolot/metalang99/blob/63d20d61fc97736b748c62fc9a95e61122411651/examples/ackermann.c
-
-</li>
-
-<li>
-In Rust, there is a library called [Frunk]. It attempts to express the static concepts of Rust using the language of the type system: using Frunk, we can represent ordinary `enum`s as [coproducts] and `struct`s as [`LabelledGeneric`]s. Moreover, Frunk exposes an API for manipulating with [heterogenous lists]: `map`s, left/right folds, etc.:
-
-<p class="code-annotation">`reverse-hlist.rs`</p>
-
-```rust
-assert_eq!(hlist![].into_reverse(), hlist![]);
-
-assert_eq!(
-    hlist![1, "hello", true, 42f32].into_reverse(),
-    hlist![42f32, true, "hello", 1],
-)
-```
-
-<p class="adapted-from">Adapted from the docs of [HCons::into_reverse].</p>
-
-[HCons::into_reverse]: https://beachape.com/frunk/frunk/hlist/struct.HCons.html#method.into_reverse
-
-</li>
-
-<li>
-Yet another library named [Typenum]: it allows to perform integral calculations at compile-time. Albeit quite different in design, it essentially takes the same approach as we did in the section on type-level induction: it represents numbers as generics, through the abuse of the type system [^const-generics]:
-
-<p class="code-annotation">`typenum.rs`</p>
-
-```rust
-use std::ops::{Add, Div, Mul, Rem, Sub};
-use typenum::{Integer, N3, P2};
-
-assert_eq!(<N3 as Add<P2>>::Output::to_i32(), -1);
-assert_eq!(<N3 as Sub<P2>>::Output::to_i32(), -5);
-assert_eq!(<N3 as Mul<P2>>::Output::to_i32(), -6);
-assert_eq!(<N3 as Div<P2>>::Output::to_i32(), -1);
-assert_eq!(<N3 as Rem<P2>>::Output::to_i32(), -1);
-```
-
-<p class="adapted-from">Adapted from the docs of [typenum::int].</p>
-
-[typenum::int]: https://docs.rs/typenum/1.15.0/typenum/int/index.html
-
-</li>
-
-<li>
-The [VLC media player] has a macro-based [plugin API] used to represent media codecs. For example, here is how Opus is defined:
-
-<p class="code-annotation">`opus.c`</p>
-
-```c
-vlc_module_begin ()
-    set_subcategory( SUBCAT_INPUT_ACODEC )
-
-    set_description( N_("Opus audio decoder") )
-    set_capability( "audio decoder", 100 )
-    set_shortname( N_("Opus") )
-    set_callbacks( OpenDecoder, CloseDecoder )
-
-#ifdef ENABLE_SOUT
-    add_submodule ()
-    set_description( N_("Opus audio encoder") )
-    set_capability( "audio encoder", 150 )
-    set_shortname( N_("Opus") )
-    set_callbacks( OpenEncoder, CloseEncoder )
-#endif
-
-vlc_module_end ()
-```
-
-<p class="adapted-from">Adapted from [vlc/modules/codec/opus.c].</p>
-
-[vlc/modules/codec/opus.c]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/modules/codec/opus.c
-
-[Greenspun's tenth rule] now eternalised.
-
-[Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
-
-</li>
-
-</ul>
-
+[template metaprogramming]: https://en.wikipedia.org/wiki/Template_metaprogramming
 [Boost/Hana]: https://github.com/boostorg/hana
-[Boost/Preprocessor]: https://github.com/boostorg/preprocessor
-[Frunk]: https://github.com/lloydmeta/frunk
-[coproducts]: https://beachape.com/frunk/frunk/coproduct/index.html
-[`LabelledGeneric`]: https://beachape.com/frunk/frunk/labelled/index.html
-[heterogenous lists]: https://beachape.com/frunk/frunk/hlist/index.html
+[Boost/MPL]: https://github.com/boostorg/mpl
+
+ - My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor.
+
 [Metalang99]: https://github.com/Hirrolot/metalang99
-[Typenum]: https://github.com/paholg/typenum
+
+ - [Kubernetes], one of the largest codebases in Golang, has its own [object-oriented type system] implemented in the [`runtime` package].
+
+[Kubernetes]: https://github.com/kubernetes/kubernetes
+[object-oriented type system]: https://medium.com/@arschles/go-experience-report-generics-in-kubernetes-25da87430301
+[`runtime` package]: https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime
+
+ - The [VLC media player] has a macro-based [plugin API] used to represent media codecs. Here is how [Opus is defined].
+
 [VLC media player]: https://github.com/videolan/vlc
 [plugin API]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/include/vlc_plugin.h
+[Opus is defined]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/modules/codec/opus.c#L57
 
-With this approach, each time you write some inherently static code at a meta-level, you cannot reuse it in the host language and vice versa, thus violating the [DRY principle]. Even worse, such hand-made metalanguages tend to result in inscrutable compiler diagnostics that can be summarised in the following screenshot [^teloxide-error-message]:
+Recalling the famous [Greenspun's tenth rule], such hand-made metalanguages are typically "ad-hoc, informally-specified, bug-ridden, and slow", with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating declarative, small domain-specific languages sounds so cool at first sight. Have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot [^teloxide-error-message]:
 
-[DRY principle]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself
+[Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
 
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg)
 

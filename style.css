@@ -212,12 +212,17 @@ ol {
 }
 
 table {
+    margin: auto;
     border-collapse: collapse;
 }
 
 th,
 td {
     border-bottom: 1px solid gray;
+}
+
+td {
+    padding: 0px 5px 0px 5px;
 }
 
 
