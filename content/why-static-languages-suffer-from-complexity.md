@@ -453,7 +453,9 @@ Static languages enforce compile-time checks; this is good. But they suffer from
 
 Programming languages ought to be rethought.
 
-[^type-variables]: Generics are sometimes called "type variables", which highlights their natural correspondence to ordinary variables.
+[^type-variables]: In such systems as [Calculus of Constructions], polymorphic functions accept generics as ordinary function parameters of the type *, or "the type of all types".
+
+[Calculus of Constructions]: https://en.wikipedia.org/wiki/Calculus_of_constructions
 
 [^const-generics]: Some time ago, a small part of [const generics] was stabilised. In perspective, they could replace Typenum by using the same integer representation as in ordinary code.
 
@@ -463,7 +465,7 @@ Programming languages ought to be rethought.
 
 [teloxide]: https://github.com/teloxide/teloxide
 
-[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.<br><br>As of Jan. 4 2022, tokio-either has 5,394 downloads total.
+[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.<br>As of Jan. 4 2022, tokio-either has 5,394 downloads total.
 
 [tokio-either]: https://github.com/Hirrolot/tokio-either
 
