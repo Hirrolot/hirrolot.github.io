@@ -77,25 +77,6 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-    }
-    .hanging div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }
   </style>
   <link rel="stylesheet" href="../style.css" />
   <!--[if lt IE 9]>
@@ -127,17 +108,12 @@
 <li><a href="#recursion-type-level-induction">Recursion – Type-level induction</a></li>
 <li><a href="#the-unfortunate-consequences-of-being-static">The unfortunate consequences of being static</a></li>
 <li><a href="#is-there-a-way-out">Is there a way out?…</a></li>
-<li><a href="#references">References</a></li>
 </ul>
 </nav>
 <p>People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.</p>
 <p>This is what I call <strong>statics-dynamics biformity</strong>: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce <em>inconsistency</em> to your language; in the latter case, you inevitably introduce the <em>feature biformity</em>.</p>
 <p>For our purposes, the <strong>statics level</strong> is where all linguistic machinery is being performed at compile-time. Similarly, the <strong>dynamics level</strong> is where code is being executed at run-time. Thence the typical control operators, such as <code>if</code>/<code>while</code>/<code>for</code>/<code>return</code>, data structures, and procedures, are dynamic, whereas static type system features and syntactical macros are static. In essence, the majority of static linguistic abstractions have their correspondence in the dynamic space and vice versa:</p>
 <table>
-<colgroup>
-<col style="width: 52%" />
-<col style="width: 47%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Dynamics</th>
@@ -147,7 +123,7 @@
 <tbody>
 <tr class="odd">
 <td>Variables</td>
-<td>Generics/<a href="https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html">Associated types</a></td>
+<td>Generics/<a href="https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html">Associated types</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></td>
 </tr>
 <tr class="even">
 <td><code>if</code></td>
@@ -155,7 +131,7 @@
 </tr>
 <tr class="odd">
 <td>Loop/recursion</td>
-<td>Type-level induction <span class="citation" data-cites="peano-rust">(Paho Lurie-Gregg, n.d.)</span> <span class="citation" data-cites="rust-type-system-turing-complete">(Shea Leffler, n.d.)</span> <span class="citation" data-cites="frunk">(Lloyd Chan, n.d.)</span> <span class="citation" data-cites="rust-inductive-proofs">(Roman Kotelnikov, n.d.)</span></td>
+<td>Type-level induction</td>
 </tr>
 <tr class="even">
 <td><code>HashMap&lt;String, &amp;dyn Any&gt;</code></td>
@@ -167,11 +143,11 @@
 </tr>
 <tr class="even">
 <td>Pattern matching</td>
-<td>Multiple trait implementations, type/template specialisation <span class="citation" data-cites="template-specialisation">(Wikipedia, n.d.)</span> <span class="citation" data-cites="rust-impl-specialisation">(The Rust RFC Book, n.d.)</span> <span class="citation" data-cites="haskell-advanced-overlap">(The Haskell Wiki, n.d.)</span></td>
+<td>Multiple trait implementations</td>
 </tr>
 </tbody>
 </table>
-<p>In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system.</p>
+<p>In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system. If you feel busy, feel free to jump right to the <a href="#the-unfortunate-consequences-of-being-static">main section</a> about the problem explanation.</p>
 <h2 id="record-types-hash-maps">Record types – Hash maps</h2>
 <p>Consider your everyday manipulation with record types (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=945f3a2f34937369495b3733718598a5">playground</a>):</p>
 <p class="code-annotation">
@@ -485,7 +461,7 @@ Adapted from <a href="https://github.com/haskell/haskell-language-server/blob/ee
 <ul>
 <li>The <a href="https://github.com/videolan/vlc">VLC media player</a> has a macro-based <a href="https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/include/vlc_plugin.h">plugin API</a> used to represent media codecs. Here is how <a href="https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/modules/codec/opus.c#L57">Opus is defined</a>.</li>
 </ul>
-<p>Recalling the famous <a href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">Greenspun’s tenth rule</a>, such hand-made metalanguages are typically “ad-hoc, informally-specified, bug-ridden, and slow,” with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating declarative, small domain-specific languages sounds so cool at first sight. Have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Recalling the famous <a href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">Greenspun’s tenth rule</a>, such hand-made metalanguages are typically “ad-hoc, informally-specified, bug-ridden, and slow,” with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating declarative, small domain-specific languages sounds so cool at first sight. Have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p><img src="../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg" /></p>
 <p>This is woefully to say, but it seems that an “expressive” PL nowadays means “Hey there, I have seriously messed up with the number of features, but that is fine!”</p>
 <p>Finally, a word has to be said about metaprogramming in a host language. With such systems as <a href="https://wiki.haskell.org/A_practical_Template_Haskell_Tutorial">Template Haskell</a> and <a href="https://doc.rust-lang.org/reference/procedural-macros.html">Rust’s procedural macros</a>, we can manipulate an AST of a host language using the same language, which is good in terms of biformity but unpleasant in terms of inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function, since they are just different concepts. Personally, I do think that procedural macros in Rust are a giant design mistake that is comparable to <code>#define</code> macros in plain C: aside from pure syntax, the macro system simply has no idea about the language being manipulated. E.g., imagine there is an enumeration called <code>Either</code>, whose definition is as follows:</p>
@@ -499,44 +475,21 @@ Adapted from <a href="https://github.com/haskell/haskell-language-server/blob/ee
 <p class="adapted-from">
 Adapted from <a href="https://docs.rs/either/latest/either/enum.Either.html">either::Either</a>.
 </p>
-<p>Now imagine we have an arbitrary trait <code>Foo</code>, and we are willing to implement this trait for <code>Either&lt;L, R&gt;</code>, where <code>L</code> and <code>R</code> both implement <code>Foo</code>. It turns out that we cannot apply a derive macro to <code>Either</code> that implements this trait, even if the name is known because, in order to do this, this macro must know all the signatures of <code>Foo</code>. To make the situation even worse, <code>Foo</code> may be defined in a separate library, meaning that we cannot augment its definition with extra meta-information needed for the derivation for <code>Either&lt;L, R&gt;</code>. While it may seem as a rare scanario, in fact it is not; I highly encourage you to look at <a href="https://docs.rs/tokio-util/latest/tokio_util/">tokio-util</a>’s <a href="https://docs.rs/tokio-util/latest/tokio_util/either/enum.Either.html"><code>Either</code></a>, which is <strong>exactly</strong> the same enumeration but it implements Tokio-specific traits, such as <code>AsyncRead</code>, <code>AsyncWrite</code>, <code>AsyncSeek</code>, etc.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Now imagine you have five different <code>Either</code>s in your project that came from different libraries – that would be a true integration headache! While type introspection may be a compromise, it would nonetheless make the language even more complex than it already is.</p>
+<p>Now imagine we have an arbitrary trait <code>Foo</code>, and we are willing to implement this trait for <code>Either&lt;L, R&gt;</code>, where <code>L</code> and <code>R</code> both implement <code>Foo</code>. It turns out that we cannot apply a derive macro to <code>Either</code> that implements this trait, even if the name is known because, in order to do this, this macro must know all the signatures of <code>Foo</code>. To make the situation even worse, <code>Foo</code> may be defined in a separate library, meaning that we cannot augment its definition with extra meta-information needed for the derivation for <code>Either&lt;L, R&gt;</code>. While it may seem as a rare scanario, in fact it is not; I highly encourage you to look at <a href="https://docs.rs/tokio-util/latest/tokio_util/">tokio-util</a>’s <a href="https://docs.rs/tokio-util/latest/tokio_util/either/enum.Either.html"><code>Either</code></a>, which is <strong>exactly</strong> the same enumeration but it implements Tokio-specific traits, such as <code>AsyncRead</code>, <code>AsyncWrite</code>, <code>AsyncSeek</code>, etc.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Now imagine you have five different <code>Either</code>s in your project that came from different libraries – that would be a true integration headache! While type introspection may be a compromise, it would nonetheless make the language even more complex than it already is.</p>
 <h2 id="is-there-a-way-out">Is there a way out?…</h2>
-<p>Let us think a little bit about how to workaround the issue. If we make our languages fully dynamic, we will win biformity and inconsistency,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> but will imminently lose the pleasure of compile-time validation and will end up debugging our programs at mid-nights. The misery of dynamic type systems is widely known.</p>
-<p>The only way to approach the problem is to make a language whose features are both static and dynamic and not to split the same feature into two parts.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Thus, the ideal linguistic abstraction is both static and dynamic; however, it is still a single concept and not two logically similar concepts but with different interfaces.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> A perfect example is <a href="https://en.wikipedia.org/wiki/Compile-time_function_execution">CTFE</a>, colloquially known as <code>constexpr</code>: same code can be executed at compile-time under a static context and at run-time under a dynamic context (e.g., when requesting a user input from <code>stdin</code>.); thus, we do not have to write different code for compile-time (statics) and run-time (dynamics), instead we use the same representation.</p>
+<p>Let us think a little bit about how to workaround the issue. If we make our languages fully dynamic, we will win biformity and inconsistency,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but will imminently lose the pleasure of compile-time validation and will end up debugging our programs at mid-nights. The misery of dynamic type systems is widely known.</p>
+<p>The only way to approach the problem is to make a language whose features are both static and dynamic and not to split the same feature into two parts.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Thus, the ideal linguistic abstraction is both static and dynamic; however, it is still a single concept and not two logically similar concepts but with different interfaces.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> A perfect example is <a href="https://en.wikipedia.org/wiki/Compile-time_function_execution">CTFE</a>, colloquially known as <code>constexpr</code>: same code can be executed at compile-time under a static context and at run-time under a dynamic context (e.g., when requesting a user input from <code>stdin</code>.); thus, we do not have to write different code for compile-time (statics) and run-time (dynamics), instead we use the same representation.</p>
 <p>Static languages enforce compile-time checks; this is good. But they suffer from feature biformity and inconsistency – this is bad. Dynamic languages, on the other hand, suffer from these drawbacks to a lesser extent, but they lack compile-time checks. A hypothetical solution should take the best from the both worlds.</p>
 <p>Programming languages ought to be rethought.</p>
-<h2 class="unnumbered" id="references">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-frunk" class="csl-entry" role="doc-biblioentry">
-Lloyd Chan. n.d. <span>“Funktional Generic Type-Level Programming in Rust: HList, Coproduct, Generic, LabelledGeneric, Validated, Monoid and Friends.”</span> <a href="https://github.com/lloydmeta/frunk">https://github.com/lloydmeta/frunk</a>.
-</div>
-<div id="ref-peano-rust" class="csl-entry" role="doc-biblioentry">
-Paho Lurie-Gregg. n.d. <span>“The Peano Numbers Implemented in Rust’s Type System.”</span> <a href="https://github.com/paholg/peano/blob/master/src/lib.rs">https://github.com/paholg/peano/blob/master/src/lib.rs</a>.
-</div>
-<div id="ref-rust-inductive-proofs" class="csl-entry" role="doc-biblioentry">
-Roman Kotelnikov. n.d. <span>“Deriving Inductive Proofs in Rust, Making Compiler Work for You.”</span> <a href="https://www.works-hub.com/learn/deriving-inductive-proofs-in-rust-making-compiler-work-for-you-69ed2">https://www.works-hub.com/learn/deriving-inductive-proofs-in-rust-making-compiler-work-for-you-69ed2</a>.
-</div>
-<div id="ref-rust-type-system-turing-complete" class="csl-entry" role="doc-biblioentry">
-Shea Leffler. n.d. <span>“Rust’s Type System Is Turing-Complete.”</span> <a href="https://sdleffler.github.io/RustTypeSystemTuringComplete/">https://sdleffler.github.io/RustTypeSystemTuringComplete/</a>.
-</div>
-<div id="ref-haskell-advanced-overlap" class="csl-entry" role="doc-biblioentry">
-The Haskell Wiki. n.d. <span>“Haskell Advanced Overlap.”</span> <a href="https://wiki.haskell.org/GHC/AdvancedOverlap">https://wiki.haskell.org/GHC/AdvancedOverlap</a>.
-</div>
-<div id="ref-rust-impl-specialisation" class="csl-entry" role="doc-biblioentry">
-The Rust RFC Book. n.d. <span>“Rust Impl Specialisation RFC.”</span> <a href="https://rust-lang.github.io/rfcs/1210-impl-specialization.html">https://rust-lang.github.io/rfcs/1210-impl-specialization.html</a>.
-</div>
-<div id="ref-template-specialisation" class="csl-entry" role="doc-biblioentry">
-Wikipedia. n.d. <span>“C++ Template Specialisation.”</span> <a href="https://en.wikipedia.org/wiki/Generic_programming#Template_specialization">https://en.wikipedia.org/wiki/Generic_programming#Template_specialization</a>.
-</div>
-</div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Got it while working on <a href="https://github.com/teloxide/teloxide">teloxide</a>, IIRC.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>It is even more of comedy that initially, I wrote a third-party crate called <a href="https://github.com/Hirrolot/tokio-either">tokio-either</a>, which just contained that <code>Either</code> with several trait implementations. Only later, the Tokio maintainers <a href="https://github.com/tokio-rs/tokio/pull/2821">decided</a> to move it to tokio-util.<br><br>As of Jan. 4 2022, tokio-either has 5,394 downloads total.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Terra is a perfect example of a simple dynamic language. In the <a href="https://terralang.org/#simplicity">“Simplicity” section</a>, they show how features of static PLs can be implemented as libraries in dynamic languages.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>To achieve so, we could use <a href="https://www.idris-lang.org/">dependent types</a>. For example, when requesting a field value from a hash map, as in one of the examples above, the <code>get</code> function will request a <em>proof</em> that the field actually exists in that hash map; this way, the check will be performed at compile-time, using the same hash map that we use at run-time. Dependent types, however, are still too low-level to me, and I hardly believe that they will find their production use in their current form. With such powerful typing facilities, you typically twiddle with your type system instead of focusing on business logic.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Multiple personality disorder? 🤨<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>Generics are sometimes called “type variables,” which highlights their natural correspondence to ordinary variables.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Got it while working on <a href="https://github.com/teloxide/teloxide">teloxide</a>, IIRC.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>It is even more of comedy that initially, I wrote a third-party crate called <a href="https://github.com/Hirrolot/tokio-either">tokio-either</a>, which just contained that <code>Either</code> with several trait implementations. Only later, the Tokio maintainers <a href="https://github.com/tokio-rs/tokio/pull/2821">decided</a> to move it to tokio-util.<br><br>As of Jan. 4 2022, tokio-either has 5,394 downloads total.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Terra is a perfect example of a simple dynamic language. In the <a href="https://terralang.org/#simplicity">“Simplicity” section</a>, they show how features of static PLs can be implemented as libraries in dynamic languages.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>To achieve so, we could use <a href="https://www.idris-lang.org/">dependent types</a>. For example, when requesting a field value from a hash map, as in one of the examples above, the <code>get</code> function will request a <em>proof</em> that the field actually exists in that hash map; this way, the check will be performed at compile-time, using the same hash map that we use at run-time. Dependent types, however, are still too low-level to me, and I hardly believe that they will find their production use in their current form. With such powerful typing facilities, you typically twiddle with your type system instead of focusing on business logic.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Multiple personality disorder? 🤨<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <script src="https://utteranc.es/client.js" repo="hirrolot/hirrolot.github.io" issue-term="pathname" label="comments" theme="github-light" crossorigin="anonymous" async>

@@ -2,44 +2,6 @@
 title: "Why Static Languages Suffer From Complexity"
 author: Hirrolot's Blog
 date: Jan 3, 2022
-
-references:
-  - id: template-specialisation
-    title: "C++ template specialisation"
-    author: Wikipedia
-    URL: "https://en.wikipedia.org/wiki/Generic_programming#Template_specialization"
-
-  - id: rust-impl-specialisation
-    title: "Rust impl specialisation RFC"
-    author: The Rust RFC Book
-    URL: "https://rust-lang.github.io/rfcs/1210-impl-specialization.html"
-
-  - id: haskell-advanced-overlap
-    title: "Haskell advanced overlap"
-    author: The Haskell Wiki
-    URL: "https://wiki.haskell.org/GHC/AdvancedOverlap"
-
-  - id: peano-rust
-    title: "The peano numbers implemented in Rust's type system."
-    author: Paho Lurie-Gregg
-    URL: "https://github.com/paholg/peano/blob/master/src/lib.rs"
-
-  - id: rust-type-system-turing-complete
-    type: article-journal
-    title: "Rust's Type System is Turing-Complete"
-    author: Shea Leffler
-    URL: "https://sdleffler.github.io/RustTypeSystemTuringComplete/"
-
-  - id: frunk
-    title: "Funktional generic type-level programming in Rust: HList, Coproduct, Generic, LabelledGeneric, Validated, Monoid and friends"
-    author: Lloyd Chan
-    URL: "https://github.com/lloydmeta/frunk"
-
-  - id: rust-inductive-proofs
-    type: article-journal
-    title: "Deriving inductive proofs in Rust, making compiler work for you"
-    author: Roman Kotelnikov
-    URL: "https://www.works-hub.com/learn/deriving-inductive-proofs-in-rust-making-compiler-work-for-you-69ed2"
 ---
 
 People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.
@@ -50,17 +12,19 @@ For our purposes, the **statics level** is where all linguistic machinery is bei
 
 | Dynamics | Statics |
 |----------|---------|
-| Variables | Generics/[Associated types] |
+| Variables | Generics/[Associated types] [^type-variables] |
 | `if` | [Trait bounds] |
-| Loop/recursion | Type-level induction [@peano-rust] [@rust-type-system-turing-complete] [@frunk] [@rust-inductive-proofs] |
+| Loop/recursion | Type-level induction |
 | `HashMap<String, &dyn Any>` | Record types |
 | Tree (data structure) | Sum types |
-| Pattern matching | Multiple trait implementations, type/template specialisation [@template-specialisation] [@rust-impl-specialisation] [@haskell-advanced-overlap] |
+| Pattern matching | Multiple trait implementations |
 
 [Trait bounds]: https://doc.rust-lang.org/book/ch10-02-traits.html
 [Associated types]: https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html
 
-In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system.
+In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system. If you feel busy, feel free to jump right to the [main section] about the problem explanation.
+
+[main section]: #the-unfortunate-consequences-of-being-static
 
 ## Record types -- Hash maps
 
@@ -483,7 +447,7 @@ Static languages enforce compile-time checks; this is good. But they suffer from
 
 Programming languages ought to be rethought.
 
-## References
+[^type-variables]: Generics are sometimes called "type variables", which highlights their natural correspondence to ordinary variables.
 
 [^const-generics]: Some time ago, a small part of [const generics] was stabilised. In perspective, they could replace Typenum by using the same integer representation as in ordinary code.
 
