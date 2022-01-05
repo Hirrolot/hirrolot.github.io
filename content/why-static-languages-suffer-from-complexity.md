@@ -16,15 +16,17 @@ For our purposes, the **statics level** is where all linguistic machinery is bei
 
 | Dynamics | Statics |
 |----------|---------|
-| Variables | Generics/[Associated types] [^type-variables] |
-| `if` | [Trait bounds] |
+| Variable | Generic/[Associated type] [^type-variables] |
+| `if` | [Trait bound] |
 | Loop/recursion | Type-level induction |
-| `HashMap<String, &dyn Any>` | Record types |
-| Tree (data structure) | Sum types |
+| Array | Record type/Tuple/[Heterogeneous list] |
+| Tree (data structure) | Sum type/[Coproduct] |
 | Pattern matching | Multiple trait implementations |
 
-[Trait bounds]: https://doc.rust-lang.org/book/ch10-02-traits.html
-[Associated types]: https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html
+[Trait bound]: https://doc.rust-lang.org/book/ch10-02-traits.html
+[Associated type]: https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html
+[Heterogeneous list]: https://beachape.com/frunk/frunk/hlist/index.html
+[Coproduct]: https://beachape.com/frunk/frunk/coproduct/index.html
 
 In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system. If you feel busy, feel free to jump right to the [main section] about the problem explanation.
 
@@ -32,7 +34,7 @@ In the following sections, before elaborating on the problem further, let me dem
 
 </div>
 
-## Record types -- Hash maps
+## Record type -- Array
 
 Consider your everyday manipulation with record types ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=945f3a2f34937369495b3733718598a5)):
 
@@ -59,43 +61,93 @@ fn main() {
 }
 ```
 
-Now take a look at the same program, but written using a hash map instead of a record type ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=b1aed9ece0c6e075843314aed299e585)):
+The same can be done using arrays ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=1dc3af0998b22c401a0042b081f441e1)):
 
 <p class="code-annotation">`automobile-dynamic.rs`</p>
 
 ```rust
 use std::any::Any;
-use std::collections::HashMap;
+
+#[repr(usize)]
+enum MyCar {
+    Wheels,
+    Seats,
+    Manufacturer,
+}
 
 fn main() {
-    let mut my_car: HashMap<&'static str, &dyn Any> = HashMap::new();
-
-    my_car.insert("wheels", &4);
-    my_car.insert("seats", &4);
-    my_car.insert("manufacturer", &"X");
+    let my_car: [Box<dyn Any>; 3] = [Box::new(4), Box::new(4), Box::new("X")];
 
     println!(
         "My car has {} wheels and {} seats, and it was made by {}.",
-        my_car.get("wheels")
-            .unwrap()
+        my_car[MyCar::Wheels as usize]
             .downcast_ref::<i32>()
             .unwrap(),
-        my_car.get("seats")
-            .unwrap()
-            .downcast_ref::<i32>()
-            .unwrap(),
-        my_car
-            .get("manufacturer")
-            .unwrap()
+        my_car[MyCar::Seats as usize].downcast_ref::<i32>().unwrap(),
+        my_car[MyCar::Manufacturer as usize]
             .downcast_ref::<&'static str>()
             .unwrap()
     );
 }
 ```
 
-Yes, if we specify an incorrect type somewhere near `.get`, we will get a panic. But the very **logic** of the program remains the same, only we elevate type checking to run-time.
+Yes, if we specify an incorrect type to `.downcast_ref`, we will get a panic. But the very **logic** of the program remains the same, only we elevate type checking to run-time.
 
-## Sum types -- Trees
+Going further, we can encode static `Automobile` as a heterogenous list:
+
+<p class="code-annotation">`automobile-hlist.rs`</p>
+
+```rust
+use frunk::{hlist, HList};
+
+struct Wheels(u8);
+struct Seats(u8);
+struct Manufacturer(String);
+type Automobile = HList![Wheels, Seats, Manufacturer];
+
+fn main() {
+    let my_car: Automobile = hlist![Wheels(4), Seats(4), Manufacturer(String::from("X"))];
+
+    println!(
+        "My car has {} wheels and {} seats, and it was made by {}.",
+        my_car.get::<Wheels, _>().0,
+        my_car.get::<Seats, _>().0,
+        my_car.get::<Manufacturer, _>().0
+    );
+}
+```
+
+This version enforces exactly the same type checks as `automobile-static.rs`, but additionally provides [methods] for manipulating with `type Automobile` as with ordinary collections! E.g., we may want to reverse our automobile:
+
+[methods]: https://docs.rs/frunk/0.4.0/frunk/hlist/struct.HCons.html#implementations
+
+```rust
+assert_eq!(
+    my_car.into_reverse(),
+    hlist![Manufacturer(String::from("X")), Seats(4), Wheels(4)]
+);
+```
+
+(Need to augment the field types with `#[derive(Debug, PartialEq)]`.)
+
+Or we may want to zip our car with their car:
+
+```rust
+let their_car = hlist![Wheels(6), Seats(4), Manufacturer(String::from("Y"))];
+
+assert_eq!(
+    my_car.zip(their_car),
+    hlist![
+        (Wheels(4), Wheels(6)),
+        (Seats(4), Seats(4)),
+        (Manufacturer(String::from("X")), Manufacturer(String::from("Y")))
+    ]
+);
+```
+
+... And so forth.
+
+## Sum type -- Tree
 
 One may find sum types good to represent an AST node ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=e5031b0c2888fe9ea336789ee1cdf049)):
 
@@ -178,7 +230,11 @@ fn main() {
 }
 ```
 
-## Variables -- Associated types
+Similarly to how we did with `struct Automobile`, we can represent `enum Expr` as [`frunk::Coproduct`]. This is left as an exercise to a reader.
+
+[`frunk::Coproduct`]: https://beachape.com/frunk/frunk/coproduct/enum.Coproduct.html
+
+## Variable -- Associated type
 
 We may want to negate a boolean value using the standard operator `!` ([playground](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=0dea07f96037bce0e82a2c93c77898b0)):
 
@@ -271,7 +327,7 @@ fn main() {
 }
 ```
 
-With [negative trait bounds], we could even handle the case where `T` does _not_ implement `Kosher`, thereby expressing the "else" thing.
+With [negative trait bounds], we could even handle the case when `T` does _not_ implement `Kosher`, thereby expressing the "else" thing.
 
 ## Recursion -- Type-level induction
 
@@ -389,27 +445,115 @@ In addition to this inconsistency, we have the feature **biformity**. In such la
 
 When a host language does not provide enough static capabilities needed for convenient development, some programmers go especially insane and create whole new compile-time metalanguages and eDSLs atop of existing ones. Thus, inconsistency has the treacherous property of transforming into biformity:
 
- - We have [template metaprogramming] libraries, such as [Boost/Hana] and [Boost/MPL], which copy the functionality of C++ to be used at a meta-level.
+<ul>
+<li>
+
+[**C++**] We have [template metaprogramming] libraries, such as [Boost/Hana] and [Boost/MPL], which copy the functionality of C++ to be used at a meta-level:
+
 
 [template metaprogramming]: https://en.wikipedia.org/wiki/Template_metaprogramming
 [Boost/Hana]: https://github.com/boostorg/hana
 [Boost/MPL]: https://github.com/boostorg/mpl
 
- - My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor.
+<p class="code-annotation">`take_while.cpp`</p>
+
+```cpp
+BOOST_HANA_CONSTANT_CHECK(
+    hana::take_while(hana::tuple_c<int, 0, 1, 2, 3>, hana::less.than(2_c))
+    ==
+    hana::tuple_c<int, 0, 1>
+);
+```
+
+<p class="adapted-from">Adapted from [hana/example/take_while.cpp].</p>
+
+[hana/example/take_while.cpp]: https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a2f36/example/take_while.cpp
+
+<p class="code-annotation">`filter.cpp`</p>
+
+```cpp
+constexpr auto is_integral =
+    hana::compose(hana::trait<std::is_integral>, hana::typeid_);
+
+static_assert(
+    hana::filter(hana::make_tuple(1, 2.0, 3, 4.0), is_integral)
+    == hana::make_tuple(1, 3), "");
+static_assert(
+    hana::filter(hana::just(3), is_integral)
+    == hana::just(3), "");
+BOOST_HANA_CONSTANT_CHECK(
+    hana::filter(hana::just(3.0), is_integral) == hana::nothing);
+```
+
+<p class="adapted-from">Adapted from [hana/example/filter.cpp].</p>
+
+[hana/example/filter.cpp]: https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a2f36/example/filter.cpp
+
+<p class="code-annotation">`iter_fold.cpp`</p>
+
+```cpp
+typedef vector_c<int, 5, -1, 0, 7, 2, 0, -5, 4> numbers;
+typedef iter_fold<
+    numbers,
+    begin<numbers>::type,
+    if_<less<deref<_1>, deref<_2>>, _2, _1>
+>::type max_element_iter;
+
+BOOST_MPL_ASSERT_RELATION(
+    deref<max_element_iter>::type::value, ==, 7);
+```
+
+<p class="adapted-from">Adapted from [the docs of MPL].</p>
+
+[the docs of MPL]: https://www.boost.org/doc/libs/1_78_0/libs/mpl/doc/refmanual/iter-fold.html
+
+</li>
+<li>
+
+[**C**] My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor. It came to such extend that I was forced to [re-implement recursion] through the combination of a Lisp-like trampoline and [Continuation-Passing Style (CPS)]. In the end, I had a considerable number of list functions in the standard library, such as [`ML99_listMap`], [`ML99_listIntersperse`], and [`ML99_listFoldr`], which arguably makes Metalang99, as a pure data transformation language, more expressive than C itself.
 
 [Metalang99]: https://github.com/Hirrolot/metalang99
+[re-implement recursion]: https://github.com/Hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h
+[Continuation-Passing Style (CPS)]: https://en.wikipedia.org/wiki/Continuation-passing_style
+[`ML99_listMap`]: https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listMap
+[`ML99_listIntersperse`]: https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listIntersperse
+[`ML99_listFoldr`]: https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listFoldr
 
- - [Kubernetes], one of the largest codebases in Golang, has its own [object-oriented type system] implemented in the [`runtime` package].
+</li>
+<li>
+
+[**Rust**] In the first example of inconsistency (`Automobile`), we used a heterogenous list from the [Frunk] library. It is of no difficulty to see that Frunk [duplicates](https://github.com/lloydmeta/frunk/blob/master/core/src/hlist.rs) some of the functionality of collections and iterators just to elevate them to type-level. It could be cool to apply `Iterator::map` or `Iterator::intersperse` to heterogenous lists, but we cannot. Even worse, if we nevertheless want to perform declarative type-level data transformations, we have to maintain the 1-to-1 correspondence between the iterator adaptors and those of type-level; each time a
+ new utility is implemented for iterators, we have one utility missing in `hlist`.
+
+[Frunk]: https://docs.rs/frunk/latest/frunk/index.html
+
+</li>
+<li>
+
+[**Rust**] [Typenum] is yet another popular type-level library for Rust: it allows to perform integral calculations at compile-time, by encoding signed and unsigned integers as generics [^recall-generics-correspondence]. By doing this, the part of the language responsible for integers finds its counterpart in the statics, thereby introducing even more biformity [^const-generics]. We cannot just parameterise some type with `(2 + 2) * 5`, we have to write something like `<<P2 as Add<P2>>::Output as Mul<P5>>::Output`! The best thing you could do is to write a macro that does the dirty job for you, but it would only be syntax sugar -- you would anyway see hordes of compile-time errors with the aforementioned traits.
+
+[Typenum]: https://docs.rs/typenum/latest/typenum/
+
+</li>
+</ul>
+
+Sometimes, software engineers find their languages too primitive to express their ideas even in dynamic code. But they do not give up:
+
+ - [**Golang**] [Kubernetes], one of the largest codebases in Golang, has its own [object-oriented type system] implemented in the [`runtime` package].
 
 [Kubernetes]: https://github.com/kubernetes/kubernetes
 [object-oriented type system]: https://medium.com/@arschles/go-experience-report-generics-in-kubernetes-25da87430301
 [`runtime` package]: https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime
 
- - The [VLC media player] has a macro-based [plugin API] used to represent media codecs. Here is how [Opus is defined].
+ - [**C**] The [VLC media player] has a macro-based [plugin API] used to represent media codecs. Here is how [Opus is defined].
 
 [VLC media player]: https://github.com/videolan/vlc
 [plugin API]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/include/vlc_plugin.h
 [Opus is defined]: https://github.com/videolan/vlc/blob/271d3552b7ad097d796bc431e946931abbe15658/modules/codec/opus.c#L57
+
+ - [**C**] The [QEMU machine emulator] is built upon their custom [object model](https://github.com/qemu/qemu/tree/master/include/qapi/qmp): `QObject`, `QNum`, `QNull`, `QList`, `QString`, `QDict`, `QBool`, etc.
+
+[QEMU machine emulator]: https://github.com/qemu/qemu
 
 Recalling the famous [Greenspun's tenth rule], such hand-made metalanguages are typically "ad-hoc, informally-specified, bug-ridden, and slow", with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating declarative, small domain-specific languages sounds so cool at first sight. Have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot [^teloxide-error-message]:
 
@@ -457,7 +601,9 @@ Programming languages ought to be rethought.
 
 [Calculus of Constructions]: https://en.wikipedia.org/wiki/Calculus_of_constructions
 
-[^const-generics]: Some time ago, a small part of [const generics] was stabilised. In perspective, they could replace Typenum by using the same integer representation as in ordinary code.
+[^recall-generics-correspondence]: Do you remember our variables-generics correspondence?
+
+[^const-generics]: Some time ago, minimal working [const generics] were stabilised. In perspective, they could replace Typenum by using the same integer representation as in ordinary code.
 
 [const generics]: https://github.com/rust-lang/rust/issues/44580
 
