@@ -280,7 +280,7 @@ const ThisIsTrue: <Negate<False> as Bool>::Value = True;
 
 (We could even generalise these two implementations of `Negate` over a generic value `Cond`, but this is impossible due to a [known bug in the Rust's type system](https://github.com/rust-lang/rust/issues/20400).)
 
-## Branching -- Trait bounds
+## If -- Trait bound
 
 If-then-else is much like trait bounds ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=4ce6bda628caf7147a46df9f97864043)):
 

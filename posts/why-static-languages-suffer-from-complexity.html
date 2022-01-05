@@ -104,7 +104,7 @@
 <li><a href="#record-type-array">Record type – Array</a></li>
 <li><a href="#sum-type-tree">Sum type – Tree</a></li>
 <li><a href="#variable-associated-type">Variable – Associated type</a></li>
-<li><a href="#branching-trait-bounds">Branching – Trait bounds</a></li>
+<li><a href="#if-trait-bound">If – Trait bound</a></li>
 <li><a href="#recursion-type-level-induction">Recursion – Type-level induction</a></li>
 <li><a href="#the-unfortunate-consequences-of-being-static">The unfortunate consequences of being static</a></li>
 <li><a href="#is-there-a-way-out">Is there a way out?…</a></li>
@@ -356,7 +356,7 @@
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ThisIsFalse<span class="op">:</span> <span class="op">&lt;</span>Negate<span class="op">&lt;</span>True<span class="op">&gt;</span> <span class="kw">as</span> Bool<span class="op">&gt;</span><span class="pp">::</span>Value <span class="op">=</span> False<span class="op">;</span></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ThisIsTrue<span class="op">:</span> <span class="op">&lt;</span>Negate<span class="op">&lt;</span>False<span class="op">&gt;</span> <span class="kw">as</span> Bool<span class="op">&gt;</span><span class="pp">::</span>Value <span class="op">=</span> True<span class="op">;</span></span></code></pre></div>
 <p>(We could even generalise these two implementations of <code>Negate</code> over a generic value <code>Cond</code>, but this is impossible due to a <a href="https://github.com/rust-lang/rust/issues/20400">known bug in the Rust’s type system</a>.)</p>
-<h2 id="branching-trait-bounds">Branching – Trait bounds</h2>
+<h2 id="if-trait-bound">If – Trait bound</h2>
 <p>If-then-else is much like trait bounds (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=4ce6bda628caf7147a46df9f97864043">playground</a>):</p>
 <p class="code-annotation">
 <code>kosher-dynamic.rs</code>
