@@ -1,11 +1,18 @@
 window.addEventListener("load", function(event) {
+    moveTocDown();
     createClickableHeaders();
     createPopupNotes();
     genAuthorEmoji();
     decorateToc();
     createCodeAnnotationContainers();
-    moveTocDown();
 });
+
+function moveTocDown() {
+    var introduction = document.querySelector(".introduction");
+    var toc = document.querySelector("#TOC");
+
+    toc.parentNode.insertBefore(introduction, toc);
+}
 
 function createClickableHeaders() {
     var headers = document.querySelectorAll("h1, h2, h3");
@@ -141,11 +148,4 @@ function createCodeAnnotationContainers() {
         codeAnnotations[i].parentNode.insertBefore(container, codeAnnotations[i]);
         container.appendChild(codeAnnotations[i]);
     }
-}
-
-function moveTocDown() {
-    var introduction = document.querySelector(".introduction");
-    var toc = document.querySelector("#TOC");
-
-    toc.parentNode.insertBefore(introduction, toc);
 }
