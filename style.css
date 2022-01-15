@@ -110,7 +110,6 @@ h1 {
 
 h2:before {
     content: "¶ ";
-    color: gray;
 }
 
 h1,
@@ -193,6 +192,11 @@ blockquote::before {
     position: absolute;
     content: "\201C";
     font-size: 60px;
+}
+
+blockquote::before,
+h2::before {
+    color: #a8516e;
 }
 
 .quote-author {
