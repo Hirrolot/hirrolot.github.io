@@ -164,7 +164,7 @@ assert_eq!(
 
 ... And so forth.
 
-However, sometimes we may want to apply type-level computation to ordinary `struct`s and `enum`s, but we cannot do it because we are unable to extract the very structure of a type definition (fields and types/variants and their function signatures) from a corresponding type name, especially if this type is external to our crate and we cannot put a derive macro onto it [^derive-tight-coupling]. To resolve the issue, the Frunk developers decided to create such a procedural macro that examines the internal structure of a type definition by implementing the [`Generic`] trait for it; it has the `type Repr` associated type, which, when implemented, equals to some form of a manipulatable heterogenous list. Still, all other types (well, transparent ones, such as [DTOs]) that do not have this derive macro, are left unexaminable, owing to the aforementioned limitations of Rust.
+However, sometimes we may want to apply type-level computation to ordinary `struct`s and `enum`s, but we cannot do it because we are unable to extract the very structure of a type definition (fields and types/variants and their function signatures) from a corresponding type name, especially if this type is external to our crate and we cannot put a derive macro onto it [^derive-tight-coupling]. To resolve the issue, Frunk developers decided to create such a procedural macro that examines the internal structure of a type definition by implementing the [`Generic`] trait for it; it has the `type Repr` associated type, which, when implemented, equals to some form of a manipulatable heterogenous list. Still, all other types (well, transparent ones, such as [DTOs]) that do not have this derive macro, are left unexaminable, owing to the aforementioned limitations of Rust.
 
 [`Generic`]: https://docs.rs/frunk/latest/frunk/generic/trait.Generic.html
 [DTOs]: https://en.wikipedia.org/wiki/Data_transfer_object
@@ -254,7 +254,7 @@ fn main() {
 }
 ```
 
-Similarly to how we did with `struct Automobile`, we can represent `enum Expr` as [`frunk::Coproduct`]. This is left as an exercise to a reader.
+Similarly to how we did with `struct Automobile`, we can represent `enum Expr` as [`frunk::Coproduct`]. This is left as an exercise to the reader.
 
 [`frunk::Coproduct`]: https://beachape.com/frunk/frunk/coproduct/enum.Coproduct.html
 
@@ -302,7 +302,7 @@ const ThisIsFalse: <Negate<True> as Bool>::Value = False;
 const ThisIsTrue: <Negate<False> as Bool>::Value = True;
 ```
 
-In fact, the [Turing completeness of Rust's type system] is built upon this principle combined with type induction (which we shall a bit later). Every time you see an ordinary value in terms of Rust, know that it has its formal correspondence on the type-level, in the computational sense. Every time you write some algorithm, it has its correspondence on the type-level, using conceptually equivalent constructions! If you are interested in _how_, the above article provides a **mathematical proof**: first, the author implements a so-called language Smallfuck using _dynamics_: a sum type, pattern matching, recursion, and then using _statics_: logic on traits, associated types, etc.
+In fact, the [Turing completeness of Rust's type system] is built upon this principle combined with type induction (which we shall see a bit later). Every time you see an ordinary value in terms of Rust, know that it has its formal correspondence on the type-level, in the computational sense. Every time you write some algorithm, it has its correspondence on the type-level, using conceptually equivalent constructions! If you are interested in _how_, the above article provides a **mathematical proof**: first, the author implements a so-called language Smallfuck using _dynamics_: a sum type, pattern matching, recursion, and then using _statics_: logic on traits, associated types, etc.
 
 [Turing completeness of Rust's type system]: https://sdleffler.github.io/RustTypeSystemTuringComplete/
 
@@ -397,7 +397,7 @@ main = assert ((add one two) == three) $ pure ()
 
 ![](../media/why-static-languages-suffer-from-complexity/chad-meme.png)
 
-The purpose of this writeup is only to convey the intuition behind the statics-dynamics biformity and not to provide a formal proof -- for the latter, please refer to an awesome library called [`type-operators`] (by the same guy who implemented Smallfuck on types). In essence, it is an algorithmic macro eDSL that boils down to type-level manipulation with traits: you can define algebraic data types and perform data manipulations on them similar to how you normally do in Rust, but in the end, the whole code will dwell on the type-level. For more details, see the [translation rules](https://github.com/sdleffler/type-operators-rs/blob/master/src/lib.rs) and an [excellent guide](https://github.com/sdleffler/type-operators-rs/blob/master/README.md) by the same author. Another noteworthy project is [Fortraith], which is a "compile-time compiler that compiles Forth to compile-time trait expressions":
+The purpose of this writeup is only to convey the intuition behind the statics-dynamics biformity and not to provide a formal proof -- for the latter, please refer to an awesome library called [`type-operators`] (by the same person who implemented Smallfuck on types). In essence, it is an algorithmic macro eDSL that boils down to type-level manipulation with traits: you can define algebraic data types and perform data manipulations on them similar to how you normally do in Rust, but in the end, the whole code will dwell on the type-level. For more details, see the [translation rules](https://github.com/sdleffler/type-operators-rs/blob/master/src/lib.rs) and an [excellent guide](https://github.com/sdleffler/type-operators-rs/blob/master/README.md) by the same author. Another noteworthy project is [Fortraith], which is a "compile-time compiler that compiles Forth to compile-time trait expressions":
 
 [`type-operators`]: https://crates.io/crates/type-operators
 [Fortraith]: https://github.com/Ashymad/fortraith
@@ -639,7 +639,7 @@ toFmt (  x :: xs) = FChar x (toFmt xs)
 toFmt [] = FEnd
 ```
 
-Later, we will use it to generate a type for our `printf` function. The syntax is resembles Haskell a lot and should be comprehensible for a reader.
+Later, we will use it to generate a type for our `printf` function. The syntax resembles Haskell a lot and should be comprehensible for a reader.
 
 Now the most interesting part:
 
@@ -830,7 +830,7 @@ Everything is good except that Zig is a systems language. On [their official web
 
 The second reason is concerned with a language runtime [^runtime-definition]: for a language to be systems, to avoid hidden performance penalties, it should have a minimum runtime -- no default GC, no default event loop, etc., but for particular applications, it might be necessary to have a runtime -- for asynchronous ones, for instance, so actually you _must_ deal with custom runtime code in some way. Here we encounter a whole new set of problems regarding [function colours]: e.g., having `async` in your language and having no tools to _abstract over_ synchronous and asynchronous functions means that you divided your language into two parts: synchronous and asynchronous, and say, if you have a generic higher-order library, it will be inevitably marked `async` to accept all kinds of user callbacks. To resolve the issue, you need to implement some form of [effect polymorphism] (e.g., monads or algebraic effects), which is still a research topic. High-level languages have innately fewer problems to deal with, and this is why most of the software is written in Java, C#, Python, and JavaScript; in Golang, conceptually, every function is `async`, thus facilitating consistency _by default_, without resorting to sophisticated type features. On the contrary, Rust is already considered a complex language and still has no standard means to write truly generic asynchronous code.
 
-Zig can be still used in large systems projects like web browsers, interpreters, and operating system kernels -- nobody wants these things to freeze unexpectedly. Zig's low-level programming features would facilitate convenient operation with memory and hardware devices, while its sane approach to metaprogramming (in the right hands) would cultivate understandable code structure. Bringing it to high-level code would just increase the mental burden without considerable benefits.
+Zig can still be used in large systems projects like web browsers, interpreters, and operating system kernels -- nobody wants these things to freeze unexpectedly. Zig's low-level programming features would facilitate convenient operation with memory and hardware devices, while its sane approach to metaprogramming (in the right hands) would cultivate understandable code structure. Bringing it to high-level code would just increase the mental burden without considerable benefits.
 
 > Progress is possible only if we train ourselves to think about programs without thinking of them as pieces of executable code.
 
