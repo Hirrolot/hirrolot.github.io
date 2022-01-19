@@ -2,6 +2,23 @@
 title: "Why Static Languages Suffer From Complexity"
 author: Hirrolot's Blog
 date: Jan 3, 2022
+
+references:
+  - id: type-dd-with-idris
+    title: "Type-Driven Development with Idris"
+    author: Edwin Brady
+    publisher: "Manning Publications Co."
+    URL: "https://www.manning.com/books/type-driven-development-with-idris"
+
+  - id: dijkstra-pl-quote
+    title: "On the teaching of programming, i.e. on the teaching of thinking"
+    author: Edsger Dijkstra
+    URL: "https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD473.html"
+
+  - id: zig-comptime-params
+    title: "Introducing the Compile-Time Concept"
+    author: Zig developers
+    URL: "https://ziglang.org/documentation/0.9.0/#Introducing-the-Compile-Time-Concept"
 ---
 
 <div class="introduction">
@@ -12,24 +29,26 @@ People in the programming language design community strive to make their languag
 
 This is what I call **statics-dynamics biformity**: whenever you introduce a new linguistic abstraction to your language, it may reside either on the statics level, on the dynamics level, or on the both levels. In the first two cases, where the abstraction is located only on one particular level, you introduce _inconsistency_ to your language; in the latter case, you inevitably introduce the _feature biformity_.
 
-For our purposes, the **statics level** is where all linguistic machinery is being performed at compile-time. Similarly, the **dynamics level** is where code is being executed at run-time. Thence the typical control operators, such as `if`/`while`/`for`/`return`, data structures, and procedures, are dynamic, whereas static type system features and syntactical macros are static. In essence, the majority of static linguistic abstractions have their correspondence in the dynamic space and vice versa:
+For our purposes, the **statics level** is where all linguistic machinery is being performed at compile-time. Similarly, the **dynamics level** is where code is being executed at run-time. Thence the typical control flow operators, such as `if`/`while`/`for`/`return`, data structures, and procedures, are dynamic, whereas static type system features and syntactical macros, are static. In essence, the majority of static linguistic abstractions have their correspondence in the dynamic space and vice versa:
 
 | Dynamics | Statics |
 |----------|---------|
-| Variable | Generic/[Associated type] [^type-variables] |
-| `if` | [Trait bound] |
-| Loop/recursion | Type-level induction |
 | Array | Record type/Tuple/[Heterogeneous list] |
 | Tree (data structure) | Sum type/[Coproduct] |
-| Pattern matching | Multiple trait implementations |
+| Value | Generic/[Associated type] [^type-variables] |
+| Loop/recursion | Type-level induction |
+| If-then-else/Pattern matching | Multiple trait implementations |
+| Function signature | `trait F<In...> { type Out; }` |
+| Function implementation | `impl F<...> for T { type Out = ...; }` |
+| Function call | `<T as F<...>>::Out` |
 
-[Trait bound]: https://doc.rust-lang.org/book/ch10-02-traits.html
 [Associated type]: https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html
 [Heterogeneous list]: https://beachape.com/frunk/frunk/hlist/index.html
 [Coproduct]: https://beachape.com/frunk/frunk/coproduct/index.html
 
-In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using the static and dynamic approaches. All the examples are written in Rust, but can be applied to any other general-purpose programming language with enough expressive type system. If you feel busy, feel free to jump right to the [main section] about the problem explanation.
+In the following sections, before elaborating on the problem further, let me demonstrate to you how to implement logically equivalent programs using both the static and dynamic approaches. Most of the examples are written in Rust but can be applied to any other general-purpose programming language with enough expressive type system; keep in mind that this writeup is language-agnostic and is concerned with the _philosophy_ of [PLT] in general rather than with particular PL implementations. If you feel busy, feel free to jump right to the [main section] about the problem explanation.
 
+[PLT]: https://en.wikipedia.org/wiki/Programming_language_theory
 [main section]: #the-unfortunate-consequences-of-being-static
 
 </div>
@@ -117,7 +136,7 @@ fn main() {
 }
 ```
 
-This version enforces exactly the same type checks as `automobile-static.rs`, but additionally provides [methods] for manipulating with `type Automobile` as with ordinary collections! E.g., we may want to reverse our automobile:
+This version enforces exactly the same type checks as `automobile-static.rs`, but additionally provides [methods] for manipulating with `type Automobile` as with ordinary collections! E.g., we may want to reverse our automobile [^missing-traits]:
 
 [methods]: https://docs.rs/frunk/0.4.0/frunk/hlist/struct.HCons.html#implementations
 
@@ -127,8 +146,6 @@ assert_eq!(
     hlist![Manufacturer(String::from("X")), Seats(4), Wheels(4)]
 );
 ```
-
-(Need to augment the field types with `#[derive(Debug, PartialEq)]`.)
 
 Or we may want to zip our car with their car:
 
@@ -146,6 +163,13 @@ assert_eq!(
 ```
 
 ... And so forth.
+
+However, sometimes we may want to apply type-level computation to ordinary `struct`s and `enum`s, but we cannot do it because we are unable to extract the very structure of a type definition (fields and types/variants and their function signatures) from a corresponding type name, especially if this type is external to our crate and we cannot put a derive macro onto it [^derive-tight-coupling]. To resolve the issue, the Frunk developers decided to create such a procedural macro that examines the internal structure of a type definition by implementing the [`Generic`] trait for it; it has the `type Repr` associated type, which, when implemented, equals to some form of a manipulatable heterogenous list. Still, all other types (well, transparent ones, such as [DTOs]) that do not have this derive macro, are left unexaminable, owing to the aforementioned limitations of Rust.
+
+[`Generic`]: https://docs.rs/frunk/latest/frunk/generic/trait.Generic.html
+[DTOs]: https://en.wikipedia.org/wiki/Data_transfer_object
+
+![](../media/why-static-languages-suffer-from-complexity/rust-meme.png)
 
 ## Sum type -- Tree
 
@@ -234,7 +258,7 @@ Similarly to how we did with `struct Automobile`, we can represent `enum Expr` a
 
 [`frunk::Coproduct`]: https://beachape.com/frunk/frunk/coproduct/enum.Coproduct.html
 
-## Variable -- Associated type
+## Value -- Associated type
 
 We may want to negate a boolean value using the standard operator `!` ([playground](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=0dea07f96037bce0e82a2c93c77898b0)):
 
@@ -247,7 +271,7 @@ fn main() {
 }
 ```
 
-The same can be done through associated types ([playground](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=e101a1a384390a1d502aa514b21f9954)):
+The same can be done through associated types [^assoc-type-bug] ([playground](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=e101a1a384390a1d502aa514b21f9954)):
 
 <p class="code-annotation">`negate-static.rs`</p>
 
@@ -278,56 +302,9 @@ const ThisIsFalse: <Negate<True> as Bool>::Value = False;
 const ThisIsTrue: <Negate<False> as Bool>::Value = True;
 ```
 
-(We could even generalise these two implementations of `Negate` over a generic value `Cond`, but this is impossible due to a [known bug in the Rust's type system](https://github.com/rust-lang/rust/issues/20400).)
+In fact, the [Turing completeness of Rust's type system] is built upon this principle combined with type induction (which we shall a bit later). Every time you see an ordinary value in terms of Rust, know that it has its formal correspondence on the type-level, in the computational sense. Every time you write some algorithm, it has its correspondence on the type-level, using conceptually equivalent constructions! If you are interested in _how_, the above article provides a **mathematical proof**: first, the author implements a so-called language Smallfuck using _dynamics_: a sum type, pattern matching, recursion, and then using _statics_: logic on traits, associated types, etc.
 
-## If -- Trait bound
-
-If-then-else is much like trait bounds ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=4ce6bda628caf7147a46df9f97864043)):
-
-<p class="code-annotation">`kosher-dynamic.rs`</p>
-
-```rust
-const FOO: i32 = 0;
-const BAR: i32 = 1;
-
-fn is_kosher(x: i32) -> bool {
-    match x {
-        FOO => true,
-        _ => false,
-    }
-}
-
-fn main() {
-    assert!(is_kosher(FOO));
-
-    // ERROR:
-    assert!(is_kosher(BAR));
-}
-```
-
-This time, let us make a predicate out of a trait and define `Foo` and `Bar` as custom types ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=d8953b584f3c885c4b90051a18e79e35)):
-
-<p class="code-annotation">`kosher-static.rs`</p>
-
-```rust
-trait Kosher {}
-
-struct Foo;
-struct Bar;
-
-impl Kosher for Foo {}
-
-fn accept_kosher<T: Kosher>() {}
-
-fn main() {
-    accept_kosher::<Foo>();
-
-    // ERROR:
-    accept_kosher::<Bar>();
-}
-```
-
-With [negative trait bounds], we could even handle the case when `T` does _not_ implement `Kosher`, thereby expressing the "else" thing.
+[Turing completeness of Rust's type system]: https://sdleffler.github.io/RustTypeSystemTuringComplete/
 
 ## Recursion -- Type-level induction
 
@@ -346,8 +323,8 @@ enum Nat {
 
 fn add(lhs: &Box<Nat>, rhs: &Box<Nat>) -> Nat {
     match lhs.deref() {
-        Nat::Z => rhs.deref().clone(),
-        Nat::S(next) => Nat::S(Box::new(add(next, rhs))),
+        Nat::Z => rhs.deref().clone(), // I
+        Nat::S(next) => Nat::S(Box::new(add(next, rhs))), // II
     }
 }
 
@@ -378,10 +355,12 @@ trait Add<Rhs> {
     type Result;
 }
 
+// I
 impl<Rhs> Add<Rhs> for Z {
     type Result = Rhs;
 }
 
+// II
 impl<Lhs: Add<Rhs>, Rhs> Add<Rhs> for S<Lhs> {
     type Result = S<<Lhs as Add<Rhs>>::Result>;
 }
@@ -393,23 +372,68 @@ type Three = S<Two>;
 const THREE: <One as Add<Two>>::Result = S(PhantomData);
 ```
 
-Here, `impl ... for Z` is the base case, and `impl ... for S<Lhs>` is the induction step. As in the first example, the induction works by reducing the first argument to `Z`.
+Here, `impl ... for Z` is the base case (termination case), and `impl ... for S<Lhs>` is the induction step (recursion case) -- similar to how we did with pattern matching using `match`. Likewise, as in the first example, the induction works by reducing the first argument to `Z`: `<Lhs as Add<Rhs>>::Result` works just like `add(next, rhs)` -- it invokes pattern matching once again to drive the computation further. Note that the two trait implementations indeed belong to the same logical function implementation; they look detached because we perform pattern matching on our type-level number (`Z` and `S<Next>`). This is somewhat similar to what we are used to see in Haskell, where each pattern matching case looks like a separate function definition:
 
-You can clearly see the logical resemblance of the both examples -- because the **logic** part remains the same, no matter how you call it: be it statics or dynamics.
+<p class="code-annotation">`peano-static.hs`</p>
+
+```haskell
+import Control.Exception
+
+data Nat = Z | S Nat deriving Eq
+
+add :: Nat -> Nat -> Nat
+add Z rhs = rhs -- I
+add (S next) rhs = S(add next rhs) -- II
+
+one = S Z
+two = S one
+three = S two
+
+main :: IO ()
+main = assert ((add one two) == three) $ pure ()
+```
+
+## Type-level logic reified
+
+![](../media/why-static-languages-suffer-from-complexity/chad-meme.png)
+
+The purpose of this writeup is only to convey the intuition behind the statics-dynamics biformity and not to provide a formal proof -- for the latter, please refer to an awesome library called [`type-operators`] (by the same guy who implemented Smallfuck on types). In essence, it is an algorithmic macro eDSL that boils down to type-level manipulation with traits: you can define algebraic data types and perform data manipulations on them similar to how you normally do in Rust, but in the end, the whole code will dwell on the type-level. For more details, see the [translation rules](https://github.com/sdleffler/type-operators-rs/blob/master/src/lib.rs) and an [excellent guide](https://github.com/sdleffler/type-operators-rs/blob/master/README.md) by the same author. Another noteworthy project is [Fortraith], which is a "compile-time compiler that compiles Forth to compile-time trait expressions":
+
+[`type-operators`]: https://crates.io/crates/type-operators
+[Fortraith]: https://github.com/Ashymad/fortraith
+
+```rust
+forth!(
+    : factorial (n -- n) 1 swap fact0 ;
+    : fact0 (n n -- n) dup 1 = if drop else dup rot * swap pred fact0 then ;
+    5 factorial .
+);
+```
+
+The above code translates a simple factorial implementation to computation on traits and associated types. Later, you obtain a result as follows:
+
+```rust
+println!(
+    "{}",
+    <<<Empty as five>::Result as factorial>::Result as top>::Result::eval()
+);
+```
+
+Having considered everything above, it is crystal clear that the **logic** part remains the same, no matter how you call it: be it statics or dynamics.
 
 ## The unfortunate consequences of being static
 
 > Are you quite sure that all those bells and whistles, all those wonderful facilities of your so called powerful programming languages, belong to the solution set rather than the problem set?
 
-<p class="quote-author">[Edsger Dijkstra]</p>
+<p class="quote-author">[Edsger Dijkstra] [@dijkstra-pl-quote]</p>
 
 [Edsger Dijkstra]: https://en.wikipedia.org/wiki/Edsger_W._Dijkstra
 
-Programming languages nowadays do not focus on the logic. They focus on the mechanisms inferior to logic; they call boolean negation the most simple operator that must exist from the very beginning but [negative trait bounds] are considered a debatable concept with "a lot of issues". The majority of mainstream PLs support the tree data structure in their standard libraries, but sum types [stay unimplemented for decades]. I cannot imagine a single language without the `if` operator, but only a few PLs accommodate full-fledged trait bounds, not to mention pattern matching. This is **inconsistency** -- it compels software enginners design low-quality APIs that either go dynamic and expose a very few compile-time checks or go static and try to circumvent the fundamental limitations of a host language, thereby making their usage more and more abstruse. Combining statics and dynamics in a single working solution is also complicated since you cannot invoke dynamics in a static context. In terms of [function colors], dynamics is coloured red, whereas statics is blue.
+Programming languages nowadays do not focus on the logic. They focus on the mechanisms inferior to logic; they call boolean negation the most simple operator that must exist from the very beginning but [negative trait bounds] are considered a debatable concept with "a lot of issues". The majority of mainstream PLs support the tree data structure in their standard libraries, but sum types [stay unimplemented for decades]. I cannot imagine a single language without the `if` operator, but only a few PLs accommodate full-fledged trait bounds, not to mention pattern matching. This is **inconsistency** -- it compels software enginners design low-quality APIs that either go dynamic and expose a very few compile-time checks or go static and try to circumvent the fundamental limitations of a host language, thereby making their usage more and more abstruse. Combining statics and dynamics in a single working solution is also complicated since you cannot invoke dynamics in a static context. In terms of [function colours], dynamics is coloured red, whereas statics is blue.
 
 [negative trait bounds]: https://github.com/rust-lang/rfcs/issues/1834
 [stay unimplemented for decades]: https://bitbashing.io/std-visit.html
-[function colors]: https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
+[function colours]: https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
 
 In addition to this inconsistency, we have the feature **biformity**. In such languages as C++, Haskell, and Rust, this biformity amounts to the most perverse forms; you can think of any so-called "expressive" programming language as of two or more smaller languages put together: C++ the language and C++ templates/macros, Rust the language and type-level Rust + declarative macros, etc. With this approach, each time you write something at a meta-level, you cannot reuse it in the host language and vice versa, thus violating the [DRY principle] (as we shall see in a minute). Additionally, biformity increases the learning curve, hardens language evolution, and finally ends up in such a feature bloat that only the initiated can figure out what is happening in the code. Take a look at any production code in Haskell and you will immediately see those numerous GHC `#LANGUAGE` clauses, each of which signifies a separate language extension:
 
@@ -443,7 +467,7 @@ In addition to this inconsistency, we have the feature **biformity**. In such la
 
 [haskell/haskell-language-server]: https://github.com/haskell/haskell-language-server/blob/ee0a0cc78352c961f641443eea89a26b9e1d3974/hls-plugin-api/src/Ide/Types.hs
 
-When a host language does not provide enough static capabilities needed for convenient development, some programmers go especially insane and create whole new compile-time metalanguages and eDSLs atop of existing ones. Thus, inconsistency has the treacherous property of transforming into biformity:
+When a host language does not provide enough static capabilities needed for convenient development, some programmers go especially insane and create whole new compile-time metalanguages and eDSLs atop of existing ones. Thus, **inconsistency has the treacherous property of transforming into biformity**:
 
 <ul>
 <li>
@@ -510,7 +534,7 @@ BOOST_MPL_ASSERT_RELATION(
 </li>
 <li>
 
-[**C**] My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor. It came to such extend that I was forced to [re-implement recursion] through the combination of a Lisp-like trampoline and [Continuation-Passing Style (CPS)]. In the end, I had a considerable number of list functions in the standard library, such as [`ML99_listMap`], [`ML99_listIntersperse`], and [`ML99_listFoldr`], which arguably makes Metalang99, as a pure data transformation language, more expressive than C itself.
+[**C**] My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor. It came to such extent that I was forced to [re-implement recursion] through the combination of a Lisp-like trampoline and [Continuation-Passing Style (CPS)] techniques. In the end, I had a cornucopia of list manipulation functions in the standard library, such as [`ML99_listMap`], [`ML99_listIntersperse`], and [`ML99_listFoldr`], which arguably makes Metalang99, as a pure data transformation language, more expressive than C itself [^boost-preprocessor].
 
 [Metalang99]: https://github.com/Hirrolot/metalang99
 [re-implement recursion]: https://github.com/Hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h
@@ -530,12 +554,14 @@ BOOST_MPL_ASSERT_RELATION(
 </li>
 <li>
 
-[**Rust**] [Typenum] is yet another popular type-level library for Rust: it allows to perform integral calculations at compile-time, by encoding signed and unsigned integers as generics [^recall-generics-correspondence]. By doing this, the part of the language responsible for integers finds its counterpart in the statics, thereby introducing even more biformity [^const-generics]. We cannot just parameterise some type with `(2 + 2) * 5`, we have to write something like `<<P2 as Add<P2>>::Output as Mul<P5>>::Output`! The best thing you could do is to write a macro that does the dirty job for you, but it would only be syntax sugar -- you would anyway see hordes of compile-time errors with the aforementioned traits.
+[**Rust**] [Typenum] is yet another popular type-level library: it allows to perform integral calculations at compile-time, by encoding integers as generics [^recall-generics-correspondence]. By doing this, the part of the language responsible for integers finds its counterpart in the statics, thereby introducing even more biformity [^const-generics]. We cannot just parameterise some type with `(2 + 2) * 5`, we have to write something like `<<P2 as Add<P2>>::Output as Mul<P5>>::Output`! The best thing you could do is to write a macro that does the dirty job for you, but it would only be syntax sugar -- you would anyway see hordes of compile-time errors with the aforementioned traits.
 
 [Typenum]: https://docs.rs/typenum/latest/typenum/
 
 </li>
 </ul>
+
+![](../media/why-static-languages-suffer-from-complexity/tmp-meme.png)
 
 Sometimes, software engineers find their languages too primitive to express their ideas even in dynamic code. But they do not give up:
 
@@ -555,7 +581,7 @@ Sometimes, software engineers find their languages too primitive to express thei
 
 [QEMU machine emulator]: https://github.com/qemu/qemu
 
-Recalling the famous [Greenspun's tenth rule], such hand-made metalanguages are typically "ad-hoc, informally-specified, bug-ridden, and slow", with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating declarative, small domain-specific languages sounds so cool at first sight. Have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot [^teloxide-error-message]:
+Recalling the famous [Greenspun's tenth rule], such handmade metalanguages are typically "ad-hoc, informally-specified, bug-ridden, and slow", with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating highly declarative, small domain-specific languages sounds so cool at first sight. When a problem domain (or some intermediate machinery) is expressed in terms of a host language, you need to understand how to chain calls together to get things done -- this is what we usually call an API; however, when this API is written in another language, then, in addition to the calling sequence, you need to understand the syntax and semantics of that language, which is very unfortunate for two reasons: the mental burden it lays upon developers and a very limited number of developers that can support such metalanguages. From my experience, handmade metalinguistics tend to quickly go out of hand and spread across the whole codebase, thereby making it harder to dig into. Not only reasoning is impaired but also compiler-developer interaction: have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot [^teloxide-error-message]:
 
 [Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
 
@@ -563,7 +589,7 @@ Recalling the famous [Greenspun's tenth rule], such hand-made metalanguages are 
 
 This is woefully to say, but it seems that an "expressive" PL nowadays means "Hey there, I have seriously messed up with the number of features, but that is fine!"
 
-Finally, a word has to be said about metaprogramming in a host language. With such systems as [Template Haskell] and [Rust's procedural macros], we can manipulate an AST of a host language using the same language, which is good in terms of biformity but unpleasant in terms of inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function, since they are just different concepts. Personally, I do think that procedural macros in Rust are a giant design mistake that is comparable to `#define` macros in plain C: aside from pure syntax, the macro system simply has no idea about the language being manipulated. E.g., imagine there is an enumeration called `Either`, whose definition is as follows:
+Finally, a word has to be said about metaprogramming in a host language. With such templating systems as [Template Haskell] and [Rust's procedural macros], we can manipulate an AST [^is-true-ast] of a host language using the same language, which is good in terms of biformity but unpleasant in terms of general language inconsistency. Macros are not functions: we cannot partially apply a macro and obtain a partially applied function (or vice versa), since they are just different concepts -- this can turn out to be a pain in the ass if we are to design a generic and easy-to-use library API. Personally, I do think that procedural macros in Rust are a **giant design mistake** that is comparable to `#define` macros in plain C: aside from pure syntax, the macro system simply has no idea about the language being manipulated; instead of a tool to extend and work with a language gracefully, you get slightly enhanced text substitution and nothing more. E.g., imagine there is an enumeration called `Either`, whose definition is as follows:
 
 [Template Haskell]: https://wiki.haskell.org/A_practical_Template_Haskell_Tutorial
 [Rust's procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
@@ -585,21 +611,246 @@ Now imagine we have an arbitrary trait `Foo`, and we are willing to implement th
 
 [tokio-util]: https://docs.rs/tokio-util/latest/tokio_util/
 
-## Is there a way out?...
+## Idris: The way out?
+
+> One of the most fundamental features of Idris is that types and expressions are part of the same language -- you use the same syntax for both.
+
+<p class="quote-author">[Edwin Brady], the author of [Idris] [@type-dd-with-idris]</p>
+
+[Edwin Brady]: https://www.type-driven.org.uk/edwinb/
+[Idris]: https://www.idris-lang.org/
 
 Let us think a little bit about how to workaround the issue. If we make our languages fully dynamic, we will win biformity and inconsistency [^terra], but will imminently lose the pleasure of compile-time validation and will end up debugging our programs at mid-nights. The misery of dynamic type systems is widely known.
 
-The only way to approach the problem is to make a language whose features are both static and dynamic and not to split the same feature into two parts [^dep-types]. Thus, the ideal linguistic abstraction is both static and dynamic; however, it is still a single concept and not two logically similar concepts but with different interfaces [^concept-disorder]. A perfect example is [CTFE], colloquially known as `constexpr`: same code can be executed at compile-time under a static context and at run-time under a dynamic context (e.g., when requesting a user input from `stdin`.); thus, we do not have to write different code for compile-time (statics) and run-time (dynamics), instead we use the same representation.
+The only way to approach the problem is to make a language whose features are both static and dynamic and not to split the same feature into two parts. Thus, the ideal linguistic abstraction is both static and dynamic; however, it is still a single concept and not two logically similar concepts but with different interfaces [^concept-disorder]. A perfect example is [CTFE], colloquially known as `constexpr`: same code can be executed at compile-time under a static context and at run-time under a dynamic context (e.g., when requesting a user input from `stdin`.); thus, we do not have to write different code for compile-time (statics) and run-time (dynamics), instead we use the same representation.
 
 [CTFE]: https://en.wikipedia.org/wiki/Compile-time_function_execution
+
+One possible solution I have seen is dependent types. With dependent types, we can parameterise types not only with other types but with values, too. In a dependently typed language [Idris], there is a type called `Type` -- it stands for the "type of all types", thereby **weakening the dichotomy between type-level and value-level**. Having such a powerful thing at our disposal, we can express _typed_ abstractions that are usually either built into a language compiler/environment or done via macros. Perhaps the most common and descriptive example is a type-safe `printf` that calculates types of its arguments on the fly, so let give us the pleasure of mastering it in Idris [^idris-gist-link]!
+
+First, define an inductive data type `Fmt` and a way to get it from a format string:
+
+```idris
+data Fmt = FArg Fmt | FChar Char Fmt | FEnd
+
+toFmt : (fmt : List Char) -> Fmt
+toFmt ('*' :: xs) = FArg (toFmt xs)
+toFmt (  x :: xs) = FChar x (toFmt xs)
+toFmt [] = FEnd
+```
+
+Later, we will use it to generate a type for our `printf` function. The syntax is resembles Haskell a lot and should be comprehensible for a reader.
+
+Now the most interesting part:
+
+```idris
+PrintfType : (fmt : Fmt) -> Type
+PrintfType (FArg fmt) = ({ty : Type} -> Show ty => (obj : ty) -> PrintfType fmt)
+PrintfType (FChar _ fmt) = PrintfType fmt
+PrintfType FEnd = String
+```
+
+What this function does? It **calculates a type** based on the input argument `fmt`. As usual, we case-split `fmt` into three cases and deal with them separately:
+
+ 1. `(FArg fmt)`. Since `FArg` indicates that we are to provide a printable argument, this case produces a type signature that takes an additional parameter:
+    1. `{ty : Type}` means that Idris will deduce a type `ty` of this argument automatically ([implicit argument]).
+    2. `Show ty` is a type constraint that says that `ty` should implement `Show`.
+    3. `(obj : ty)` is that printable argument we must provide to `printf`.
+    4. `PrintfType fmt` is a recursive call that deals with the rest of the input `fmt`. In Idris, inductive types are managed by inductive functions!
+ 2. `(FChar _ fmt)`. `FChar` indicates an ordinary character in a format string, so here we just ignore it and continue with `PrintfType fmt`.
+ 3. `FEnd`. This is the end of input. Since we want our `printf` to produce a `String`, we return `String` as an ordinary type.
+
+[implicit argument]: https://docs.idris-lang.org/en/latest/tutorial/miscellany.html#implicit-arguments
+
+Now say we have a format string `"*x*"`, or `FArg (FChar ('x' (FArg FEnd)))`; what type will `PrintfType` generate? Simple:
+
+ 1. `FArg`: `{ty : Type} -> Show ty => (obj : ty) -> PrintfType (FChar ('x' (FArg FEnd)))`
+ 2. `FChar`: `{ty : Type} -> Show ty => (obj : ty) -> PrintfType (FArg FEnd)`
+ 3. `FArg`: `{ty : Type} -> Show ty => (obj : ty) -> {ty : Type} -> Show ty => (obj : ty) -> PrintfType FEnd`
+ 4. `FEnd`: `{ty : Type} -> Show ty => (obj : ty) -> {ty : Type} -> Show ty => (obj : ty) -> String`
+
+Cool, now it is time to write the coveted `printf`:
+
+```idris
+printf : (fmt : String) -> PrintfType (toFmt $ unpack fmt)
+printf fmt = printfAux (toFmt $ unpack fmt) [] where
+    printfAux : (fmt : Fmt) -> List Char -> PrintfType fmt
+    printfAux (FArg fmt) acc = \obj => printfAux fmt (acc ++ unpack (show obj))
+    printfAux (FChar c fmt) acc = printfAux fmt (acc ++ [c])
+    printfAux FEnd acc = pack acc
+```
+
+As you can see, `PrintfType (toFmt $ unpack fmt)` occurs in the type signature, meaning that the whole type of `printf` _depends on the input argument_ `fmt`! But what does `unpack fmt` mean? Since `printf` takes `fmt : String`, we should convert it to `List Char` beforehand because we match this string in `toFmt`; as far as I know, Idris does not allow matching an ordinary `String` in the same way. Likewise, we do `unpack fmt` before calling `printfAux`, since it also takes `List Char` as a result accumulator.
+
+Let us examine the `printfAux` implementation:
+
+ 1. `(FArg fmt)`. Here we return a lambda function that takes `obj` and calls `show` on it, then appends to `acc` by the `++` operator.
+ 2. `(FChar c fmt)`. Just append `c` to `acc` and call `printfAux` once again on `fmt`.
+ 3. `FEnd`. Since `acc` is typed `List Char` but we have to return `String` (according to the last case of `PrintfType`), we call `pack` on it.
+
+Finally, test `printf`:
+
+<p class="code-annotation">`printf.idr`</p>
+
+```idris
+main : IO ()
+main = putStrLn $ printf "Mr. John has * contacts in *." 42 "New York"
+```
+
+This prints `Mr. John has 42 contacts in "New York".`. But what if we do not provide `42` to `printf`?
+
+```
+Error: While processing right hand side of main. When unifying:
+    ?ty -> PrintfType (toFmt [assert_total (prim__strIndex "Mr. John has * contacts in *." (prim__cast_IntegerInt (natToInteger (length "Mr. John has * contacts in *.")) - 1))])
+and:
+    String
+Mismatch
+between: ?ty -> PrintfType (toFmt [assert_total (prim__strIndex "Mr. John has * contacts in *." (prim__cast_IntegerInt (natToInteger (length "Mr. John has * contacts in *.")) - 1))]) and String.
+
+test:21:19--21:68
+ 17 |     printfAux (FChar c fmt) acc = printfAux fmt (acc ++ [c])
+ 18 |     printfAux FEnd acc = pack acc
+ 19 | 
+ 20 | main : IO ()
+ 21 | main = putStrLn $ printf "Mr. John has * contacts in *." "New York"
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: compiling hole Main.main
+```
+
+Yeah, Idris detects the error and produces a type mismatch! This is basically how you implement type-safe `printf` with first-class types. If you are curious about the same thing in Rust, take a look at [Will Crichton's attempt], which relies heavily on heterogenous lists we have seen above. The downside of this approach now should be perfectly clear to you: in Rust, the language of the type system differs from the main language, but in Idris, it is indeed the same thing -- this is why we can freely define type-level functions as regular functions returning a `Type` and invoke them later in type signatures. Moreover, because Idris is dependently typed, you can even compute a type based on some run-time argument, which is impossible in such languages as [Zig].
+
+[Will Crichton's attempt]: https://willcrichton.net/notes/type-safe-printf/
+[Zig]: https://ziglang.org/
+
+![](../media/why-static-languages-suffer-from-complexity/printf-meme.png)
+
+I already anticipate the question: what is the problem of implementing `printf` with macros? After all, [`println!`] works just fine in Rust. The problem is macros. Think for yourself: why a programming language needs heavy-duty macros? Because we may want to extend it. Why may we want to extend it? Because a programming language does not fit our needs: we cannot express something using regular linguistic abstractions, and this is why we decide to extend the language with ad-hoc meta-abstractions. In the main section, I provided an argumentation why this approach sucks -- because a macro system has no clue about a language being manipulated; in fact, procedural macros in Rust is just a fancy name for the [M4 preprocessor]. You guys integrated M4 into your language. Of course, this is [better than external M4], but it is nevertheless a method of the 20'th century; proc. macros even cannot manipulate an [_abstract_ syntax tree], because [`syn::Item`], a common structure used to write proc. macros, is indeed known as a [_concrete_ syntax tree], or "parse tree". On the other hand, types are a natural part of a host language, and this is why if we can express a programmatic abstraction using types, we _reuse_ linguistic abstractions instead of resorting to ad-hoc machinery. Ideally, a programming language should have either no macros or only a lightweight form of syntax rewriting rules (like Scheme's [`extend-syntax`] or [syntax extensions] of Idris), in order to keep the language consistent and well-suited to solve expected tasks.
+
+[`println!`]: https://doc.rust-lang.org/std/macro.println.html
+[M4 preprocessor]: https://en.wikipedia.org/wiki/M4_(computer_language)
+[better than external M4]: whats-the-point-of-the-c-preprocessor-actually.html
+[_abstract_ syntax tree]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
+[_concrete_ syntax tree]: https://en.wikipedia.org/wiki/Parse_tree
+[`syn::Item`]: https://docs.rs/syn/latest/syn/enum.Item.html
+[`extend-syntax`]: https://www2.ccs.neu.edu/racket/pubs/lasc1990-sf.pdf
+[syntax extensions]: https://docs.idris-lang.org/en/latest/tutorial/syntax.html
+
+That being said, Idris erases the first biformity "values-generics" by introducing `Type`, the "type of all types". By doing so, it also resolves a bunch of other correspondences, such as recursion vs. type-level induction, functions vs. trait machinery, and so forth; this, in turn, allows to program in the same language as much as possible, even when dealing with highly generic code. E.g., you can even represent a list of types as `List Type`, just like `List Nat` or `List String`, and deal with it as usual! It is possible due to a [cumulative hierarchy of universes]: simply speaking, `Type` is of type `Type 1`, `Type 1` is of type `Type 2`, and so on. Since [`Data.List`]'s generic named `a` is "implicitly" typed `Type`, it can be `Nat` and `String` as well as `Type`; in the latter case, `a` would be deduced as `Type 1`. Such an infinite sequence of types is needed to avoid a variation of [Russell's paradox] by making an inhabitant "structurally smaller" than its type.
+
+[`Data.List`]: https://github.com/idris-lang/Idris2/blob/0d58282087a8dce89a036e31e192af13b9199850/libs/prelude/Prelude/Basics.idr#L164
+[cumulative hierarchy of universes]: https://docs.idris-lang.org/en/latest/faq/faq.html#does-idris-have-universe-polymorphism-what-is-the-type-of-type
+[Russell's paradox]: https://en.wikipedia.org/wiki/Russell%27s_paradox
+
+Idris, however, is not a simple language. Our twenty line example of `printf` already uses a "whole lotta features", such as inductive data types, dependent pattern matching, implicits, type constraints, to mention a few. Additionally, Idris features [computational effects], [elaborator reflection], coinductive data types, and many-many stuff for theorem proving. With such a pleiad of typing facilities, you typically twiddle with your language machinery rather than doing some meaningful work. I can hardly believe that in their current state, dependent types will find massive production use; as for now, in the programming world, they are no more than a fancy thing for PL researchers and random enthusiasts like me. Dependent types alone are just too low-level.
+
+[computational effects]: http://docs.idris-lang.org/en/latest/effects/index.html
+[elaborator reflection]: http://docs.idris-lang.org/en/latest/elaboratorReflection/index.html
+
+## Zig: Simpler, but too systems
+
+> In Zig, types are first-class citizens. They can be assigned to variables, passed as parameters to functions, and returned from functions.
+
+<p class="quote-author">The Zig manual [@zig-comptime-params]</p>
+
+Our last patient would be the [Zig] programming language. Here is a compile-time `printf` implementation in Zig (sorry no highlighting yet):
+
+<p class="code-annotation">`printf.zig`</p>
+
+```zig
+const std = @import("std");
+
+fn printf(comptime fmt: []const u8, args: anytype) anyerror!void {
+    const stdout = std.io.getStdOut().writer();
+
+    comptime var arg_idx: usize = 0;
+
+    inline for (fmt) |c| {
+        if (c == '*') {
+            try printArg(stdout, args[arg_idx]);
+            arg_idx += 1;
+        } else {
+            try stdout.print("{c}", .{c});
+        }
+    }
+
+    comptime {
+        if (args.len != arg_idx) {
+            @compileError("Unused arguments");
+        }
+    }
+}
+
+fn printArg(stdout: std.fs.File.Writer, arg: anytype) anyerror!void {
+    if (@typeInfo(@TypeOf(arg)) == .Pointer) {
+        try stdout.writeAll(arg);
+    } else {
+        try stdout.print("{any}", .{arg});
+    }
+}
+
+pub fn main() !void {
+    try printf("Mr. John has * contacts in *.\n", .{ 42, "New York" });
+}
+```
+
+Here, we use a feature called [`comptime`]: a `comptime` function parameter means that it **must** be known at the time of compilation. Not only it allows for aggressive optimisations but also opens a Valhalla of "metaprogramming" facilities, most notably without separate macro-level or type-level sublanguages. The above code needs no further explanation -- the mundane logic should be clear to every programmer, unlike `printf.idr` that seems to look like a fruit of a mad genius' wet fantasies.
+
+[`comptime`]: https://kristoff.it/blog/what-is-zig-comptime/
+
+If we omit `42`, Zig will report a compilation error:
+
+```
+An error occurred:
+/tmp/playground2454631537/play.zig:10:38: error: field index 1 outside tuple 'struct:33:52' which has 1 fields
+            try printArg(stdout, args[arg_idx]);
+                                     ^
+/tmp/playground2454631537/play.zig:33:15: note: called from here
+    try printf("Mr. John has * contacts in *.\n", .{ "New York" });
+              ^
+/tmp/playground2454631537/play.zig:32:21: note: called from here
+pub fn main() !void {
+                    ^
+```
+
+The only inconvenience I experienced during the development of `printf` is [massive errors...] Much like C++ templates. However, I admit that this can be solved (or at least workarounded) by more explicit type constraints. Overall, the design of Zig's type system seems reasonable: there is a type of all types called `type`, and using `comptime`, we can [compute types] at compile-time via regular variables, loops, procedures, etc. We can even perform type reflection through the [`@typeInfo`], [`@typeName`], and [`@TypeOf`] built-ins! Yes, we can no longer depend on run-time values, but if you do not need a theorem prover, probably full-blown dependent types are a bit of overkill.
+
+[massive errors...]: https://gist.github.com/Hirrolot/504dfe97627895c9f8f82697e27bb142
+[compute types]: https://ikrima.dev/dev-notes/zig/zig-metaprogramming/
+[`@typeInfo`]: https://ziglang.org/documentation/master/#typeInfo
+[`@typeName`]: https://ziglang.org/documentation/master/#typeName
+[`@TypeOf`]: https://ziglang.org/documentation/master/#TypeOf
+
+Everything is good except that Zig is a systems language. On [their official website], Zig is described as a "general-purpose programming language", but I can hardly agree with this statement. Yes, you can write virtually any software in Zig, but should you? My experience in maintaining high-level code in Rust and C99 says **NO**. The first reason is safety: if you make a systems language safe, you will make programmers deal with borrow checker and ownership (or equivalent) issues that have absolutely nothing to do with business logic (believe me, I know the pain); otherwise, if you choose the C-way manual memory management, you will make programmers debugging their programs for long hours with the hope that `-fsanitize=address` would show something meaningful. The second reason is concerned with a language runtime [^runtime-definition]: for a language to be systems, to avoid hidden performance penalties, it should have a minimum runtime -- no default GC, no default event loop, etc., but for particular applications, it might be necessary to have a runtime -- for asynchronous ones, for instance, so actually you _must_ deal with custom runtime code in some way. Here we encounter a whole new set of problems regarding [function colours]: e.g., having `async` in your language and having no tools to _abstract over_ synchronous and asynchronous functions means that you divided your language into two parts: synchronous and asynchronous, and say, if you have a generic higher-order library, it will be inevitably marked `async` to accept all kinds of user callbacks. To resolve the issue, you need to implement some form of [effect polymorphism] (e.g., monads or algebraic effects), which is still a research topic. High-level languages have just innately fewer problems to deal with, and this is why most of the software is written in Java, C#, Python, and JavaScript. Zig can be still used in large systems projects like web browsers and operating systems (nobody wants these things to freeze unexpectedly), but bringing it to high-level code would just increase the mental burden.
+
+[their official website]: https://ziglang.org/
+[effect polymorphism]: http://docs.idris-lang.org/en/latest/effects/index.html
+
+![](../media/why-static-languages-suffer-from-complexity/types-meme.png)
+
+## Final words
 
 Static languages enforce compile-time checks; this is good. But they suffer from feature biformity and inconsistency -- this is bad. Dynamic languages, on the other hand, suffer from these drawbacks to a lesser extent, but they lack compile-time checks. A hypothetical solution should take the best from the both worlds.
 
 Programming languages ought to be rethought.
 
-[^type-variables]: In such systems as [Calculus of Constructions], polymorphic functions accept generics as ordinary function parameters of the type *, or "the type of all types".
+## References
+
+[^type-variables]: In such systems as [Calculus of Constructions], polymorphic functions accept generics as ordinary function parameters of the kind *, or "the kind of all types".
 
 [Calculus of Constructions]: https://en.wikipedia.org/wiki/Calculus_of_constructions
+
+[^kind-not-type]: Formally, "*" is known as a _kind_, not type.
+
+[^missing-traits]: Need to augment the field types with `#[derive(Debug, PartialEq)]`.
+
+[^derive-tight-coupling]: In addition to inextensibility, derive macros possess _tight coupling_: if `DeriveX` is put onto `Foo`, then `foo.rs` inevitably depends on `DeriveX`. This can complicate migration of components, slow down compilation time, and cause merge conflicts.
+
+[^assoc-type-bug]: We could even generalise these two implementations of `Negate` over a generic value `Cond`, but this is impossible due to a [known bug in the Rust's type system](https://github.com/rust-lang/rust/issues/20400).
+
+[^boost-preprocessor]: In the C++ community, there is an analogous library [Boost/Preprocessor].
+
+[Boost/Preprocessor]: http://boost.org/libs/preprocessor
 
 [^recall-generics-correspondence]: Do you remember our variables-generics correspondence?
 
@@ -609,16 +860,18 @@ Programming languages ought to be rethought.
 
 [^teloxide-error-message]: Got it while working on [teloxide], IIRC.
 
+[^is-true-ast]: Technically speaking, Rust cannot work with its true AST, but we will come back to it later.
+
 [teloxide]: https://github.com/teloxide/teloxide
 
-[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.<br>As of Jan. 4 2022, tokio-either has 5,394 downloads total.
+[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.
 
 [tokio-either]: https://github.com/Hirrolot/tokio-either
 
 [^terra]: Terra is a perfect example of a simple dynamic language. In the ["Simplicity" section](https://terralang.org/#simplicity), they show how features of static PLs can be implemented as libraries in dynamic languages.
 
-[^dep-types]: To achieve so, we could use [dependent types]. For example, when requesting a field value from a hash map, as in one of the examples above, the `get` function will request a _proof_ that the field actually exists in that hash map; this way, the check will be performed at compile-time, using the same hash map that we use at run-time. Dependent types, however, are still too low-level to me, and I hardly believe that they will find their production use in their current form. With such powerful typing facilities, you typically twiddle with your type system instead of focusing on business logic.
-
-[dependent types]: https://www.idris-lang.org/
-
 [^concept-disorder]: Multiple personality disorder? 🤨
+
+[^idris-gist-link]: The full code can be found at [my gist](https://gist.github.com/Hirrolot/b5b23af0dcb68cf7e87e72baf6da6ef6). I use Idris2, which you can download [here](https://idris2.readthedocs.io/en/latest/tutorial/starting.html).
+
+[^runtime-definition]: For our purposes, a language runtime is some hidden machinery responsible for mapping the semantics of a language (i.e., its abstract machine) to the semantics of a real executor.

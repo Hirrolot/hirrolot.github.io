@@ -198,8 +198,9 @@ blockquote::before {
 .quote-author {
     text-align: right;
     font-style: italic;
-    font-family: 'Lancelot', cursive;
-    font-size: 23px;
+    font-family: 'Luxurious Roman', cursive;
+    margin-top: 40px;
+    margin-bottom: 55px;
 }
 
 .quote-author::before {
