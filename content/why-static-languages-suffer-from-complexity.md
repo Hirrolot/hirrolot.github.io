@@ -1,7 +1,7 @@
 ---
 title: "Why Static Languages Suffer From Complexity"
 author: Hirrolot's Blog
-date: Jan 3, 2022
+date: Jan 19, 2022
 
 references:
   - id: type-dd-with-idris
@@ -821,12 +821,20 @@ The only inconvenience I experienced during the development of `printf` is [mass
 [`@typeName`]: https://ziglang.org/documentation/master/#typeName
 [`@TypeOf`]: https://ziglang.org/documentation/master/#TypeOf
 
-Everything is good except that Zig is a systems language. On [their official website], Zig is described as a "general-purpose programming language", but I can hardly agree with this statement. Yes, you can write virtually any software in Zig, but should you? My experience in maintaining high-level code in Rust and C99 says **NO**. The first reason is safety: if you make a systems language safe, you will make programmers deal with borrow checker and ownership (or equivalent) issues that have absolutely nothing to do with business logic (believe me, I know the pain); otherwise, if you choose the C-way manual memory management, you will make programmers debugging their programs for long hours with the hope that `-fsanitize=address` would show something meaningful. The second reason is concerned with a language runtime [^runtime-definition]: for a language to be systems, to avoid hidden performance penalties, it should have a minimum runtime -- no default GC, no default event loop, etc., but for particular applications, it might be necessary to have a runtime -- for asynchronous ones, for instance, so actually you _must_ deal with custom runtime code in some way. Here we encounter a whole new set of problems regarding [function colours]: e.g., having `async` in your language and having no tools to _abstract over_ synchronous and asynchronous functions means that you divided your language into two parts: synchronous and asynchronous, and say, if you have a generic higher-order library, it will be inevitably marked `async` to accept all kinds of user callbacks. To resolve the issue, you need to implement some form of [effect polymorphism] (e.g., monads or algebraic effects), which is still a research topic. High-level languages have just innately fewer problems to deal with, and this is why most of the software is written in Java, C#, Python, and JavaScript. Zig can be still used in large systems projects like web browsers and operating systems (nobody wants these things to freeze unexpectedly), but bringing it to high-level code would just increase the mental burden.
+![](../media/why-static-languages-suffer-from-complexity/types-meme.png)
+
+Everything is good except that Zig is a systems language. On [their official website], Zig is described as a "general-purpose programming language", but I can hardly agree with this statement. Yes, you can write virtually any software in Zig, but should you? My experience in maintaining high-level code in Rust and C99 says **NO**. The first reason is safety: if you make a systems language safe, you will make programmers deal with borrow checker and ownership (or equivalent) issues that have absolutely nothing to do with business logic (believe me, I know the pain); otherwise, if you choose the C-way manual memory management, you will make programmers debugging their code for long hours with the hope that `-fsanitize=address` would show something meaningful. Moreover, if you want to build new abstractions atop of pointers, you will end up with `&str`, `AsRef<str>`, `Borrow<str>`, `Box<str>`, and the similar. Come on, I just want a UTF-8 string; most of the time, I do not really care whether it is one of those alternatives.
 
 [their official website]: https://ziglang.org/
 [effect polymorphism]: http://docs.idris-lang.org/en/latest/effects/index.html
 
-![](../media/why-static-languages-suffer-from-complexity/types-meme.png)
+The second reason is concerned with a language runtime [^runtime-definition]: for a language to be systems, to avoid hidden performance penalties, it should have a minimum runtime -- no default GC, no default event loop, etc., but for particular applications, it might be necessary to have a runtime -- for asynchronous ones, for instance, so actually you _must_ deal with custom runtime code in some way. Here we encounter a whole new set of problems regarding [function colours]: e.g., having `async` in your language and having no tools to _abstract over_ synchronous and asynchronous functions means that you divided your language into two parts: synchronous and asynchronous, and say, if you have a generic higher-order library, it will be inevitably marked `async` to accept all kinds of user callbacks. To resolve the issue, you need to implement some form of [effect polymorphism] (e.g., monads or algebraic effects), which is still a research topic. High-level languages have innately fewer problems to deal with, and this is why most of the software is written in Java, C#, Python, and JavaScript; in Golang, conceptually, every function is `async`, thus facilitating consistency _by default_, without resorting to sophisticated type features. On the contrary, Rust is already considered a complex language and still has no standard means to write truly generic asynchronous code.
+
+Zig can be still used in large systems projects like web browsers, interpreters, and operating system kernels -- nobody wants these things to freeze unexpectedly. Zig's low-level programming features would facilitate convenient operation with memory and hardware devices, while its sane approach to metaprogramming (in the right hands) would cultivate understandable code structure. Bringing it to high-level code would just increase the mental burden without considerable benefits.
+
+> Progress is possible only if we train ourselves to think about programs without thinking of them as pieces of executable code.
+
+<p class="quote-author">[Edsger Dijkstra]</p>
 
 ## Final words
 
