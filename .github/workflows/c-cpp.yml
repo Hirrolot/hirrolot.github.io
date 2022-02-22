@@ -22,7 +22,6 @@ jobs:
         run: |
           mkdir posts
           bash build.sh
-          mkdir docs
           mv index.html posts media utterances.html style.css \
             script.js rss.xml post_header_aux.html index_header_aux.html \
             header.html myself.png docs
