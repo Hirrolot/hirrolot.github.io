@@ -1,0 +1,28 @@
+name: Build Docs
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Pandoc
+        run: |
+          wget https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-1-amd64.deb
+          sudo dpkg -i pandoc-2.17.1.1-1-amd64.deb
+
+      - name: Build the docs
+        run: bash build.sh
+
+      - name: Deploy the docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+           github_token: ${{ secrets.GITHUB_TOKEN }}
+           publish_dir: ./docs/
