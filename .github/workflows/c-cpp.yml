@@ -25,7 +25,7 @@ jobs:
           mkdir docs
           mv index.html posts media utterances.html style.css \
             script.js rss.xml post_header_aux.html index_header_aux.html \
-            header.html docs
+            header.html docs myself.png
 
       - name: Deploy the docs
         uses: peaceiris/actions-gh-pages@v3
