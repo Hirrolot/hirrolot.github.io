@@ -19,7 +19,13 @@ jobs:
           sudo dpkg -i pandoc-2.17.1.1-1-amd64.deb
 
       - name: Build the docs
-        run: mkdir posts && bash build.sh
+        run: |
+          mkdir posts
+          bash build.sh
+          mkdir docs
+          mv index.html posts media utterances.html style.css \
+            script.js rss.xml post_header_aux.html index_header_aux.html \
+            header.html docs
 
       - name: Deploy the docs
         uses: peaceiris/actions-gh-pages@v3
