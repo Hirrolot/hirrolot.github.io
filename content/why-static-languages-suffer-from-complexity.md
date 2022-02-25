@@ -611,6 +611,8 @@ Now imagine we have an arbitrary trait `Foo`, and we are willing to implement th
 
 [tokio-util]: https://docs.rs/tokio-util/latest/tokio_util/
 
+_Update: In fact, defining a separate `Either` is unrelated to the inability to automatically derive trait functions. My fault._
+
 ## Idris: The way out?
 
 > One of the most fundamental features of Idris is that types and expressions are part of the same language -- you use the same syntax for both.
@@ -829,6 +831,8 @@ Everything is good except that Zig is a systems language. On [their official web
 [effect polymorphism]: http://docs.idris-lang.org/en/latest/effects/index.html
 
 The second reason is concerned with a language runtime [^runtime-definition]: for a language to be systems, to avoid hidden performance penalties, it should have a minimum runtime -- no default GC, no default event loop, etc., but for particular applications, it might be necessary to have a runtime -- for asynchronous ones, for instance, so actually you _must_ deal with custom runtime code in some way. Here we encounter a whole new set of problems regarding [function colours]: e.g., having `async` in your language and having no tools to _abstract over_ synchronous and asynchronous functions means that you divided your language into two parts: synchronous and asynchronous, and say, if you have a generic higher-order library, it will be inevitably marked `async` to accept all kinds of user callbacks. To resolve the issue, you need to implement some form of [effect polymorphism] (e.g., monads or algebraic effects), which is still a research topic. High-level languages have innately fewer problems to deal with, and this is why most of the software is written in Java, C#, Python, and JavaScript; in Golang, conceptually, every function is `async`, thus facilitating consistency _by default_, without resorting to sophisticated type features. On the contrary, Rust is already considered a complex language and still has no standard means to write truly generic asynchronous code.
+
+_Update: [Zig functions have no notion of a colour](https://kristoff.it/blog/zig-colorblind-async-await/). My fault._
 
 Zig can still be used in large systems projects like web browsers, interpreters, and operating system kernels -- nobody wants these things to freeze unexpectedly. Zig's low-level programming features would facilitate convenient operation with memory and hardware devices, while its sane approach to metaprogramming (in the right hands) would cultivate understandable code structure. Bringing it to high-level code would just increase the mental burden without considerable benefits.
 
