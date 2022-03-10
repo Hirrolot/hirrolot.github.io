@@ -846,11 +846,7 @@ Static languages enforce compile-time checks; this is good. But they suffer from
 
 Programming languages ought to be rethought.
 
-Discussions:
-
- - [HN](https://news.ycombinator.com/item?id=29996240)
- - [r/rust](https://www.reddit.com/r/rust/comments/s7sgxq/why_static_languages_suffer_from_complexity/)
- - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/s7shox/why_static_languages_suffer_from_complexity/)
+[HN](https://news.ycombinator.com/item?id=29996240) · [r/rust](https://www.reddit.com/r/rust/comments/s7sgxq/why_static_languages_suffer_from_complexity/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/s7shox/why_static_languages_suffer_from_complexity/)
 
 ## References
 

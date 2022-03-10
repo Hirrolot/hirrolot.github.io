@@ -384,11 +384,7 @@ I encourage you to mimic the syntax of a host language when writing macros, to m
 
 I encourage you to **extend, not to alter**.
 
-Discussions:
-
- - [r/programming](https://www.reddit.com/r/programming/comments/oexpgf/extend_your_language_dont_alter_it/)
- - [r/rust](https://www.reddit.com/r/rust/comments/oexogi/extend_your_language_dont_alter_it/)
- - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/oexnl6/extend_your_language_dont_alter_it/)
+[r/programming](https://www.reddit.com/r/programming/comments/oexpgf/extend_your_language_dont_alter_it/) · [r/rust](https://www.reddit.com/r/rust/comments/oexogi/extend_your_language_dont_alter_it/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/oexnl6/extend_your_language_dont_alter_it/)
 
 ## References
 

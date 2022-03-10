@@ -438,12 +438,7 @@ Links:
 
 [mailing list]: https://lists.sr.ht/~hirrolot/metalang99
 
-Discussions:
-
- - [HN](https://news.ycombinator.com/item?id=27919448)
- - [r/programming](https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/)
- - [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/opeez9/macros_on_steroids_or_how_can_pure_c_benefit_from/)
- - [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/opeeo0/macros_on_steroids_or_how_can_pure_c_benefit_from/)
+[HN](https://news.ycombinator.com/item?id=27919448) · [r/programming](https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/opeez9/macros_on_steroids_or_how_can_pure_c_benefit_from/) · [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/opeeo0/macros_on_steroids_or_how_can_pure_c_benefit_from/)
 
 ## References
 
