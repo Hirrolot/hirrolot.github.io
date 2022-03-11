@@ -42,6 +42,8 @@ references:
 
 <div class="introduction">
 
+<p class="discussions">[r/programming](https://www.reddit.com/r/programming/comments/owj32r/whats_the_point_of_the_c_preprocessor_actually/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/owhczm/whats_the_point_of_the_c_preprocessor_actually/) · [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/owhbdy/whats_the_point_of_the_c_preprocessor_actually/)</p>
+
 "To do stuff that you cannot do with functions" [^preprocessor-early-days] -- virtually every C programmer would say.
 
 Fair. But in fact, it is a bit more complicated.
@@ -297,8 +299,6 @@ Links:
 
 [motivational post]: ../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html
 [mailing list]: https://lists.sr.ht/~hirrolot/metalang99
-
-[r/programming](https://www.reddit.com/r/programming/comments/owj32r/whats_the_point_of_the_c_preprocessor_actually/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/owhczm/whats_the_point_of_the_c_preprocessor_actually/) · [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/owhbdy/whats_the_point_of_the_c_preprocessor_actually/)
  
 ## Afterword
 

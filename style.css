@@ -108,6 +108,10 @@ h1 {
     font-size: 2.5rem;
 }
 
+.discussions {
+    text-align: right;
+}
+
 h2:before {
     content: "¶ ";
     color: gray;

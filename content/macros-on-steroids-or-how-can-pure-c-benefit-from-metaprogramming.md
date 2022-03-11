@@ -32,6 +32,8 @@ references:
 
 <div class="introduction">
 
+<p class="discussions">[HN](https://news.ycombinator.com/item?id=27919448) · [r/programming](https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/opeez9/macros_on_steroids_or_how_can_pure_c_benefit_from/) · [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/opeeo0/macros_on_steroids_or_how_can_pure_c_benefit_from/)</p>
+
 _This post has a [followup](../posts/whats-the-point-of-the-c-preprocessor-actually.html)._
 
 Have you ever envisioned the daily C preprocessor as a tool for some decent metaprogramming?
@@ -437,8 +439,6 @@ Links:
  - The [mailing list] for the above libraries. Join and talk with us!
 
 [mailing list]: https://lists.sr.ht/~hirrolot/metalang99
-
-[HN](https://news.ycombinator.com/item?id=27919448) · [r/programming](https://www.reddit.com/r/programming/comments/opefdc/macros_on_steroids_or_how_can_pure_c_benefit_from/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/opeez9/macros_on_steroids_or_how_can_pure_c_benefit_from/) · [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/opeeo0/macros_on_steroids_or_how_can_pure_c_benefit_from/)
 
 ## References
 

@@ -23,6 +23,8 @@ references:
 
 <div class="introduction">
 
+<p class="discussions">[HN](https://news.ycombinator.com/item?id=29996240) · [r/rust](https://www.reddit.com/r/rust/comments/s7sgxq/why_static_languages_suffer_from_complexity/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/s7shox/why_static_languages_suffer_from_complexity/)</p>
+
 ![](../media/why-static-languages-suffer-from-complexity/preview.jpg)
 
 People in the programming language design community strive to make their languages more expressive, with a strong type system, mainly to increase ergonomics by avoiding code duplication in final software; however, the more expressive their languages become, the more abruptly duplication penetrates the language itself.
@@ -845,8 +847,6 @@ Zig can still be used in large systems projects like web browsers, interpreters,
 Static languages enforce compile-time checks; this is good. But they suffer from feature biformity and inconsistency -- this is bad. Dynamic languages, on the other hand, suffer from these drawbacks to a lesser extent, but they lack compile-time checks. A hypothetical solution should take the best from the both worlds.
 
 Programming languages ought to be rethought.
-
-[HN](https://news.ycombinator.com/item?id=29996240) · [r/rust](https://www.reddit.com/r/rust/comments/s7sgxq/why_static_languages_suffer_from_complexity/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/s7shox/why_static_languages_suffer_from_complexity/)
 
 ## References
 

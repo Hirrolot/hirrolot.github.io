@@ -113,6 +113,8 @@ references:
 
 <div class="introduction">
 
+<p class="discussions">[r/programming](https://www.reddit.com/r/programming/comments/oexpgf/extend_your_language_dont_alter_it/) · [r/rust](https://www.reddit.com/r/rust/comments/oexogi/extend_your_language_dont_alter_it/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/oexnl6/extend_your_language_dont_alter_it/)</p>
+
 Sometimes your programming language lacks a specific feature that will make your life easier. Perhaps language developers look upon it with a great deal of reluctance and skepticism, or are not going to implement it at all. But you need it, you need this feature right here and right now. What are you going to do then?
 
 Generally, you have two approaches: first, you can continue living an utterly miserable and hopeless life without the feature, and second, you can implement the feature by means of some kind of _meta-abstraction_.
@@ -383,8 +385,6 @@ The intent of this blog post was to advocate the principle of syntactical consis
 I encourage you to mimic the syntax of a host language when writing macros, to make your code look more eye-pleasing, less like a malevolent beast.
 
 I encourage you to **extend, not to alter**.
-
-[r/programming](https://www.reddit.com/r/programming/comments/oexpgf/extend_your_language_dont_alter_it/) · [r/rust](https://www.reddit.com/r/rust/comments/oexogi/extend_your_language_dont_alter_it/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/oexnl6/extend_your_language_dont_alter_it/)
 
 ## References
 
