@@ -332,7 +332,9 @@ id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>The neat part is that not only such use of macros reduces boilerplate
 but also reduces the risk of a failure: you can no longer access
 <code>.rhs</code> if the binary tree is just <code>Leaf</code> (since
