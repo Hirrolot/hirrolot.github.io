@@ -222,6 +222,8 @@ int sum(const BinaryTree *tree) {
         of(Leaf, x) return *x;
         of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);
     }
+
+    return -1;
 }
 ```
 

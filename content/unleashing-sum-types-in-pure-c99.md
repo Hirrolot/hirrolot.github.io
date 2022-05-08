@@ -116,6 +116,8 @@ int sum(const BinaryTree *tree) {
         of(Leaf, x) return *x;
         of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);
     }
+
+    return -1;
 }
 
 #define TREE(tree)                ((BinaryTree *)(BinaryTree[]){tree})
@@ -167,6 +169,8 @@ double eval(const Expr *expr) {
         of(Mul, lhs, rhs) return eval(*lhs) * eval(*rhs);
         of(Div, lhs, rhs) return eval(*lhs) / eval(*rhs);
     }
+
+    return -1;
 }
 
 #define EXPR(expr)       ((Expr *)(Expr[]){expr})
