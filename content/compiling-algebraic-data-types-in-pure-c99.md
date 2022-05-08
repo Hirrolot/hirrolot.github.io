@@ -29,7 +29,7 @@ This library implements [algebraic data types (ADT)] for pure C99. This allows y
 
 If you are not acquainted with the concept of algebraic data types, please read [_Unleashing Sum Types in Pure C99_](https://medium.com/@hirrolot/unleashing-sum-types-in-pure-c99-31544302d2ba) first.
 
-To study the formal system on a concrete example, it is helpful to read this post along with the [generated output](https://godbolt.org/z/zda5Ysr6W) of [`examples/binary_tree.c`](https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c).
+To study the formal system on a concrete example, it is helpful to read this post along with the [generated output](https://godbolt.org/z/o766ovjrW) of [`examples/binary_tree.c`](https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c).
 
 </div>
 
