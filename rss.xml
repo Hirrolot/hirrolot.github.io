@@ -5,6 +5,11 @@
         <description>Hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
+            <title>Pretty-Printable Enumerations in Pure C</title>
+            <guid>https://hirrolot.github.io/posts/pretty-printable-enumerations-in-pure-c.html</guid>
+            <pubDate>Mon, 23 May 2022 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title>Why Static Languages Suffer From Complexity</title>
             <guid>https://hirrolot.github.io/posts/why-static-languages-suffer-from-complexity.html</guid>
             <pubDate>Mon, 3 Jan 2022 00:00:00 GMT</pubDate>
