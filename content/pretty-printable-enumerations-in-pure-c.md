@@ -204,7 +204,7 @@ One may want to suggest using code generators like [M4] instead of Metalang99, o
  1. Separate codegen files from C files, or
  2. Embed special syntax to C files and fuck up IDE support, or
  3. Write code in comments and fuck up IDE support, or
- 4. Do something else and fuck IDE support.
+ 4. Do something else and fuck up IDE support.
 
 Several projects adopted some of the aforementioned solutions (especially 3 and 4). The unfortunate consequences may not seem so severe if you invoke codegen only in a small amount of places, but declaring types, obviously, does not fall into this category of things. Therefore, we need a solution that does not require external machinery, and the only thing in pure C that can do the trick is its macro system.
 
