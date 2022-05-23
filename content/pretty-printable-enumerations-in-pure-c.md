@@ -302,3 +302,5 @@ int main(void) {
 The neat thing is that you can list other derivers together with `Print` like this: `derive(Print, Foo, Bar)`, which adds some extensibility to the code. Note that this implementation does not account variant parameters (payload); [`examples/derive/print.c`] shows how to handle them. For more information on deriver macros, see my blog post [_"Compile-Time Introspection of Sum Types in Pure C99"_](compile-time-introspection-of-sum-types-in-pure-c99.html).
 
 [`examples/derive/print.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/derive/print.c
+
+## References
