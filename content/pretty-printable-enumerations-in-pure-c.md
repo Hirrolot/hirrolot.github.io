@@ -12,6 +12,8 @@ references:
 
 <div class="introduction">
 
+<p class="discussions">[r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/uw4o14/prettyprintable_enumerations_in_pure_c/) · [r/C_Programming](https://www.reddit.com/r/C_Programming/comments/uw4lk6/prettyprintable_enumerations_in_pure_c/)</p>
+
 It is a notorious fact that the `enum` keyword in C is just another way to give integers names: by defining an `enum`, you perform a work similar to `#define`-ing integer macros or declaring `const` variables. However, sometimes we may want to give our enumerations a bit more high-level semantics, as in the following scenario:
 
 ```c
