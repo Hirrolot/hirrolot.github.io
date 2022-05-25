@@ -10,12 +10,11 @@ Over the last few years, I've been passionate about programming language design,
 
 Welcome to my blog!</p>
 <p class="badges">
-<a href="https://github.com/Hirrolot">GitHub</a> ·
-<a href="https://twitter.com/hirrolot">Twitter</a> ·
-<a href="https://www.reddit.com/user/Hirrolot/">Reddit</a> ·
-<a href="https://t.me/hirrolot">Telegram</a> ·
-<a href="https://hirrolot.github.io/rss.xml">RSS</a> ·
-<a href="mailto:hirrolot@gmail.com">Gmail</a>
+<a href="https://www.linkedin.com/in/hirrolot-h-0b9427236/" class="badge"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+<a href="mailto:hirrolot@gmail.com" class="badge"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+<a href="https://t.me/hirrolot" class="badge"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" /></a>
+<a href="https://www.reddit.com/user/Hirrolot" class="badge"><img src="https://img.shields.io/badge/Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white" /></a>
+<a href="https://twitter.com/hirrolot" class="badge"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" /></a>
 </p>
 </div>
 
