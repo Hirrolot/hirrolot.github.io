@@ -15,6 +15,7 @@ Welcome to my blog!</p>
 <a href="https://t.me/hirrolot" class="badge"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" /></a>
 <a href="https://www.reddit.com/user/Hirrolot" class="badge"><img src="https://img.shields.io/badge/Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white" /></a>
 <a href="https://twitter.com/hirrolot" class="badge"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" /></a>
+<a href="https://hirrolot.github.io/rss.xml" class="badge"><img src="https://img.shields.io/badge/RSS-FFA500?style=for-the-badge&logo=rss&logoColor=white" /></a>
 </p>
 </div>
 
