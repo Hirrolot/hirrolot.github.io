@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <assert.h>
 #include <errno.h>
 #include <stdbool.h>
@@ -6,15 +8,15 @@
 #include <string.h>
 
 #include <dirent.h>
-#include <unistd.h>
-
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 
-#define CONTENT_DIR  "content"
-#define OUTPUT_DIR   "posts"
-#define EXCELLENT_ME "excellent_me.md"
-#define POSTS_MAX    512
+#define CONTENT_DIR "content"
+#define OUTPUT_DIR  "posts"
+#define BADGES      "badges.html"
+#define POSTS_MAX   512
 
 #define PANDOC_COMMON_ARGS "--standalone -H header.html"
 
@@ -47,13 +49,12 @@ typedef struct {
 static void collect_post_names(size_t *posts_count,
                                char *post_names[POSTS_MAX]);
 
-static void gen_index_md(size_t posts_count,
-                         const char *post_names[static posts_count]);
+static void gen_index_html(size_t posts_count,
+                           const char *post_names[static posts_count]);
 static void gen_posts_history(FILE *index, size_t posts_count,
                               const char *post_names[static posts_count]);
 
 static void gen_target(FILE *makefile, const char *post_name);
-static void gen_target_index(FILE *makefile);
 
 static void gen_phony_all(FILE *makefile, size_t posts_count,
                           const char *post_names[static posts_count]);
@@ -83,7 +84,7 @@ static char *find_post_metadata_quoted_field(const char *str,
                                              const char *field_name);
 
 static char *file_base(const char *filename);
-static char *read_file_content(const char *filename);
+static void append_file(FILE *out, const char *filename);
 
 int main(void) {
     FILE *makefile = fopen("Makefile", "w");
@@ -99,11 +100,10 @@ int main(void) {
         gen_target(makefile, post_names[i]);
     }
 
-    gen_target_index(makefile);
     gen_phony_all(makefile, posts_count, (const char **)post_names);
     gen_phony_clean(makefile);
 
-    gen_index_md(posts_count, (const char **)post_names);
+    gen_index_html(posts_count, (const char **)post_names);
 
     for (size_t i = 0; i < posts_count; i++) {
         free(post_names[i]);
@@ -127,8 +127,7 @@ static void collect_post_names(size_t *posts_count,
         }
 
         if (strcmp(entry->d_name, ".") == 0 ||
-            strcmp(entry->d_name, "..") == 0 ||
-            strcmp(entry->d_name, "index.md") == 0) {
+            strcmp(entry->d_name, "..") == 0) {
             continue;
         }
 
@@ -141,16 +140,23 @@ static void collect_post_names(size_t *posts_count,
     assert(dir_closed);
 }
 
-static void gen_index_md(size_t posts_count,
-                         const char *post_names[static posts_count]) {
-    FILE *index = fopen(CONTENT_DIR "/index.md", "w");
+static void gen_index_html(size_t posts_count,
+                           const char *post_names[static posts_count]) {
+    FILE *index = fopen("index.html", "w");
     assert(index);
 
-    char *excellent_me = read_file_content(EXCELLENT_ME);
-    fprintf(index, "%s\n", excellent_me);
-    free(excellent_me);
+    fprintf(index, "<!DOCTYPE html><html><body>\n");
+    append_file(index, "header.html");
+    fprintf(index,
+            "<link rel=\"stylesheet\" href=\"style.css\" />\n"
+            "<link rel=\"shortcut icon\" href=\"myself.png\" "
+            "type=\"image/x-icon\">\n<script src=\"script.js\"></script>\n\n");
+    fprintf(index, "<h1 class=\"blog-title\">Hirrolot's Blog</h1>\n\n");
+    append_file(index, BADGES);
 
     gen_posts_history(index, posts_count, post_names);
+
+    fprintf(index, "</body></html>\n");
 
     const bool index_closed = fclose(index) == 0;
     assert(index_closed);
@@ -163,11 +169,9 @@ static void gen_posts_history(FILE *index, size_t posts_count,
     const unsigned min_year = PostMetadata_min_year(posts_count, metadata),
                    max_year = PostMetadata_max_year(posts_count, metadata);
 
-    for (unsigned year = max_year; year >= min_year; year--) {
-        fprintf(index, "<span class=\"posts-year\" id=\"%u\">%u</span>\n", year,
-                year);
-        fprintf(index, "<div class=\"posts-history\">\n");
+    fprintf(index, "<div class=\"posts-history\">\n");
 
+    for (unsigned year = max_year; year >= min_year; year--) {
         for (Month month = Dec; month >= Jan; month--) {
             for (unsigned day = 31; day >= 1; day--) {
                 for (size_t i = 0; i < posts_count; i++) {
@@ -182,17 +186,18 @@ static void gen_posts_history(FILE *index, size_t posts_count,
                     }
 
                     fprintf(index,
-                            " - [%s](" OUTPUT_DIR "/%s.html)<br><span "
-                            "class=\"post-date\">%s %u</span><br>\n",
-                            metadata[i].title, post_names[i],
+                            "<div class=\"post-link\"><a href=\"" OUTPUT_DIR
+                            "/%s.html\">%s</a><br><span class=\"post-date\">%s "
+                            "%u, %u</span></div>\n",
+                            post_names[i], metadata[i].title,
                             Month_str(metadata[i].date.month),
-                            metadata[i].date.day);
+                            metadata[i].date.day, year);
                 }
             }
         }
-
-        fprintf(index, "</div>\n"); // class="posts-history"
     }
+
+    fprintf(index, "</div>\n"); // class="posts-history"
 
     for (size_t i = 0; i < posts_count; i++) {
         PostMetadata_free(&metadata[i]);
@@ -212,14 +217,6 @@ static void gen_target(FILE *makefile, const char *post_name) {
             post_name, post_name, post_name, post_name);
 }
 
-static void gen_target_index(FILE *makefile) {
-    fprintf(makefile,
-            "index: " CONTENT_DIR "/index.md\n\t"
-            "pandoc " CONTENT_DIR "/index.md " PANDOC_COMMON_ARGS
-            " --output index.html --css style.css --include-in-header "
-            "index_header_aux.html\n\n");
-}
-
 static void gen_phony_all(FILE *makefile, size_t posts_count,
                           const char *post_names[static posts_count]) {
     fprintf(makefile, "all: ");
@@ -228,7 +225,7 @@ static void gen_phony_all(FILE *makefile, size_t posts_count,
         fprintf(makefile, "%s ", post_names[i]);
     }
 
-    fprintf(makefile, "index\n\n");
+    fprintf(makefile, "\n\n");
 }
 
 static void gen_phony_clean(FILE *makefile) {
@@ -270,10 +267,6 @@ PostMetadata_min_year(size_t posts_count,
     unsigned min_year = 9999;
 
     for (size_t i = 0; i < posts_count; i++) {
-        if (strcmp(metadata[i].title, "index") == 0) {
-            continue;
-        }
-
         if (min_year > metadata[i].date.year) {
             min_year = metadata[i].date.year;
         }
@@ -288,10 +281,6 @@ PostMetadata_max_year(size_t posts_count,
     unsigned max_year = 0;
 
     for (size_t i = 0; i < posts_count; i++) {
-        if (strcmp(metadata[i].title, "index") == 0) {
-            continue;
-        }
-
         if (max_year < metadata[i].date.year) {
             max_year = metadata[i].date.year;
         }
@@ -301,21 +290,21 @@ PostMetadata_max_year(size_t posts_count,
 }
 
 #define MONTHS                                                                 \
-    ASSOC(Jan);                                                                \
-    ASSOC(Feb);                                                                \
-    ASSOC(Mar);                                                                \
-    ASSOC(Apr);                                                                \
-    ASSOC(May);                                                                \
-    ASSOC(Jun);                                                                \
-    ASSOC(Jul);                                                                \
-    ASSOC(Aug);                                                                \
-    ASSOC(Sept);                                                               \
-    ASSOC(Oct);                                                                \
-    ASSOC(Nov);                                                                \
-    ASSOC(Dec)
+    X(Jan);                                                                    \
+    X(Feb);                                                                    \
+    X(Mar);                                                                    \
+    X(Apr);                                                                    \
+    X(May);                                                                    \
+    X(Jun);                                                                    \
+    X(Jul);                                                                    \
+    X(Aug);                                                                    \
+    X(Sept);                                                                   \
+    X(Oct);                                                                    \
+    X(Nov);                                                                    \
+    X(Dec)
 
 static Month Month_parse(const char *str) {
-#define ASSOC(month)                                                           \
+#define X(month)                                                               \
     do {                                                                       \
         if (strcmp(str, #month) == 0) {                                        \
             return month;                                                      \
@@ -327,11 +316,11 @@ static Month Month_parse(const char *str) {
     assert(false);
     return 0;
 
-#undef ASSOC
+#undef X
 }
 
 static const char *Month_str(Month self) {
-#define ASSOC(month)                                                           \
+#define X(month)                                                               \
     case month:                                                                \
         return #month;
 
@@ -342,7 +331,7 @@ static const char *Month_str(Month self) {
         return NULL;
     }
 
-#undef ASSOC
+#undef X
 }
 
 #undef MONTHS
@@ -411,27 +400,24 @@ static char *file_base(const char *filename) {
     return strndup(filename, strchr(filename, '.') - filename);
 }
 
-static char *read_file_content(const char *filename) {
-    FILE *fp = fopen(filename, "r");
-    assert(fp);
+static void append_file(FILE *out, const char *filename) {
+    struct stat in_stat;
+    const bool stat_ok = stat(filename, &in_stat) == 0;
+    assert(stat_ok);
+    assert(in_stat.st_size > 0);
 
-    struct stat file_stat;
-    const bool stat_succeeded = stat(filename, &file_stat) == 0;
-    assert(stat_succeeded);
-    assert(file_stat.st_size > 0);
+    const int input = open(filename, O_RDONLY);
+    assert(input != -1);
 
-    char *content = malloc(file_stat.st_size);
-    assert(content);
+    // Flush all buffer data accumulated by C library functions.
+    const bool fflush_ok = fflush(out) == 0;
+    assert(fflush_ok);
 
-    size_t i = 0;
-    char c;
-    while ((c = fgetc(fp)) != EOF) {
-        content[i] = c;
-        i++;
-    }
+    const bool sendfile_ok =
+        copy_file_range(input, NULL, fileno(out), NULL, in_stat.st_size, 0) ==
+        in_stat.st_size;
+    assert(sendfile_ok);
 
-    const bool fp_closed = fclose(fp) == 0;
-    assert(fp_closed);
-
-    return content;
+    const bool header_fd_closed = close(input) == 0;
+    assert(header_fd_closed);
 }

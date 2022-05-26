@@ -1,17 +1,8 @@
 .badges {
     display: flex;
     flex-direction: row;
-}
-
-.post-date {
-    font-style: italic;
-    color: gray;
-}
-
-.selfie {
-    display: block;
-    width: 340px;
-    border: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 img {
@@ -127,7 +118,7 @@ h6 {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-h1:hover,
+h1:not(.blog-title):hover,
 h2:hover,
 h3:hover {
     text-decoration: underline;
@@ -144,7 +135,20 @@ h3:hover {
 }
 
 .posts-history {
+    flex-direction: column;
+    max-width: 800px;
+    font-weight: normal;
     font-style: italic;
+    font-size: 20px;
+}
+
+.posts-history .post-link {
+    border: none;
+    padding: 10px 5px 10px 5px;
+}
+
+.posts-history div:nth-child(odd) {
+    background-color: #f2f2f2;
 }
 
 #TOC {
@@ -158,11 +162,6 @@ h3:hover {
     text-align: center;
     margin-top: 7px;
     text-decoration: underline;
-}
-
-.posts-year {
-    font-family: 'Caveat', cursive;
-    font-size: 24px;
 }
 
 .header-link {

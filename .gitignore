@@ -1,6 +1,5 @@
 Makefile
 gen
 .vscode
-content/index.md
 index.html
 posts/
