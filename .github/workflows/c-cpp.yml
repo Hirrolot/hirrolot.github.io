@@ -31,7 +31,6 @@ jobs:
             script.js \
             rss.xml \
             post_header_aux.html \
-            index_header_aux.html \
             header.html \
             myself.png \
             docs
