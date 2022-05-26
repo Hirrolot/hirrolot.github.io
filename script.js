@@ -1,4 +1,4 @@
-window.addEventListener("load", function(event) {
+window.addEventListener("load", function (event) {
     moveTocDown();
     createClickableHeaders();
     createPopupNotes();
@@ -11,7 +11,9 @@ function moveTocDown() {
     var introduction = document.querySelector(".introduction");
     var toc = document.querySelector("#TOC");
 
-    toc.parentNode.insertBefore(introduction, toc);
+    if (toc && introduction) {
+        toc.parentNode.insertBefore(introduction, toc);
+    }
 }
 
 function createClickableHeaders() {
@@ -48,11 +50,11 @@ function createPopupNotes() {
         noteContainer.appendChild(sup);
         noteContainer.appendChild(noteText);
 
-        noteContainer.addEventListener("mouseover", function() {
+        noteContainer.addEventListener("mouseover", function () {
             this.querySelector(".note-text").classList.toggle("show-note");
         });
 
-        noteContainer.addEventListener("mouseout", function() {
+        noteContainer.addEventListener("mouseout", function () {
             this.querySelector(".note-text").classList.remove("show-note");
         });
 
