@@ -145,18 +145,22 @@ static void gen_index_html(size_t posts_count,
     FILE *index = fopen("index.html", "w");
     assert(index);
 
-    fprintf(index, "<!DOCTYPE html><html><body>\n");
+    fprintf(index, "<!DOCTYPE html>\n<html>\n<head>\n");
+    fprintf(index, "<title>Hirrolot's Blog</title>\n");
     append_file(index, "header.html");
-    fprintf(index,
-            "<link rel=\"stylesheet\" href=\"style.css\" />\n"
-            "<link rel=\"shortcut icon\" href=\"myself.png\" "
-            "type=\"image/x-icon\">\n<script src=\"script.js\"></script>\n\n");
+
+    fprintf(index, "<link rel=\"stylesheet\" href=\"style.css\" />\n");
+    fprintf(index, "<link rel=\"shortcut icon\" href=\"myself.png\" "
+                   "type=\"image/x-icon\">\n");
+    fprintf(index, "<script src=\"script.js\"></script>\n\n");
+
+    fprintf(index, "</head>\n<body>\n");
     fprintf(index, "<h1 class=\"blog-title\">Hirrolot's Blog</h1>\n\n");
     append_file(index, BADGES);
 
     gen_posts_history(index, posts_count, post_names);
 
-    fprintf(index, "</body></html>\n");
+    fprintf(index, "</body>\n</html>\n");
 
     const bool index_closed = fclose(index) == 0;
     assert(index_closed);
