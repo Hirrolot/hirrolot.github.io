@@ -142,8 +142,8 @@ func invokePandoc(postName string) error {
 		"--include-after-body", "utterances.html",
 		"--include-in-header", "post_header_aux.html")
 
-	stdout, err := cmd.CombinedOutput()
-	defer fmt.Print(string(stdout))
+	output, err := cmd.CombinedOutput()
+	defer fmt.Print(string(output))
 	if err != nil {
 		return err
 	}
