@@ -14,8 +14,11 @@ import (
 	"time"
 )
 
-const contentDir = "content"
-const outputDir = "posts"
+const (
+	contentDir     = "content"
+	outputDir      = "posts"
+	postDateLayout = "Jan 2, 2006"
+)
 
 func main() {
 	postNames, err := collectPostNames()
@@ -86,15 +89,14 @@ func genPostsHistory(w io.Writer, postNames []string) error {
 		for month := time.December; month >= time.January; month-- {
 			for day := 31; day >= 1; day-- {
 				for i, post := range meta {
-					if post.date.year != year || post.date.month != month || post.date.day != uint8(day) {
+					if post.date.Year() != year || post.date.Month() != month || post.date.Day() != day {
 						continue
 					}
 
 					fmt.Fprintf(w,
-						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><br><span class=\"post-date\">%s %d, %d</span></div>\n",
+						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><br><span class=\"post-date\">%s</span></div>\n",
 						outputDir, postNames[i], post.title,
-						strMonth(post.date.month),
-						post.date.day, post.date.year)
+						post.date.Format(postDateLayout))
 				}
 			}
 		}
@@ -153,13 +155,7 @@ func invokePandoc(postName string) error {
 
 type PostMetadata struct {
 	title string
-	date  PostDate
-}
-
-type PostDate struct {
-	day   uint8
-	month time.Month
-	year  uint32
+	date  time.Time
 }
 
 func collectPostsMetadata(postNames []string) (meta []PostMetadata, e error) {
@@ -177,16 +173,12 @@ func collectPostsMetadata(postNames []string) (meta []PostMetadata, e error) {
 				postMeta.title = strings.TrimPrefix(line, "title: ")
 			}
 			if strings.HasPrefix(line, "date: ") {
-				date := strings.TrimPrefix(line, "date: ")
+				dateStr := strings.TrimPrefix(line, "date: ")
 
-				var month string
-				_, err := fmt.Sscanf(date, "%s %d, %d",
-					&month, &postMeta.date.day, &postMeta.date.year)
+				postMeta.date, err = time.Parse(postDateLayout, dateStr)
 				if err != nil {
 					return nil, err
 				}
-
-				postMeta.date.month = parseMonth(month)
 			}
 		}
 
@@ -196,84 +188,22 @@ func collectPostsMetadata(postNames []string) (meta []PostMetadata, e error) {
 	return meta, nil
 }
 
-func parseMonth(month string) time.Month {
-	switch month {
-	case "Jan":
-		return time.January
-	case "Feb":
-		return time.February
-	case "Mar":
-		return time.March
-	case "Apr":
-		return time.April
-	case "May":
-		return time.May
-	case "Jun":
-		return time.June
-	case "Jul":
-		return time.July
-	case "Aug":
-		return time.August
-	case "Sept":
-		return time.September
-	case "Oct":
-		return time.October
-	case "Nov":
-		return time.November
-	case "Dec":
-		return time.December
-	default:
-		panic("No such month")
-	}
-}
-
-func strMonth(month time.Month) string {
-	switch month {
-	case time.January:
-		return "Jan"
-	case time.February:
-		return "Feb"
-	case time.March:
-		return "Mar"
-	case time.April:
-		return "Apr"
-	case time.May:
-		return "May"
-	case time.June:
-		return "Jun"
-	case time.July:
-		return "Jul"
-	case time.August:
-		return "Aug"
-	case time.September:
-		return "Sept"
-	case time.October:
-		return "Oct"
-	case time.November:
-		return "Nov"
-	case time.December:
-		return "Dec"
-	default:
-		panic("No such month")
-	}
-}
-
-func minPostYear(meta []PostMetadata) uint32 {
-	result := uint32(9999)
+func minPostYear(meta []PostMetadata) int {
+	result := 9999
 	for _, post := range meta {
-		if result > post.date.year {
-			result = post.date.year
+		if result > post.date.Year() {
+			result = post.date.Year()
 		}
 	}
 
 	return result
 }
 
-func maxPostYear(meta []PostMetadata) uint32 {
-	result := uint32(9999)
+func maxPostYear(meta []PostMetadata) int {
+	result := 0
 	for _, post := range meta {
-		if result < post.date.year {
-			result = post.date.year
+		if result < post.date.Year() {
+			result = post.date.Year()
 		}
 	}
 
