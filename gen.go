@@ -20,28 +20,133 @@ const (
 	postDateLayout = "Jan 2, 2006"
 )
 
+type Post struct {
+	name, title string    // Always present.
+	date        time.Time // Always present.
+	redirectTo  string    // "" in case of a regular post.
+}
+
 func main() {
-	postNames, err := collectPostNames()
+	posts := collectPosts()
+	genPostPages(posts)
+	genIndexHtml(posts)
+}
+
+func collectPosts() (posts []Post) {
+	postNames, err := ioutil.ReadDir(contentDir)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Cannot read dir '%s': %v.", contentDir, err)
 	}
 
 	for _, postName := range postNames {
-		if err := invokePandoc(postName); err != nil {
-			log.Fatal(err)
-		}
+		baseName := postName.Name()
+		extension := filepath.Ext(baseName)
+
+		var post Post
+		post.name = strings.TrimSuffix(baseName, extension)
+		parseMetadata(readPostContent(baseName), &post)
+		posts = append(posts, post)
 	}
 
-	err = genIndexHtml(postNames)
+	return posts
+}
+
+func readPostContent(postBaseName string) string {
+	postFilename := fmt.Sprintf("%s/%s", contentDir, postBaseName)
+	content, err := os.ReadFile(postFilename)
+	if err != nil {
+		log.Fatalf("Cannot read file '%s': %v.", postFilename, err)
+	}
+
+	return string(content)
+}
+
+func parseMetadata(content string, post *Post) {
+	for _, line := range strings.Split(string(content), "\n") {
+		if post.title == "" {
+			post.title = parseMetadataField(line, "title")
+		}
+		if post.redirectTo == "" {
+			post.redirectTo = parseMetadataField(line, "redirect")
+		}
+		parsePostDate(post, line)
+	}
+
+	if post.title == "" {
+		log.Fatalf("Cannot find a title in '%s'.", post.name)
+	}
+	if post.date.Year() == 0 {
+		log.Fatalf("Cannot find a date in '%s'.", post.name)
+	}
+}
+
+func parsePostDate(post *Post, line string) {
+	if dateStr := parseMetadataField(line, "date"); dateStr != "" {
+		date, err := time.Parse(postDateLayout, dateStr)
+		if err != nil {
+			log.Fatalf("Cannot parse date in '%s': %v.", post.name, err)
+		}
+		post.date = date
+	}
+}
+
+func parseMetadataField(line, fieldName string) string {
+	fieldPrefix := fmt.Sprintf("%s: ", fieldName)
+
+	if strings.HasPrefix(line, fieldPrefix) {
+		return strings.TrimPrefix(line, fieldPrefix)
+	}
+
+	return ""
+}
+
+func genPostPages(posts []Post) {
+	for _, post := range posts {
+		if post.redirectTo != "" {
+			genRedirectHtml(&post)
+		} else {
+			invokePandoc(&post)
+		}
+	}
+}
+
+func genRedirectHtml(post *Post) {
+	htmlFilename := fmt.Sprintf("%s/%s.html", outputDir, post.name)
+	file, err := os.Create(htmlFilename)
+	defer file.Close()
+	if err != nil {
+		log.Fatalf("Cannot create '%s': %v.", htmlFilename, err)
+	}
+
+	w := bufio.NewWriter(file)
+	defer w.Flush()
+
+	fmt.Fprintf(w, "<!DOCTYPE html><html><script>window.location.replace(\"%s\");</script></html>", post.redirectTo)
+}
+
+func invokePandoc(post *Post) {
+	cmd := exec.Command(
+		"pandoc", fmt.Sprintf("%s/%s.md", contentDir, post.name),
+		"--output", fmt.Sprintf("%s/%s.html", outputDir, post.name),
+		"--standalone",
+		"-H", "header.html",
+		"--table-of-contents",
+		"--citeproc",
+		"--css", "../style.css",
+		"--include-after-body", "utterances.html",
+		"--include-in-header", "post_header_aux.html")
+
+	output, err := cmd.CombinedOutput()
+	defer fmt.Print(string(output))
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func genIndexHtml(postNames []string) error {
+func genIndexHtml(posts []Post) {
 	file, err := os.Create("index.html")
 	if err != nil {
-		return err
+		log.Fatalf("Cannot create 'index.html': %v.", err)
 	}
 	defer file.Close()
 
@@ -52,7 +157,7 @@ func genIndexHtml(postNames []string) error {
 
 	err = appendFile(w, "header.html")
 	if err != nil {
-		return err
+		log.Fatalf("Cannot append 'header.html': %s.", err)
 	}
 
 	fmt.Fprintf(w, "<link rel=\"stylesheet\" href=\"style.css\" />\n")
@@ -63,47 +168,12 @@ func genIndexHtml(postNames []string) error {
 	fmt.Fprintf(w, "<h1 class=\"blog-title\">Hirrolot's Blog</h1>\n\n")
 	err = appendFile(w, "badges.html")
 	if err != nil {
-		return err
+		log.Fatalf("Cannot append 'badges.html': %s.", err)
 	}
 
-	err = genPostsHistory(w, postNames)
-	if err != nil {
-		return err
-	}
+	genPostsHistory(w, posts)
 
 	fmt.Fprintln(w, "</body>\n</html>")
-	return nil
-}
-
-func genPostsHistory(w io.Writer, postNames []string) error {
-	meta, err := collectPostsMetadata(postNames)
-	if err != nil {
-		return err
-	}
-
-	fmt.Fprintf(w, "<div class=\"posts-history\">\n")
-
-	minYear, maxYear := minPostYear(meta), maxPostYear(meta)
-
-	for year := maxYear; year >= minYear; year-- {
-		for month := time.December; month >= time.January; month-- {
-			for day := 31; day >= 1; day-- {
-				for i, post := range meta {
-					if post.date.Year() != year || post.date.Month() != month || post.date.Day() != day {
-						continue
-					}
-
-					fmt.Fprintf(w,
-						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><br><span class=\"post-date\">%s</span></div>\n",
-						outputDir, postNames[i], post.title,
-						post.date.Format(postDateLayout))
-				}
-			}
-		}
-	}
-
-	fmt.Fprintln(w, "</div>") // class="posts-history"
-	return nil
 }
 
 func appendFile(w io.Writer, filename string) error {
@@ -119,78 +189,35 @@ func appendFile(w io.Writer, filename string) error {
 	return nil
 }
 
-func collectPostNames() (posts []string, e error) {
-	postNames, err := ioutil.ReadDir(contentDir)
-	if err != nil {
-		return nil, err
-	}
+func genPostsHistory(w io.Writer, posts []Post) error {
+	fmt.Fprintf(w, "<div class=\"posts-history\">\n")
 
-	for _, post := range postNames {
-		posts = append(posts, strings.TrimSuffix(post.Name(), filepath.Ext(post.Name())))
-	}
+	minYear, maxYear := minPostYear(posts), maxPostYear(posts)
 
-	return posts, nil
-}
+	for year := maxYear; year >= minYear; year-- {
+		for month := time.December; month >= time.January; month-- {
+			for day := 31; day >= 1; day-- {
+				for _, post := range posts {
+					if post.date.Year() != year || post.date.Month() != month || post.date.Day() != day {
+						continue
+					}
 
-func invokePandoc(postName string) error {
-	cmd := exec.Command(
-		"pandoc", fmt.Sprintf("%s/%s.md", contentDir, postName),
-		"--output", fmt.Sprintf("%s/%s.html", outputDir, postName),
-		"--standalone",
-		"-H", "header.html",
-		"--table-of-contents",
-		"--citeproc",
-		"--css", "../style.css",
-		"--include-after-body", "utterances.html",
-		"--include-in-header", "post_header_aux.html")
-
-	output, err := cmd.CombinedOutput()
-	defer fmt.Print(string(output))
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-type PostMetadata struct {
-	title string
-	date  time.Time
-}
-
-func collectPostsMetadata(postNames []string) (meta []PostMetadata, e error) {
-	for _, postName := range postNames {
-		content, err := os.ReadFile(fmt.Sprintf("%s/%s.md", contentDir, postName))
-		if err != nil {
-			return nil, err
-		}
-
-		pandocMetadata := strings.Split(string(content), "---")[1]
-
-		var postMeta PostMetadata
-		for _, line := range strings.Split(pandocMetadata, "\n") {
-			if strings.HasPrefix(line, "title: ") {
-				postMeta.title = strings.TrimPrefix(line, "title: ")
-			}
-			if strings.HasPrefix(line, "date: ") {
-				dateStr := strings.TrimPrefix(line, "date: ")
-
-				postMeta.date, err = time.Parse(postDateLayout, dateStr)
-				if err != nil {
-					return nil, err
+					fmt.Fprintf(w,
+						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><br><span class=\"post-date\">%s</span></div>\n",
+						outputDir, post.name, post.title,
+						post.date.Format(postDateLayout))
 				}
 			}
 		}
-
-		meta = append(meta, postMeta)
 	}
 
-	return meta, nil
+	fmt.Fprintln(w, "</div>") // class="posts-history"
+	return nil
 }
 
-func minPostYear(meta []PostMetadata) int {
+func minPostYear(posts []Post) int {
 	result := 9999
-	for _, post := range meta {
+	for _, post := range posts {
 		if result > post.date.Year() {
 			result = post.date.Year()
 		}
@@ -199,9 +226,9 @@ func minPostYear(meta []PostMetadata) int {
 	return result
 }
 
-func maxPostYear(meta []PostMetadata) int {
+func maxPostYear(posts []Post) int {
 	result := 0
-	for _, post := range meta {
+	for _, post := range posts {
 		if result < post.date.Year() {
 			result = post.date.Year()
 		}
