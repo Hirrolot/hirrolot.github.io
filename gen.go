@@ -206,9 +206,16 @@ func genPostsHistory(w io.Writer, posts []Post) error {
 						continue
 					}
 
+					var postClass string
+					if post.redirectTo != "" {
+						postClass = "redirect-post"
+					} else {
+						postClass = "regular-post"
+					}
+
 					fmt.Fprintf(w,
-						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><br><span class=\"post-date\">%s</span></div>\n",
-						outputDir, post.name, post.title,
+						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><span class=\"%s\"></span><br><span class=\"post-date\">%s</span></div>\n",
+						outputDir, post.name, post.title, postClass,
 						post.date.Format(postDateLayout))
 				}
 			}

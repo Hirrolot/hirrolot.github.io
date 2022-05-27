@@ -151,6 +151,14 @@ h3:hover {
     background-color: #f2f2f2;
 }
 
+.redirect-post::before {
+    content: " ";
+}
+
+.redirect-post::after {
+    content: url(media/external-link.svg);
+}
+
 #TOC {
     max-width: 600px;
     margin: auto;
