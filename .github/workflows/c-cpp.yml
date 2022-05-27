@@ -21,7 +21,7 @@ jobs:
       - name: Build the docs
         run: |
           mkdir posts
-          bash build.sh
+          ./build.sh
           mkdir docs
           mv index.html \
             posts \
