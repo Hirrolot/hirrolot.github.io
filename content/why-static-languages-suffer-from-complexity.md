@@ -854,8 +854,6 @@ Programming languages ought to be rethought.
 
 [Calculus of Constructions]: https://en.wikipedia.org/wiki/Calculus_of_constructions
 
-[^kind-not-type]: Formally, "*" is known as a _kind_, not type.
-
 [^missing-traits]: Need to augment the field types with `#[derive(Debug, PartialEq)]`.
 
 [^derive-tight-coupling]: In addition to inextensibility, derive macros possess _tight coupling_: if `DeriveX` is put onto `Foo`, then `foo.rs` inevitably depends on `DeriveX`. This can complicate migration of components, slow down compilation time, and cause merge conflicts.
