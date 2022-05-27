@@ -65,7 +65,7 @@ func genIndexHtml(postNames []string) error {
 
 	err = genPostsHistory(w, postNames)
 	if err != nil {
-		return nil
+		return err
 	}
 
 	fmt.Fprintln(w, "</body>\n</html>")
