@@ -63,12 +63,16 @@ func readPostContent(postBaseName string) string {
 
 func parseMetadata(content string, post *Post) {
 	for _, line := range strings.Split(string(content), "\n") {
-		if post.title == "" {
-			post.title = parseMetadataField(line, "title")
+		title := parseMetadataField(line, "title")
+		if title != "" {
+			titleWithoutDoubleQuotes := title[1 : len(title)-1]
+			post.title = titleWithoutDoubleQuotes
 		}
+
 		if post.redirectTo == "" {
 			post.redirectTo = parseMetadataField(line, "redirect")
 		}
+
 		parsePostDate(post, line)
 	}
 
