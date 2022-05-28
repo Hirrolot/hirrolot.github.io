@@ -45,6 +45,7 @@ func collectPosts() (posts []Post) {
 		var post Post
 		post.Name = strings.TrimSuffix(baseName, extension)
 		parseMetadata(readPostContent(baseName), &post)
+
 		posts = append(posts, post)
 	}
 
@@ -76,12 +77,7 @@ func parseMetadata(content string, post *Post) {
 		parsePostDate(post, line)
 	}
 
-	if post.Title == "" {
-		log.Fatalf("Cannot find a title in '%s'.", post.Name)
-	}
-	if post.Date.Year() == 0 {
-		log.Fatalf("Cannot find a date in '%s'.", post.Name)
-	}
+	checkPostMetadata(post)
 }
 
 func parsePostDate(post *Post, line string) {
@@ -102,6 +98,15 @@ func parseMetadataField(line, fieldName string) string {
 	}
 
 	return ""
+}
+
+func checkPostMetadata(post *Post) {
+	if post.Title == "" {
+		log.Fatalf("Cannot find a title in '%s'.", post.Name)
+	}
+	if post.Date.Year() == 0 {
+		log.Fatalf("Cannot find a date in '%s'.", post.Name)
+	}
 }
 
 func genPostPages(posts []Post) {
