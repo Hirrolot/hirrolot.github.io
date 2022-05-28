@@ -31,7 +31,7 @@
     gap: 3px;
 }
 
-img:not(.contact-img) {
+img:not(.contact-img):not(.redirect-icon) {
     display: block;
     margin: auto;
     max-width: 100%;
@@ -193,12 +193,10 @@ h3:hover {
     margin: 0px 8px 0px 8px;
 }
 
-.redirect-post::before {
-    content: " ";
-}
-
-.redirect-post::after {
-    content: url(media/external-link.svg);
+.redirect-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 4px;
 }
 
 #TOC {
