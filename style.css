@@ -1,11 +1,37 @@
-.badges {
+.index-header {
+    width: 100%;
+    background-color: linen;
+    padding: 20px 0px 20px 0px;
+}
+
+.index-header-content {
+    max-width: 800px;
+    margin: auto;
+}
+
+.blog-title {
+    display: inline-block;
+    font-size: 34px;
+    font-family: 'Sofia', cursive;
+    font-style: italic;
+}
+
+.contacts,
+.contact {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-end;
 }
 
-img:not(.badge) {
+.contacts {
+    gap: 10px;
+}
+
+.contact {
+    gap: 3px;
+}
+
+img:not(.contact-img) {
     display: block;
     margin: auto;
     max-width: 100%;
@@ -13,10 +39,21 @@ img:not(.badge) {
     margin-bottom: 20px;
 }
 
-body {
+.index-body {
+    margin: 0px;
+}
+
+body:not(.index-body) {
     padding: 0px 10px 0px 10px;
+}
+
+body:not(.index-body),
+.posts-history {
     margin: auto;
     max-width: 800px;
+}
+
+body {
     font-family: 'Source Serif Pro', serif;
     font-size: 20px;
     line-height: 1.6;
@@ -51,7 +88,7 @@ div.sourceCode {
     font-size: 16px;
 }
 
-body pre {
+body:not(.index-body) pre {
     margin-top: 16px;
 }
 
@@ -118,7 +155,7 @@ h6 {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-h1:not(.blog-title):hover,
+h1:hover,
 h2:hover,
 h3:hover {
     text-decoration: underline;
@@ -136,6 +173,7 @@ h3:hover {
 
 .posts-history {
     flex-direction: column;
+    margin-top: 20px;
     max-width: 800px;
     font-weight: normal;
     font-style: italic;
@@ -149,6 +187,10 @@ h3:hover {
 
 .posts-history div:nth-child(odd) {
     background-color: #f2f2f2;
+}
+
+.posts-history-container {
+    margin: 0px 8px 0px 8px;
 }
 
 .redirect-post::before {
@@ -186,7 +228,7 @@ h3:hover {
     font-style: italic;
 }
 
-a:not(.badge-link):hover {
+a:hover {
     background-color: PaleVioletRed;
 }
 
@@ -219,7 +261,8 @@ blockquote::before {
     content: "— ";
 }
 
-#refs {
+#refs,
+.contacts {
     font-size: 18px;
 }
 
