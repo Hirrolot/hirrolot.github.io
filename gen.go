@@ -2,14 +2,14 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"fmt"
-	"io"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 )
@@ -21,9 +21,9 @@ const (
 )
 
 type Post struct {
-	name, title string    // Always present.
-	date        time.Time // Always present.
-	redirectTo  string    // "" in case of a regular post.
+	Name, Title string    // Always present.
+	Date        time.Time // Always present.
+	RedirectTo  string    // "" in case of a regular post.
 }
 
 func main() {
@@ -43,7 +43,7 @@ func collectPosts() (posts []Post) {
 		extension := filepath.Ext(baseName)
 
 		var post Post
-		post.name = strings.TrimSuffix(baseName, extension)
+		post.Name = strings.TrimSuffix(baseName, extension)
 		parseMetadata(readPostContent(baseName), &post)
 		posts = append(posts, post)
 	}
@@ -66,21 +66,21 @@ func parseMetadata(content string, post *Post) {
 		title := parseMetadataField(line, "title")
 		if title != "" {
 			titleWithoutDoubleQuotes := title[1 : len(title)-1]
-			post.title = titleWithoutDoubleQuotes
+			post.Title = titleWithoutDoubleQuotes
 		}
 
-		if post.redirectTo == "" {
-			post.redirectTo = parseMetadataField(line, "redirect")
+		if post.RedirectTo == "" {
+			post.RedirectTo = parseMetadataField(line, "redirect")
 		}
 
 		parsePostDate(post, line)
 	}
 
-	if post.title == "" {
-		log.Fatalf("Cannot find a title in '%s'.", post.name)
+	if post.Title == "" {
+		log.Fatalf("Cannot find a title in '%s'.", post.Name)
 	}
-	if post.date.Year() == 0 {
-		log.Fatalf("Cannot find a date in '%s'.", post.name)
+	if post.Date.Year() == 0 {
+		log.Fatalf("Cannot find a date in '%s'.", post.Name)
 	}
 }
 
@@ -88,9 +88,9 @@ func parsePostDate(post *Post, line string) {
 	if dateStr := parseMetadataField(line, "date"); dateStr != "" {
 		date, err := time.Parse(postDateLayout, dateStr)
 		if err != nil {
-			log.Fatalf("Cannot parse date in '%s': %v.", post.name, err)
+			log.Fatalf("Cannot parse date in '%s': %v.", post.Name, err)
 		}
-		post.date = date
+		post.Date = date
 	}
 }
 
@@ -106,7 +106,7 @@ func parseMetadataField(line, fieldName string) string {
 
 func genPostPages(posts []Post) {
 	for _, post := range posts {
-		if post.redirectTo != "" {
+		if post.RedirectTo != "" {
 			genRedirectHtml(&post)
 		} else {
 			invokePandoc(&post)
@@ -115,7 +115,7 @@ func genPostPages(posts []Post) {
 }
 
 func genRedirectHtml(post *Post) {
-	htmlFilename := fmt.Sprintf("%s/%s.html", outputDir, post.name)
+	htmlFilename := fmt.Sprintf("%s/%s.html", outputDir, post.Name)
 	file, err := os.Create(htmlFilename)
 	defer file.Close()
 	if err != nil {
@@ -125,13 +125,18 @@ func genRedirectHtml(post *Post) {
 	w := bufio.NewWriter(file)
 	defer w.Flush()
 
-	fmt.Fprintf(w, "<!DOCTYPE html><html><script>window.location.replace(\"%s\");</script></html>", post.redirectTo)
+	t := template.Must(template.ParseFiles("templates/redirect.tmpl"))
+
+	err = t.ExecuteTemplate(w, "redirect.tmpl", post)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func invokePandoc(post *Post) {
 	cmd := exec.Command(
-		"pandoc", fmt.Sprintf("%s/%s.md", contentDir, post.name),
-		"--output", fmt.Sprintf("%s/%s.html", outputDir, post.name),
+		"pandoc", fmt.Sprintf("%s/%s.md", contentDir, post.Name),
+		"--output", fmt.Sprintf("%s/%s.html", outputDir, post.Name),
 		"--standalone",
 		"-H", "header.html",
 		"--table-of-contents",
@@ -147,6 +152,11 @@ func invokePandoc(post *Post) {
 	}
 }
 
+type IndexTemplate struct {
+	OutputDir string
+	Posts     []Post
+}
+
 func genIndexHtml(posts []Post) {
 	file, err := os.Create("index.html")
 	if err != nil {
@@ -156,94 +166,17 @@ func genIndexHtml(posts []Post) {
 
 	w := bufio.NewWriter(file)
 	defer w.Flush()
-	fmt.Fprintf(w, "<!DOCTYPE html>\n<html>\n<head>\n")
-	fmt.Fprintf(w, "<title>Hirrolot's Blog</title>\n")
 
-	err = appendFile(w, "header.html")
+	t := template.Must(template.ParseFiles(
+		"templates/index.tmpl", "templates/badges.html", "header.html"))
+
+	sort.Slice(posts, func(i, j int) bool {
+		return posts[i].Date.After(posts[j].Date)
+	})
+
+	err = t.ExecuteTemplate(w, "index.tmpl",
+		IndexTemplate{OutputDir: outputDir, Posts: posts})
 	if err != nil {
-		log.Fatalf("Cannot append 'header.html': %s.", err)
+		log.Fatal(err)
 	}
-
-	fmt.Fprintf(w, "<link rel=\"stylesheet\" href=\"style.css\" />\n")
-	fmt.Fprintf(w, "<link rel=\"shortcut icon\" href=\"myself.png\" type=\"image/x-icon\">\n")
-	fmt.Fprintf(w, "<script src=\"script.js\"></script>\n\n")
-
-	fmt.Fprintf(w, "</head>\n<body>\n")
-	fmt.Fprintf(w, "<h1 class=\"blog-title\">Hirrolot's Blog</h1>\n\n")
-	err = appendFile(w, "badges.html")
-	if err != nil {
-		log.Fatalf("Cannot append 'badges.html': %s.", err)
-	}
-
-	genPostsHistory(w, posts)
-
-	fmt.Fprintln(w, "</body>\n</html>")
-}
-
-func appendFile(w io.Writer, filename string) error {
-	headerHtml, err := os.ReadFile(filename)
-	if err != nil {
-		return err
-	}
-	_, err = io.Copy(w, bytes.NewReader(headerHtml))
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func genPostsHistory(w io.Writer, posts []Post) error {
-	fmt.Fprintf(w, "<div class=\"posts-history\">\n")
-
-	minYear, maxYear := minPostYear(posts), maxPostYear(posts)
-
-	for year := maxYear; year >= minYear; year-- {
-		for month := time.December; month >= time.January; month-- {
-			for day := 31; day >= 1; day-- {
-				for _, post := range posts {
-					if post.date.Year() != year || post.date.Month() != month || post.date.Day() != day {
-						continue
-					}
-
-					var postClass string
-					if post.redirectTo != "" {
-						postClass = "redirect-post"
-					} else {
-						postClass = "regular-post"
-					}
-
-					fmt.Fprintf(w,
-						"<div class=\"post-link\"><a href=\" %s/%s.html\">%s</a><span class=\"%s\"></span><br><span class=\"post-date\">%s</span></div>\n",
-						outputDir, post.name, post.title, postClass,
-						post.date.Format(postDateLayout))
-				}
-			}
-		}
-	}
-
-	fmt.Fprintln(w, "</div>") // class="posts-history"
-	return nil
-}
-
-func minPostYear(posts []Post) int {
-	result := 9999
-	for _, post := range posts {
-		if result > post.date.Year() {
-			result = post.date.Year()
-		}
-	}
-
-	return result
-}
-
-func maxPostYear(posts []Post) int {
-	result := 0
-	for _, post := range posts {
-		if result < post.date.Year() {
-			result = post.date.Year()
-		}
-	}
-
-	return result
 }

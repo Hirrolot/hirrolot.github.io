@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hirrolot's Blog</title>
+{{template "header.html"}}
+<link rel="stylesheet" href="style.css" />
+<link rel="shortcut icon" href="myself.png" type="image/x-icon">
+<script src="script.js"></script>
+</head>
+
+<body>
+    <h1 class="blog-title">Hirrolot's Blog</h1>
+    {{template "badges.html"}}
+
+    <div class="posts-history">
+    {{range .Posts}}
+        <div class="post-link">
+            <a href="{{$.OutputDir}}/{{.Name}}.html">{{.Title}}</a>
+            <span class={{if .RedirectTo}}"redirect-post"{{else}}"regular-post"{{end}}></span>
+            <br>
+            <span class="post-date">{{.Date.Format "Jan 2, 2006"}}</span>
+        </div>
+    {{end}}
+    </div>
+</body>
+</html>
