@@ -1,0 +1,37 @@
+[
+    {
+        "link": "https://www.linkedin.com/in/hirrolot-h-0b9427236/",
+        "img": "brand-linkedin.svg",
+        "description": "LinkedIn"
+    },
+    {
+        "link": "mailto:hirrolot@gmail.com",
+        "img": "brand-gmail.svg",
+        "description": "Gmail"
+    },
+    {
+        "link": "https://t.me/hirrolot",
+        "img": "brand-telegram.svg",
+        "description": "Telegram"
+    },
+    {
+        "link": "https://www.reddit.com/user/Hirrolot",
+        "img": "brand-reddit.svg",
+        "description": "Reddit"
+    },
+    {
+        "link": "https://twitter.com/hirrolot",
+        "img": "brand-twitter.svg",
+        "description": "Twitter"
+    },
+    {
+        "link": "https://github.com/Hirrolot",
+        "img": "brand-github.svg",
+        "description": "GitHub"
+    },
+    {
+        "link": "https://hirrolot.github.io/rss.xml",
+        "img": "file-rss.svg",
+        "description": "RSS"
+    }
+]

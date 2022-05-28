@@ -8,16 +8,22 @@
 <script src="script.js"></script>
 </head>
 
-<body>
-    <h1 class="blog-title">Hirrolot's Blog</h1>
-    <p class="badges">
-        {{range .Badges}}
-        <a href="{{.Link}}" class="badge-link">
-            <img src="{{.Img}}" class="badge" />
-        </a>
-        {{end}}
-    </p>
+<body class="index-body">
+    <header class="index-header">
+        <div class="index-header-content">
+            <span class="blog-title">Hirrolot's Blog</span>
+            <div class="contacts">
+                {{range .Contacts}}
+                <div class="contact">
+                    <img src="media/{{.Img}}" class="contact-img" />
+                    <a href="{{.Link}}" class="contact-link">{{.Description}}</a>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </header>
 
+    <div class="posts-history-container">
     <div class="posts-history">
     {{range .Posts}}
         <div class="post-link">
@@ -27,6 +33,7 @@
             <span class="post-date">{{.Date.Format "Jan 2, 2006"}}</span>
         </div>
     {{end}}
+    </div>
     </div>
 </body>
 </html>

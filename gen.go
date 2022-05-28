@@ -161,11 +161,11 @@ func invokePandoc(post *Post) {
 type IndexTemplate struct {
 	OutputDir string
 	Posts     []Post
-	Badges    []Badge
+	Contacts  []Contact
 }
 
-type Badge struct {
-	Link, Img string
+type Contact struct {
+	Link, Img, Description string
 }
 
 func genIndexHtml(posts []Post) {
@@ -186,22 +186,22 @@ func genIndexHtml(posts []Post) {
 	})
 
 	err = t.ExecuteTemplate(w, "index.tmpl",
-		IndexTemplate{OutputDir: outputDir, Posts: posts, Badges: readBadges()})
+		IndexTemplate{OutputDir: outputDir, Posts: posts, Contacts: readContacts()})
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func readBadges() []Badge {
-	badgesData, err := os.ReadFile("badges.json")
+func readContacts() []Contact {
+	contactsData, err := os.ReadFile("contacts.json")
 	if err != nil {
-		log.Fatalf("Cannot read 'badges.json': %v.", err)
+		log.Fatalf("Cannot read 'contacts.json': %v.", err)
 	}
 
-	var badges []Badge
-	if err := json.Unmarshal(badgesData, &badges); err != nil {
+	var contacts []Contact
+	if err := json.Unmarshal(contactsData, &contacts); err != nil {
 		log.Fatal(err)
 	}
 
-	return badges
+	return contacts
 }
