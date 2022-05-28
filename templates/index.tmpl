@@ -10,7 +10,13 @@
 
 <body>
     <h1 class="blog-title">Hirrolot's Blog</h1>
-    {{template "badges.html"}}
+    <p class="badges">
+        {{range .Badges}}
+        <a href="{{.Link}}" class="badge-link">
+            <img src="{{.Img}}" class="badge" />
+        </a>
+        {{end}}
+    </p>
 
     <div class="posts-history">
     {{range .Posts}}

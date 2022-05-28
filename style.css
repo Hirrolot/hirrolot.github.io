@@ -186,7 +186,7 @@ h3:hover {
     font-style: italic;
 }
 
-a:not(.badge):hover {
+a:not(.badge-link):hover {
     background-color: PaleVioletRed;
 }
 

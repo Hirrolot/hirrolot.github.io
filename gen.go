@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -160,6 +161,11 @@ func invokePandoc(post *Post) {
 type IndexTemplate struct {
 	OutputDir string
 	Posts     []Post
+	Badges    []Badge
+}
+
+type Badge struct {
+	Link, Img string
 }
 
 func genIndexHtml(posts []Post) {
@@ -173,15 +179,29 @@ func genIndexHtml(posts []Post) {
 	defer w.Flush()
 
 	t := template.Must(template.ParseFiles(
-		"templates/index.tmpl", "templates/badges.html", "header.html"))
+		"templates/index.tmpl", "header.html"))
 
 	sort.Slice(posts, func(i, j int) bool {
 		return posts[i].Date.After(posts[j].Date)
 	})
 
 	err = t.ExecuteTemplate(w, "index.tmpl",
-		IndexTemplate{OutputDir: outputDir, Posts: posts})
+		IndexTemplate{OutputDir: outputDir, Posts: posts, Badges: readBadges()})
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func readBadges() []Badge {
+	badgesData, err := os.ReadFile("badges.json")
+	if err != nil {
+		log.Fatalf("Cannot read 'badges.json': %v.", err)
+	}
+
+	var badges []Badge
+	if err := json.Unmarshal(badgesData, &badges); err != nil {
+		log.Fatal(err)
+	}
+
+	return badges
 }
