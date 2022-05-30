@@ -162,6 +162,11 @@ h3:hover {
     color: gray;
 }
 
+::selection {
+    color: white;
+    background-color: black;
+}
+
 #TOC,
 .posts-history {
     border-style: solid;
