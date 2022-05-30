@@ -1,7 +1,7 @@
 .index-header {
     width: 100%;
     background-color: linen;
-    padding: 20px 0px 20px 0px;
+    padding: 20px 0px;
 }
 
 .index-header-content {
@@ -16,7 +16,7 @@
     font-style: italic;
     background-color: black;
     color: white;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px;
     margin-bottom: 10px;
 }
 
@@ -35,7 +35,7 @@
     gap: 3px;
 }
 
-img:not(.contact-img):not(.redirect-icon) {
+img:not(.redirect-icon, .contact-img, .myself) {
     display: block;
     margin: auto;
     max-width: 100%;
@@ -43,12 +43,18 @@ img:not(.contact-img):not(.redirect-icon) {
     margin-bottom: 20px;
 }
 
+.myself {
+    display: block;
+    width: 380px;
+    margin: 20px auto 20px auto;
+}
+
 .index-body {
     margin: 0px;
 }
 
 body:not(.index-body) {
-    padding: 0px 10px 0px 10px;
+    padding: 0px 10px;
 }
 
 body:not(.index-body),
@@ -103,7 +109,7 @@ body:not(.index-body) pre {
     background-color: #e8ccd7;
     font-style: italic;
     font-size: 16px;
-    padding: 0px 5px 0px 5px;
+    padding: 0px 5px;
     border-style: dashed;
     border-width: 1px;
 }
@@ -195,7 +201,7 @@ h3:hover {
 
 .posts-history .post-link {
     border: none;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 5px;
 }
 
 .posts-history div:nth-child(odd) {
@@ -203,7 +209,7 @@ h3:hover {
 }
 
 .posts-history-container {
-    margin: 0px 8px 0px 8px;
+    margin: 0px 8px;
 }
 
 .redirect-icon {
@@ -293,7 +299,7 @@ td {
 }
 
 td {
-    padding: 0px 5px 0px 5px;
+    padding: 0px 5px;
 }
 
 
@@ -318,7 +324,7 @@ td {
     font-style: normal;
     font-weight: normal;
     background-color: floralwhite;
-    padding: 5px 12px 5px 12px;
+    padding: 5px 12px;
     border-style: solid;
     border-width: 1px;
     border-color: gray;
