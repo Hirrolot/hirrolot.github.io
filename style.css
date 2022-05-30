@@ -12,8 +12,12 @@
 .blog-title {
     display: inline-block;
     font-size: 34px;
-    font-family: 'Sofia', cursive;
+    font-family: 'Alex Brush', cursive;
     font-style: italic;
+    background-color: black;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    margin-bottom: 10px;
 }
 
 .contacts,
@@ -165,6 +169,11 @@ h3:hover {
 ::selection {
     color: white;
     background-color: black;
+}
+
+.blog-title::selection {
+    color: black;
+    background-color: white;
 }
 
 #TOC,
