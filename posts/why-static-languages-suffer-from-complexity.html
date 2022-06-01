@@ -928,9 +928,6 @@ Now imagine you have five different <code>Either</code>s in your project
 that came from different libraries – that would be a true integration
 headache! While type introspection may be a compromise, it would
 nonetheless make the language even more complex than it already is.</p>
-<p><em>Update: In fact, defining a separate <code>Either</code> is
-unrelated to the inability to automatically derive trait functions. My
-fault.</em></p>
 <h2 id="idris-the-way-out">Idris: The way out?</h2>
 <blockquote>
 <p>One of the most fundamental features of Idris is that types and
@@ -1311,9 +1308,6 @@ Python, and JavaScript; in Golang, conceptually, every function is
 without resorting to sophisticated type features. On the contrary, Rust
 is already considered a complex language and still has no standard means
 to write truly generic asynchronous code.</p>
-<p><em>Update: <a
-href="https://kristoff.it/blog/zig-colorblind-async-await/">Zig
-functions have no notion of a colour</a>. My fault.</em></p>
 <p>Zig can still be used in large systems projects like web browsers,
 interpreters, and operating system kernels – nobody wants these things
 to freeze unexpectedly. Zig’s low-level programming features would
