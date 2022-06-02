@@ -25,7 +25,7 @@ But one recent situation has made me to _fail ignominiously_.
 
 ## Functions that handle updates: First try
 
-We are programming a ~~blazing fast~~ messenger bot to make people's lives easier. Using long polling or webhooks, we obtain a stream of server updates, one-by-one. For all updates, we have a vector of handlers, each of which accept a reference to an update and return a future resolving to `()`. `Dispatcher` owns the handler vector and on each incoming update, it executes the handlers sequentially.
+We are programming a ~~blazing fast~~ messenger bot to make people's lives easier. Using long polling or webhooks, we obtain a stream of server updates, one-by-one. For all updates, we have a vector of handlers, each of which accepts a reference to an update and returns a future resolving to `()`. `Dispatcher` owns the handler vector and on each incoming update, it executes the handlers sequentially.
 
 Let us try to implement this. We will omit the execution of handlers and focus only on the `push_handler` function. First try ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=77fa41ad76bd47211ba3778a7c41d3ae)):
 
@@ -461,7 +461,7 @@ If you have no idea what this error means, you are not alone -- see [issue #7079
 [issue #41078]: https://github.com/rust-lang/rust/issues/41078
 [issue #42940]: https://github.com/rust-lang/rust/issues/42940
 
-You see how our simple task of registering handlers has seamlessly transcended into wandering in rustc issues with the hope to somehow circumvent the language. Designing interfaces in Rust is like walking through a minefield: in order to succeed, you need to balance on your ideal interface and what features are available to you. Yes, I hear you. No, it is not like in all other languages. When you program in some stable production language (not Rust), you can typically foresee how your imaginary interface would fit with language semantics; but when you program in Rust, the process of designing APIs is affected by numerous arbitrary language limitations like those we have seen so far. You expect that borrow checker will validate your references and type system will help you to deal with program entities conveniently, but you end up throwing `Box`, `Pin`, and `Arc` here and there and fighting with type system inexpressiveness.
+You see how our simple task of registering handlers has seamlessly transcended into wandering in rustc issues with the hope to somehow circumvent the language. Designing interfaces in Rust is like walking through a minefield: in order to succeed, you need to balance on your ideal interface and what features are available to you. Yes, I hear you. No, it is not like in all other languages. When you program in some stable production language (not Rust), you can typically foresee how your imaginary interface would fit with language semantics; but when you program in Rust, the process of designing APIs is affected by numerous arbitrary language limitations like those we have seen so far. You expect that borrow checker will validate your references and type system will help you to deal with program entities, but you end up throwing `Box`, `Pin`, and `Arc` here and there and fighting with type system inexpressiveness.
 
 To finish the section, this is the full implementation in Golang:
 
