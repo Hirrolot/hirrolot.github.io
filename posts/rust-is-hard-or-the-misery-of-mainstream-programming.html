@@ -154,8 +154,8 @@ updates: First try</h2>
 <p>We are programming a <del>blazing fast</del> messenger bot to make
 people’s lives easier. Using long polling or webhooks, we obtain a
 stream of server updates, one-by-one. For all updates, we have a vector
-of handlers, each of which accept a reference to an update and return a
-future resolving to <code>()</code>. <code>Dispatcher</code> owns the
+of handlers, each of which accepts a reference to an update and returns
+a future resolving to <code>()</code>. <code>Dispatcher</code> owns the
 handler vector and on each incoming update, it executes the handlers
 sequentially.</p>
 <p>Let us try to implement this. We will omit the execution of handlers
@@ -650,9 +650,9 @@ your imaginary interface would fit with language semantics; but when you
 program in Rust, the process of designing APIs is affected by numerous
 arbitrary language limitations like those we have seen so far. You
 expect that borrow checker will validate your references and type system
-will help you to deal with program entities conveniently, but you end up
-throwing <code>Box</code>, <code>Pin</code>, and <code>Arc</code> here
-and there and fighting with type system inexpressiveness.</p>
+will help you to deal with program entities, but you end up throwing
+<code>Box</code>, <code>Pin</code>, and <code>Arc</code> here and there
+and fighting with type system inexpressiveness.</p>
 <p>To finish the section, this is the full implementation in Golang:</p>
 <p class="code-annotation">
 <code>dispatcher.go</code>
