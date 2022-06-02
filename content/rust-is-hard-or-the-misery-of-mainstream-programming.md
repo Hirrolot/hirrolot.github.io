@@ -6,6 +6,8 @@ date: Jun 2, 2022
 
 <div class="introduction">
 
+<p class="discussions">[r/rust](https://www.reddit.com/r/rust/comments/v3cktw/rust_is_hard_or_the_misery_of_mainstream/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/v3clru/rust_is_hard_or_the_misery_of_mainstream/)</p>
+
 ![](../media/rust-is-hard-or-the-misery-of-mainstream-programming/rustaceans-meme.jpeg)
 
 When you use Rust, it is sometimes outright preposterous how much knowledge of language, and how much of programming ingenuity and curiosity you need in order to accomplish the most trivial things. When you feel particularly desperate, you go to [rust/issues] and search for a solution for your problem. Suddenly, you find an issue with an explanation that it is theoretically impossible to design your API in this way, owing to some subtle language bug. The issue is <span style="background-color: rgb(35, 134, 54); color: white; display: inline-block; padding: 5px 12px; border-radius: 28px; font-size: 16px; font-family: sans-serif;"><svg style="vertical-align: middle; margin-bottom: 3px;" height="16" class="octicon octicon-issue-opened" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill="#FFFFFF" d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path><path fill="#FFFFFF" fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"></path></svg> Open</span> and dated Apr 5, 2017.
@@ -531,4 +533,4 @@ If you still want to create a PL of the future, I wish you good luck and strong 
 
 Feel free to contact me if you wish to extend this list.
 
-[^await-mistake]: Actually I forgot this `#[must_use]` while writing the example and then did not understand for a while why `stdout` was clean in the case of two or more chained handlers 🤡.
+[^await-mistake]: Actually I forgot this `#[must_use]` while writing the example and then did not understand for a while why `stdout` was clean in the case of two or more chained handlers. 🤡
