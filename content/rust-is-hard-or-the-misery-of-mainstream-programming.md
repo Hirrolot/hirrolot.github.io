@@ -536,7 +536,7 @@ If you still want to create a PL of the future, I wish you good luck and strong 
 
 Feel free to contact me if you wish to extend this list.
 
-## Update: Adressing misinterpretations
+## Update: Addressing misinterpretations
 
 Since publication, this post has gained 500+ upvotes on [r/rust] and 650+ comments on [HN]. I did not expect such amount of attention. Unfortunately, before publishing anything, it is very hard to predict all possible misinterpretations.
 
