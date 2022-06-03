@@ -115,6 +115,8 @@ different?</a></li>
 <li><a href="#waiting-for-better-future">Waiting for better
 future</a></li>
 <li><a href="#related-ideas">Related ideas</a></li>
+<li><a href="#update-adressing-misinterpretations">Update: Adressing
+misinterpretations</a></li>
 </ul>
 </nav>
 <div class="introduction">
@@ -775,6 +777,47 @@ href="https://boats.gitlab.io/blog/post/shifgrethor-i/">Shifgrethor I:
 Garbage collection as a Rust library</a>”</em></li>
 </ul>
 <p>Feel free to contact me if you wish to extend this list.</p>
+<h2 id="update-adressing-misinterpretations">Update: Adressing
+misinterpretations</h2>
+<p>Since publication, this post has gained 500+ upvotes on <a
+href="https://www.reddit.com/r/rust/comments/v3cktw/rust_is_hard_or_the_misery_of_mainstream/">r/rust</a>
+and 650+ commets on <a
+href="https://news.ycombinator.com/item?id=31601040">HN</a>. I did not
+expect such amount of attention. Unfortunately, before publishing
+anything, it is very hard to predict all possible
+misinterpretations.</p>
+<p>Some people <a
+href="https://itsallaboutthebit.com/async-simple/">pointed out</a> that
+the dispatcher example was concerned with the problems of library
+maintainers, and that application programmers usually do not have to
+deal with such peculiarities. They are right to some extent; however,
+the reason I wrote this essay was mainly to talk about <em>programming
+language design</em>.</p>
+<p>Rust is ill-suited for generic <code>async</code> programming, this
+is the gross true. When you enter async, you observe that many other
+language features suddenly break down: references, closures, type
+system, to name a few. From the perspective of language design, this
+manifests a failure to design an orthogonal language. I wanted to convey
+this observation in my post; I should have stated this explicitly.</p>
+<p>Additionally, the ability to we write good libraries reveals the true
+potential of a language, since libraries have to deal with the most
+generic code, and therefore they require more expressive features from
+language designers. This also affects mundane application programming:
+the more elegant libraries you have, the more easily you can solve your
+tasks. Example: the abscence of <a
+href="https://blog.rust-lang.org/2021/08/03/GATs-stabilization-push.html">GATs</a>
+does not allow you to have a generic <code>async</code> runtime
+interface and change Tokio to something else in one line of code, as we
+do for loggers.</p>
+<p>One gentleman also outlined a <a
+href="https://www.reddit.com/r/rust/comments/v3cktw/comment/ib0mp49/?utm_source=share&amp;utm_medium=web2x&amp;context=3">more
+comprehensive list</a> of the <code>async</code> failures in Rust,
+including function colouring, asynchronous <code>Drop</code>, and
+library code duplication. I did not try to address all of these issues
+here – otherwise the text would be bloated with too much secondary
+details. However, this list pretty much sums up all the bad things you
+have to deal with in generic <code>async</code> code, such as library
+development.</p>
 <section class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
