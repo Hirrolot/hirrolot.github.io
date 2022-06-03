@@ -69,10 +69,6 @@ body {
     line-height: 1.6;
 }
 
-p {
-    text-align: justify;
-}
-
 code:not([class]) {
     font-size: 16px;
     background-color: rgba(85, 87, 88, 0.137);
