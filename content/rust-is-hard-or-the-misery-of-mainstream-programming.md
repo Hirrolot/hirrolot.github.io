@@ -6,7 +6,7 @@ date: Jun 2, 2022
 
 <div class="introduction">
 
-<p class="discussions">[r/rust](https://www.reddit.com/r/rust/comments/v3cktw/rust_is_hard_or_the_misery_of_mainstream/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/v3clru/rust_is_hard_or_the_misery_of_mainstream/)</p>
+<p class="discussions">[HN](https://news.ycombinator.com/item?id=31601040) · [r/rust](https://www.reddit.com/r/rust/comments/v3cktw/rust_is_hard_or_the_misery_of_mainstream/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/v3clru/rust_is_hard_or_the_misery_of_mainstream/)</p>
 
 ![](../media/rust-is-hard-or-the-misery-of-mainstream-programming/rustaceans-meme.jpeg)
 
