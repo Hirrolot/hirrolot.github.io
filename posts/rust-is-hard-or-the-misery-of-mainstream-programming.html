@@ -797,8 +797,10 @@ language design</em>.</p>
 is the gross true. When you enter async, you observe that many other
 language features suddenly break down: references, closures, type
 system, to name a few. From the perspective of language design, this
-manifests a failure to design an orthogonal language. I wanted to convey
-this observation in my post; I should have stated this explicitly.</p>
+manifests a failure to design an orthogonal language <a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. I
+wanted to convey this observation in my post; I should have stated this
+explicitly.</p>
 <p>Additionally, the ability to we write good libraries reveals the true
 potential of a language, since libraries have to deal with the most
 generic code, and therefore they require more expressive features from
@@ -826,6 +828,11 @@ role="doc-endnotes">
 <code>#[must_use]</code> while writing the example and then did not
 understand for a while why <code>stdout</code> was clean in the case of
 two or more chained handlers. 🤡<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>A language is orthogonal when its
+features “play well” with each other. E.g., arrays as function
+parameters in C just boil down to pointers, which is admittedly not
+orthogonal.<a href="#fnref2" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
