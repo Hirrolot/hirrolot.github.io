@@ -69,6 +69,12 @@ body {
     line-height: 1.6;
 }
 
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 18px !important;
+    }
+}
+
 code:not([class]) {
     font-size: 16px;
     background-color: rgba(85, 87, 88, 0.137);
@@ -279,11 +285,6 @@ blockquote::before {
 #refs,
 .contacts {
     font-size: 18px;
-}
-
-ul,
-ol {
-    text-align: justify;
 }
 
 table {
