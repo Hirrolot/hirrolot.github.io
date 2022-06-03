@@ -73,6 +73,15 @@ body {
     body {
         font-size: 18px !important;
     }
+
+    div.sourceCode,
+    code:not([class]) {
+        font-size: 14px !important;
+    }
+
+    .note-text {
+        font-size: 16px !important;
+    }
 }
 
 code:not([class]) {
