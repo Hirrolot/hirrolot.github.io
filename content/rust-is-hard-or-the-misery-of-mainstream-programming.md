@@ -6,7 +6,10 @@ date: Jun 2, 2022
 
 <div class="introduction">
 
-<p class="discussions">[HN](https://news.ycombinator.com/item?id=31601040) · [r/rust](https://www.reddit.com/r/rust/comments/v3cktw/rust_is_hard_or_the_misery_of_mainstream/) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/v3clru/rust_is_hard_or_the_misery_of_mainstream/)</p>
+<p class="discussions">[HN] · [r/rust] · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/v3clru/rust_is_hard_or_the_misery_of_mainstream/)</p>
+
+[HN]: https://news.ycombinator.com/item?id=31601040
+[r/rust]: https://www.reddit.com/r/rust/comments/v3cktw/rust_is_hard_or_the_misery_of_mainstream/
 
 ![](../media/rust-is-hard-or-the-misery-of-mainstream-programming/rustaceans-meme.jpeg)
 
@@ -532,5 +535,19 @@ If you still want to create a PL of the future, I wish you good luck and strong 
  - _"[Shifgrethor I: Garbage collection as a Rust library](https://boats.gitlab.io/blog/post/shifgrethor-i/)"_
 
 Feel free to contact me if you wish to extend this list.
+
+## Update: Adressing misinterpretations
+
+Since publication, this post has gained 500+ upvotes on [r/rust] and 650+ commets on [HN]. I did not expect such amount of attention. Unfortunately, before publishing anything, it is very hard to predict all possible misinterpretations.
+
+Some people [pointed out](https://itsallaboutthebit.com/async-simple/) that the dispatcher example was concerned with the problems of library maintainers, and that application programmers usually do not have to deal with such peculiarities. They are right to some extent; however, the reason I wrote this essay was mainly to talk about _programming language design_.
+
+Rust is ill-suited for generic `async` programming, this is the gross true. When you enter async, you observe that many other language features suddenly break down: references, closures, type system, to name a few. From the perspective of language design, this manifests a failure to design an orthogonal language. I wanted to convey this observation in my post; I should have stated this explicitly.
+
+Additionally, the ability to we write good libraries reveals the true potential of a language, since libraries have to deal with the most generic code, and therefore they require more expressive features from language designers. This also affects mundane application programming: the more elegant libraries you have, the more easily you can solve your tasks. Example: the abscence of [GATs] does not allow you to have a generic `async` runtime interface and change Tokio to something else in one line of code, as we do for loggers.
+
+[GATs]: https://blog.rust-lang.org/2021/08/03/GATs-stabilization-push.html
+
+One gentleman also outlined a [more comprehensive list](https://www.reddit.com/r/rust/comments/v3cktw/comment/ib0mp49/?utm_source=share&utm_medium=web2x&context=3) of the `async` failures in Rust, including function colouring, asynchronous `Drop`, and library code duplication. I did not try to address all of these issues here -- otherwise the text would be bloated with too much secondary details. However, this list pretty much sums up all the bad things you have to deal with in generic `async` code, such as library development.
 
 [^await-mistake]: Actually I forgot this `#[must_use]` while writing the example and then did not understand for a while why `stdout` was clean in the case of two or more chained handlers. 🤡
