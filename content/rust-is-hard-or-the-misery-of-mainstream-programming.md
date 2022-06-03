@@ -538,13 +538,13 @@ Feel free to contact me if you wish to extend this list.
 
 ## Update: Adressing misinterpretations
 
-Since publication, this post has gained 500+ upvotes on [r/rust] and 650+ commets on [HN]. I did not expect such amount of attention. Unfortunately, before publishing anything, it is very hard to predict all possible misinterpretations.
+Since publication, this post has gained 500+ upvotes on [r/rust] and 650+ comments on [HN]. I did not expect such amount of attention. Unfortunately, before publishing anything, it is very hard to predict all possible misinterpretations.
 
 Some people [pointed out](https://itsallaboutthebit.com/async-simple/) that the dispatcher example was concerned with the problems of library maintainers, and that application programmers usually do not have to deal with such peculiarities. They are right to some extent; however, the reason I wrote this essay was mainly to talk about _programming language design_.
 
 Rust is ill-suited for generic `async` programming, this is the gross true. When you enter async, you observe that many other language features suddenly break down: references, closures, type system, to name a few. From the perspective of language design, this manifests a failure to design an orthogonal language [^orthogonal]. I wanted to convey this observation in my post; I should have stated this explicitly.
 
-Additionally, the ability to we write good libraries reveals the true potential of a language, since libraries have to deal with the most generic code, and therefore they require more expressive features from language designers. This also affects mundane application programming: the more elegant libraries you have, the more easily you can solve your tasks. Example: the abscence of [GATs] does not allow you to have a generic `async` runtime interface and change Tokio to something else in one line of code, as we do for loggers.
+Additionally, the ability to we write good libraries reveals the true potential of a language, since libraries have to deal with the most generic code, and therefore they require more expressive features from language designers. This also affects mundane application programming: the more elegant libraries you have, the more easily you can solve your tasks. Example: the abscence of [GATs] does not allow you to have a generic runtime interface and change Tokio to something else in one line of code, as we do for loggers.
 
 [GATs]: https://blog.rust-lang.org/2021/08/03/GATs-stabilization-push.html
 
