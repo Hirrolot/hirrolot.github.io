@@ -538,7 +538,7 @@ Feel free to contact me if you wish to extend this list.
 
 ## Update: Addressing misinterpretations
 
-Since publication, this post has gained 500+ upvotes on [r/rust] and 650+ comments on [HN]. I did not expect such amount of attention. Unfortunately, before publishing anything, it is very hard to predict all possible misinterpretations.
+Since publication, this post has gained 500+ upvotes on [r/rust] and 700+ comments on [HN]. I did not expect such amount of attention. Unfortunately, before publishing anything, it is very hard to predict all possible misinterpretations.
 
 Some people [pointed out](https://itsallaboutthebit.com/async-simple/) that the dispatcher example was concerned with the problems of library maintainers, and that application programmers usually do not have to deal with such peculiarities. They are right to some extent; however, the reason I wrote this essay was mainly to talk about _programming language design_.
 
