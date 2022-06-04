@@ -30,6 +30,12 @@ function createClickableHeaders() {
 }
 
 function createPopupNotes() {
+    // Pop-up notes overflow screen size sometimes. This is a hack, I am noob at CSS/JS.
+    // TODO: Adjust notes dynamically.
+    if (window.innerWidth <= 600) {
+        return;
+    }
+
     var notes = document.querySelectorAll(".footnote-ref");
 
     for (var i = notes.length - 1; i >= 0; i--) {
