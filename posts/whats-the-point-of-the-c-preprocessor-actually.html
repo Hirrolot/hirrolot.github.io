@@ -544,7 +544,18 @@ different name).<a href="#fnref2" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-<script src="https://utteranc.es/client.js" repo="hirrolot/hirrolot.github.io" issue-term="pathname" label="comments" theme="github-light" crossorigin="anonymous" async>
+<script src="https://utteranc.es/client.js" repo="hirrolot/hirrolot.github.io" issue-term="pathname" label="comments"
+    theme="github-light" crossorigin="anonymous" async>
+    </script>
+<script>
+    var comments = document.querySelector(".utterances");
+    console.log(comments.innerHTML);
+
+    if (comments) {
+        console.log("abc");
+        comments.style.fontSize = "18px";
+        comments.style.color = "red";
+    }
 </script>
 </body>
 </html>
