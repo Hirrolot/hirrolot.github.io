@@ -366,7 +366,3 @@ td {
 details:hover {
     cursor: pointer;
 }
-
-.utterances {
-    font-size: 18px !important;
-}
