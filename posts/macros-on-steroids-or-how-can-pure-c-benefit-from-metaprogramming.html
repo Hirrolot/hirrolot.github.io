@@ -183,27 +183,29 @@ role="doc-noteref"><sup>2</sup></a>:</p>
 it first by using functions, then by using macros. For example, instead
 of copy-pasting the same code of reading user data each time, we can
 reify it into the function <code>read_user</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> read_user<span class="op">(</span><span class="dt">char</span> <span class="op">*</span>user<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;Type user: &quot;</span><span class="op">);</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> <span class="dt">bool</span> user_read <span class="op">=</span> scanf<span class="op">(</span><span class="st">&quot;%15s&quot;</span><span class="op">,</span> user<span class="op">)</span> <span class="op">==</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">(</span>user_read<span class="op">);</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;New user %s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> user<span class="op">);</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> amy<span class="op">[</span><span class="dv">16</span><span class="op">],</span> luke<span class="op">[</span><span class="dv">16</span><span class="op">];</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>read_user<span class="op">(</span>amy<span class="op">);</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>read_user<span class="op">(</span>luke<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="dt">void</span> read_user<span class="op">(</span><span class="dt">char</span> <span class="op">*</span>user<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>    printf<span class="op">(</span><span class="st">&quot;Type user: &quot;</span><span class="op">);</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="dt">const</span> <span class="dt">bool</span> user_read <span class="op">=</span> scanf<span class="op">(</span><span class="st">&quot;%15s&quot;</span><span class="op">,</span> user<span class="op">)</span> <span class="op">==</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    assert<span class="op">(</span>user_read<span class="op">);</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    printf<span class="op">(</span><span class="st">&quot;New user %s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> user<span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="op">}</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="dt">char</span> amy<span class="op">[</span><span class="dv">16</span><span class="op">],</span> luke<span class="op">[</span><span class="dv">16</span><span class="op">];</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>read_user<span class="op">(</span>amy<span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>read_user<span class="op">(</span>luke<span class="op">);</span></span></code></pre></div>
 <p>Sometimes you cannot avoid repetition through functions. Then you
 resort to macros:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define list_for_each(pos, head) \</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">    for (pos = (head)-&gt;next; pos != (head); pos = pos-&gt;next)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> list_head <span class="op">*</span>current<span class="op">;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>list_for_each<span class="op">(</span>current<span class="op">,</span> <span class="op">&amp;</span>self<span class="op">-&gt;</span>items<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Do something meaningful...</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="pp">#define list_for_each(pos, head) \</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="pp">    for (pos = (head)-&gt;next; pos != (head); pos = pos-&gt;next)</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">struct</span> list_head <span class="op">*</span>current<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>list_for_each<span class="op">(</span>current<span class="op">,</span> <span class="op">&amp;</span>self<span class="op">-&gt;</span>items<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="co">// Do something meaningful...</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/torvalds/linux/blob/master/include/linux/list.h"><code>linux/include/linux/list.h</code></a>.
@@ -218,44 +220,48 @@ n.d.)</span>:</p>
 <p class="code-annotation">
 <code>rec.c</code>
 </p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define FOO(x, ...) x; FOO(__VA_ARGS__)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>FOO<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="pp">#define FOO(x, ...) x; FOO(__VA_ARGS__)</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>FOO<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code> <a href="#fn3" class="footnote-ref" id="fnref3"
 role="doc-noteref"><sup>3</sup></a>
 </p>
-<pre><code>$ clang rec.c -E -P -Weverything -std=c99
-rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
-FOO(1, 2, 3)
-^
-rec.c:1:24: note: expanded from macro &#39;FOO&#39;
-#define FOO(x, ...) x; FOO(__VA_ARGS__)
-                       ^
-
-1; FOO(2, 3)
-1 warning generated.</code></pre>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ clang rec.c -E -P -Weverything -std=c99</span>
+<span id="cb4-2"><a href="#cb4-2"></a>rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]</span>
+<span id="cb4-3"><a href="#cb4-3"></a>FOO(1, 2, 3)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>^</span>
+<span id="cb4-5"><a href="#cb4-5"></a>rec.c:1:24: note: expanded from macro &#39;FOO&#39;</span>
+<span id="cb4-6"><a href="#cb4-6"></a>#define FOO(x, ...) x; FOO(__VA_ARGS__)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>                       ^</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>1; FOO(2, 3)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>1 warning generated.</span></code></pre></div>
 <p>What you are going to do with the following code snippet then?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> BinaryTree <span class="op">*</span>lhs<span class="op">;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> BinaryTree <span class="op">*</span>rhs<span class="op">;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> BinaryTreeNode<span class="op">;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">enum</span> <span class="op">{</span> Leaf<span class="op">,</span> Node <span class="op">}</span> tag<span class="op">;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">union</span> <span class="op">{</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> leaf<span class="op">;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        BinaryTreeNode node<span class="op">;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> data<span class="op">;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> BinaryTree<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="kw">struct</span> BinaryTree <span class="op">*</span>lhs<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="kw">struct</span> BinaryTree <span class="op">*</span>rhs<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="op">}</span> BinaryTreeNode<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="kw">enum</span> <span class="op">{</span> Leaf<span class="op">,</span> Node <span class="op">}</span> tag<span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="kw">union</span> <span class="op">{</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>        <span class="dt">int</span> leaf<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>        BinaryTreeNode node<span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="op">}</span> data<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="op">}</span> BinaryTree<span class="op">;</span></span></code></pre></div>
 <p>Experienced C programmers might have noticed that the pattern is
 called a <a href="https://en.wikipedia.org/wiki/Tagged_union">tagged
 union</a>. It is described as follows:</p>
-<pre><code>typedef struct {
-    enum { &lt;tag&gt;... } tag;
-    union { &lt;type&gt; &lt;tag&gt;... } data;
-} &lt;name&gt;;</code></pre>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>typedef struct {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    enum { &lt;tag&gt;... } tag;</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    union { &lt;type&gt; &lt;tag&gt;... } data;</span>
+<span id="cb6-4"><a href="#cb6-4"></a>} &lt;name&gt;;</span></code></pre></div>
 <p>See <code>&lt;tag&gt;...</code> and
 <code>&lt;type&gt; &lt;tag&gt;...</code>? These are the little monsters
 of code repetition. They cannot be generated even by a naive variadic
@@ -266,27 +272,28 @@ build some syntax sugar atop of bare tagged unions, but the thing is
 that <em>we cannot</em>. For example, this is how the same
 <code>BinaryTree</code> might look in Rust:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> BinaryTree <span class="op">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    Leaf(<span class="dt">i32</span>)<span class="op">,</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Node(<span class="dt">Box</span><span class="op">&lt;</span>BinaryTree<span class="op">&gt;,</span> <span class="dt">i32</span><span class="op">,</span> <span class="dt">Box</span><span class="op">&lt;</span>BinaryTree<span class="op">&gt;</span>)<span class="op">,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">enum</span> BinaryTree <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    Leaf(<span class="dt">i32</span>)<span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    Node(<span class="dt">Box</span><span class="op">&lt;</span>BinaryTree<span class="op">&gt;,</span> <span class="dt">i32</span><span class="op">,</span> <span class="dt">Box</span><span class="op">&lt;</span>BinaryTree<span class="op">&gt;</span>)<span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="op">}</span></span></code></pre></div>
 <p>Another example: interfaces. Consider the <code>Airplane</code>
 interface:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_forward<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_back<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_up<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_down<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> AirplaneVTable<span class="op">;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">// The definitions of `MyAirplane_*` methods here...</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> AirplaneVTable my_airplane <span class="op">=</span> <span class="op">{</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    MyAirplane_move_forward<span class="op">,</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    MyAirplane_move_back<span class="op">,</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    MyAirplane_move_up<span class="op">,</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    MyAirplane_move_down<span class="op">,</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="dt">void</span> <span class="op">(*</span>move_forward<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="dt">void</span> <span class="op">(*</span>move_back<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>    <span class="dt">void</span> <span class="op">(*</span>move_up<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="dt">void</span> <span class="op">(*</span>move_down<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="op">}</span> AirplaneVTable<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">// The definitions of `MyAirplane_*` methods here...</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="dt">const</span> AirplaneVTable my_airplane <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>    MyAirplane_move_forward<span class="op">,</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>    MyAirplane_move_back<span class="op">,</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>    MyAirplane_move_up<span class="op">,</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>    MyAirplane_move_down<span class="op">,</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="op">};</span></span></code></pre></div>
 <p>Can you notice the repetition here? Right, in the definition of
 <code>AirplaneVTable my_airplane</code>. We already know the names of
 the interface methods, why do we need to specify them again? Why could
@@ -294,16 +301,16 @@ not we just write <code>impl(Airplane, MyAirplane)</code> which will
 collect all methods’ names and prepend <code>MyAirplane</code> to each
 one? In Rust:</p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">trait</span> Airplane <span class="op">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> move_forward(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> move_back(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> move_up(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> move_down(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Airplane <span class="cf">for</span> MyAirplane <span class="op">{</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The definitions of `MyAirplane` methods here...</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">trait</span> Airplane <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>    <span class="kw">fn</span> move_forward(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>    <span class="kw">fn</span> move_back(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="kw">fn</span> move_up(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>    <span class="kw">fn</span> move_down(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> distance<span class="op">:</span> <span class="dt">i32</span>)<span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="op">}</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="kw">impl</span> Airplane <span class="cf">for</span> MyAirplane <span class="op">{</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>    <span class="co">// The definitions of `MyAirplane` methods here...</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="op">}</span></span></code></pre></div>
 <p>I think you already know the answer: because preprocessor macros
 cannot loop/recurse and, therefore, cannot iterate on unbounded
 sequences of arguments.</p>
@@ -320,23 +327,25 @@ next two sections. Reader, follow me!</p>
 With the aid of <a
 href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library
 implemented atop of Metalang99, it can be defined as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;datatype99.h&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a><span class="pp">#include </span><span class="im">&lt;datatype99.h&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>datatype<span class="op">(</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>    BinaryTree<span class="op">,</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="op">);</span></span></code></pre></div>
 <p>And manipulated as follows <a href="#fn5" class="footnote-ref"
 id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="op">}</span></span></code></pre></div>
 <p>The neat part is that not only such use of macros reduces boilerplate
 but also reduces the risk of a failure: you can no longer access
 <code>.rhs</code> if the binary tree is just <code>Leaf</code> (since
@@ -350,45 +359,47 @@ href="https://godbolt.org/z/3TKn8T3Gj">godbolt</a>.</p>
 <p>The same holds for the aforementioned <code>AirplaneVTable</code>.
 Here is how easy you can define it with <a
 href="https://github.com/Hirrolot/interface99">Interface99</a>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Airplane_IFACE                             \</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="pp">    vfunc(void, move_forward, VSelf, int distance) \</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="pp">    vfunc(void, move_back, VSelf, int distance)    \</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="pp">    vfunc(void, move_up, VSelf, int distance)      \</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="pp">    vfunc(void, move_down, VSelf, int distance)</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>interface<span class="op">(</span>Airplane<span class="op">);</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">// The definitions of `MyAirplane_*` methods here...</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>Airplane<span class="op">,</span> MyAirplane<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a><span class="pp">#define Airplane_IFACE                             \</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="pp">    vfunc(void, move_forward, VSelf, int distance) \</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="pp">    vfunc(void, move_back, VSelf, int distance)    \</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="pp">    vfunc(void, move_up, VSelf, int distance)      \</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="pp">    vfunc(void, move_down, VSelf, int distance)</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a>interface<span class="op">(</span>Airplane<span class="op">);</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">// The definitions of `MyAirplane_*` methods here...</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a>impl<span class="op">(</span>Airplane<span class="op">,</span> MyAirplane<span class="op">);</span></span></code></pre></div>
 <p><code>impl(Airplane, MyAirplane)</code> is the most noticeable part
 here; it deduces the methods’ names from the context, freeing you from
 the burden of updating the definition each time you add/remove/rename an
 interface method.</p>
 <p>At the end of the game, you will end up with this:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// interface(Airplane);</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> AirplaneVTable AirplaneVTable<span class="op">;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Airplane Airplane<span class="op">;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> AirplaneVTable <span class="op">{</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_forward<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_back<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_up<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>move_down<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Airplane <span class="op">{</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">*</span>self<span class="op">;</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> AirplaneVTable <span class="op">*</span>vptr<span class="op">;</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">// impl(Airplane, MyAirplane);</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> AirplaneVTable MyAirplane_Airplane_impl <span class="op">=</span> <span class="op">{</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>move_forward <span class="op">=</span> MyAirplane_move_forward<span class="op">,</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>move_back <span class="op">=</span> MyAirplane_move_back<span class="op">,</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>move_up <span class="op">=</span> MyAirplane_move_up<span class="op">,</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>move_down <span class="op">=</span> MyAirplane_move_down<span class="op">,</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">// interface(Airplane);</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">typedef</span> <span class="kw">struct</span> AirplaneVTable AirplaneVTable<span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">typedef</span> <span class="kw">struct</span> Airplane Airplane<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="kw">struct</span> AirplaneVTable <span class="op">{</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="dt">void</span> <span class="op">(*</span>move_forward<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="dt">void</span> <span class="op">(*</span>move_back<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="dt">void</span> <span class="op">(*</span>move_up<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="dt">void</span> <span class="op">(*</span>move_down<span class="op">)(</span>VSelf<span class="op">,</span> <span class="dt">int</span> distance<span class="op">);</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="op">};</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="kw">struct</span> Airplane <span class="op">{</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>    <span class="dt">void</span> <span class="op">*</span>self<span class="op">;</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a>    <span class="dt">const</span> AirplaneVTable <span class="op">*</span>vptr<span class="op">;</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="op">};</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a></span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="co">// impl(Airplane, MyAirplane);</span></span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="dt">static</span> <span class="dt">const</span> AirplaneVTable MyAirplane_Airplane_impl <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a>    <span class="op">.</span>move_forward <span class="op">=</span> MyAirplane_move_forward<span class="op">,</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a>    <span class="op">.</span>move_back <span class="op">=</span> MyAirplane_move_back<span class="op">,</span></span>
+<span id="cb13-21"><a href="#cb13-21"></a>    <span class="op">.</span>move_up <span class="op">=</span> MyAirplane_move_up<span class="op">,</span></span>
+<span id="cb13-22"><a href="#cb13-22"></a>    <span class="op">.</span>move_down <span class="op">=</span> MyAirplane_move_down<span class="op">,</span></span>
+<span id="cb13-23"><a href="#cb13-23"></a><span class="op">};</span></span></code></pre></div>
 <p>Pretty much the same as if you wrote by hand. <a
 href="https://en.wikipedia.org/wiki/Virtual_method_table">Virtual method
 tables</a> are so common that they are used almost in every
@@ -431,76 +442,85 @@ see something like this:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;
-    3 | datatype(A, (Foo, int), Bar(int));
-      | ^~~~~~~~</code></pre>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+<span id="cb15-2"><a href="#cb15-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;</span>
+<span id="cb15-3"><a href="#cb15-3"></a>    3 | datatype(A, (Foo, int), Bar(int));</span>
+<span id="cb15-4"><a href="#cb15-4"></a>      | ^~~~~~~~</span></code></pre></div>
 <p>Or this:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;
-    3 | datatype(A, (Foo, int) (Bar, int));
-      | ^~~~~~~~</code></pre>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb17-1"><a href="#cb17-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+<span id="cb17-2"><a href="#cb17-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;</span>
+<span id="cb17-3"><a href="#cb17-3"></a>    3 | datatype(A, (Foo, int) (Bar, int));</span>
+<span id="cb17-4"><a href="#cb17-4"></a>      | ^~~~~~~~</span></code></pre></div>
 <p>If an error is not really in the syntax part, you will see something
 like this:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>Foo<span class="op">,</span> <span class="op">(</span>FooA<span class="op">,</span> NonExistingType<span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a>datatype<span class="op">(</span>Foo<span class="op">,</span> <span class="op">(</span>FooA<span class="op">,</span> NonExistingType<span class="op">));</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>playground.c:3:1: error: unknown type name ‘NonExistingType’
-    3 | datatype(
-      | ^~~~~~~~
-playground.c:3:1: error: unknown type name ‘NonExistingType’
-playground.c:3:1: error: unknown type name ‘NonExistingType’</code></pre>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb19-1"><a href="#cb19-1"></a>playground.c:3:1: error: unknown type name ‘NonExistingType’</span>
+<span id="cb19-2"><a href="#cb19-2"></a>    3 | datatype(</span>
+<span id="cb19-3"><a href="#cb19-3"></a>      | ^~~~~~~~</span>
+<span id="cb19-4"><a href="#cb19-4"></a>playground.c:3:1: error: unknown type name ‘NonExistingType’</span>
+<span id="cb19-5"><a href="#cb19-5"></a>playground.c:3:1: error: unknown type name ‘NonExistingType’</span></code></pre></div>
 <p>Or this:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a>match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>    of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="co">// of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="op">}</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>playground.c: In function ‘sum’:
-playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]
-    6 |     match(*tree) {
-      |     ^~~~~</code></pre>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb21-1"><a href="#cb21-1"></a>playground.c: In function ‘sum’:</span>
+<span id="cb21-2"><a href="#cb21-2"></a>playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]</span>
+<span id="cb21-3"><a href="#cb21-3"></a>    6 |     match(*tree) {</span>
+<span id="cb21-4"><a href="#cb21-4"></a>      |     ^~~~~</span></code></pre></div>
 <p>Take a look at this example with Interface99:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Foo_IFACE vfunc(void, foo, int x, int y)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>interface<span class="op">(</span>Foo<span class="op">);</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> dummy<span class="op">;</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> MyFoo<span class="op">;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Missing `void MyFoo_foo(int x, int y)`.</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>Foo<span class="op">,</span> MyFoo<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="pp">#define Foo_IFACE vfunc(void, foo, int x, int y)</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>interface<span class="op">(</span>Foo<span class="op">);</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>    <span class="dt">char</span> dummy<span class="op">;</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="op">}</span> MyFoo<span class="op">;</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="co">// Missing `void MyFoo_foo(int x, int y)`.</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a></span>
+<span id="cb22-10"><a href="#cb22-10"></a>impl<span class="op">(</span>Foo<span class="op">,</span> MyFoo<span class="op">);</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)
-   12 | impl(Foo, MyFoo);
-      | ^~~~
-</code></pre>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb23-1"><a href="#cb23-1"></a>playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>   12 | impl(Foo, MyFoo);</span>
+<span id="cb23-3"><a href="#cb23-3"></a>      | ^~~~</span></code></pre></div>
 <p>When a macro failed, and I do not understand what is wrong just by
 looking at the console or by looking at its invocation (which is very
 rare), I observe the expansion with <code>-E</code>. This is where the
@@ -516,11 +536,12 @@ href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"
 <code>/bin/sh</code> <a href="#fn7" class="footnote-ref" id="fnref7"
 role="doc-noteref"><sup>7</sup></a>
 </p>
-<pre><code>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
-
-real    0m0,121s
-user    0m0,107s
-sys     0m0,011s</code></pre>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb24-1"><a href="#cb24-1"></a>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0</span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a>real    0m0,121s</span>
+<span id="cb24-4"><a href="#cb24-4"></a>user    0m0,107s</span>
+<span id="cb24-5"><a href="#cb24-5"></a>sys     0m0,011s</span></code></pre></div>
 <p>This might be an issue only if you have a lot of macro stuff in
 header files. If so, I suggest to use a widely known technique called <a
 href="https://en.wikipedia.org/wiki/Precompiled_header">precompiled

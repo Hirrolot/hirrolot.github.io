@@ -176,20 +176,21 @@ the solution I came up with.</p>
 <p><del>Metalang99 is a language to write macros.</del> Sorry, it is a
 language to write recursive macros!</p>
 <p>What was previously impossible soon became possible:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>datatype<span class="op">(</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>    BinaryTree<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library
@@ -199,31 +200,32 @@ for tagged unions.
 detail: to make the following code work, you must
 <code>#include &lt;datatype99.h&gt;</code>. Let me mend myself this
 time:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;interface99.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Shape_IFACE                      \</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="pp">    vfunc( int, perim, const VSelf)      \</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">    vfunc(void, scale, VSelf, int factor)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>interface<span class="op">(</span>Shape<span class="op">);</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">,</span> b<span class="op">;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> Rectangle<span class="op">;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>  Rectangle_perim<span class="op">(</span><span class="dt">const</span> VSelf<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Rectangle_scale<span class="op">(</span>VSelf<span class="op">,</span> <span class="dt">int</span> factor<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>Shape<span class="op">,</span> Rectangle<span class="op">);</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">,</span> b<span class="op">,</span> c<span class="op">;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> Triangle<span class="op">;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>  Triangle_perim<span class="op">(</span><span class="dt">const</span> VSelf<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Triangle_scale<span class="op">(</span>VSelf<span class="op">,</span> <span class="dt">int</span> factor<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>Shape<span class="op">,</span> Triangle<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="pp">#include </span><span class="im">&lt;interface99.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="pp">#define Shape_IFACE                      \</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="pp">    vfunc( int, perim, const VSelf)      \</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="pp">    vfunc(void, scale, VSelf, int factor)</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>interface<span class="op">(</span>Shape<span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="dt">int</span> a<span class="op">,</span> b<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="op">}</span> Rectangle<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="dt">int</span>  Rectangle_perim<span class="op">(</span><span class="dt">const</span> VSelf<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="dt">void</span> Rectangle_scale<span class="op">(</span>VSelf<span class="op">,</span> <span class="dt">int</span> factor<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a>impl<span class="op">(</span>Shape<span class="op">,</span> Rectangle<span class="op">);</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>    <span class="dt">int</span> a<span class="op">,</span> b<span class="op">,</span> c<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="op">}</span> Triangle<span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="dt">int</span>  Triangle_perim<span class="op">(</span><span class="dt">const</span> VSelf<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="dt">void</span> Triangle_scale<span class="op">(</span>VSelf<span class="op">,</span> <span class="dt">int</span> factor<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25"></a>impl<span class="op">(</span>Shape<span class="op">,</span> Triangle<span class="op">);</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/Hirrolot/interface99">Interface99</a>, a
@@ -324,40 +326,46 @@ some real errors you can get from Datatype99 real quick:</p>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> Bar<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;
-    3 | datatype(A, (Foo, int), Bar(int));
-      | ^~~~~~~~</code></pre>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+<span id="cb4-2"><a href="#cb4-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    3 | datatype(A, (Foo, int), Bar(int));</span>
+<span id="cb4-4"><a href="#cb4-4"></a>      | ^~~~~~~~</span></code></pre></div>
 </li>
 <li>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;
-    3 | datatype(A, (Foo, int) (Bar, int));
-      | ^~~~~~~~</code></pre>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+<span id="cb6-2"><a href="#cb6-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    3 | datatype(A, (Foo, int) (Bar, int));</span>
+<span id="cb6-4"><a href="#cb6-4"></a>      | ^~~~~~~~</span></code></pre></div>
 </li>
 <li>
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="co">/* trailing comma is prohibited */</span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">),</span> <span class="co">/* trailing comma is prohibited */</span><span class="op">);</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: must be (x1, ..., xN)&quot;
-    3 | datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
-      | ^~~~~~~~</code></pre>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+<span id="cb8-2"><a href="#cb8-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: must be (x1, ..., xN)&quot;</span>
+<span id="cb8-3"><a href="#cb8-3"></a>    3 | datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);</span>
+<span id="cb8-4"><a href="#cb8-4"></a>      | ^~~~~~~~</span></code></pre></div>
 </li>
 </ul>
 <p>Looks nice?</p>
@@ -365,14 +373,16 @@ playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: must
 <p class="code-annotation">
 <code>playground.c</code>
 </p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">~,</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a>datatype<span class="op">(</span>A<span class="op">,</span> <span class="op">(</span>Foo<span class="op">,</span> <span class="dt">int</span><span class="op">)</span> <span class="op">~,</span> <span class="op">(</span>Bar<span class="op">,</span> <span class="dt">int</span><span class="op">));</span></span></code></pre></div>
 <p class="code-annotation">
 <code>/bin/sh</code>
 </p>
-<pre><code>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
-playground.c:3:1: error: static assertion failed: &quot;invalid term `ML99_PRIV_IF_0 ~(ML99_PRIV_listFromTuplesError, ML99_PRIV_listFromTuplesProgressAux) (DATATYPE99_PRIV_parseVariant, 2, (Foo, int) ~, (Bar, int), ~)`&quot;
-    3 | datatype(A, (Foo, int) ~, (Bar, int));
-      | ^~~~~~~~</code></pre>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+<span id="cb10-2"><a href="#cb10-2"></a>playground.c:3:1: error: static assertion failed: &quot;invalid term `ML99_PRIV_IF_0 ~(ML99_PRIV_listFromTuplesError, ML99_PRIV_listFromTuplesProgressAux) (DATATYPE99_PRIV_parseVariant, 2, (Foo, int) ~, (Bar, int), ~)`&quot;</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    3 | datatype(A, (Foo, int) ~, (Bar, int));</span>
+<span id="cb10-4"><a href="#cb10-4"></a>      | ^~~~~~~~</span></code></pre></div>
 <p>Looks less nice?</p>
 <p>Bad news: it is impossible to handle all kinds of errors in macros
 gracefully. But we do not need to handle <em>all</em> of them. It would

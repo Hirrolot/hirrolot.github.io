@@ -231,20 +231,21 @@ only the syntax business – macros.</p>
 <p>Having the terminology established, let us dive into the
 pragmatics!</p>
 <h2 id="syntactical-consistency">Syntactical consistency</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datatype<span class="op">(</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    BinaryTree<span class="op">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>datatype<span class="op">(</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>    BinaryTree<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="op">(</span>Leaf<span class="op">,</span> <span class="dt">int</span><span class="op">),</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="op">(</span>Node<span class="op">,</span> BinaryTree <span class="op">*,</span> <span class="dt">int</span><span class="op">,</span> BinaryTree <span class="op">*)</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    match<span class="op">(*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>        of<span class="op">(</span>Leaf<span class="op">,</span> x<span class="op">)</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>        of<span class="op">(</span>Node<span class="op">,</span> lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">)</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="op">}</span></span></code></pre></div>
 <p>What is this? This is how good old C looks like with <a
 href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library
 that provides us with the full support for <a
@@ -252,16 +253,17 @@ href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data
 types</a>. Please pay your attention to the pattern matching syntax.
 Does it feel alright? Does it feel natural, like it has always been
 there? Absolutely. Now gaze upon this imaginary piece of code:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    match<span class="op">(</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span>tree<span class="op">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            of<span class="op">(</span>Leaf<span class="op">,</span> <span class="op">(</span>x<span class="op">),</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">),</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            of<span class="op">(</span>Node<span class="op">,</span> <span class="op">(</span>lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">),</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">)),</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">});</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="dt">int</span> sum<span class="op">(</span><span class="dt">const</span> BinaryTree <span class="op">*</span>tree<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>    match<span class="op">(</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>        <span class="op">*</span>tree<span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>        <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>            of<span class="op">(</span>Leaf<span class="op">,</span> <span class="op">(</span>x<span class="op">),</span> <span class="cf">return</span> <span class="op">*</span>x<span class="op">),</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>            of<span class="op">(</span>Node<span class="op">,</span> <span class="op">(</span>lhs<span class="op">,</span> x<span class="op">,</span> rhs<span class="op">),</span> <span class="cf">return</span> sum<span class="op">(*</span>lhs<span class="op">)</span> <span class="op">+</span> <span class="op">*</span>x <span class="op">+</span> sum<span class="op">(*</span>rhs<span class="op">)),</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>        <span class="op">});</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="op">}</span></span></code></pre></div>
 <p>I ask you the same question: does it feel alright? Does it feel
 natural, like it has always been there? Absolutely <strong>NOT</strong>.
 While it might look fine in another language, it looks utterly weird in
@@ -293,25 +295,26 @@ role="doc-noteref"><sup>6</sup></a>:</p>
 <p>Got the pattern? The proper syntax of <code>match</code>
 <em>coincides</em> with the syntax of the host language, C in our case,
 whereas the latter one does not. Another example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define State_INTERFACE               \</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">    iFn(int, get, void *self);        \</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">    iFn(void, set, void *self, int x);</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>interface<span class="op">(</span>State<span class="op">);</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> Num<span class="op">;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> Num_State_get<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x<span class="op">;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Num_State_set<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span>State<span class="op">,</span> Num<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="pp">#define State_INTERFACE               \</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="pp">    iFn(int, get, void *self);        \</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="pp">    iFn(void, set, void *self, int x);</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>interface<span class="op">(</span>State<span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="op">}</span> Num<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="dt">int</span> Num_State_get<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="cf">return</span> <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x<span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="op">}</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="dt">void</span> Num_State_set<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="op">}</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>impl<span class="op">(</span>State<span class="op">,</span> Num<span class="op">);</span></span></code></pre></div>
 <p>This time you see pure ISO C99 augmented with <a
 href="https://github.com/Hirrolot/interface99">Interface99</a>, a
 library that provides the software interface pattern. Notice that the
@@ -319,17 +322,18 @@ function definition syntax remains the same (albeit <code>iFn</code> is
 somewhat less common), and <code>impl</code> just deduces these
 definitions (<code>Num_State_get</code> &amp;
 <code>Num_State_set</code>) from the context. Now consider this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>impl<span class="op">(</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>State<span class="op">)</span> <span class="cf">for</span> <span class="op">(</span>Num<span class="op">),</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span><span class="dt">int</span><span class="op">)(</span>get<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">)({</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x<span class="op">;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}),</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span><span class="dt">void</span><span class="op">)(</span>set<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> x<span class="op">)({</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}),</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>impl<span class="op">(</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="op">(</span>State<span class="op">)</span> <span class="cf">for</span> <span class="op">(</span>Num<span class="op">),</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="op">(</span><span class="dt">int</span><span class="op">)(</span>get<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">)({</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>        <span class="cf">return</span> <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="op">}),</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="op">(</span><span class="dt">void</span><span class="op">)(</span>set<span class="op">)(</span><span class="dt">void</span> <span class="op">*</span>self<span class="op">,</span> <span class="dt">int</span> x<span class="op">)({</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>        <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="op">}),</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="op">);</span></span></code></pre></div>
 <p>This macro <code>impl</code> does not follow the syntax of C. This is
 why it looks so odd.</p>
 <p>Both alternatives have the same semantics and the same functionality.
@@ -351,10 +355,10 @@ function definitions, structures, enumerations, or pretty much anything!
 Consider <a
 href="https://docs.rs/tokio/latest/tokio/macro.select.html"><code>tokio::select!</code></a>:</p>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">tokio::select!</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    v1 <span class="op">=</span> (<span class="op">&amp;</span><span class="kw">mut</span> rx1)<span class="op">,</span> <span class="cf">if</span> a<span class="op">.</span>is_none() <span class="op">=&gt;</span> a <span class="op">=</span> <span class="cn">Some</span>(v1<span class="op">.</span>unwrap())<span class="op">,</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    v2 <span class="op">=</span> (<span class="op">&amp;</span><span class="kw">mut</span> rx2)<span class="op">,</span> <span class="cf">if</span> b<span class="op">.</span>is_none() <span class="op">=&gt;</span> b <span class="op">=</span> <span class="cn">Some</span>(v2<span class="op">.</span>unwrap())<span class="op">,</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">tokio::select!</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    v1 <span class="op">=</span> (<span class="op">&amp;</span><span class="kw">mut</span> rx1)<span class="op">,</span> <span class="cf">if</span> a<span class="op">.</span>is_none() <span class="op">=&gt;</span> a <span class="op">=</span> <span class="cn">Some</span>(v1<span class="op">.</span>unwrap())<span class="op">,</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    v2 <span class="op">=</span> (<span class="op">&amp;</span><span class="kw">mut</span> rx2)<span class="op">,</span> <span class="cf">if</span> b<span class="op">.</span>is_none() <span class="op">=&gt;</span> b <span class="op">=</span> <span class="cn">Some</span>(v2<span class="op">.</span>unwrap())<span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="op">}</span></span></code></pre></div>
 <p>See? The <code>&lt;something&gt; =&gt; &lt;something&gt;</code>
 syntax is much like native Rusty pattern matching. Because of it, this
 syntax looks very familiar, and even if you are not yet acquainted with
@@ -362,12 +366,12 @@ the macro, you can already roughly understand what is happening. Another
 example is derive macros of <a
 href="https://github.com/serde-rs/json">serde-json</a>:</p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span>Serialize<span class="op">,</span> Deserialize<span class="at">)]</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Person <span class="op">{</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    name<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    age<span class="op">:</span> <span class="dt">u8</span><span class="op">,</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    phones<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">String</span><span class="op">&gt;,</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1"></a><span class="at">#[</span>derive<span class="at">(</span>Serialize<span class="op">,</span> Deserialize<span class="at">)]</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">struct</span> Person <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    name<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>    age<span class="op">:</span> <span class="dt">u8</span><span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    phones<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">String</span><span class="op">&gt;,</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="op">}</span></span></code></pre></div>
 <p>Here, <code>Serialize</code> &amp; <code>Deserialize</code> are
 indeed macros. They parse the contents of <code>struct Person</code> and
 derive the corresponding traits for it. You do not need to adjust the
@@ -426,22 +430,22 @@ and your macros perfectly deal with them; therefore, you can easily
 imitate any language construction. Everything will look the same. Even
 with so-called powerful Rusty macros, we cannot do this:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">delegate!</span>(<span class="kw">self</span><span class="op">.</span>inner) <span class="op">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> <span class="kw">fn</span> is_empty(<span class="op">&amp;</span><span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">bool</span><span class="op">;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> <span class="kw">fn</span> push(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> value<span class="op">:</span> T)<span class="op">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> <span class="kw">fn</span> pop(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">Option</span><span class="op">&lt;</span>T<span class="op">&gt;;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> <span class="kw">fn</span> clear(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>)<span class="op">;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1"></a><span class="pp">delegate!</span>(<span class="kw">self</span><span class="op">.</span>inner) <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="kw">pub</span> <span class="kw">fn</span> is_empty(<span class="op">&amp;</span><span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">bool</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="kw">pub</span> <span class="kw">fn</span> push(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> value<span class="op">:</span> T)<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="kw">pub</span> <span class="kw">fn</span> pop(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">Option</span><span class="op">&lt;</span>T<span class="op">&gt;;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="kw">pub</span> <span class="kw">fn</span> clear(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>)<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="op">}</span></span></code></pre></div>
 <p>The only way is to write like this:</p>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">delegate!</span> <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    to <span class="kw">self</span><span class="op">.</span>inner <span class="op">{</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pub</span> <span class="kw">fn</span> is_empty(<span class="op">&amp;</span><span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">bool</span><span class="op">;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pub</span> <span class="kw">fn</span> push(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> value<span class="op">:</span> T)<span class="op">;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pub</span> <span class="kw">fn</span> pop(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">Option</span><span class="op">&lt;</span>T<span class="op">&gt;;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pub</span> <span class="kw">fn</span> clear(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>)<span class="op">;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1"></a><span class="pp">delegate!</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>    to <span class="kw">self</span><span class="op">.</span>inner <span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>        <span class="kw">pub</span> <span class="kw">fn</span> is_empty(<span class="op">&amp;</span><span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">bool</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>        <span class="kw">pub</span> <span class="kw">fn</span> push(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">,</span> value<span class="op">:</span> T)<span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>        <span class="kw">pub</span> <span class="kw">fn</span> pop(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">Option</span><span class="op">&lt;</span>T<span class="op">&gt;;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>        <span class="kw">pub</span> <span class="kw">fn</span> clear(<span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span>)<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>    <span class="op">}</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/Kobzol/rust-delegate">Kobzol/rust-delegate</a>,
@@ -450,15 +454,15 @@ a library for automatic method delegation in Rust.
 <p>Clearly less nifty. The <code>match</code> control flow operator can
 do that, why your “powerful” macros cannot? Look:</p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="cn">Some</span>(<span class="dv">5</span>)<span class="op">;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">// match!(x) { ...} ? Hmm...</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">match</span> x <span class="op">{</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">Some</span>(<span class="dv">50</span>) <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Got 50&quot;</span>)<span class="op">,</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cn">Some</span>(y) <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Matched, y = {:?}&quot;</span><span class="op">,</span> y)<span class="op">,</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    _ <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Default case, x = {:?}&quot;</span><span class="op">,</span> x)<span class="op">,</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">let</span> x <span class="op">=</span> <span class="cn">Some</span>(<span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">let</span> y <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">// match!(x) { ...} ? Hmm...</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="cf">match</span> x <span class="op">{</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>    <span class="cn">Some</span>(<span class="dv">50</span>) <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Got 50&quot;</span>)<span class="op">,</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="cn">Some</span>(y) <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Matched, y = {:?}&quot;</span><span class="op">,</span> y)<span class="op">,</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>    _ <span class="op">=&gt;</span> <span class="pp">println!</span>(<span class="st">&quot;Default case, x = {:?}&quot;</span><span class="op">,</span> x)<span class="op">,</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">the
@@ -491,12 +495,12 @@ much like an adaptive grammar; believe or not, the
 compiler, but is rather defined via the <code>ifThenElse</code>
 function:</p>
 <div class="sourceCode" id="cb10"><pre
-class="sourceCode idris"><code class="sourceCode idris"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifThenElse</span> <span class="ot">:</span> (x<span class="ot">:</span><span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> a;</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ifThenElse <span class="dt">True</span>  t e <span class="fu">=</span> t;</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ifThenElse <span class="dt">False</span> t e <span class="fu">=</span> e;</span></code></pre></div>
+class="sourceCode numberSource idris numberLines"><code class="sourceCode idris"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ifThenElse</span> <span class="ot">:</span> (x<span class="ot">:</span><span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> <span class="dt">Lazy</span> a <span class="ot">-&gt;</span> a;</span>
+<span id="cb10-2"><a href="#cb10-2"></a>ifThenElse <span class="dt">True</span>  t e <span class="fu">=</span> t;</span>
+<span id="cb10-3"><a href="#cb10-3"></a>ifThenElse <span class="dt">False</span> t e <span class="fu">=</span> e;</span></code></pre></div>
 <p>Which is invoked by the following syntactic rule:</p>
 <div class="sourceCode" id="cb11"><pre
-class="sourceCode idris"><code class="sourceCode idris"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">syntax</span> <span class="kw">if</span> [test] <span class="kw">then</span> [t] <span class="kw">else</span> [e] <span class="fu">=</span> ifThenElse test t e;</span></code></pre></div>
+class="sourceCode numberSource idris numberLines"><code class="sourceCode idris"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">syntax</span> <span class="kw">if</span> [test] <span class="kw">then</span> [t] <span class="kw">else</span> [e] <span class="fu">=</span> ifThenElse test t e;</span></code></pre></div>
 <p>Similar syntactical constructions can be defined in the same way. No
 need to wait for a couple of years till language designers decide to
 ship a new release, do it right here and right now. Yes, you will be

@@ -236,53 +236,53 @@ href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021
 <code>automobile-static.rs</code>
 </p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Automobile <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    wheels<span class="op">:</span> <span class="dt">u8</span><span class="op">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    seats<span class="op">:</span> <span class="dt">u8</span><span class="op">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    manufacturer<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> my_car <span class="op">=</span> Automobile <span class="op">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        wheels<span class="op">:</span> <span class="dv">4</span><span class="op">,</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        seats<span class="op">:</span> <span class="dv">4</span><span class="op">,</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        manufacturer<span class="op">:</span> <span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>)<span class="op">,</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;My car has {} wheels and {} seats, and it was made by {}.&quot;</span><span class="op">,</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        my_car<span class="op">.</span>wheels<span class="op">,</span> my_car<span class="op">.</span>seats<span class="op">,</span> my_car<span class="op">.</span>manufacturer</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">struct</span> Automobile <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>    wheels<span class="op">:</span> <span class="dt">u8</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    seats<span class="op">:</span> <span class="dt">u8</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    manufacturer<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="op">}</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="kw">let</span> my_car <span class="op">=</span> Automobile <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>        wheels<span class="op">:</span> <span class="dv">4</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>        seats<span class="op">:</span> <span class="dv">4</span><span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>        manufacturer<span class="op">:</span> <span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>)<span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="op">};</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="pp">println!</span>(</span>
+<span id="cb1-15"><a href="#cb1-15"></a>        <span class="st">&quot;My car has {} wheels and {} seats, and it was made by {}.&quot;</span><span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>        my_car<span class="op">.</span>wheels<span class="op">,</span> my_car<span class="op">.</span>seats<span class="op">,</span> my_car<span class="op">.</span>manufacturer</span>
+<span id="cb1-17"><a href="#cb1-17"></a>    )<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="op">}</span></span></code></pre></div>
 <p>The same can be done using arrays (<a
 href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=1dc3af0998b22c401a0042b081f441e1">playground</a>):</p>
 <p class="code-annotation">
 <code>automobile-dynamic.rs</code>
 </p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::any::</span><span class="bu">Any</span><span class="op">;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>repr<span class="at">(</span><span class="dt">usize</span><span class="at">)]</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> MyCar <span class="op">{</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Wheels<span class="op">,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    Seats<span class="op">,</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    Manufacturer<span class="op">,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> my_car<span class="op">:</span> [<span class="dt">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="bu">Any</span><span class="op">&gt;;</span> <span class="dv">3</span>] <span class="op">=</span> [<span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">4</span>)<span class="op">,</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">4</span>)<span class="op">,</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="st">&quot;X&quot;</span>)]<span class="op">;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;My car has {} wheels and {} seats, and it was made by {}.&quot;</span><span class="op">,</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        my_car[<span class="pp">MyCar::</span>Wheels <span class="kw">as</span> <span class="dt">usize</span>]</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>()</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>unwrap()<span class="op">,</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        my_car[<span class="pp">MyCar::</span>Seats <span class="kw">as</span> <span class="dt">usize</span>]<span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>()<span class="op">.</span>unwrap()<span class="op">,</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        my_car[<span class="pp">MyCar::</span>Manufacturer <span class="kw">as</span> <span class="dt">usize</span>]</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;&amp;</span><span class="ot">&#39;static</span> <span class="dt">str</span><span class="op">&gt;</span>()</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>unwrap()</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">use</span> <span class="pp">std::any::</span><span class="bu">Any</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="at">#[</span>repr<span class="at">(</span><span class="dt">usize</span><span class="at">)]</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">enum</span> MyCar <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    Wheels<span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    Seats<span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>    Manufacturer<span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="kw">let</span> my_car<span class="op">:</span> [<span class="dt">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="bu">Any</span><span class="op">&gt;;</span> <span class="dv">3</span>] <span class="op">=</span> [<span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">4</span>)<span class="op">,</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">4</span>)<span class="op">,</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="st">&quot;X&quot;</span>)]<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a>    <span class="pp">println!</span>(</span>
+<span id="cb2-14"><a href="#cb2-14"></a>        <span class="st">&quot;My car has {} wheels and {} seats, and it was made by {}.&quot;</span><span class="op">,</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>        my_car[<span class="pp">MyCar::</span>Wheels <span class="kw">as</span> <span class="dt">usize</span>]</span>
+<span id="cb2-16"><a href="#cb2-16"></a>            <span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>()</span>
+<span id="cb2-17"><a href="#cb2-17"></a>            <span class="op">.</span>unwrap()<span class="op">,</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>        my_car[<span class="pp">MyCar::</span>Seats <span class="kw">as</span> <span class="dt">usize</span>]<span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>()<span class="op">.</span>unwrap()<span class="op">,</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>        my_car[<span class="pp">MyCar::</span>Manufacturer <span class="kw">as</span> <span class="dt">usize</span>]</span>
+<span id="cb2-20"><a href="#cb2-20"></a>            <span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;&amp;</span><span class="ot">&#39;static</span> <span class="dt">str</span><span class="op">&gt;</span>()</span>
+<span id="cb2-21"><a href="#cb2-21"></a>            <span class="op">.</span>unwrap()</span>
+<span id="cb2-22"><a href="#cb2-22"></a>    )<span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="op">}</span></span></code></pre></div>
 <p>Yes, if we specify an incorrect type to <code>.downcast_ref</code>,
 we will get a panic. But the very <strong>logic</strong> of the program
 remains the same, only we elevate type checking to run-time.</p>
@@ -292,23 +292,23 @@ heterogenous list:</p>
 <code>automobile-hlist.rs</code>
 </p>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">frunk::</span><span class="op">{</span>hlist<span class="op">,</span> HList<span class="op">};</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Wheels(<span class="dt">u8</span>)<span class="op">;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Seats(<span class="dt">u8</span>)<span class="op">;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Manufacturer(<span class="dt">String</span>)<span class="op">;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Automobile <span class="op">=</span> <span class="pp">HList!</span>[Wheels<span class="op">,</span> Seats<span class="op">,</span> Manufacturer]<span class="op">;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> my_car<span class="op">:</span> Automobile <span class="op">=</span> <span class="pp">hlist!</span>[Wheels(<span class="dv">4</span>)<span class="op">,</span> Seats(<span class="dv">4</span>)<span class="op">,</span> Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>))]<span class="op">;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;My car has {} wheels and {} seats, and it was made by {}.&quot;</span><span class="op">,</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        my_car<span class="op">.</span><span class="pp">get::</span><span class="op">&lt;</span>Wheels<span class="op">,</span> _<span class="op">&gt;</span>()<span class="op">.</span><span class="dv">0</span><span class="op">,</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        my_car<span class="op">.</span><span class="pp">get::</span><span class="op">&lt;</span>Seats<span class="op">,</span> _<span class="op">&gt;</span>()<span class="op">.</span><span class="dv">0</span><span class="op">,</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        my_car<span class="op">.</span><span class="pp">get::</span><span class="op">&lt;</span>Manufacturer<span class="op">,</span> _<span class="op">&gt;</span>()<span class="op">.</span><span class="dv">0</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">use</span> <span class="pp">frunk::</span><span class="op">{</span>hlist<span class="op">,</span> HList<span class="op">};</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">struct</span> Wheels(<span class="dt">u8</span>)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">struct</span> Seats(<span class="dt">u8</span>)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">struct</span> Manufacturer(<span class="dt">String</span>)<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">type</span> Automobile <span class="op">=</span> <span class="pp">HList!</span>[Wheels<span class="op">,</span> Seats<span class="op">,</span> Manufacturer]<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="kw">let</span> my_car<span class="op">:</span> Automobile <span class="op">=</span> <span class="pp">hlist!</span>[Wheels(<span class="dv">4</span>)<span class="op">,</span> Seats(<span class="dv">4</span>)<span class="op">,</span> Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>))]<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="pp">println!</span>(</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        <span class="st">&quot;My car has {} wheels and {} seats, and it was made by {}.&quot;</span><span class="op">,</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>        my_car<span class="op">.</span><span class="pp">get::</span><span class="op">&lt;</span>Wheels<span class="op">,</span> _<span class="op">&gt;</span>()<span class="op">.</span><span class="dv">0</span><span class="op">,</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>        my_car<span class="op">.</span><span class="pp">get::</span><span class="op">&lt;</span>Seats<span class="op">,</span> _<span class="op">&gt;</span>()<span class="op">.</span><span class="dv">0</span><span class="op">,</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>        my_car<span class="op">.</span><span class="pp">get::</span><span class="op">&lt;</span>Manufacturer<span class="op">,</span> _<span class="op">&gt;</span>()<span class="op">.</span><span class="dv">0</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    )<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="op">}</span></span></code></pre></div>
 <p>This version enforces exactly the same type checks as
 <code>automobile-static.rs</code>, but additionally provides <a
 href="https://docs.rs/frunk/0.4.0/frunk/hlist/struct.HCons.html#implementations">methods</a>
@@ -317,22 +317,22 @@ collections! E.g., we may want to reverse our automobile <a href="#fn2"
 class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a>:</p>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">assert_eq!</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    my_car<span class="op">.</span>into_reverse()<span class="op">,</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">hlist!</span>[Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>))<span class="op">,</span> Seats(<span class="dv">4</span>)<span class="op">,</span> Wheels(<span class="dv">4</span>)]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">assert_eq!</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    my_car<span class="op">.</span>into_reverse()<span class="op">,</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="pp">hlist!</span>[Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>))<span class="op">,</span> Seats(<span class="dv">4</span>)<span class="op">,</span> Wheels(<span class="dv">4</span>)]</span>
+<span id="cb4-4"><a href="#cb4-4"></a>)<span class="op">;</span></span></code></pre></div>
 <p>Or we may want to zip our car with their car:</p>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> their_car <span class="op">=</span> <span class="pp">hlist!</span>[Wheels(<span class="dv">6</span>)<span class="op">,</span> Seats(<span class="dv">4</span>)<span class="op">,</span> Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;Y&quot;</span>))]<span class="op">;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">assert_eq!</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    my_car<span class="op">.</span>zip(their_car)<span class="op">,</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="pp">hlist!</span>[</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        (Wheels(<span class="dv">4</span>)<span class="op">,</span> Wheels(<span class="dv">6</span>))<span class="op">,</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        (Seats(<span class="dv">4</span>)<span class="op">,</span> Seats(<span class="dv">4</span>))<span class="op">,</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        (Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>))<span class="op">,</span> Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;Y&quot;</span>)))</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">let</span> their_car <span class="op">=</span> <span class="pp">hlist!</span>[Wheels(<span class="dv">6</span>)<span class="op">,</span> Seats(<span class="dv">4</span>)<span class="op">,</span> Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;Y&quot;</span>))]<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="pp">assert_eq!</span>(</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    my_car<span class="op">.</span>zip(their_car)<span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="pp">hlist!</span>[</span>
+<span id="cb5-6"><a href="#cb5-6"></a>        (Wheels(<span class="dv">4</span>)<span class="op">,</span> Wheels(<span class="dv">6</span>))<span class="op">,</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>        (Seats(<span class="dv">4</span>)<span class="op">,</span> Seats(<span class="dv">4</span>))<span class="op">,</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>        (Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;X&quot;</span>))<span class="op">,</span> Manufacturer(<span class="dt">String</span><span class="pp">::</span>from(<span class="st">&quot;Y&quot;</span>)))</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    ]</span>
+<span id="cb5-10"><a href="#cb5-10"></a>)<span class="op">;</span></span></code></pre></div>
 <p>… And so forth.</p>
 <p>However, sometimes we may want to apply type-level computation to
 ordinary <code>struct</code>s and <code>enum</code>s, but we cannot do
@@ -360,79 +360,79 @@ href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021
 <code>ast-static.rs</code>
 </p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::ops::</span><span class="bu">Deref</span><span class="op">;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Const(<span class="dt">i32</span>)<span class="op">,</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Add</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Sub</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Mul</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Div</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">Expr::</span><span class="op">*;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> eval(expr<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">match</span> expr<span class="op">.</span>deref() <span class="op">{</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        Const(x) <span class="op">=&gt;</span> <span class="op">*</span>x<span class="op">,</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Add</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">+</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Sub</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">-</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Mul</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">*</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Div</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">/</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> expr<span class="op">:</span> Expr <span class="op">=</span> <span class="bu">Add</span>(</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        Const(<span class="dv">53</span>)<span class="op">.</span>into()<span class="op">,</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Sub</span>(</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>            <span class="bu">Div</span>(Const(<span class="dv">155</span>)<span class="op">.</span>into()<span class="op">,</span> Const(<span class="dv">5</span>)<span class="op">.</span>into())<span class="op">.</span>into()<span class="op">,</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>            Const(<span class="dv">113</span>)<span class="op">.</span>into()<span class="op">,</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>into()<span class="op">,</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> eval(<span class="op">&amp;</span>expr<span class="op">.</span>into()))<span class="op">;</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">use</span> <span class="pp">std::ops::</span><span class="bu">Deref</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>    Const(<span class="dt">i32</span>)<span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="bu">Add</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="bu">Sub</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="bu">Mul</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="bu">Div</span>(<span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;,</span> <span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>)<span class="op">,</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="op">}</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="kw">use</span> <span class="pp">Expr::</span><span class="op">*;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="kw">fn</span> eval(expr<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Box</span><span class="op">&lt;</span>Expr<span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="cf">match</span> expr<span class="op">.</span>deref() <span class="op">{</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>        Const(x) <span class="op">=&gt;</span> <span class="op">*</span>x<span class="op">,</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>        <span class="bu">Add</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">+</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>        <span class="bu">Sub</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">-</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>        <span class="bu">Mul</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">*</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>        <span class="bu">Div</span>(lhs<span class="op">,</span> rhs) <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs) <span class="op">/</span> eval(<span class="op">&amp;</span>rhs)<span class="op">,</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="op">}</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="op">}</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>    <span class="kw">let</span> expr<span class="op">:</span> Expr <span class="op">=</span> <span class="bu">Add</span>(</span>
+<span id="cb6-25"><a href="#cb6-25"></a>        Const(<span class="dv">53</span>)<span class="op">.</span>into()<span class="op">,</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>        <span class="bu">Sub</span>(</span>
+<span id="cb6-27"><a href="#cb6-27"></a>            <span class="bu">Div</span>(Const(<span class="dv">155</span>)<span class="op">.</span>into()<span class="op">,</span> Const(<span class="dv">5</span>)<span class="op">.</span>into())<span class="op">.</span>into()<span class="op">,</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>            Const(<span class="dv">113</span>)<span class="op">.</span>into()<span class="op">,</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a>        )</span>
+<span id="cb6-30"><a href="#cb6-30"></a>        <span class="op">.</span>into()<span class="op">,</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>    )<span class="op">;</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a></span>
+<span id="cb6-33"><a href="#cb6-33"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> eval(<span class="op">&amp;</span>expr<span class="op">.</span>into()))<span class="op">;</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a><span class="op">}</span></span></code></pre></div>
 <p>The same can be done using tagged trees (<a
 href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=6da60ed991ab6e6511c4572549047f62">playground</a>):</p>
 <p class="code-annotation">
 <code>ast-dynamic.rs</code>
 </p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::any::</span><span class="bu">Any</span><span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Tree <span class="op">{</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    tag<span class="op">:</span> <span class="dt">i32</span><span class="op">,</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    value<span class="op">:</span> <span class="dt">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="bu">Any</span><span class="op">&gt;,</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    nodes<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">Box</span><span class="op">&lt;</span>Tree<span class="op">&gt;&gt;,</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AST_TAG_CONST<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AST_TAG_ADD<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AST_TAG_SUB<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AST_TAG_MUL<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AST_TAG_DIV<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> eval(expr<span class="op">:</span> <span class="op">&amp;</span>Tree) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> lhs <span class="op">=</span> expr<span class="op">.</span>nodes<span class="op">.</span>get(<span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> rhs <span class="op">=</span> expr<span class="op">.</span>nodes<span class="op">.</span>get(<span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">match</span> expr<span class="op">.</span>tag <span class="op">{</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        AST_TAG_CONST <span class="op">=&gt;</span> <span class="op">*</span>expr<span class="op">.</span>value<span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>()<span class="op">.</span>unwrap()<span class="op">,</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        AST_TAG_ADD <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">+</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        AST_TAG_SUB <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">-</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        AST_TAG_MUL <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">*</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        AST_TAG_DIV <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">/</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        _ <span class="op">=&gt;</span> <span class="pp">panic!</span>(<span class="st">&quot;Out of range&quot;</span>)<span class="op">,</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> expr <span class="op">=</span> <span class="co">/* Construction omitted... */</span><span class="op">;</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> eval(<span class="op">&amp;</span>expr))<span class="op">;</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">use</span> <span class="pp">std::any::</span><span class="bu">Any</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">struct</span> Tree <span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    tag<span class="op">:</span> <span class="dt">i32</span><span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    value<span class="op">:</span> <span class="dt">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="bu">Any</span><span class="op">&gt;,</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    nodes<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">Box</span><span class="op">&lt;</span>Tree<span class="op">&gt;&gt;,</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="op">}</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="kw">const</span> AST_TAG_CONST<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="kw">const</span> AST_TAG_ADD<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="kw">const</span> AST_TAG_SUB<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="kw">const</span> AST_TAG_MUL<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="kw">const</span> AST_TAG_DIV<span class="op">:</span> <span class="dt">i32</span> <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="kw">fn</span> eval(expr<span class="op">:</span> <span class="op">&amp;</span>Tree) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="kw">let</span> lhs <span class="op">=</span> expr<span class="op">.</span>nodes<span class="op">.</span>get(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="kw">let</span> rhs <span class="op">=</span> expr<span class="op">.</span>nodes<span class="op">.</span>get(<span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a></span>
+<span id="cb7-19"><a href="#cb7-19"></a>    <span class="cf">match</span> expr<span class="op">.</span>tag <span class="op">{</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>        AST_TAG_CONST <span class="op">=&gt;</span> <span class="op">*</span>expr<span class="op">.</span>value<span class="op">.</span><span class="pp">downcast_ref::</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>()<span class="op">.</span>unwrap()<span class="op">,</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a>        AST_TAG_ADD <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">+</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a>        AST_TAG_SUB <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">-</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a>        AST_TAG_MUL <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">*</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>        AST_TAG_DIV <span class="op">=&gt;</span> eval(<span class="op">&amp;</span>lhs<span class="op">.</span>unwrap()) <span class="op">/</span> eval(<span class="op">&amp;</span>rhs<span class="op">.</span>unwrap())<span class="op">,</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a>        _ <span class="op">=&gt;</span> <span class="pp">panic!</span>(<span class="st">&quot;Out of range&quot;</span>)<span class="op">,</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a>    <span class="op">}</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="op">}</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a></span>
+<span id="cb7-29"><a href="#cb7-29"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a>    <span class="kw">let</span> expr <span class="op">=</span> <span class="co">/* Construction omitted... */</span><span class="op">;</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a></span>
+<span id="cb7-32"><a href="#cb7-32"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> eval(<span class="op">&amp;</span>expr))<span class="op">;</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="op">}</span></span></code></pre></div>
 <p>Similarly to how we did with <code>struct Automobile</code>, we can
 represent <code>enum Expr</code> as <a
 href="https://beachape.com/frunk/frunk/coproduct/enum.Coproduct.html"><code>frunk::Coproduct</code></a>.
@@ -445,10 +445,10 @@ href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=202
 <code>negate-dynamic.rs</code>
 </p>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">assert_eq!</span>(<span class="op">!</span><span class="cn">true</span><span class="op">,</span> <span class="cn">false</span>)<span class="op">;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">assert_eq!</span>(<span class="op">!</span><span class="cn">false</span><span class="op">,</span> <span class="cn">true</span>)<span class="op">;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="pp">assert_eq!</span>(<span class="op">!</span><span class="cn">true</span><span class="op">,</span> <span class="cn">false</span>)<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="pp">assert_eq!</span>(<span class="op">!</span><span class="cn">false</span><span class="op">,</span> <span class="cn">true</span>)<span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="op">}</span></span></code></pre></div>
 <p>The same can be done through associated types <a href="#fn4"
 class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (<a
 href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=e101a1a384390a1d502aa514b21f9954">playground</a>):</p>
@@ -456,30 +456,30 @@ href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=202
 <code>negate-static.rs</code>
 </p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::marker::</span>PhantomData<span class="op">;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">trait</span> Bool <span class="op">{</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> Value<span class="op">;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> True<span class="op">;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> False<span class="op">;</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Bool <span class="cf">for</span> True <span class="op">{</span> <span class="kw">type</span> Value <span class="op">=</span> True<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Bool <span class="cf">for</span> False <span class="op">{</span> <span class="kw">type</span> Value <span class="op">=</span> False<span class="op">;</span> <span class="op">}</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Negate<span class="op">&lt;</span>Cond<span class="op">&gt;</span>(PhantomData<span class="op">&lt;</span>Cond<span class="op">&gt;</span>)<span class="op">;</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Bool <span class="cf">for</span> Negate<span class="op">&lt;</span>True<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> Value <span class="op">=</span> False<span class="op">;</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> Bool <span class="cf">for</span> Negate<span class="op">&lt;</span>False<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> Value <span class="op">=</span> True<span class="op">;</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ThisIsFalse<span class="op">:</span> <span class="op">&lt;</span>Negate<span class="op">&lt;</span>True<span class="op">&gt;</span> <span class="kw">as</span> Bool<span class="op">&gt;</span><span class="pp">::</span>Value <span class="op">=</span> False<span class="op">;</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ThisIsTrue<span class="op">:</span> <span class="op">&lt;</span>Negate<span class="op">&lt;</span>False<span class="op">&gt;</span> <span class="kw">as</span> Bool<span class="op">&gt;</span><span class="pp">::</span>Value <span class="op">=</span> True<span class="op">;</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">use</span> <span class="pp">std::marker::</span>PhantomData<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw">trait</span> Bool <span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="kw">type</span> Value<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="op">}</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="kw">struct</span> True<span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="kw">struct</span> False<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="kw">impl</span> Bool <span class="cf">for</span> True <span class="op">{</span> <span class="kw">type</span> Value <span class="op">=</span> True<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="kw">impl</span> Bool <span class="cf">for</span> False <span class="op">{</span> <span class="kw">type</span> Value <span class="op">=</span> False<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="kw">struct</span> Negate<span class="op">&lt;</span>Cond<span class="op">&gt;</span>(PhantomData<span class="op">&lt;</span>Cond<span class="op">&gt;</span>)<span class="op">;</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="kw">impl</span> Bool <span class="cf">for</span> Negate<span class="op">&lt;</span>True<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a>    <span class="kw">type</span> Value <span class="op">=</span> False<span class="op">;</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="op">}</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="kw">impl</span> Bool <span class="cf">for</span> Negate<span class="op">&lt;</span>False<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a>    <span class="kw">type</span> Value <span class="op">=</span> True<span class="op">;</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="op">}</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="kw">const</span> ThisIsFalse<span class="op">:</span> <span class="op">&lt;</span>Negate<span class="op">&lt;</span>True<span class="op">&gt;</span> <span class="kw">as</span> Bool<span class="op">&gt;</span><span class="pp">::</span>Value <span class="op">=</span> False<span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="kw">const</span> ThisIsTrue<span class="op">:</span> <span class="op">&lt;</span>Negate<span class="op">&lt;</span>False<span class="op">&gt;</span> <span class="kw">as</span> Bool<span class="op">&gt;</span><span class="pp">::</span>Value <span class="op">=</span> True<span class="op">;</span></span></code></pre></div>
 <p>In fact, the <a
 href="https://sdleffler.github.io/RustTypeSystemTuringComplete/">Turing
 completeness of Rust’s type system</a> is built upon this principle
@@ -501,28 +501,28 @@ href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021
 <code>peano-dynamic.rs</code>
 </p>
 <div class="sourceCode" id="cb10"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::ops::</span><span class="bu">Deref</span><span class="op">;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Clone</span><span class="op">,</span> <span class="bu">Debug</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="at">)]</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Nat <span class="op">{</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    Z<span class="op">,</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    S(<span class="dt">Box</span><span class="op">&lt;</span>Nat<span class="op">&gt;</span>)<span class="op">,</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> add(lhs<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Box</span><span class="op">&lt;</span>Nat<span class="op">&gt;,</span> rhs<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Box</span><span class="op">&lt;</span>Nat<span class="op">&gt;</span>) <span class="op">-&gt;</span> Nat <span class="op">{</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">match</span> lhs<span class="op">.</span>deref() <span class="op">{</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="pp">Nat::</span>Z <span class="op">=&gt;</span> rhs<span class="op">.</span>deref()<span class="op">.</span>clone()<span class="op">,</span> <span class="co">// I</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="pp">Nat::</span>S(next) <span class="op">=&gt;</span> <span class="pp">Nat::</span>S(<span class="dt">Box</span><span class="pp">::</span>new(add(next<span class="op">,</span> rhs)))<span class="op">,</span> <span class="co">// II</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> one <span class="op">=</span> <span class="pp">Nat::</span>S(<span class="pp">Nat::</span>Z<span class="op">.</span>into())<span class="op">;</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> two <span class="op">=</span> <span class="pp">Nat::</span>S(one<span class="op">.</span>clone()<span class="op">.</span>into())<span class="op">;</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> three <span class="op">=</span> <span class="pp">Nat::</span>S(two<span class="op">.</span>clone()<span class="op">.</span>into())<span class="op">;</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="pp">assert_eq!</span>(add(<span class="op">&amp;</span>one<span class="op">.</span>into()<span class="op">,</span> <span class="op">&amp;</span>two<span class="op">.</span>into())<span class="op">,</span> three)<span class="op">;</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">use</span> <span class="pp">std::ops::</span><span class="bu">Deref</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Clone</span><span class="op">,</span> <span class="bu">Debug</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="at">)]</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="kw">enum</span> Nat <span class="op">{</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>    Z<span class="op">,</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    S(<span class="dt">Box</span><span class="op">&lt;</span>Nat<span class="op">&gt;</span>)<span class="op">,</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="op">}</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="kw">fn</span> add(lhs<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Box</span><span class="op">&lt;</span>Nat<span class="op">&gt;,</span> rhs<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Box</span><span class="op">&lt;</span>Nat<span class="op">&gt;</span>) <span class="op">-&gt;</span> Nat <span class="op">{</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="cf">match</span> lhs<span class="op">.</span>deref() <span class="op">{</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>        <span class="pp">Nat::</span>Z <span class="op">=&gt;</span> rhs<span class="op">.</span>deref()<span class="op">.</span>clone()<span class="op">,</span> <span class="co">// I</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>        <span class="pp">Nat::</span>S(next) <span class="op">=&gt;</span> <span class="pp">Nat::</span>S(<span class="dt">Box</span><span class="pp">::</span>new(add(next<span class="op">,</span> rhs)))<span class="op">,</span> <span class="co">// II</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>    <span class="op">}</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="op">}</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a>    <span class="kw">let</span> one <span class="op">=</span> <span class="pp">Nat::</span>S(<span class="pp">Nat::</span>Z<span class="op">.</span>into())<span class="op">;</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>    <span class="kw">let</span> two <span class="op">=</span> <span class="pp">Nat::</span>S(one<span class="op">.</span>clone()<span class="op">.</span>into())<span class="op">;</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a>    <span class="kw">let</span> three <span class="op">=</span> <span class="pp">Nat::</span>S(two<span class="op">.</span>clone()<span class="op">.</span>into())<span class="op">;</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a></span>
+<span id="cb10-21"><a href="#cb10-21"></a>    <span class="pp">assert_eq!</span>(add(<span class="op">&amp;</span>one<span class="op">.</span>into()<span class="op">,</span> <span class="op">&amp;</span>two<span class="op">.</span>into())<span class="op">,</span> three)<span class="op">;</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="op">}</span></span></code></pre></div>
 <p>This is the <a
 href="https://en.wikipedia.org/wiki/Peano_axioms">Peano encoding</a> of
 a natural number. In the <code>add</code> function, we use recursion to
@@ -535,30 +535,30 @@ href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021
 <code>peano-static.rs</code>
 </p>
 <div class="sourceCode" id="cb11"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::marker::</span>PhantomData<span class="op">;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Z<span class="op">;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> S<span class="op">&lt;</span>Next<span class="op">&gt;</span>(PhantomData<span class="op">&lt;</span>Next<span class="op">&gt;</span>)<span class="op">;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">trait</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> Result<span class="op">;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">// I</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="cf">for</span> Z <span class="op">{</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> Result <span class="op">=</span> Rhs<span class="op">;</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">// II</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span><span class="op">&lt;</span>Lhs<span class="op">:</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;,</span> Rhs<span class="op">&gt;</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="cf">for</span> S<span class="op">&lt;</span>Lhs<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> Result <span class="op">=</span> S<span class="op">&lt;&lt;</span>Lhs <span class="kw">as</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;&gt;</span><span class="pp">::</span><span class="dt">Result</span><span class="op">&gt;;</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> One <span class="op">=</span> S<span class="op">&lt;</span>Z<span class="op">&gt;;</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Two <span class="op">=</span> S<span class="op">&lt;</span>One<span class="op">&gt;;</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Three <span class="op">=</span> S<span class="op">&lt;</span>Two<span class="op">&gt;;</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> THREE<span class="op">:</span> <span class="op">&lt;</span>One <span class="kw">as</span> <span class="bu">Add</span><span class="op">&lt;</span>Two<span class="op">&gt;&gt;</span><span class="pp">::</span><span class="dt">Result</span> <span class="op">=</span> S(PhantomData)<span class="op">;</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">use</span> <span class="pp">std::marker::</span>PhantomData<span class="op">;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw">struct</span> Z<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">struct</span> S<span class="op">&lt;</span>Next<span class="op">&gt;</span>(PhantomData<span class="op">&lt;</span>Next<span class="op">&gt;</span>)<span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="kw">trait</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>    <span class="kw">type</span> Result<span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="op">}</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">// I</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="kw">impl</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="cf">for</span> Z <span class="op">{</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a>    <span class="kw">type</span> Result <span class="op">=</span> Rhs<span class="op">;</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="op">}</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">// II</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="kw">impl</span><span class="op">&lt;</span>Lhs<span class="op">:</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;,</span> Rhs<span class="op">&gt;</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;</span> <span class="cf">for</span> S<span class="op">&lt;</span>Lhs<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>    <span class="kw">type</span> Result <span class="op">=</span> S<span class="op">&lt;&lt;</span>Lhs <span class="kw">as</span> <span class="bu">Add</span><span class="op">&lt;</span>Rhs<span class="op">&gt;&gt;</span><span class="pp">::</span><span class="dt">Result</span><span class="op">&gt;;</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="op">}</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="kw">type</span> One <span class="op">=</span> S<span class="op">&lt;</span>Z<span class="op">&gt;;</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="kw">type</span> Two <span class="op">=</span> S<span class="op">&lt;</span>One<span class="op">&gt;;</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a><span class="kw">type</span> Three <span class="op">=</span> S<span class="op">&lt;</span>Two<span class="op">&gt;;</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a></span>
+<span id="cb11-24"><a href="#cb11-24"></a><span class="kw">const</span> THREE<span class="op">:</span> <span class="op">&lt;</span>One <span class="kw">as</span> <span class="bu">Add</span><span class="op">&lt;</span>Two<span class="op">&gt;&gt;</span><span class="pp">::</span><span class="dt">Result</span> <span class="op">=</span> S(PhantomData)<span class="op">;</span></span></code></pre></div>
 <p>Here, <code>impl ... for Z</code> is the base case (termination
 case), and <code>impl ... for S&lt;Lhs&gt;</code> is the induction step
 (recursion case) – similar to how we did with pattern matching using
@@ -576,20 +576,20 @@ matching case looks like a separate function definition:</p>
 <code>peano-static.hs</code>
 </p>
 <div class="sourceCode" id="cb12"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Control.Exception</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Z</span> <span class="op">|</span> <span class="dt">S</span> <span class="dt">Nat</span> <span class="kw">deriving</span> <span class="dt">Eq</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>add <span class="dt">Z</span> rhs <span class="ot">=</span> rhs <span class="co">-- I</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>add (<span class="dt">S</span> next) rhs <span class="ot">=</span> <span class="dt">S</span>(add next rhs) <span class="co">-- II</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>one <span class="ot">=</span> <span class="dt">S</span> <span class="dt">Z</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>two <span class="ot">=</span> <span class="dt">S</span> one</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>three <span class="ot">=</span> <span class="dt">S</span> two</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> assert ((add one two) <span class="op">==</span> three) <span class="op">$</span> <span class="fu">pure</span> ()</span></code></pre></div>
+class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">import</span> <span class="dt">Control.Exception</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Z</span> <span class="op">|</span> <span class="dt">S</span> <span class="dt">Nat</span> <span class="kw">deriving</span> <span class="dt">Eq</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="ot">add ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>add <span class="dt">Z</span> rhs <span class="ot">=</span> rhs <span class="co">-- I</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>add (<span class="dt">S</span> next) rhs <span class="ot">=</span> <span class="dt">S</span>(add next rhs) <span class="co">-- II</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a>one <span class="ot">=</span> <span class="dt">S</span> <span class="dt">Z</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>two <span class="ot">=</span> <span class="dt">S</span> one</span>
+<span id="cb12-11"><a href="#cb12-11"></a>three <span class="ot">=</span> <span class="dt">S</span> two</span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb12-14"><a href="#cb12-14"></a>main <span class="ot">=</span> assert ((add one two) <span class="op">==</span> three) <span class="op">$</span> <span class="fu">pure</span> ()</span></code></pre></div>
 <h2 id="type-level-logic-reified">Type-level logic reified</h2>
 <p><img
 src="../media/why-static-languages-suffer-from-complexity/chad-meme.png" /></p>
@@ -611,19 +611,19 @@ href="https://github.com/Ashymad/fortraith">Fortraith</a>, which is a
 “compile-time compiler that compiles Forth to compile-time trait
 expressions”:</p>
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">forth!</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> factorial (n <span class="op">--</span> n) <span class="dv">1</span> swap fact0 <span class="op">;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> fact0 (n n <span class="op">--</span> n) dup <span class="dv">1</span> <span class="op">=</span> <span class="cf">if</span> drop <span class="cf">else</span> dup rot <span class="op">*</span> swap pred fact0 then <span class="op">;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span> factorial <span class="op">.</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb13-1"><a href="#cb13-1"></a><span class="pp">forth!</span>(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="op">:</span> factorial (n <span class="op">--</span> n) <span class="dv">1</span> swap fact0 <span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="op">:</span> fact0 (n n <span class="op">--</span> n) dup <span class="dv">1</span> <span class="op">=</span> <span class="cf">if</span> drop <span class="cf">else</span> dup rot <span class="op">*</span> swap pred fact0 then <span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="dv">5</span> factorial <span class="op">.</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>)<span class="op">;</span></span></code></pre></div>
 <p>The above code translates a simple factorial implementation to
 computation on traits and associated types. Later, you obtain a result
 as follows:</p>
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">println!</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;{}&quot;</span><span class="op">,</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;&lt;&lt;</span>Empty <span class="kw">as</span> five<span class="op">&gt;</span><span class="pp">::</span><span class="dt">Result</span> <span class="kw">as</span> factorial<span class="op">&gt;</span><span class="pp">::</span><span class="dt">Result</span> <span class="kw">as</span> top<span class="op">&gt;</span><span class="pp">::</span><span class="dt">Result</span><span class="pp">::</span>eval()</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb14-1"><a href="#cb14-1"></a><span class="pp">println!</span>(</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="st">&quot;{}&quot;</span><span class="op">,</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="op">&lt;&lt;&lt;</span>Empty <span class="kw">as</span> five<span class="op">&gt;</span><span class="pp">::</span><span class="dt">Result</span> <span class="kw">as</span> factorial<span class="op">&gt;</span><span class="pp">::</span><span class="dt">Result</span> <span class="kw">as</span> top<span class="op">&gt;</span><span class="pp">::</span><span class="dt">Result</span><span class="pp">::</span>eval()</span>
+<span id="cb14-4"><a href="#cb14-4"></a>)<span class="op">;</span></span></code></pre></div>
 <p>Having considered everything above, it is crystal clear that the
 <strong>logic</strong> part remains the same, no matter how you call it:
 be it statics or dynamics.</p>
@@ -679,25 +679,25 @@ language extension:</p>
 <code>feature-bloat.hs</code>
 </p>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE BangPatterns               #-}</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE CPP                        #-}</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ConstraintKinds            #-}</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DefaultSignatures          #-}</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DeriveAnyClass             #-}</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DeriveGeneric              #-}</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DerivingStrategies         #-}</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleContexts           #-}</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances          #-}</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE GADTs                      #-}</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE NamedFieldPuns             #-}</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE OverloadedStrings          #-}</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE PolyKinds                  #-}</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE RecordWildCards            #-}</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables        #-}</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE TypeFamilies               #-}</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE UndecidableInstances       #-}</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ViewPatterns               #-}</span></span></code></pre></div>
+class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1"></a><span class="ot">{-# LANGUAGE BangPatterns               #-}</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ot">{-# LANGUAGE CPP                        #-}</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="ot">{-# LANGUAGE ConstraintKinds            #-}</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="ot">{-# LANGUAGE DefaultSignatures          #-}</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="ot">{-# LANGUAGE DeriveAnyClass             #-}</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="ot">{-# LANGUAGE DeriveGeneric              #-}</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="ot">{-# LANGUAGE DerivingStrategies         #-}</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="ot">{-# LANGUAGE FlexibleContexts           #-}</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="ot">{-# LANGUAGE FlexibleInstances          #-}</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="ot">{-# LANGUAGE GADTs                      #-}</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="ot">{-# LANGUAGE GeneralizedNewtypeDeriving #-}</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="ot">{-# LANGUAGE NamedFieldPuns             #-}</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="ot">{-# LANGUAGE OverloadedStrings          #-}</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="ot">{-# LANGUAGE PolyKinds                  #-}</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="ot">{-# LANGUAGE RecordWildCards            #-}</span></span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables        #-}</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a><span class="ot">{-# LANGUAGE TypeFamilies               #-}</span></span>
+<span id="cb15-18"><a href="#cb15-18"></a><span class="ot">{-# LANGUAGE UndecidableInstances       #-}</span></span>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="ot">{-# LANGUAGE ViewPatterns               #-}</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/haskell/haskell-language-server/blob/ee0a0cc78352c961f641443eea89a26b9e1d3974/hls-plugin-api/src/Ide/Types.hs">haskell/haskell-language-server</a>.
@@ -719,11 +719,11 @@ functionality of C++ to be used at a meta-level:</p>
 <code>take_while.cpp</code>
 </p>
 <div class="sourceCode" id="cb16"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">BOOST_</span>HANA_CONSTANT_CHECK<span class="op">(</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    hana<span class="op">::</span>take_while<span class="op">(</span>hana<span class="op">::</span>tuple_c<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">&gt;,</span> hana<span class="op">::</span>less<span class="op">.</span>than<span class="op">(</span><span class="dv">2_c</span><span class="op">))</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">==</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    hana<span class="op">::</span>tuple_c<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">BOOST_</span>HANA_CONSTANT_CHECK<span class="op">(</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>    hana<span class="op">::</span>take_while<span class="op">(</span>hana<span class="op">::</span>tuple_c<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">&gt;,</span> hana<span class="op">::</span>less<span class="op">.</span>than<span class="op">(</span><span class="dv">2_c</span><span class="op">))</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="op">==</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>    hana<span class="op">::</span>tuple_c<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="op">);</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a2f36/example/take_while.cpp">hana/example/take_while.cpp</a>.
@@ -732,17 +732,17 @@ href="https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a
 <code>filter.cpp</code>
 </p>
 <div class="sourceCode" id="cb17"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="kw">auto</span> is_integral <span class="op">=</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    hana<span class="op">::</span>compose<span class="op">(</span>hana<span class="op">::</span>trait<span class="op">&lt;</span><span class="bu">std::</span>is_integral<span class="op">&gt;,</span> hana<span class="op">::</span><span class="va">typeid_</span><span class="op">);</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    hana<span class="op">::</span>filter<span class="op">(</span>hana<span class="op">::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="fl">2.0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="fl">4.0</span><span class="op">),</span> is_integral<span class="op">)</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">==</span> hana<span class="op">::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="st">&quot;&quot;</span><span class="op">);</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">static_assert</span><span class="op">(</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    hana<span class="op">::</span>filter<span class="op">(</span>hana<span class="op">::</span>just<span class="op">(</span><span class="dv">3</span><span class="op">),</span> is_integral<span class="op">)</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">==</span> hana<span class="op">::</span>just<span class="op">(</span><span class="dv">3</span><span class="op">),</span> <span class="st">&quot;&quot;</span><span class="op">);</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="ex">BOOST_</span>HANA_CONSTANT_CHECK<span class="op">(</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    hana<span class="op">::</span>filter<span class="op">(</span>hana<span class="op">::</span>just<span class="op">(</span><span class="fl">3.0</span><span class="op">),</span> is_integral<span class="op">)</span> <span class="op">==</span> hana<span class="op">::</span>nothing<span class="op">);</span></span></code></pre></div>
+class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">constexpr</span> <span class="kw">auto</span> is_integral <span class="op">=</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>    hana<span class="op">::</span>compose<span class="op">(</span>hana<span class="op">::</span>trait<span class="op">&lt;</span><span class="bu">std::</span>is_integral<span class="op">&gt;,</span> hana<span class="op">::</span><span class="va">typeid_</span><span class="op">);</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="kw">static_assert</span><span class="op">(</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>    hana<span class="op">::</span>filter<span class="op">(</span>hana<span class="op">::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="fl">2.0</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="fl">4.0</span><span class="op">),</span> is_integral<span class="op">)</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="op">==</span> hana<span class="op">::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="kw">static_assert</span><span class="op">(</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>    hana<span class="op">::</span>filter<span class="op">(</span>hana<span class="op">::</span>just<span class="op">(</span><span class="dv">3</span><span class="op">),</span> is_integral<span class="op">)</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>    <span class="op">==</span> hana<span class="op">::</span>just<span class="op">(</span><span class="dv">3</span><span class="op">),</span> <span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="ex">BOOST_</span>HANA_CONSTANT_CHECK<span class="op">(</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>    hana<span class="op">::</span>filter<span class="op">(</span>hana<span class="op">::</span>just<span class="op">(</span><span class="fl">3.0</span><span class="op">),</span> is_integral<span class="op">)</span> <span class="op">==</span> hana<span class="op">::</span>nothing<span class="op">);</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a2f36/example/filter.cpp">hana/example/filter.cpp</a>.
@@ -751,15 +751,15 @@ href="https://github.com/boostorg/hana/blob/998033e9dba8c82e3c9496c274a3ad1acf4a
 <code>iter_fold.cpp</code>
 </p>
 <div class="sourceCode" id="cb18"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> vector_c<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">&gt;</span> numbers<span class="op">;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> iter_fold<span class="op">&lt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    numbers<span class="op">,</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    begin<span class="op">&lt;</span>numbers<span class="op">&gt;::</span>type<span class="op">,</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">if_</span><span class="op">&lt;</span>less<span class="op">&lt;</span>deref<span class="op">&lt;</span>_1<span class="op">&gt;,</span> deref<span class="op">&lt;</span>_2<span class="op">&gt;&gt;,</span> _2<span class="op">,</span> _1<span class="op">&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;::</span>type max_element_iter<span class="op">;</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ex">BOOST_</span>MPL_ASSERT_RELATION<span class="op">(</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    deref<span class="op">&lt;</span>max_element_iter<span class="op">&gt;::</span>type<span class="op">::</span>value<span class="op">,</span> <span class="op">==,</span> <span class="dv">7</span><span class="op">);</span></span></code></pre></div>
+class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">typedef</span> vector_c<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">&gt;</span> numbers<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">typedef</span> iter_fold<span class="op">&lt;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>    numbers<span class="op">,</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>    begin<span class="op">&lt;</span>numbers<span class="op">&gt;::</span>type<span class="op">,</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>    <span class="va">if_</span><span class="op">&lt;</span>less<span class="op">&lt;</span>deref<span class="op">&lt;</span>_1<span class="op">&gt;,</span> deref<span class="op">&lt;</span>_2<span class="op">&gt;&gt;,</span> _2<span class="op">,</span> _1<span class="op">&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="op">&gt;::</span>type max_element_iter<span class="op">;</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="ex">BOOST_</span>MPL_ASSERT_RELATION<span class="op">(</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>    deref<span class="op">&lt;</span>max_element_iter<span class="op">&gt;::</span>type<span class="op">::</span>value<span class="op">,</span> <span class="op">==,</span> <span class="dv">7</span><span class="op">);</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://www.boost.org/doc/libs/1_78_0/libs/mpl/doc/refmanual/iter-fold.html">the
@@ -900,10 +900,10 @@ called <code>Either</code>, whose definition is as follows:</p>
 <code>either.rs</code>
 </p>
 <div class="sourceCode" id="cb19"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">enum</span> Either<span class="op">&lt;</span>L<span class="op">,</span> R<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    Left(L)<span class="op">,</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    Right(R)<span class="op">,</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">pub</span> <span class="kw">enum</span> Either<span class="op">&lt;</span>L<span class="op">,</span> R<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>    Left(L)<span class="op">,</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>    Right(R)<span class="op">,</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="op">}</span></span></code></pre></div>
 <p class="adapted-from">
 Adapted from <a
 href="https://docs.rs/either/latest/either/enum.Either.html">either::Either</a>.
@@ -977,21 +977,21 @@ id="fnref13" role="doc-noteref"><sup>13</sup></a>!</p>
 <p>First, define an inductive data type <code>Fmt</code> and a way to
 get it from a format string:</p>
 <div class="sourceCode" id="cb20"><pre
-class="sourceCode idris"><code class="sourceCode idris"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Fmt</span> <span class="fu">=</span> <span class="dt">FArg</span> <span class="dt">Fmt</span> <span class="fu">|</span> <span class="dt">FChar</span> <span class="dt">Char</span> <span class="dt">Fmt</span> <span class="fu">|</span> <span class="dt">FEnd</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toFmt</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">List</span> <span class="dt">Char</span>) <span class="ot">-&gt;</span> <span class="dt">Fmt</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>toFmt (<span class="ch">&#39;*&#39;</span> <span class="ot">::</span> xs) <span class="fu">=</span> <span class="dt">FArg</span> (toFmt xs)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>toFmt (  x <span class="ot">::</span> xs) <span class="fu">=</span> <span class="dt">FChar</span> x (toFmt xs)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>toFmt [] <span class="fu">=</span> <span class="dt">FEnd</span></span></code></pre></div>
+class="sourceCode numberSource idris numberLines"><code class="sourceCode idris"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">data</span> <span class="dt">Fmt</span> <span class="fu">=</span> <span class="dt">FArg</span> <span class="dt">Fmt</span> <span class="fu">|</span> <span class="dt">FChar</span> <span class="dt">Char</span> <span class="dt">Fmt</span> <span class="fu">|</span> <span class="dt">FEnd</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="fu">toFmt</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">List</span> <span class="dt">Char</span>) <span class="ot">-&gt;</span> <span class="dt">Fmt</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>toFmt (<span class="ch">&#39;*&#39;</span> <span class="ot">::</span> xs) <span class="fu">=</span> <span class="dt">FArg</span> (toFmt xs)</span>
+<span id="cb20-5"><a href="#cb20-5"></a>toFmt (  x <span class="ot">::</span> xs) <span class="fu">=</span> <span class="dt">FChar</span> x (toFmt xs)</span>
+<span id="cb20-6"><a href="#cb20-6"></a>toFmt [] <span class="fu">=</span> <span class="dt">FEnd</span></span></code></pre></div>
 <p>Later, we will use it to generate a type for our <code>printf</code>
 function. The syntax resembles Haskell a lot and should be
 comprehensible for a reader.</p>
 <p>Now the most interesting part:</p>
 <div class="sourceCode" id="cb21"><pre
-class="sourceCode idris"><code class="sourceCode idris"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">PrintfType</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">Fmt</span>) <span class="ot">-&gt;</span> <span class="dt">Type</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dt">PrintfType</span> (<span class="dt">FArg</span> fmt) <span class="fu">=</span> ({ty <span class="ot">:</span> <span class="dt">Type</span>} <span class="ot">-&gt;</span> <span class="dt">Show</span> ty <span class="ot">=&gt;</span> (obj <span class="ot">:</span> ty) <span class="ot">-&gt;</span> <span class="dt">PrintfType</span> fmt)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="dt">PrintfType</span> (<span class="dt">FChar</span> <span class="fu">_</span> fmt) <span class="fu">=</span> <span class="dt">PrintfType</span> fmt</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dt">PrintfType</span> <span class="dt">FEnd</span> <span class="fu">=</span> <span class="dt">String</span></span></code></pre></div>
+class="sourceCode numberSource idris numberLines"><code class="sourceCode idris"><span id="cb21-1"><a href="#cb21-1"></a><span class="dt">PrintfType</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">Fmt</span>) <span class="ot">-&gt;</span> <span class="dt">Type</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="dt">PrintfType</span> (<span class="dt">FArg</span> fmt) <span class="fu">=</span> ({ty <span class="ot">:</span> <span class="dt">Type</span>} <span class="ot">-&gt;</span> <span class="dt">Show</span> ty <span class="ot">=&gt;</span> (obj <span class="ot">:</span> ty) <span class="ot">-&gt;</span> <span class="dt">PrintfType</span> fmt)</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="dt">PrintfType</span> (<span class="dt">FChar</span> <span class="fu">_</span> fmt) <span class="fu">=</span> <span class="dt">PrintfType</span> fmt</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="dt">PrintfType</span> <span class="dt">FEnd</span> <span class="fu">=</span> <span class="dt">String</span></span></code></pre></div>
 <p>What this function does? It <strong>calculates a type</strong> based
 on the input argument <code>fmt</code>. As usual, we case-split
 <code>fmt</code> into three cases and deal with them separately:</p>
@@ -1034,12 +1034,12 @@ with <code>PrintfType fmt</code>.</li>
 </ol>
 <p>Cool, now it is time to write the coveted <code>printf</code>:</p>
 <div class="sourceCode" id="cb22"><pre
-class="sourceCode idris"><code class="sourceCode idris"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printf</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">String</span>) <span class="ot">-&gt;</span> <span class="dt">PrintfType</span> (toFmt <span class="fu">$</span> unpack fmt)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>printf fmt <span class="fu">=</span> printfAux (toFmt <span class="fu">$</span> unpack fmt) [] <span class="kw">where</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">printfAux</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">Fmt</span>) <span class="ot">-&gt;</span> <span class="dt">List</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">PrintfType</span> fmt</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    printfAux (<span class="dt">FArg</span> fmt) acc <span class="fu">=</span> <span class="fu">\</span>obj <span class="ot">=&gt;</span> printfAux fmt (acc <span class="fu">++</span> unpack (show obj))</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    printfAux (<span class="dt">FChar</span> c fmt) acc <span class="fu">=</span> printfAux fmt (acc <span class="fu">++</span> [c])</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    printfAux <span class="dt">FEnd</span> acc <span class="fu">=</span> pack acc</span></code></pre></div>
+class="sourceCode numberSource idris numberLines"><code class="sourceCode idris"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">printf</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">String</span>) <span class="ot">-&gt;</span> <span class="dt">PrintfType</span> (toFmt <span class="fu">$</span> unpack fmt)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>printf fmt <span class="fu">=</span> printfAux (toFmt <span class="fu">$</span> unpack fmt) [] <span class="kw">where</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="fu">printfAux</span> <span class="ot">:</span> (fmt <span class="ot">:</span> <span class="dt">Fmt</span>) <span class="ot">-&gt;</span> <span class="dt">List</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">PrintfType</span> fmt</span>
+<span id="cb22-4"><a href="#cb22-4"></a>    printfAux (<span class="dt">FArg</span> fmt) acc <span class="fu">=</span> <span class="fu">\</span>obj <span class="ot">=&gt;</span> printfAux fmt (acc <span class="fu">++</span> unpack (show obj))</span>
+<span id="cb22-5"><a href="#cb22-5"></a>    printfAux (<span class="dt">FChar</span> c fmt) acc <span class="fu">=</span> printfAux fmt (acc <span class="fu">++</span> [c])</span>
+<span id="cb22-6"><a href="#cb22-6"></a>    printfAux <span class="dt">FEnd</span> acc <span class="fu">=</span> pack acc</span></code></pre></div>
 <p>As you can see, <code>PrintfType (toFmt $ unpack fmt)</code> occurs
 in the type signature, meaning that the whole type of
 <code>printf</code> <em>depends on the input argument</em>
@@ -1068,26 +1068,27 @@ also takes <code>List Char</code> as a result accumulator.</p>
 <code>printf.idr</code>
 </p>
 <div class="sourceCode" id="cb23"><pre
-class="sourceCode idris"><code class="sourceCode idris"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span> <span class="ot">:</span> <span class="dt">IO</span> ()</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>main <span class="fu">=</span> putStrLn <span class="fu">$</span> printf <span class="st">&quot;Mr. John has * contacts in *.&quot;</span> <span class="dv">42</span> <span class="st">&quot;New York&quot;</span></span></code></pre></div>
+class="sourceCode numberSource idris numberLines"><code class="sourceCode idris"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">main</span> <span class="ot">:</span> <span class="dt">IO</span> ()</span>
+<span id="cb23-2"><a href="#cb23-2"></a>main <span class="fu">=</span> putStrLn <span class="fu">$</span> printf <span class="st">&quot;Mr. John has * contacts in *.&quot;</span> <span class="dv">42</span> <span class="st">&quot;New York&quot;</span></span></code></pre></div>
 <p>This prints <code>Mr. John has 42 contacts in "New York".</code>. But
 what if we do not provide <code>42</code> to <code>printf</code>?</p>
-<pre><code>Error: While processing right hand side of main. When unifying:
-    ?ty -&gt; PrintfType (toFmt [assert_total (prim__strIndex &quot;Mr. John has * contacts in *.&quot; (prim__cast_IntegerInt (natToInteger (length &quot;Mr. John has * contacts in *.&quot;)) - 1))])
-and:
-    String
-Mismatch
-between: ?ty -&gt; PrintfType (toFmt [assert_total (prim__strIndex &quot;Mr. John has * contacts in *.&quot; (prim__cast_IntegerInt (natToInteger (length &quot;Mr. John has * contacts in *.&quot;)) - 1))]) and String.
-
-test:21:19--21:68
- 17 |     printfAux (FChar c fmt) acc = printfAux fmt (acc ++ [c])
- 18 |     printfAux FEnd acc = pack acc
- 19 | 
- 20 | main : IO ()
- 21 | main = putStrLn $ printf &quot;Mr. John has * contacts in *.&quot; &quot;New York&quot;
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Warning: compiling hole Main.main</code></pre>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb24-1"><a href="#cb24-1"></a>Error: While processing right hand side of main. When unifying:</span>
+<span id="cb24-2"><a href="#cb24-2"></a>    ?ty -&gt; PrintfType (toFmt [assert_total (prim__strIndex &quot;Mr. John has * contacts in *.&quot; (prim__cast_IntegerInt (natToInteger (length &quot;Mr. John has * contacts in *.&quot;)) - 1))])</span>
+<span id="cb24-3"><a href="#cb24-3"></a>and:</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    String</span>
+<span id="cb24-5"><a href="#cb24-5"></a>Mismatch</span>
+<span id="cb24-6"><a href="#cb24-6"></a>between: ?ty -&gt; PrintfType (toFmt [assert_total (prim__strIndex &quot;Mr. John has * contacts in *.&quot; (prim__cast_IntegerInt (natToInteger (length &quot;Mr. John has * contacts in *.&quot;)) - 1))]) and String.</span>
+<span id="cb24-7"><a href="#cb24-7"></a></span>
+<span id="cb24-8"><a href="#cb24-8"></a>test:21:19--21:68</span>
+<span id="cb24-9"><a href="#cb24-9"></a> 17 |     printfAux (FChar c fmt) acc = printfAux fmt (acc ++ [c])</span>
+<span id="cb24-10"><a href="#cb24-10"></a> 18 |     printfAux FEnd acc = pack acc</span>
+<span id="cb24-11"><a href="#cb24-11"></a> 19 | </span>
+<span id="cb24-12"><a href="#cb24-12"></a> 20 | main : IO ()</span>
+<span id="cb24-13"><a href="#cb24-13"></a> 21 | main = putStrLn $ printf &quot;Mr. John has * contacts in *.&quot; &quot;New York&quot;</span>
+<span id="cb24-14"><a href="#cb24-14"></a>                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span id="cb24-15"><a href="#cb24-15"></a></span>
+<span id="cb24-16"><a href="#cb24-16"></a>Warning: compiling hole Main.main</span></code></pre></div>
 <p>Yeah, Idris detects the error and produces a type mismatch! This is
 basically how you implement type-safe <code>printf</code> with
 first-class types. If you are curious about the same thing in Rust, take
@@ -1190,40 +1191,41 @@ implementation in Zig (sorry no highlighting yet):</p>
 <p class="code-annotation">
 <code>printf.zig</code>
 </p>
-<pre class="zig"><code>const std = @import(&quot;std&quot;);
-
-fn printf(comptime fmt: []const u8, args: anytype) anyerror!void {
-    const stdout = std.io.getStdOut().writer();
-
-    comptime var arg_idx: usize = 0;
-
-    inline for (fmt) |c| {
-        if (c == &#39;*&#39;) {
-            try printArg(stdout, args[arg_idx]);
-            arg_idx += 1;
-        } else {
-            try stdout.print(&quot;{c}&quot;, .{c});
-        }
-    }
-
-    comptime {
-        if (args.len != arg_idx) {
-            @compileError(&quot;Unused arguments&quot;);
-        }
-    }
-}
-
-fn printArg(stdout: std.fs.File.Writer, arg: anytype) anyerror!void {
-    if (@typeInfo(@TypeOf(arg)) == .Pointer) {
-        try stdout.writeAll(arg);
-    } else {
-        try stdout.print(&quot;{any}&quot;, .{arg});
-    }
-}
-
-pub fn main() !void {
-    try printf(&quot;Mr. John has * contacts in *.\n&quot;, .{ 42, &quot;New York&quot; });
-}</code></pre>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode numberSource zig numberLines"><code class="sourceCode"><span id="cb25-1"><a href="#cb25-1"></a>const std = @import(&quot;std&quot;);</span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>fn printf(comptime fmt: []const u8, args: anytype) anyerror!void {</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    const stdout = std.io.getStdOut().writer();</span>
+<span id="cb25-5"><a href="#cb25-5"></a></span>
+<span id="cb25-6"><a href="#cb25-6"></a>    comptime var arg_idx: usize = 0;</span>
+<span id="cb25-7"><a href="#cb25-7"></a></span>
+<span id="cb25-8"><a href="#cb25-8"></a>    inline for (fmt) |c| {</span>
+<span id="cb25-9"><a href="#cb25-9"></a>        if (c == &#39;*&#39;) {</span>
+<span id="cb25-10"><a href="#cb25-10"></a>            try printArg(stdout, args[arg_idx]);</span>
+<span id="cb25-11"><a href="#cb25-11"></a>            arg_idx += 1;</span>
+<span id="cb25-12"><a href="#cb25-12"></a>        } else {</span>
+<span id="cb25-13"><a href="#cb25-13"></a>            try stdout.print(&quot;{c}&quot;, .{c});</span>
+<span id="cb25-14"><a href="#cb25-14"></a>        }</span>
+<span id="cb25-15"><a href="#cb25-15"></a>    }</span>
+<span id="cb25-16"><a href="#cb25-16"></a></span>
+<span id="cb25-17"><a href="#cb25-17"></a>    comptime {</span>
+<span id="cb25-18"><a href="#cb25-18"></a>        if (args.len != arg_idx) {</span>
+<span id="cb25-19"><a href="#cb25-19"></a>            @compileError(&quot;Unused arguments&quot;);</span>
+<span id="cb25-20"><a href="#cb25-20"></a>        }</span>
+<span id="cb25-21"><a href="#cb25-21"></a>    }</span>
+<span id="cb25-22"><a href="#cb25-22"></a>}</span>
+<span id="cb25-23"><a href="#cb25-23"></a></span>
+<span id="cb25-24"><a href="#cb25-24"></a>fn printArg(stdout: std.fs.File.Writer, arg: anytype) anyerror!void {</span>
+<span id="cb25-25"><a href="#cb25-25"></a>    if (@typeInfo(@TypeOf(arg)) == .Pointer) {</span>
+<span id="cb25-26"><a href="#cb25-26"></a>        try stdout.writeAll(arg);</span>
+<span id="cb25-27"><a href="#cb25-27"></a>    } else {</span>
+<span id="cb25-28"><a href="#cb25-28"></a>        try stdout.print(&quot;{any}&quot;, .{arg});</span>
+<span id="cb25-29"><a href="#cb25-29"></a>    }</span>
+<span id="cb25-30"><a href="#cb25-30"></a>}</span>
+<span id="cb25-31"><a href="#cb25-31"></a></span>
+<span id="cb25-32"><a href="#cb25-32"></a>pub fn main() !void {</span>
+<span id="cb25-33"><a href="#cb25-33"></a>    try printf(&quot;Mr. John has * contacts in *.\n&quot;, .{ 42, &quot;New York&quot; });</span>
+<span id="cb25-34"><a href="#cb25-34"></a>}</span></code></pre></div>
 <p>Here, we use a feature called <a
 href="https://kristoff.it/blog/what-is-zig-comptime/"><code>comptime</code></a>:
 a <code>comptime</code> function parameter means that it
@@ -1235,16 +1237,17 @@ or type-level sublanguages. The above code needs no further explanation
 <code>printf.idr</code> that seems to look like a fruit of a mad genius’
 wet fantasies.</p>
 <p>If we omit <code>42</code>, Zig will report a compilation error:</p>
-<pre><code>An error occurred:
-/tmp/playground2454631537/play.zig:10:38: error: field index 1 outside tuple &#39;struct:33:52&#39; which has 1 fields
-            try printArg(stdout, args[arg_idx]);
-                                     ^
-/tmp/playground2454631537/play.zig:33:15: note: called from here
-    try printf(&quot;Mr. John has * contacts in *.\n&quot;, .{ &quot;New York&quot; });
-              ^
-/tmp/playground2454631537/play.zig:32:21: note: called from here
-pub fn main() !void {
-                    ^</code></pre>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb26-1"><a href="#cb26-1"></a>An error occurred:</span>
+<span id="cb26-2"><a href="#cb26-2"></a>/tmp/playground2454631537/play.zig:10:38: error: field index 1 outside tuple &#39;struct:33:52&#39; which has 1 fields</span>
+<span id="cb26-3"><a href="#cb26-3"></a>            try printArg(stdout, args[arg_idx]);</span>
+<span id="cb26-4"><a href="#cb26-4"></a>                                     ^</span>
+<span id="cb26-5"><a href="#cb26-5"></a>/tmp/playground2454631537/play.zig:33:15: note: called from here</span>
+<span id="cb26-6"><a href="#cb26-6"></a>    try printf(&quot;Mr. John has * contacts in *.\n&quot;, .{ &quot;New York&quot; });</span>
+<span id="cb26-7"><a href="#cb26-7"></a>              ^</span>
+<span id="cb26-8"><a href="#cb26-8"></a>/tmp/playground2454631537/play.zig:32:21: note: called from here</span>
+<span id="cb26-9"><a href="#cb26-9"></a>pub fn main() !void {</span>
+<span id="cb26-10"><a href="#cb26-10"></a>                    ^</span></code></pre></div>
 <p>The only inconvenience I experienced during the development of
 <code>printf</code> is <a
 href="https://gist.github.com/Hirrolot/504dfe97627895c9f8f82697e27bb142">massive
