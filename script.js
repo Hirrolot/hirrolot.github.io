@@ -161,6 +161,7 @@ function createCodeAnnotationContainers() {
 
 function styleComments() {
     var comments = document.querySelector(".utterances");
+    console.log(comments.innerHTML);
 
     if (comments) {
         console.log("abc");
