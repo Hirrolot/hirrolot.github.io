@@ -72,6 +72,7 @@ body {
 html {
     /* Fix right side overflow on mobile devices. */
     overflow-x: hidden;
+    width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
