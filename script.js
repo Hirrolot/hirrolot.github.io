@@ -5,6 +5,7 @@ window.addEventListener("load", function (event) {
     genAuthorEmoji();
     decorateToc();
     createCodeAnnotationContainers();
+    styleComments();
 });
 
 function moveTocDown() {
@@ -156,4 +157,9 @@ function createCodeAnnotationContainers() {
         codeAnnotations[i].parentNode.insertBefore(container, codeAnnotations[i]);
         container.appendChild(codeAnnotations[i]);
     }
+}
+
+function styleComments() {
+    var comments = document.querySelector(".utterances iframe");
+    comments.innerHTML = comments.innerHTML + "<style>body { font-size: 18px; }</style>";
 }
