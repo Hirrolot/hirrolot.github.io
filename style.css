@@ -67,6 +67,9 @@ body {
     font-family: 'Source Serif Pro', serif;
     font-size: 20px;
     line-height: 1.6;
+
+    /* Fix right side overflow on mobile devices. */
+    overflow-x: hidden;
 }
 
 @media only screen and (max-width: 600px) {
