@@ -160,7 +160,7 @@ function createCodeAnnotationContainers() {
 }
 
 function styleComments() {
-    var comments = document.querySelector(".utterances iframe html body");
+    var comments = document.querySelector(".utterances");
 
     if (comments) {
         console.log("abc");
