@@ -16,7 +16,7 @@ references:
 
 It is a notorious fact that the `enum` keyword in C is just another way to give integers names: by defining an `enum`, you perform a work similar to `#define`-ing integer macros or declaring `const` variables. However, sometimes we may want to give our enumerations a bit more high-level semantics, as in the following scenario:
 
-```c
+```{.c .numberLines}
 #include <stdio.h>
 
 typedef enum {
@@ -45,7 +45,7 @@ In this post, I am to outline several alternatives that I saw or used by myself.
 
 ... would be just writing this damn function:
 
-```c
+```{.c .numberLines}
 const char *Colour_print(Colour c) {
     switch (c) {
     case Red: return "Red";
@@ -73,7 +73,7 @@ Some old folks may respond to this problem with a technique known as [X-Macro]:
 
 [X-Macro]: https://en.wikipedia.org/wiki/X_Macro
 
-```c
+```{.c .numberLines}
 #define COLOURS \
     X(Red)      \
     X(Green)    \
@@ -102,7 +102,7 @@ This is a neat technique because it solves the aforementioned problem with updat
 
 <p class="code-annotation">`enum-printable.h`</p>
 
-```c
+```{.c .numberLines}
 #define ENUM_PRINTABLE(name, list) \
     typedef enum { list(DEF_ENUM_VARIANT) } name; \
  \
@@ -119,7 +119,7 @@ This is a neat technique because it solves the aforementioned problem with updat
 
 <p class="code-annotation">`colour.c`</p>
 
-```c
+```{.c .numberLines}
 #include "enum-printable.h"
 
 #define COLOURS(f) \
@@ -137,7 +137,7 @@ ENUM_PRINTABLE(Colour, COLOURS)
 
 <p class="code-annotation">`apple.c`</p>
 
-```c
+```{.c .numberLines}
 #include "enum-printable.h"
 
 #define APPLES(f) \
@@ -153,7 +153,7 @@ Much better now! However, we can accomplish the same even without one macro per 
 
 ## Macro iteration
 
-```c
+```{.c .numberLines}
 ENUM_PRINTABLE(Colour,
     Red, Green, Blue, Orange, White, Black, Pink, Yellow
 )
@@ -163,7 +163,7 @@ Excellent, but how this kind of `ENUM_PRINTABLE` is implemented? If you try to i
 
 However, in this post, I will not borther you with all the details. Here is the definition:
 
-```c
+```{.c .numberLines}
 #include <metalang99.h>
 
 #define ENUM_PRINTABLE(name, ...) \
@@ -214,7 +214,7 @@ Now about compilation errors: they are just fine, really. For example, if we acc
 
 <p class="code-annotation">`test.c`</p>
 
-```c
+```{.c .numberLines}
 #define ENUM_PRINTABLE(name, ...) \
     typedef enum { __VA_ARGS__ } name; \
  \
@@ -233,7 +233,7 @@ We would see the following compilation error:
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 $ gcc test.c -Imetalang99/include -ftrack-macro-expansion=0 
 test.c: In function ‘Colour_print’:
 test.c:20:1: error: static assertion failed: "invalid term `ML99_variadicsForEach_BLAH( (0args, ML99_reify, (0v, CASE_ENUM_VARIANT)), (0v, Red, Green, Blue, Orange, White, Black, Pink, Yellow))`"
@@ -262,7 +262,7 @@ For more information on Metalang99 and derived projects, see ["_Macros on Steroi
 [Datatype99]: https://github.com/Hirrolot/datatype99
 [algebraic data types (ADTs)]: https://en.wikipedia.org/wiki/Algebraic_data_type
 
-```c
+```{.c .numberLines}
 #include <datatype99.h>
 #include <stdio.h>
 

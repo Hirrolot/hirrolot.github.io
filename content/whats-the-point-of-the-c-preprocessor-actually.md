@@ -73,7 +73,7 @@ In C, the only way to do metaprogramming is to use macros. Perhaps the reason we
 
 What was previously impossible soon became possible:
 
-```c
+```{.c .numberLines}
 datatype(
     BinaryTree,
     (Leaf, int),
@@ -96,7 +96,7 @@ int sum(const BinaryTree *tree) {
 
 Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must `#include <datatype99.h>`. Let me mend myself this time:
 
-```c
+```{.c .numberLines}
 #include <interface99.h>
 
 #define Shape_IFACE                      \
@@ -181,13 +181,13 @@ This question is out of the scope bla-bla-bla. I will just show you some real er
 <li>
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 datatype(A, (Foo, int), Bar(int));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), Bar(int));
@@ -198,13 +198,13 @@ playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: Bar(int) 
 <li>
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 datatype(A, (Foo, int) (Bar, int));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?"
     3 | datatype(A, (Foo, int) (Bar, int));
@@ -215,13 +215,13 @@ playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: (Foo, int
 <li>
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
@@ -236,12 +236,12 @@ Looks nice?
 I know how to break this wonderful world. Look:
 
 <p class="code-annotation">`playground.c`</p>
-```c
+```{.c .numberLines}
 datatype(A, (Foo, int) ~, (Bar, int));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
-```
+```{.numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "invalid term `ML99_PRIV_IF_0 ~(ML99_PRIV_listFromTuplesError, ML99_PRIV_listFromTuplesProgressAux) (DATATYPE99_PRIV_parseVariant, 2, (Foo, int) ~, (Bar, int), ~)`"
     3 | datatype(A, (Foo, int) ~, (Bar, int));

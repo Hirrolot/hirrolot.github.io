@@ -61,7 +61,7 @@ Consider your everyday manipulation with record types ([playground](https://play
 
 <p class="code-annotation">`automobile-static.rs`</p>
 
-```rust
+```{.rust .numberLines}
 struct Automobile {
     wheels: u8,
     seats: u8,
@@ -86,7 +86,7 @@ The same can be done using arrays ([playground](https://play.rust-lang.org/?vers
 
 <p class="code-annotation">`automobile-dynamic.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use std::any::Any;
 
 #[repr(usize)]
@@ -118,7 +118,7 @@ Going further, we can encode static `Automobile` as a heterogenous list:
 
 <p class="code-annotation">`automobile-hlist.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use frunk::{hlist, HList};
 
 struct Wheels(u8);
@@ -142,7 +142,7 @@ This version enforces exactly the same type checks as `automobile-static.rs`, bu
 
 [methods]: https://docs.rs/frunk/0.4.0/frunk/hlist/struct.HCons.html#implementations
 
-```rust
+```{.rust .numberLines}
 assert_eq!(
     my_car.into_reverse(),
     hlist![Manufacturer(String::from("X")), Seats(4), Wheels(4)]
@@ -151,7 +151,7 @@ assert_eq!(
 
 Or we may want to zip our car with their car:
 
-```rust
+```{.rust .numberLines}
 let their_car = hlist![Wheels(6), Seats(4), Manufacturer(String::from("Y"))];
 
 assert_eq!(
@@ -179,7 +179,7 @@ One may find sum types good to represent an AST node ([playground](https://play.
 
 <p class="code-annotation">`ast-static.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use std::ops::Deref;
 
 enum Expr {
@@ -220,7 +220,7 @@ The same can be done using tagged trees ([playground](https://play.rust-lang.org
 
 <p class="code-annotation">`ast-dynamic.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use std::any::Any;
 
 struct Tree {
@@ -266,7 +266,7 @@ We may want to negate a boolean value using the standard operator `!` ([playgrou
 
 <p class="code-annotation">`negate-dynamic.rs`</p>
 
-```rust
+```{.rust .numberLines}
 fn main() {
     assert_eq!(!true, false);
     assert_eq!(!false, true);
@@ -277,7 +277,7 @@ The same can be done through associated types [^assoc-type-bug] ([playground](ht
 
 <p class="code-annotation">`negate-static.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use std::marker::PhantomData;
 
 trait Bool {
@@ -314,7 +314,7 @@ Let me show you one more example. But hold on tight this time ([playground](http
 
 <p class="code-annotation">`peano-dynamic.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use std::ops::Deref;
 
 #[derive(Clone, Debug, PartialEq)]
@@ -347,7 +347,7 @@ As recursion corresponds to type induction and pattern matching corresponds to m
 
 <p class="code-annotation">`peano-static.rs`</p>
 
-```rust
+```{.rust .numberLines}
 use std::marker::PhantomData;
 
 struct Z;
@@ -378,7 +378,7 @@ Here, `impl ... for Z` is the base case (termination case), and `impl ... for S<
 
 <p class="code-annotation">`peano-static.hs`</p>
 
-```haskell
+```{.haskell .numberLines}
 import Control.Exception
 
 data Nat = Z | S Nat deriving Eq
@@ -404,7 +404,7 @@ The purpose of this writeup is only to convey the intuition behind the statics-d
 [`type-operators`]: https://crates.io/crates/type-operators
 [Fortraith]: https://github.com/Ashymad/fortraith
 
-```rust
+```{.rust .numberLines}
 forth!(
     : factorial (n -- n) 1 swap fact0 ;
     : fact0 (n n -- n) dup 1 = if drop else dup rot * swap pred fact0 then ;
@@ -414,7 +414,7 @@ forth!(
 
 The above code translates a simple factorial implementation to computation on traits and associated types. Later, you obtain a result as follows:
 
-```rust
+```{.rust .numberLines}
 println!(
     "{}",
     <<<Empty as five>::Result as factorial>::Result as top>::Result::eval()
@@ -443,7 +443,7 @@ In addition to this inconsistency, we have the feature **biformity**. In such la
 
 <p class="code-annotation">`feature-bloat.hs`</p>
 
-```haskell
+```{.haskell .numberLines}
 {-# LANGUAGE BangPatterns               #-}
 {-# LANGUAGE CPP                        #-}
 {-# LANGUAGE ConstraintKinds            #-}
@@ -483,7 +483,7 @@ When a host language does not provide enough static capabilities needed for conv
 
 <p class="code-annotation">`take_while.cpp`</p>
 
-```cpp
+```{.cpp .numberLines}
 BOOST_HANA_CONSTANT_CHECK(
     hana::take_while(hana::tuple_c<int, 0, 1, 2, 3>, hana::less.than(2_c))
     ==
@@ -497,7 +497,7 @@ BOOST_HANA_CONSTANT_CHECK(
 
 <p class="code-annotation">`filter.cpp`</p>
 
-```cpp
+```{.cpp .numberLines}
 constexpr auto is_integral =
     hana::compose(hana::trait<std::is_integral>, hana::typeid_);
 
@@ -517,7 +517,7 @@ BOOST_HANA_CONSTANT_CHECK(
 
 <p class="code-annotation">`iter_fold.cpp`</p>
 
-```cpp
+```{.cpp .numberLines}
 typedef vector_c<int, 5, -1, 0, 7, 2, 0, -5, 4> numbers;
 typedef iter_fold<
     numbers,
@@ -598,7 +598,7 @@ Finally, a word has to be said about metaprogramming in a host language. With su
 
 <p class="code-annotation">`either.rs`</p>
 
-```rust
+```{.rust .numberLines}
 pub enum Either<L, R> {
     Left(L),
     Right(R),
@@ -632,7 +632,7 @@ One possible solution I have seen is dependent types. With dependent types, we c
 
 First, define an inductive data type `Fmt` and a way to get it from a format string:
 
-```idris
+```{.idris .numberLines}
 data Fmt = FArg Fmt | FChar Char Fmt | FEnd
 
 toFmt : (fmt : List Char) -> Fmt
@@ -645,7 +645,7 @@ Later, we will use it to generate a type for our `printf` function. The syntax r
 
 Now the most interesting part:
 
-```idris
+```{.idris .numberLines}
 PrintfType : (fmt : Fmt) -> Type
 PrintfType (FArg fmt) = ({ty : Type} -> Show ty => (obj : ty) -> PrintfType fmt)
 PrintfType (FChar _ fmt) = PrintfType fmt
@@ -673,7 +673,7 @@ Now say we have a format string `"*x*"`, or `FArg (FChar ('x' (FArg FEnd)))`; wh
 
 Cool, now it is time to write the coveted `printf`:
 
-```idris
+```{.idris .numberLines}
 printf : (fmt : String) -> PrintfType (toFmt $ unpack fmt)
 printf fmt = printfAux (toFmt $ unpack fmt) [] where
     printfAux : (fmt : Fmt) -> List Char -> PrintfType fmt
@@ -694,14 +694,14 @@ Finally, test `printf`:
 
 <p class="code-annotation">`printf.idr`</p>
 
-```idris
+```{.idris .numberLines}
 main : IO ()
 main = putStrLn $ printf "Mr. John has * contacts in *." 42 "New York"
 ```
 
 This prints `Mr. John has 42 contacts in "New York".`. But what if we do not provide `42` to `printf`?
 
-```
+```{.numberLines}
 Error: While processing right hand side of main. When unifying:
     ?ty -> PrintfType (toFmt [assert_total (prim__strIndex "Mr. John has * contacts in *." (prim__cast_IntegerInt (natToInteger (length "Mr. John has * contacts in *.")) - 1))])
 and:
@@ -759,7 +759,7 @@ Our last patient would be the [Zig] programming language. Here is a compile-time
 
 <p class="code-annotation">`printf.zig`</p>
 
-```zig
+```{.zig .numberLines}
 const std = @import("std");
 
 fn printf(comptime fmt: []const u8, args: anytype) anyerror!void {
@@ -802,7 +802,7 @@ Here, we use a feature called [`comptime`]: a `comptime` function parameter mean
 
 If we omit `42`, Zig will report a compilation error:
 
-```
+```{.numberLines}
 An error occurred:
 /tmp/playground2454631537/play.zig:10:38: error: field index 1 outside tuple 'struct:33:52' which has 1 fields
             try printArg(stdout, args[arg_idx]);

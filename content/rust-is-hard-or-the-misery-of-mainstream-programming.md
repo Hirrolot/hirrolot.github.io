@@ -32,7 +32,7 @@ We are programming a ~~blazing fast~~ messenger bot to make people's lives easie
 
 Let us try to implement this. We will omit the execution of handlers and focus only on the `push_handler` function. First try ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=77fa41ad76bd47211ba3778a7c41d3ae)):
 
-```rust
+```{.rust .numberLines}
 use futures::future::BoxFuture;
 use std::future::Future;
 
@@ -68,7 +68,7 @@ Here we represent each update handler using a dynamically typed `Fn` trait restr
 [`BoxFuture`]: https://docs.rs/futures/latest/futures/future/type.BoxFuture.html
 [`Box::pin`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.pin
 
-```
+```{.numberLines}
 error[E0312]: lifetime of reference outlives lifetime of borrowed content...
   --> src/main.rs:17:58
    |
@@ -93,7 +93,7 @@ The reason is that `push_handler` accepts a _concrete_ lifetime `'a` that we try
 
 We can try to approach this differently: instead of the `Fut` generic, we can force a user handler to return `BoxFuture` bounded by `for<'a>` ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=241de07a19e739112d57cd8ef8442db2)):
 
-```rust
+```{.rust .numberLines}
 use futures::future::BoxFuture;
 
 #[derive(Debug)]
@@ -133,7 +133,7 @@ A heterogenous list is indeed just a fancy name for a tuple. Thus, we want somet
 
 First of all, this is the representation of our heterogenous list ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=d311df0efb8136c64b19c9f783e65cd1)):
 
-```rust
+```{.rust .numberLines}
 struct Dispatcher<H, Tail> {
     handler: H,
     tail: Tail,
@@ -144,7 +144,7 @@ struct DispatcherEnd;
 
 If you think this is a bit senseless, you are not far from true. All we want is to be able to construct types like `Dispatcher<H1, Dispatcher<H2, Dispatcher<H3, DispatcherEnd>>>`, an equivalent form of the `(H1, H2, H3)` tuple. With this in mind, we can now define the `push_handler` function using simple type-level induction:
 
-```rust
+```{.rust .numberLines}
 trait PushHandler<NewH> {
     type Out;
     fn push_handler(self, handler: NewH) -> Self::Out;
@@ -183,7 +183,7 @@ If you are new to type-level induction, you can think of it as of regular recurs
 
 We implement `execute` in the same way:
 
-```rust
+```{.rust .numberLines}
 trait Execute<'a> {
     #[must_use]
     fn execute(&'a self, upd: &'a Update) -> BoxFuture<'a, ()>;
@@ -212,7 +212,7 @@ where
 
 But that is not all we need. The final move is to abstract `execute` _for all_ lifetimes of updates, since our implementation of `Execute<'a>` relies on some concrete `'a`, whereas we want our dispatcher to handle updates of variying lifetimes:
 
-```rust
+```{.rust .numberLines}
 async fn execute<Dp>(dp: Dp, upd: Update)
 where
     Dp: for<'a> Execute<'a>,
@@ -223,7 +223,7 @@ where
 
 Fine, now we are ready to test our bizzare solution:
 
-```rust
+```{.rust .numberLines}
 #[tokio::main]
 async fn main() {
     let dp = DispatcherEnd;
@@ -237,7 +237,7 @@ async fn main() {
 
 But it does not work either:
 
-```
+```{.numberLines}
 error: implementation of `Execute` is not general enough
   --> src/main.rs:83:5
    |
@@ -250,7 +250,7 @@ error: implementation of `Execute` is not general enough
 
 Still think that programming with borrow checker is easy and everybody can do it after some practice? Unfortunately, no matter how much practice you have, you cannot cause the above code to compile. The reason is this: the closure passed to `dp.push_handler` accepts `upd` of a _concrete_ lifetime `'1`, but `execute` requires `Dp` to implement `Execute<'0>` for _any_ lifetime `'0`, due to the HRTB bound introduced in the `where` clause. However, if you try your luck with regular functions, the code will compile:
 
-```rust
+```{.rust .numberLines}
 #[tokio::main]
 async fn main() {
     let dp = DispatcherEnd;
@@ -268,7 +268,7 @@ This will print `Update` to the standard output.
 
 This particular behaviour of borrow checker may seem irrational -- and, in fact, it is; functions and closures differ not only in their respective traits but also in how they handle lifetimes. While closures that accept references are bounded by _specific_ lifetimes, functions such as our `dbg_update` accept `&'a Update` for _all_ lifetimes `'a`. This divergence is demonstrated by the following example code ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=3ba11772d068d17b428029075308f405)):
 
-```rust
+```{.rust .numberLines}
 let dbg_update = |upd| {
     println!("{:?}", upd);
 };
@@ -286,7 +286,7 @@ let dbg_update = |upd| {
 
 Due to calls to `dbg_update`, we obtain the following compilation error:
 
-```
+```{.numberLines}
 error[E0597]: `upd` does not live long enough
   --> src/main.rs:11:20
    |
@@ -303,7 +303,7 @@ This is because the `dbg_update` closure can handly only one specific lifetime, 
 
 In contrast, `dbg_update` as a function works perfectly in this scenario ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=6b71d1fde5b00dd361c1e30eab6ea57c)):
 
-```rust
+```{.rust .numberLines}
 fn dbg_update_fn(upd: &Update) {
     println!("{:?}", upd);
 }
@@ -321,7 +321,7 @@ fn dbg_update_fn(upd: &Update) {
 
 We can even trace the exact signature of this function using the handy `let () = ...;` idiom ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=0901c5082bec20168439fdea93cae938)):
 
-```rust
+```{.rust .numberLines}
 fn dbg_update_fn(upd: &Update) {
     println!("{:?}", upd);
 }
@@ -331,7 +331,7 @@ let () = dbg_update_fn;
 
 The signature is `for<'r> fn(&'r Update)`, as expected:
 
-```
+```{.numberLines}
 error[E0308]: mismatched types
  --> src/main.rs:9:9
   |
@@ -346,7 +346,7 @@ error[E0308]: mismatched types
 
 That being said, this solution with a heterogenous list is not what we want either: it is quite flummoxing, boilerplate, hacky, and does not work with closures at all. Also, I do not recommend going too far with complex type mechanics in Rust; if you suddenly encounter a type check failure somewhere near the dispatcher type, I wish you good luck. Imagine that you are maintaining a production system written in Rust and you need to fix some critical bug as quickly as possible. You introduce the necessary changes to your codebase and then see the following compilation output:
 
-```
+```{.numberLines}
 error[E0308]: mismatched types
    --> src/main.rs:123:9
     |
@@ -371,7 +371,7 @@ When I was novice in Rust, I used to think that references are simpler than smar
 
 Let us just replace it with `Arc<Update>` ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=f2aed7fb232e9fac8743d4986820f3d3)):
 
-```rust
+```{.rust .numberLines}
 use futures::future::BoxFuture;
 use std::future::Future;
 use std::sync::Arc;
@@ -421,7 +421,7 @@ The awesome essay _"[Why async fn in traits are hard]"_ by [Niko Matsakis] expla
 
 Secondly, explicit type annotation for `upd` breaks everything ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=3b17c3a2e3f0eab0725f5762c49b1eb4)):
 
-```rust
+```{.rust .numberLines}
 use tokio; // 1.18.2
 
 #[derive(Debug)]
@@ -439,7 +439,7 @@ async fn main() {
 
 Compiler output:
 
-```
+```{.numberLines}
 error: lifetime may not live long enough
   --> src/main.rs:8:34
    |

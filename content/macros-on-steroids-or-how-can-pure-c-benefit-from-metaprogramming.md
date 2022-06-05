@@ -64,7 +64,7 @@ There is an important thing called _code repetition_. There are three kinds of i
 
 Whenever you encounter repetition in your code, you try to eliminate it first by using functions, then by using macros. For example, instead of copy-pasting the same code of reading user data each time, we can reify it into the function `read_user`:
 
-```c
+```{.c .numberLines}
 void read_user(char *user) {
     printf("Type user: ");
     const bool user_read = scanf("%15s", user) == 1;
@@ -81,7 +81,7 @@ read_user(luke);
 
 Sometimes you cannot avoid repetition through functions. Then you resort to macros:
 
-```c
+```{.c .numberLines}
 #define list_for_each(pos, head) \
     for (pos = (head)->next; pos != (head); pos = pos->next)
 
@@ -97,14 +97,14 @@ Going further, sometimes you cannot eliminate repetition through trivial macros 
 
 <p class="code-annotation">`rec.c`</p>
 
-```c
+```{.c .numberLines}
 #define FOO(x, ...) x; FOO(__VA_ARGS__)
 
 FOO(1, 2, 3)
 ```
 
 <p class="code-annotation">`/bin/sh` [^e-p-flags]</p>
-```
+```{.numberLines}
 $ clang rec.c -E -P -Weverything -std=c99
 rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
 FOO(1, 2, 3)
@@ -119,7 +119,7 @@ rec.c:1:24: note: expanded from macro 'FOO'
 
 What you are going to do with the following code snippet then?
 
-```c
+```{.c .numberLines}
 typedef struct {
     struct BinaryTree *lhs;
     int x;
@@ -139,7 +139,7 @@ Experienced C programmers might have noticed that the pattern is called a [tagge
 
 [tagged union]: https://en.wikipedia.org/wiki/Tagged_union
 
-```
+```{.numberLines}
 typedef struct {
     enum { <tag>... } tag;
     union { <type> <tag>... } data;
@@ -150,7 +150,7 @@ See `<tag>...` and `<type> <tag>...`? These are the little monsters of code repe
 
 [variadic macro]: https://en.cppreference.com/w/c/preprocessor/replace
 
-```rust
+```{.rust .numberLines}
 enum BinaryTree {
     Leaf(i32),
     Node(Box<BinaryTree>, i32, Box<BinaryTree>),
@@ -159,7 +159,7 @@ enum BinaryTree {
 
 Another example: interfaces. Consider the `Airplane` interface:
 
-```c
+```{.c .numberLines}
 typedef struct {
     void (*move_forward)(void *self, int distance);
     void (*move_back)(void *self, int distance);
@@ -179,7 +179,7 @@ const AirplaneVTable my_airplane = {
 
 Can you notice the repetition here? Right, in the definition of `AirplaneVTable my_airplane`. We already know the names of the interface methods, why do we need to specify them again? Why could not we just write `impl(Airplane, MyAirplane)` which will collect all methods' names and prepend `MyAirplane` to each one? In Rust:
 
-```rust
+```{.rust .numberLines}
 trait Airplane {
     fn move_forward(&mut self, distance: i32);
     fn move_back(&mut self, distance: i32);
@@ -204,7 +204,7 @@ Metalang99 is a _natural_ extension to the preprocessor; it allows you to elimin
 
 Recall to the aforementioned `BinaryTree` tagged union. With the aid of [Datatype99], a library implemented atop of Metalang99, it can be defined as follows:
 
-```c
+```{.c .numberLines}
 #include <datatype99.h>
 
 datatype(
@@ -216,7 +216,7 @@ datatype(
 
 And manipulated as follows [^pattern-matching]:
 
-```c
+```{.c .numberLines}
 int sum(const BinaryTree *tree) {
     match(*tree) {
         of(Leaf, x) return *x;
@@ -235,7 +235,7 @@ If you want to observe the generated code, please follow [godbolt](https://godbo
 
 The same holds for the aforementioned `AirplaneVTable`. Here is how easy you can define it with [Interface99]:
 
-```c
+```{.c .numberLines}
 #define Airplane_IFACE                             \
     vfunc(void, move_forward, VSelf, int distance) \
     vfunc(void, move_back, VSelf, int distance)    \
@@ -253,7 +253,7 @@ impl(Airplane, MyAirplane);
 
 At the end of the game, you will end up with this:
 
-```c
+```{.c .numberLines}
 // interface(Airplane);
 typedef struct AirplaneVTable AirplaneVTable;
 typedef struct Airplane Airplane;
@@ -305,13 +305,13 @@ I know how insane error messages can be with metaprogramming [^hello-boost-pp], 
 
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 datatype(A, (Foo, int), Bar(int));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), Bar(int));
@@ -322,13 +322,13 @@ Or this:
 
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 datatype(A, (Foo, int) (Bar, int));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?"
     3 | datatype(A, (Foo, int) (Bar, int));
@@ -339,13 +339,13 @@ If an error is not really in the syntax part, you will see something like this:
 
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 datatype(Foo, (FooA, NonExistingType));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 playground.c:3:1: error: unknown type name ‘NonExistingType’
     3 | datatype(
       | ^~~~~~~~
@@ -357,7 +357,7 @@ Or this:
 
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 match(*tree) {
     of(Leaf, x) return *x;
     // of(Node, lhs, x, rhs) return sum(*lhs) + *x + sum(*rhs);
@@ -366,7 +366,7 @@ match(*tree) {
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 playground.c: In function ‘sum’:
 playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]
     6 |     match(*tree) {
@@ -377,7 +377,7 @@ Take a look at this example with Interface99:
 
 <p class="code-annotation">`playground.c`</p>
 
-```c
+```{.c .numberLines}
 #define Foo_IFACE vfunc(void, foo, int x, int y)
 interface(Foo);
 
@@ -392,7 +392,7 @@ impl(Foo, MyFoo);
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```
+```{.numberLines}
 playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)
    12 | impl(Foo, MyFoo);
       | ^~~~
@@ -409,7 +409,7 @@ The compilation times are not really an issue. Let us see how much it takes to c
 
 <p class="code-annotation">`/bin/sh` [^ftrack-macro-expansion]</p>
 
-```
+```{.numberLines}
 $ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 
 real    0m0,121s

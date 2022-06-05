@@ -148,7 +148,7 @@ Having the terminology established, let us dive into the pragmatics!
 
 ## Syntactical consistency
 
-```c
+```{.c .numberLines}
 datatype(
     BinaryTree,
     (Leaf, int),
@@ -170,7 +170,7 @@ What is this? This is how good old C looks like with [Datatype99], a library tha
 [Datatype99]: https://github.com/Hirrolot/datatype99
 [algebraic data types]: https://en.wikipedia.org/wiki/Algebraic_data_type
 
-```c
+```{.c .numberLines}
 int sum(const BinaryTree *tree) {
     match(
         *tree,
@@ -201,7 +201,7 @@ But we do not see
 
 Got the pattern? The proper syntax of `match` _coincides_ with the syntax of the host language, C in our case, whereas the latter one does not. Another example:
 
-```c
+```{.c .numberLines}
 #define State_INTERFACE               \
     iFn(int, get, void *self);        \
     iFn(void, set, void *self, int x);
@@ -227,7 +227,7 @@ This time you see pure ISO C99 augmented with [Interface99], a library that prov
 
 [Interface99]: https://github.com/Hirrolot/interface99
 
-```c
+```{.c .numberLines}
 impl(
     (State) for (Num),
 
@@ -252,7 +252,7 @@ While C/C++ macros work with preprocessing tokens [@preprocessing-tokens], Rusty
 [concrete syntax trees]: https://en.wikipedia.org/wiki/Parse_tree
 [`tokio::select!`]: https://docs.rs/tokio/latest/tokio/macro.select.html
 
-```rust
+```{.rust .numberLines}
 tokio::select! {
     v1 = (&mut rx1), if a.is_none() => a = Some(v1.unwrap()),
     v2 = (&mut rx2), if b.is_none() => b = Some(v2.unwrap()),
@@ -263,7 +263,7 @@ See? The `<something> => <something>` syntax is much like native Rusty pattern m
 
 [serde-json]: https://github.com/serde-rs/json
 
-```rust
+```{.rust .numberLines}
 #[derive(Serialize, Deserialize)]
 struct Person {
     name: String,
@@ -304,7 +304,7 @@ As opposed to Rust, we have a solution in a completely different direction -- [s
 
 To come back to our muttons, s-expressions facilitate syntactical consistency too. Consider this: everything is composed of s-expressions, and your macros perfectly deal with them; therefore, you can easily imitate any language construction. Everything will look the same. Even with so-called powerful Rusty macros, we cannot do this:
 
-```rust
+```{.rust .numberLines}
 delegate!(self.inner) {
     pub fn is_empty(&self) -> bool;
     pub fn push(&mut self, value: T);
@@ -315,7 +315,7 @@ delegate!(self.inner) {
 
 The only way is to write like this:
 
-```rust
+```{.rust .numberLines}
 delegate! {
     to self.inner {
         pub fn is_empty(&self) -> bool;
@@ -332,7 +332,7 @@ delegate! {
 
 Clearly less nifty. The `match` control flow operator can do that, why your "powerful" macros cannot? Look:
 
-```rust
+```{.rust .numberLines}
 let x = Some(5);
 let y = 10;
 
@@ -358,7 +358,7 @@ Basically what it means is that you can specify your own syntactic forms (like `
 
 [syntax extensions]: http://docs.idris-lang.org/en/latest/tutorial/syntax.html
 
-```idris
+```{.idris .numberLines}
 ifThenElse : (x:Bool) -> Lazy a -> Lazy a -> a;
 ifThenElse True  t e = t;
 ifThenElse False t e = e;
@@ -366,7 +366,7 @@ ifThenElse False t e = e;
 
 Which is invoked by the following syntactic rule:
 
-```idris
+```{.idris .numberLines}
 syntax if [test] then [t] else [e] = ifThenElse test t e;
 ```
 
