@@ -69,11 +69,6 @@ body {
     line-height: 1.6;
 }
 
-/* Remove extra space in the right side on mobile devices. */
-html body {
-    width: 100%;
-}
-
 @media only screen and (max-width: 600px) {
     body {
         font-size: 18px !important;
