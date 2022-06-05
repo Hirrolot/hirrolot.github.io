@@ -161,5 +161,8 @@ function createCodeAnnotationContainers() {
 
 function styleComments() {
     var comments = document.querySelector(".utterances iframe");
-    comments.innerHTML = comments.innerHTML + "<style>body { font-size: 18px; }</style>";
+
+    if (comments) {
+        comments.setAttribute("style", "font-size: 18px;");
+    }
 }
