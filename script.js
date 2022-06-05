@@ -163,6 +163,6 @@ function styleComments() {
     var comments = document.querySelector(".utterances iframe");
 
     if (comments) {
-        comments.setAttribute("style", "font-size: 18px;");
+        comments.setAttribute("style", "font-size: 18px !important;");
     }
 }
