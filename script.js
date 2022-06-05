@@ -160,9 +160,11 @@ function createCodeAnnotationContainers() {
 }
 
 function styleComments() {
-    var comments = document.querySelector(".utterances iframe");
+    var comments = document.querySelector(".utterances iframe html body");
 
     if (comments) {
+        console.log("abc");
         comments.style.fontSize = "18px";
+        comments.style.color = "red";
     }
 }
