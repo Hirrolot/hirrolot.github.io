@@ -45,7 +45,7 @@ img:not(.redirect-icon, .contact-img, .myself) {
 
 .myself {
     display: block;
-    width: 380px;
+    max-width: 380px;
     margin: 20px auto 20px auto;
 }
 
