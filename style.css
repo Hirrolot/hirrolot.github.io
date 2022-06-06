@@ -2,11 +2,11 @@
     width: 100%;
     background-color: linen;
     padding: 20px 0px;
-    margin: auto;
 }
 
 .index-header-content {
     max-width: 800px;
+    margin: auto;
 }
 
 .blog-title {
@@ -216,7 +216,7 @@ h3:hover {
 
 .posts-history-container,
 .myself-container,
-.index-header-content {
+.index-header-container {
     margin: 0px 8px;
 }
 
