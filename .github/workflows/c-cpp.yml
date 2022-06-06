@@ -27,7 +27,6 @@ jobs:
             posts \
             media \
             utterances.html \
-            utterances.js \
             style.css \
             script.js \
             rss.xml \
