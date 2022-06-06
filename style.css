@@ -45,7 +45,8 @@ img:not(.redirect-icon, .contact-img, .myself) {
 
 .myself {
     display: block;
-    max-width: 380px;
+    width: 380px;
+    max-width: 100%;
     margin: 20px auto 20px auto;
 }
 
@@ -213,7 +214,8 @@ h3:hover {
     background-color: #f2f2f2;
 }
 
-.posts-history-container {
+.posts-history-container,
+.myself-container {
     margin: 0px 8px;
 }
 
