@@ -14,13 +14,10 @@
     font-size: 34px;
     font-family: 'Alex Brush', cursive;
     font-style: italic;
-    background-color: black;
-    color: white;
     padding: 5px 10px;
     margin-bottom: 10px;
-    border-style: solid;
-    border-color: palevioletred;
-    border-width: 5px;
+    background-color: rgb(193, 78, 116);
+    color: white;
 }
 
 .contacts,
