@@ -104,7 +104,7 @@ FOO(1, 2, 3)
 ```
 
 <p class="code-annotation">`/bin/sh` [^e-p-flags]</p>
-```{.numberLines}
+```{.code .numberLines}
 $ clang rec.c -E -P -Weverything -std=c99
 rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]
 FOO(1, 2, 3)
@@ -139,7 +139,7 @@ Experienced C programmers might have noticed that the pattern is called a [tagge
 
 [tagged union]: https://en.wikipedia.org/wiki/Tagged_union
 
-```{.numberLines}
+```{.code .numberLines}
 typedef struct {
     enum { <tag>... } tag;
     union { <type> <tag>... } data;
@@ -311,7 +311,7 @@ datatype(A, (Foo, int), Bar(int));
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), Bar(int));
@@ -328,7 +328,7 @@ datatype(A, (Foo, int) (Bar, int));
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?"
     3 | datatype(A, (Foo, int) (Bar, int));
@@ -345,7 +345,7 @@ datatype(Foo, (FooA, NonExistingType));
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 playground.c:3:1: error: unknown type name ‘NonExistingType’
     3 | datatype(
       | ^~~~~~~~
@@ -366,7 +366,7 @@ match(*tree) {
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 playground.c: In function ‘sum’:
 playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]
     6 |     match(*tree) {
@@ -392,7 +392,7 @@ impl(Foo, MyFoo);
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)
    12 | impl(Foo, MyFoo);
       | ^~~~
@@ -409,7 +409,7 @@ The compilation times are not really an issue. Let us see how much it takes to c
 
 <p class="code-annotation">`/bin/sh` [^ftrack-macro-expansion]</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0
 
 real    0m0,121s

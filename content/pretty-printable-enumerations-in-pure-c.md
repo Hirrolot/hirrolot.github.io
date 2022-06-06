@@ -233,7 +233,7 @@ We would see the following compilation error:
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ gcc test.c -Imetalang99/include -ftrack-macro-expansion=0 
 test.c: In function ‘Colour_print’:
 test.c:20:1: error: static assertion failed: "invalid term `ML99_variadicsForEach_BLAH( (0args, ML99_reify, (0v, CASE_ENUM_VARIANT)), (0v, Red, Green, Blue, Orange, White, Black, Pink, Yellow))`"

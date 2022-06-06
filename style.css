@@ -94,15 +94,6 @@ code:not([class]) {
     padding: 2px;
 }
 
-pre code:not([class]) {
-    background-color: AliceBlue;
-}
-
-div.sourceCode {
-    background-color: Linen;
-}
-
-pre code:not([class]),
 div.sourceCode {
     display: block;
     margin: auto;
@@ -110,6 +101,8 @@ div.sourceCode {
     padding: 16px;
     line-height: 25px;
     font-size: 16px;
+    background-color: Linen;
+    border: 1px dotted LightGray;
 }
 
 body:not(.index-body) pre {
@@ -137,11 +130,6 @@ body:not(.index-body) pre {
 .code-annotation code {
     font-size: 16px;
     background-color: transparent;
-}
-
-pre code:not([class]),
-div.sourceCode {
-    border: 1px dotted LightGray;
 }
 
 .adapted-from {

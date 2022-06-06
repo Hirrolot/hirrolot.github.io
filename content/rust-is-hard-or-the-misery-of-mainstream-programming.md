@@ -68,7 +68,7 @@ Here we represent each update handler using a dynamically typed `Fn` trait restr
 [`BoxFuture`]: https://docs.rs/futures/latest/futures/future/type.BoxFuture.html
 [`Box::pin`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.pin
 
-```{.numberLines}
+```{.code .numberLines}
 error[E0312]: lifetime of reference outlives lifetime of borrowed content...
   --> src/main.rs:17:58
    |
@@ -237,7 +237,7 @@ async fn main() {
 
 But it does not work either:
 
-```{.numberLines}
+```{.code .numberLines}
 error: implementation of `Execute` is not general enough
   --> src/main.rs:83:5
    |
@@ -286,7 +286,7 @@ let dbg_update = |upd| {
 
 Due to calls to `dbg_update`, we obtain the following compilation error:
 
-```{.numberLines}
+```{.code .numberLines}
 error[E0597]: `upd` does not live long enough
   --> src/main.rs:11:20
    |
@@ -331,7 +331,7 @@ let () = dbg_update_fn;
 
 The signature is `for<'r> fn(&'r Update)`, as expected:
 
-```{.numberLines}
+```{.code .numberLines}
 error[E0308]: mismatched types
  --> src/main.rs:9:9
   |
@@ -346,7 +346,7 @@ error[E0308]: mismatched types
 
 That being said, this solution with a heterogenous list is not what we want either: it is quite flummoxing, boilerplate, hacky, and does not work with closures at all. Also, I do not recommend going too far with complex type mechanics in Rust; if you suddenly encounter a type check failure somewhere near the dispatcher type, I wish you good luck. Imagine that you are maintaining a production system written in Rust and you need to fix some critical bug as quickly as possible. You introduce the necessary changes to your codebase and then see the following compilation output:
 
-```{.numberLines}
+```{.code .numberLines}
 error[E0308]: mismatched types
    --> src/main.rs:123:9
     |
@@ -439,7 +439,7 @@ async fn main() {
 
 Compiler output:
 
-```{.numberLines}
+```{.code .numberLines}
 error: lifetime may not live long enough
   --> src/main.rs:8:34
    |
@@ -470,7 +470,7 @@ To finish the section, this is the full implementation in Golang:
 
 <p class="code-annotation">`dispatcher.go`</p>
 
-```go
+```{.go .numberLines}
 package main
 
 import "fmt"

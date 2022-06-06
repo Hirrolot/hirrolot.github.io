@@ -701,7 +701,7 @@ main = putStrLn $ printf "Mr. John has * contacts in *." 42 "New York"
 
 This prints `Mr. John has 42 contacts in "New York".`. But what if we do not provide `42` to `printf`?
 
-```{.numberLines}
+```{.code .numberLines}
 Error: While processing right hand side of main. When unifying:
     ?ty -> PrintfType (toFmt [assert_total (prim__strIndex "Mr. John has * contacts in *." (prim__cast_IntegerInt (natToInteger (length "Mr. John has * contacts in *.")) - 1))])
 and:
@@ -802,7 +802,7 @@ Here, we use a feature called [`comptime`]: a `comptime` function parameter mean
 
 If we omit `42`, Zig will report a compilation error:
 
-```{.numberLines}
+```{.code .numberLines}
 An error occurred:
 /tmp/playground2454631537/play.zig:10:38: error: field index 1 outside tuple 'struct:33:52' which has 1 fields
             try printArg(stdout, args[arg_idx]);

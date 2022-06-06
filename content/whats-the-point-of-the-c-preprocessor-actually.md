@@ -187,7 +187,7 @@ datatype(A, (Foo, int), Bar(int));
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), Bar(int));
@@ -204,7 +204,7 @@ datatype(A, (Foo, int) (Bar, int));
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?"
     3 | datatype(A, (Foo, int) (Bar, int));
@@ -221,7 +221,7 @@ datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
 
 <p class="code-annotation">`/bin/sh`</p>
 
-```{.numberLines}
+```{.code .numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "ML99_assertIsTuple: must be (x1, ..., xN)"
     3 | datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);
@@ -241,7 +241,7 @@ datatype(A, (Foo, int) ~, (Bar, int));
 ```
 
 <p class="code-annotation">`/bin/sh`</p>
-```{.numberLines}
+```{.code .numberLines}
 $ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0
 playground.c:3:1: error: static assertion failed: "invalid term `ML99_PRIV_IF_0 ~(ML99_PRIV_listFromTuplesError, ML99_PRIV_listFromTuplesProgressAux) (DATATYPE99_PRIV_parseVariant, 2, (Foo, int) ~, (Bar, int), ~)`"
     3 | datatype(A, (Foo, int) ~, (Bar, int));
