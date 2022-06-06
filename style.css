@@ -18,6 +18,9 @@
     color: white;
     padding: 5px 10px;
     margin-bottom: 10px;
+    border-style: solid;
+    border-color: palevioletred;
+    border-width: 5px;
 }
 
 .contacts,
