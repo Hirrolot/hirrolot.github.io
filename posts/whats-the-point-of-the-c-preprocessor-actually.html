@@ -332,7 +332,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
 <span id="cb4-2"><a href="#cb4-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;</span>
 <span id="cb4-3"><a href="#cb4-3"></a>    3 | datatype(A, (Foo, int), Bar(int));</span>
 <span id="cb4-4"><a href="#cb4-4"></a>      | ^~~~~~~~</span></code></pre></div>
@@ -347,7 +347,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
 <span id="cb6-2"><a href="#cb6-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;</span>
 <span id="cb6-3"><a href="#cb6-3"></a>    3 | datatype(A, (Foo, int) (Bar, int));</span>
 <span id="cb6-4"><a href="#cb6-4"></a>      | ^~~~~~~~</span></code></pre></div>
@@ -362,7 +362,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
 <span id="cb8-2"><a href="#cb8-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: must be (x1, ..., xN)&quot;</span>
 <span id="cb8-3"><a href="#cb8-3"></a>    3 | datatype(A, (Foo, int), (Bar, int), /* trailing comma is prohibited */);</span>
 <span id="cb8-4"><a href="#cb8-4"></a>      | ^~~~~~~~</span></code></pre></div>
@@ -379,7 +379,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb10"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
 <span id="cb10-2"><a href="#cb10-2"></a>playground.c:3:1: error: static assertion failed: &quot;invalid term `ML99_PRIV_IF_0 ~(ML99_PRIV_listFromTuplesError, ML99_PRIV_listFromTuplesProgressAux) (DATATYPE99_PRIV_parseVariant, 2, (Foo, int) ~, (Bar, int), ~)`&quot;</span>
 <span id="cb10-3"><a href="#cb10-3"></a>    3 | datatype(A, (Foo, int) ~, (Bar, int));</span>
 <span id="cb10-4"><a href="#cb10-4"></a>      | ^~~~~~~~</span></code></pre></div>

@@ -229,7 +229,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 role="doc-noteref"><sup>3</sup></a>
 </p>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ clang rec.c -E -P -Weverything -std=c99</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>$ clang rec.c -E -P -Weverything -std=c99</span>
 <span id="cb4-2"><a href="#cb4-2"></a>rec.c:3:1: warning: disabled expansion of recursive macro [-Wdisabled-macro-expansion]</span>
 <span id="cb4-3"><a href="#cb4-3"></a>FOO(1, 2, 3)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>^</span>
@@ -258,7 +258,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 called a <a href="https://en.wikipedia.org/wiki/Tagged_union">tagged
 union</a>. It is described as follows:</p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>typedef struct {</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>typedef struct {</span>
 <span id="cb6-2"><a href="#cb6-2"></a>    enum { &lt;tag&gt;... } tag;</span>
 <span id="cb6-3"><a href="#cb6-3"></a>    union { &lt;type&gt; &lt;tag&gt;... } data;</span>
 <span id="cb6-4"><a href="#cb6-4"></a>} &lt;name&gt;;</span></code></pre></div>
@@ -448,7 +448,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
 <span id="cb15-2"><a href="#cb15-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: Bar(int) must be (x1, ..., xN)&quot;</span>
 <span id="cb15-3"><a href="#cb15-3"></a>    3 | datatype(A, (Foo, int), Bar(int));</span>
 <span id="cb15-4"><a href="#cb15-4"></a>      | ^~~~~~~~</span></code></pre></div>
@@ -462,7 +462,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb17"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb17-1"><a href="#cb17-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb17-1"><a href="#cb17-1"></a>$ gcc playground.c -Imetalang99/include -Idatatype99 -ftrack-macro-expansion=0</span>
 <span id="cb17-2"><a href="#cb17-2"></a>playground.c:3:1: error: static assertion failed: &quot;ML99_assertIsTuple: (Foo, int) (Bar, int) must be (x1, ..., xN), did you miss a comma?&quot;</span>
 <span id="cb17-3"><a href="#cb17-3"></a>    3 | datatype(A, (Foo, int) (Bar, int));</span>
 <span id="cb17-4"><a href="#cb17-4"></a>      | ^~~~~~~~</span></code></pre></div>
@@ -477,7 +477,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb19"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb19-1"><a href="#cb19-1"></a>playground.c:3:1: error: unknown type name ‘NonExistingType’</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb19-1"><a href="#cb19-1"></a>playground.c:3:1: error: unknown type name ‘NonExistingType’</span>
 <span id="cb19-2"><a href="#cb19-2"></a>    3 | datatype(</span>
 <span id="cb19-3"><a href="#cb19-3"></a>      | ^~~~~~~~</span>
 <span id="cb19-4"><a href="#cb19-4"></a>playground.c:3:1: error: unknown type name ‘NonExistingType’</span>
@@ -495,7 +495,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb21"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb21-1"><a href="#cb21-1"></a>playground.c: In function ‘sum’:</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb21-1"><a href="#cb21-1"></a>playground.c: In function ‘sum’:</span>
 <span id="cb21-2"><a href="#cb21-2"></a>playground.c:6:5: warning: enumeration value ‘NodeTag’ not handled in switch [-Wswitch]</span>
 <span id="cb21-3"><a href="#cb21-3"></a>    6 |     match(*tree) {</span>
 <span id="cb21-4"><a href="#cb21-4"></a>      |     ^~~~~</span></code></pre></div>
@@ -518,7 +518,7 @@ class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span i
 <code>/bin/sh</code>
 </p>
 <div class="sourceCode" id="cb23"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb23-1"><a href="#cb23-1"></a>playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb23-1"><a href="#cb23-1"></a>playground.c:12:1: error: ‘MyFoo_foo’ undeclared here (not in a function)</span>
 <span id="cb23-2"><a href="#cb23-2"></a>   12 | impl(Foo, MyFoo);</span>
 <span id="cb23-3"><a href="#cb23-3"></a>      | ^~~~</span></code></pre></div>
 <p>When a macro failed, and I do not understand what is wrong just by
@@ -537,7 +537,7 @@ href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"
 role="doc-noteref"><sup>7</sup></a>
 </p>
 <div class="sourceCode" id="cb24"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb24-1"><a href="#cb24-1"></a>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb24-1"><a href="#cb24-1"></a>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0</span>
 <span id="cb24-2"><a href="#cb24-2"></a></span>
 <span id="cb24-3"><a href="#cb24-3"></a>real    0m0,121s</span>
 <span id="cb24-4"><a href="#cb24-4"></a>user    0m0,107s</span>

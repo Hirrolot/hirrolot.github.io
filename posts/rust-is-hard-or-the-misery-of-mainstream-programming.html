@@ -208,7 +208,7 @@ from the <code>futures</code> crate using <a
 href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.pin"><code>Box::pin</code></a>.
 Now let us see if the above solution works:</p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>error[E0312]: lifetime of reference outlives lifetime of borrowed content...</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>error[E0312]: lifetime of reference outlives lifetime of borrowed content...</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  --&gt; src/main.rs:17:58</span>
 <span id="cb2-3"><a href="#cb2-3"></a>   |</span>
 <span id="cb2-4"><a href="#cb2-4"></a>17 |         self.0.push(Box::new(move |upd| Box::pin(handler(upd))));</span>
@@ -384,7 +384,7 @@ class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><
 <span id="cb8-9"><a href="#cb8-9"></a><span class="op">}</span></span></code></pre></div>
 <p>But it does not work either:</p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>error: implementation of `Execute` is not general enough</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>error: implementation of `Execute` is not general enough</span>
 <span id="cb9-2"><a href="#cb9-2"></a>  --&gt; src/main.rs:83:5</span>
 <span id="cb9-3"><a href="#cb9-3"></a>   |</span>
 <span id="cb9-4"><a href="#cb9-4"></a>83 |     execute(dp, Update).await;</span>
@@ -440,7 +440,7 @@ class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><
 <p>Due to calls to <code>dbg_update</code>, we obtain the following
 compilation error:</p>
 <div class="sourceCode" id="cb12"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>error[E0597]: `upd` does not live long enough</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>error[E0597]: `upd` does not live long enough</span>
 <span id="cb12-2"><a href="#cb12-2"></a>  --&gt; src/main.rs:11:20</span>
 <span id="cb12-3"><a href="#cb12-3"></a>   |</span>
 <span id="cb12-4"><a href="#cb12-4"></a>11 |         dbg_update(&amp;upd);</span>
@@ -482,7 +482,7 @@ class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><
 <p>The signature is <code>for&lt;'r&gt; fn(&amp;'r Update)</code>, as
 expected:</p>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>error[E0308]: mismatched types</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>error[E0308]: mismatched types</span>
 <span id="cb15-2"><a href="#cb15-2"></a> --&gt; src/main.rs:9:9</span>
 <span id="cb15-3"><a href="#cb15-3"></a>  |</span>
 <span id="cb15-4"><a href="#cb15-4"></a>9 |     let () = dbg_update_fn;</span>
@@ -502,7 +502,7 @@ you need to fix some critical bug as quickly as possible. You introduce
 the necessary changes to your codebase and then see the following
 compilation output:</p>
 <div class="sourceCode" id="cb16"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb16-1"><a href="#cb16-1"></a>error[E0308]: mismatched types</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb16-1"><a href="#cb16-1"></a>error[E0308]: mismatched types</span>
 <span id="cb16-2"><a href="#cb16-2"></a>   --&gt; src/main.rs:123:9</span>
 <span id="cb16-3"><a href="#cb16-3"></a>    |</span>
 <span id="cb16-4"><a href="#cb16-4"></a>123 |     let () = dp;</span>
@@ -618,7 +618,7 @@ class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><
 <span id="cb18-13"><a href="#cb18-13"></a><span class="op">}</span></span></code></pre></div>
 <p>Compiler output:</p>
 <div class="sourceCode" id="cb19"><pre
-class="sourceCode numberSource numberLines"><code class="sourceCode"><span id="cb19-1"><a href="#cb19-1"></a>error: lifetime may not live long enough</span>
+class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb19-1"><a href="#cb19-1"></a>error: lifetime may not live long enough</span>
 <span id="cb19-2"><a href="#cb19-2"></a>  --&gt; src/main.rs:8:34</span>
 <span id="cb19-3"><a href="#cb19-3"></a>   |</span>
 <span id="cb19-4"><a href="#cb19-4"></a>8  |       let closure = |upd: &amp;Update| async move {</span>
@@ -667,27 +667,27 @@ and fighting with type system inexpressiveness.</p>
 <code>dispatcher.go</code>
 </p>
 <div class="sourceCode" id="cb20"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Update <span class="kw">struct</span><span class="op">{}</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Handler <span class="kw">func</span><span class="op">(*</span>Update<span class="op">)</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Dispatcher <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    handlers <span class="op">[]</span>Handler</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>dp <span class="op">*</span>Dispatcher<span class="op">)</span> pushHandler<span class="op">(</span>handler Handler<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    dp<span class="op">.</span>handlers <span class="op">=</span> <span class="bu">append</span><span class="op">(</span>dp<span class="op">.</span>handlers<span class="op">,</span> handler<span class="op">)</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    dp <span class="op">:=</span> Dispatcher<span class="op">{</span>handlers<span class="op">:</span> <span class="ot">nil</span><span class="op">}</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    dp<span class="op">.</span>pushHandler<span class="op">(</span><span class="kw">func</span><span class="op">(</span>upd <span class="op">*</span>Update<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        fmt<span class="op">.</span>Println<span class="op">(</span>upd<span class="op">)</span></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode numberSource go numberLines"><code class="sourceCode go"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">package</span> main</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="kw">type</span> Update <span class="kw">struct</span><span class="op">{}</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="kw">type</span> Handler <span class="kw">func</span><span class="op">(*</span>Update<span class="op">)</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="kw">type</span> Dispatcher <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a>    handlers <span class="op">[]</span>Handler</span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="op">}</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a></span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="kw">func</span> <span class="op">(</span>dp <span class="op">*</span>Dispatcher<span class="op">)</span> pushHandler<span class="op">(</span>handler Handler<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>    dp<span class="op">.</span>handlers <span class="op">=</span> <span class="bu">append</span><span class="op">(</span>dp<span class="op">.</span>handlers<span class="op">,</span> handler<span class="op">)</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a><span class="op">}</span></span>
+<span id="cb20-15"><a href="#cb20-15"></a></span>
+<span id="cb20-16"><a href="#cb20-16"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a>    dp <span class="op">:=</span> Dispatcher<span class="op">{</span>handlers<span class="op">:</span> <span class="ot">nil</span><span class="op">}</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a>    dp<span class="op">.</span>pushHandler<span class="op">(</span><span class="kw">func</span><span class="op">(</span>upd <span class="op">*</span>Update<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-19"><a href="#cb20-19"></a>        fmt<span class="op">.</span>Println<span class="op">(</span>upd<span class="op">)</span></span>
+<span id="cb20-20"><a href="#cb20-20"></a>    <span class="op">})</span></span>
+<span id="cb20-21"><a href="#cb20-21"></a><span class="op">}</span></span></code></pre></div>
 <h2 id="why-rust-is-so-hard">Why Rust is so hard?</h2>
 <p>Sometimes it is helpful to understand why shit happens. “Because X is
 bad” is not an answer; “Because people that made X are bad” is not an
