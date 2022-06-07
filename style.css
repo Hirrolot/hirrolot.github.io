@@ -1,6 +1,6 @@
 .index-header {
     width: 100%;
-    background-color: linen;
+    background-color: #f2f2f2;
     padding: 20px 0px;
 }
 
@@ -16,7 +16,7 @@
     font-style: italic;
     padding: 5px 10px;
     margin-bottom: 10px;
-    background-color: rgb(119 62 102);
+    background-color: #c64d75;
     color: white;
 }
 
