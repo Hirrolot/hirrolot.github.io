@@ -9,15 +9,13 @@
     margin: auto;
 }
 
+/* Badass pink: #c64d75 */
+
 .blog-title {
-    display: inline-block;
-    font-size: 34px;
-    font-family: 'Alex Brush', cursive;
-    font-style: italic;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    background-color: black;
-    color: white;
+    margin: -5px 0px 10px 0px;
+    text-align: left;
+    font-size: 38px;
+    text-align: right;
 }
 
 .contacts,
@@ -29,6 +27,7 @@
 
 .contacts {
     gap: 10px;
+    flex-direction: row-reverse;
 }
 
 .contact {
@@ -181,11 +180,6 @@ h3:hover {
 ::selection {
     color: white;
     background-color: black;
-}
-
-.blog-title::selection {
-    color: black;
-    background-color: white;
 }
 
 #TOC,
