@@ -17,7 +17,7 @@ function moveTocDown() {
 }
 
 function createClickableHeaders() {
-    var headers = document.querySelectorAll("h1, h2, h3");
+    var headers = document.querySelectorAll("h1:not(.blog-title), h2, h3");
 
     for (var i = headers.length - 1; i >= 0; i--) {
         var headerLink = document.createElement("a");
