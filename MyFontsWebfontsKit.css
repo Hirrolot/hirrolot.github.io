@@ -1,0 +1,28 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 5041573, 2022-06-09T07:49:22-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: Goddess-Title by Device
+ * URL: https://www.myfonts.com/fonts/device/goddess/title/
+ * Copyright: Copyright (c) 2018 by Rian Hughes. All rights reserved.
+ * 
+ * 
+ * 
+ * © 2022 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("https://hello.myfonts.net/count/4ceda5");
+  
+@font-face {
+  font-family: "Goddess-Title";
+  src: url('webFonts/GoddessTitle/font.woff2') format('woff2'), url('webFonts/GoddessTitle/font.woff') format('woff');
+}
+
