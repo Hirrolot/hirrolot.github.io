@@ -1,6 +1,6 @@
 .index-header {
     width: 100%;
-    padding: 20px 0px;
+    padding: 10px 0px 20px 0px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     background-color: rgb(246, 246, 246);
 }
@@ -13,11 +13,10 @@
 /* Badass pink: #c64d75 */
 
 .blog-title {
-    margin: -5px 0px 10px 0px;
-    text-align: left;
     font-family: "Goddess-Title";
     font-size: 38px;
     text-align: right;
+    margin-bottom: 10px;
 }
 
 .contacts,
