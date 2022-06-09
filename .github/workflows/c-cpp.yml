@@ -33,9 +33,9 @@ jobs:
             post_header_aux.html \
             header.html \
             myself.png \
-            docs \
+            MyFontsWebfontsKit.css \
             webFonts \
-            MyFontsWebfontsKit.css
+            docs
 
       - name: Deploy the docs
         uses: peaceiris/actions-gh-pages@v3
