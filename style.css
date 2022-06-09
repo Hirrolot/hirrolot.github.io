@@ -222,6 +222,9 @@ h3:hover {
 }
 
 #TOC {
+    /* Remove later in JS during page content adjustment. */
+    display: none;
+
     max-width: 600px;
     margin: auto;
     margin-bottom: 40px;
