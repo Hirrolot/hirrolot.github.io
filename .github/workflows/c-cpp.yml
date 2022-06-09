@@ -30,11 +30,9 @@ jobs:
             style.css \
             script.js \
             rss.xml \
-            post_header_aux.html \
             header.html \
             myself.png \
-            MyFontsWebfontsKit.css \
-            webFonts \
+            fonts \
             docs
 
       - name: Deploy the docs
