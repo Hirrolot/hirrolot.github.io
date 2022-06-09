@@ -1,0 +1,35 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 5041670, 2022-06-09T15:54:21-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: ChristelWagnerReg by Otto Maurer
+ * URL: https://www.myfonts.com/fonts/otto-maurer/christel-wagner/regular/
+ * 
+ * Webfont: ChristelWagnerReg-Italic by Otto Maurer
+ * URL: https://www.myfonts.com/fonts/otto-maurer/christel-wagner/regular-italic/
+ * 
+ * 
+ * Webfonts copyright: Copyright (c) 2014 by Otto Maurer. All rights reserved.
+ * 
+ * © 2022 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("https://hello.myfonts.net/count/4ceda5");
+  
+@font-face {
+  font-family: "ChristelWagnerReg";
+  src: url('ChristelWagnerReg/font.woff2') format('woff2'), url('ChristelWagnerReg/font.woff') format('woff');
+}
+@font-face {
+  font-family: "ChristelWagnerReg-Italic";
+  src: url('ChristelWagnerRegItalic/font.woff2') format('woff2'), url('ChristelWagnerRegItalic/font.woff') format('woff');
+}
+
