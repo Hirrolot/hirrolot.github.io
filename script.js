@@ -13,6 +13,9 @@ function moveTocDown() {
 
     if (toc && introduction) {
         toc.parentNode.insertBefore(introduction, toc);
+
+        // Previously it was "none". After we are done moving it, we make it visible.
+        toc.style.display = "block";
     }
 }
 
