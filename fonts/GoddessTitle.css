@@ -23,6 +23,6 @@
   
 @font-face {
   font-family: "Goddess-Title";
-  src: url('webFonts/GoddessTitle/font.woff2') format('woff2'), url('webFonts/GoddessTitle/font.woff') format('woff');
+  src: url('GoddessTitle/font.woff2') format('woff2'), url('GoddessTitle/font.woff') format('woff');
 }
 
