@@ -15,7 +15,7 @@
 .blog-title {
     margin: -5px 0px 10px 0px;
     text-align: left;
-    font-size: 38px;
+    font-family: "Goddess-Title";
     text-align: right;
 }
 
@@ -171,7 +171,7 @@ h6 {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-h1:hover,
+h1:not(.blog-title):hover,
 h2:hover,
 h3:hover {
     text-decoration: underline;
