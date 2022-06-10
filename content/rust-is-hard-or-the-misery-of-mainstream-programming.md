@@ -545,7 +545,7 @@ Some people [pointed out](https://itsallaboutthebit.com/async-simple/) that the 
 
 Rust is ill-suited for generic `async` programming, this is the gross true. When you enter `async`, you observe that many other language features suddenly break down: references, closures, type system, to name a few. From the perspective of language design, this manifests a failure to design an orthogonal language [^orthogonal]. I wanted to convey this observation in my post; I should have stated this explicitly.
 
-Additionally, the ability to we write good libraries reveals the true potential of a language, since libraries have to deal with the most generic code, and therefore they require more expressive features from language designers. This also affects mundane application programming: the more elegant libraries you have, the more easily you can solve your tasks. Example: the abscence of [GATs] does not allow you to have a generic runtime interface and change Tokio to something else in one line of code, as we do for loggers.
+Additionally, how we write libraries reveals the true potential of a language, since libraries tend to require more expressive features from language designers -- due to their generic nature. This also affects mundane application programming: the more elegant libraries you have, the more easily you can solve your tasks. Example: the abscence of [GATs] does not allow you to have a generic runtime interface and change Tokio to something else in one line of code, as we do for loggers.
 
 [GATs]: https://blog.rust-lang.org/2021/08/03/GATs-stabilization-push.html
 

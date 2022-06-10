@@ -225,12 +225,15 @@ h3:hover {
     /* Remove later in JS during page content adjustment. */
     display: none;
 
-    max-width: 600px;
-    margin: auto;
-    margin-bottom: 40px;
-    margin-top: 40px;
     background-color: #ededed;
     padding: 5px 0px;
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+#TOC ul {
+    width: max-content;
+    margin: 20px auto;
 }
 
 .toc-title {
