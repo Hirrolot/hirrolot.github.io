@@ -19,11 +19,6 @@ references:
     author: Leonardo Vencovsky
     URL: "https://github.com/LeoVen/C-Macro-Collections"
 
-  - id: frunk
-    title: "Funktional generic type-level programming in Rust: HList, Coproduct, Generic, LabelledGeneric, Validated, Monoid and friends"
-    author: Lloyd Chan
-    URL: "https://github.com/lloydmeta/frunk"
-
   - id: typeclass-metaprogramming
     type: article-journal
     title: "An introduction to typeclass metaprogramming"
@@ -88,12 +83,6 @@ references:
     author: Hirrolot
     URL: "https://hirrolot.github.io/posts/compiling-algebraic-data-types-in-pure-c99.html"
 
-  - id: metaprog-structures-c-article
-    title: "Metaprogramming custom control structures in C"
-    type: article-journal
-    author: Simon Tatham
-    URL: "https://www.chiark.greenend.org.uk/~sgtatham/mp/"
-
   - id: idris-book
     title: "Type-Driven Development with Idris"
     type: book
@@ -138,8 +127,9 @@ What do I mean by that gorgeous word, linguistic abstraction, to which I have re
 [procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
 [incremental TT muncher pattern]: https://danielkeep.github.io/tlborm/book/pat-incremental-tt-munchers.html
 
-**Why types are "meta"?** Consider this: what you usually accomplish with metaprogramming, you can leverage to enough expressive types [^leverage-type-system]. Returning back to our poor C preprocessor, in Rust you can simply use generics instead of instantiating type-specific code by hand. Or you can go insane and play with heterogenous lists [@frunk] instead of (ab)using compile-time macro collections of [Boost/Preprocessor]. So types are capable of metaprogramming to some extent [@typeclass-metaprogramming; @hoas; @gadt-for-dummies; @type-level-rust-1; @type-level-rust-2; @rust-type-system-turing-complete; @type-operators-rust; @typenum; @fortraith; @idris-book] -- this is why they are "meta".
+**Why types are "meta"?** What you usually accomplish with metaprogramming, you can leverage to enough expressive types [^leverage-type-system]. Returning back to our poor C preprocessor, in Rust you can simply use generics instead of instantiating type-specific code by hand. Or you can [go insane] and play with type lists instead of (ab)using compile-time macro collections of [Boost/Preprocessor]. So types are capable of metaprogramming to some extent [@typeclass-metaprogramming; @hoas; @gadt-for-dummies; @type-level-rust-1; @type-level-rust-2; @rust-type-system-turing-complete; @type-operators-rust; @typenum; @fortraith; @idris-book] -- this is why they are "meta".
 
+[go insane]: https://github.com/lloydmeta/frunk
 [Boost/Preprocessor]: https://github.com/boostorg/preprocessor
 
 The presence of either of these tools in our language makes us able to extend it with custom concepts in an embedded manner, i.e., without intervention of third-party utilities. However, today I will discuss only the syntax business -- macros.
@@ -185,7 +175,7 @@ int sum(const BinaryTree *tree) {
 
 I ask you the same question: does it feel alright? Does it feel natural, like it has always been there? Absolutely **NOT**. While it might look fine in another language, it looks utterly weird in C. But actually, what is the essential difference between these two code snippets, the difference that makes the former look properly, well-formedly, whereas the latter one look like a disformed creature? The **syntactical consistency**.
 
-By syntactical consistency, I understand the degree by which the grammar of a particular meta-abstraction (in our case, the macros `match` & `of`) conforms to/coincides with the grammar of a host language. Recall that in C-like languages, we quite often see syntactical constructions of the form `<keyword> (...) <compound-statement>` [^compound-stmt]:
+By syntactical consistency, I understand the degree by which the grammar of a particular meta-abstraction (e.g., the macros `match` & `of`) conforms to/coincides with the grammar of a host language. Recall that in C-like languages, we can often see constructions of the form `<keyword> (...) <compound-statement>` [^compound-stmt]:
 
  - `for (int i = 0; i < 10; i++) { printf("%d\n", i); }`
  - `while (i < 10) { printf("%d\n", i); i++; }`
@@ -247,7 +237,7 @@ Both alternatives have the same semantics and the same functionality. The differ
 
 ## The bliss of Rust: Syntax-aware macros
 
-While C/C++ macros work with preprocessing tokens [@preprocessing-tokens], Rusty macros work with [concrete syntax trees], and sometimes with language tokens. This is cool because they let you to _imitate_ the syntax of Rust: you can parse native function definitions, structures, enumerations, or pretty much anything! Consider [`tokio::select!`]:
+While C/C++ macros work with preprocessing tokens [@preprocessing-tokens], Rusty macros work with [concrete syntax trees], and sometimes with language tokens. This is cool because they let you _imitate_ the syntax of Rust: you can parse function definitions, structures, enumerations, or pretty much anything! Consider [`tokio::select!`]:
 
 [concrete syntax trees]: https://en.wikipedia.org/wiki/Parse_tree
 [`tokio::select!`]: https://docs.rs/tokio/latest/tokio/macro.select.html
@@ -259,7 +249,9 @@ tokio::select! {
 }
 ```
 
-See? The `<something> => <something>` syntax is much like native Rusty pattern matching. Because of it, this syntax looks very familiar, and even if you are not yet acquainted with the macro, you can already roughly understand what is happening. Another example is derive macros of [serde-json]:
+See? The `<something> => <something>` syntax is much like native Rusty pattern matching. Because of it, this syntax looks very familiar, and even if you are not yet acquainted with the macro, you can already roughly understand what is happening.
+
+Another example is derive macros of [serde-json]:
 
 [serde-json]: https://github.com/serde-rs/json
 
@@ -302,7 +294,7 @@ As opposed to Rust, we have a solution in a completely different direction -- [s
 
 [s-expressions]: https://en.wikipedia.org/wiki/S-expression
 
-To come back to our muttons, s-expressions facilitate syntactical consistency too. Consider this: everything is composed of s-expressions, and your macros perfectly deal with them; therefore, you can easily imitate any language construction. Everything will look the same. Even with so-called powerful Rusty macros, we cannot do this:
+To come back to our muttons, the nature of s-expressions is to facilitate syntactical consistency. Consider this: if there are only s-expressions and nothing more, you can imitate _any_ language item with simple macros -- everything will look the same. Even with so-called "powerful" Rusty macros, we cannot do this:
 
 ```{.rust .numberLines}
 delegate!(self.inner) {
@@ -346,7 +338,7 @@ match x {
 
 <p class="adapted-from">Adapted from [the chapter of TRPL about pattern matching](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html).</p>
 
-Even if it could be fixed, this example still demonstrates the white holes of communication of the main syntax and user-defined macros in Rust: sometimes, due to its multifaceted grammar, it just does not allow us to express things naturally. One possible solution is an [adaptive grammar]:
+Even if it could be fixed, this example does still greatly demonstrate the white holes of communication of the main syntax and user-defined macros in Rust: sometimes, due to its multifaceted grammar, it just does not allow us to express things naturally. One possible solution is leveraging an [adaptive grammar]:
 
 [adaptive grammar]: https://en.wikipedia.org/wiki/Adaptive_grammar
 
@@ -376,9 +368,10 @@ Similar syntactical constructions can be defined in the same way. No need to wai
 
 This is all exciting and fun, but how to apply this knowledge in practice? I have an answer. Rather a long answer, full of peculiar details and techniques.
 
-I suggest you to start with a popular article of Simon Tatham [@metaprog-structures-c-article] about metaprogramming custom control structures in C [^tatham]. If you are only interested in a working solution, consider [Metalang99] [^metalang99] with its [statement chaining macros]. Seeing how pattern matching works in [Datatype99] [@compiling-adt-c] can also give you some insight.
+I suggest you to start with a [popular article] of Simon Tatham about metaprogramming custom control structures in C [^tatham]. If you are only interested in a working solution, consider [Metalang99] [^metalang99] with its [statement chaining macros]. Seeing how pattern matching works in [Datatype99] [@compiling-adt-c] can also give you some insight.
 
-[statement chaining macros]: https://metalang99.readthedocs.io/en/latest/gen.html
+[popular article]: https://www.chiark.greenend.org.uk/~sgtatham/mp/
+[statement chaining macros]: https://metalang99.readthedocs.io/en/latest/stmt.html
 
 ## Final words
 

@@ -610,11 +610,9 @@ pub enum Either<L, R> {
 
 [either::Either]: https://docs.rs/either/latest/either/enum.Either.html
 
-Now imagine we have an arbitrary trait `Foo`, and we are willing to implement this trait for `Either<L, R>`, where `L` and `R` both implement `Foo`. It turns out that we cannot apply a derive macro to `Either` that implements this trait, even if the name is known because, in order to do this, this macro must know all the signatures of `Foo`. To make the situation even worse, `Foo` may be defined in a separate library, meaning that we cannot augment its definition with extra meta-information needed for the derivation for `Either<L, R>`. While it may seem as a rare scanario, in fact it is not; I highly encourage you to look at [tokio-util]'s [`Either`](https://docs.rs/tokio-util/latest/tokio_util/either/enum.Either.html), which is **exactly** the same enumeration but it implements Tokio-specific traits, such as `AsyncRead`, `AsyncWrite`, `AsyncSeek`, etc [^my-tokio-either]. ~~Now imagine you have five different `Either`s in your project that came from different libraries -- that would be a true integration headache!~~ While type introspection may be a compromise, it would nonetheless make the language even more complex than it already is.
+Now imagine we have an arbitrary trait `Foo`, and we are willing to implement this trait for `Either<L, R>`, where `L` and `R` both implement `Foo`. It turns out that we cannot apply a derive macro to `Either` that implements this trait, even if the name is known because, in order to do this, this macro must know all the signatures of `Foo`. To make the situation even worse, `Foo` may be defined in a separate library, meaning that we cannot augment its definition with extra meta-information needed for the derivation for `Either<L, R>`. While it may seem as a rare scanario, in fact it is not; I highly encourage you to look at [tokio-util]'s [`Either`](https://docs.rs/tokio-util/latest/tokio_util/either/enum.Either.html), which is **exactly** the same enumeration but it implements Tokio-specific traits, such as `AsyncRead`, `AsyncWrite`, `AsyncSeek`, etc [^my-tokio-either]. ~~Now imagine you have five different `Either`s in your project that came from different libraries -- that would be a true integration headache!~~ [^tokio-either-update] While type introspection may be a compromise, it would nonetheless make the language even more complex than it already is.
 
 [tokio-util]: https://docs.rs/tokio-util/latest/tokio_util/
-
-_Update: I have no idea why Tokio has its own `Either` -- they could implement their traits for `either::Either` in the same way. However, even if so, it does not eliminate the mess of hand-made "deriving", due to the absence of full-blown reflection._
 
 ## Idris: The way out?
 
@@ -877,9 +875,11 @@ Programming languages ought to be rethought.
 
 [^text-subst]: _Update: I mean you can manipulate the syntax, but you have no idea about the semantics. Of course, Rust's macros are far more convenient than those of C, but the very concept is almost the same in both cases._
 
-[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to tokio-util.
+[^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to `tokio-util`.
 
 [tokio-either]: https://github.com/Hirrolot/tokio-either
+
+[^tokio-either-update]: _Update: I have no idea why Tokio does not implement its traits for `either::Either` in the same way as it does for `tokio-either`. Anyway, it would not eliminate the mess of hand-made "deriving" that must be done._
 
 [^terra]: Terra is a perfect example of a simple dynamic language. In the ["Simplicity" section](https://terralang.org/#simplicity), they show how features of static PLs can be implemented as libraries in dynamic languages.
 
