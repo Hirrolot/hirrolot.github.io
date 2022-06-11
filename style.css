@@ -248,10 +248,13 @@ h3:hover {
     margin: 5px 0px 0px 0px;
 }
 
-p,
-ul,
-ol {
-    text-align: justify;
+@media not screen and (max-width: 600px) {
+
+    p,
+    ul,
+    ol {
+        text-align: justify;
+    }
 }
 
 .header-link {
