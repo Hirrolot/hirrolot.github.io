@@ -207,15 +207,14 @@ manipulate other code, other code cannot manipulate macros <a
 href="#fn4" class="footnote-ref" id="fnref4"
 role="doc-noteref"><sup>4</sup></a> – this is the reason why macros are
 “meta”.</p>
-<p><strong>Why types are “meta”?</strong> Consider this: what you
-usually accomplish with metaprogramming, you can leverage to enough
-expressive types <a href="#fn5" class="footnote-ref" id="fnref5"
+<p><strong>Why types are “meta”?</strong> What you usually accomplish
+with metaprogramming, you can leverage to enough expressive types <a
+href="#fn5" class="footnote-ref" id="fnref5"
 role="doc-noteref"><sup>5</sup></a>. Returning back to our poor C
 preprocessor, in Rust you can simply use generics instead of
-instantiating type-specific code by hand. Or you can go insane and play
-with heterogenous lists <span class="citation" data-cites="frunk">(Lloyd
-Chan, n.d.)</span> instead of (ab)using compile-time macro collections
-of <a
+instantiating type-specific code by hand. Or you can <a
+href="https://github.com/lloydmeta/frunk">go insane</a> and play with
+type lists instead of (ab)using compile-time macro collections of <a
 href="https://github.com/boostorg/preprocessor">Boost/Preprocessor</a>.
 So types are capable of metaprogramming to some extent <span
 class="citation"
@@ -272,10 +271,10 @@ snippets, the difference that makes the former look properly,
 well-formedly, whereas the latter one look like a disformed creature?
 The <strong>syntactical consistency</strong>.</p>
 <p>By syntactical consistency, I understand the degree by which the
-grammar of a particular meta-abstraction (in our case, the macros
+grammar of a particular meta-abstraction (e.g., the macros
 <code>match</code> &amp; <code>of</code>) conforms to/coincides with the
-grammar of a host language. Recall that in C-like languages, we quite
-often see syntactical constructions of the form
+grammar of a host language. Recall that in C-like languages, we can
+often see constructions of the form
 <code>&lt;keyword&gt; (...) &lt;compound-statement&gt;</code> <a
 href="#fn6" class="footnote-ref" id="fnref6"
 role="doc-noteref"><sup>6</sup></a>:</p>
@@ -350,9 +349,9 @@ class="citation" data-cites="preprocessing-tokens">(ISO C, n.d.)</span>,
 Rusty macros work with <a
 href="https://en.wikipedia.org/wiki/Parse_tree">concrete syntax
 trees</a>, and sometimes with language tokens. This is cool because they
-let you to <em>imitate</em> the syntax of Rust: you can parse native
-function definitions, structures, enumerations, or pretty much anything!
-Consider <a
+let you <em>imitate</em> the syntax of Rust: you can parse function
+definitions, structures, enumerations, or pretty much anything! Consider
+<a
 href="https://docs.rs/tokio/latest/tokio/macro.select.html"><code>tokio::select!</code></a>:</p>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">tokio::select!</span> <span class="op">{</span></span>
@@ -362,8 +361,8 @@ class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><
 <p>See? The <code>&lt;something&gt; =&gt; &lt;something&gt;</code>
 syntax is much like native Rusty pattern matching. Because of it, this
 syntax looks very familiar, and even if you are not yet acquainted with
-the macro, you can already roughly understand what is happening. Another
-example is derive macros of <a
+the macro, you can already roughly understand what is happening.</p>
+<p>Another example is derive macros of <a
 href="https://github.com/serde-rs/json">serde-json</a>:</p>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb6-1"><a href="#cb6-1"></a><span class="at">#[</span>derive<span class="at">(</span>Serialize<span class="op">,</span> Deserialize<span class="at">)]</span></span>
@@ -424,11 +423,11 @@ IDE support and language analysis in general. Metaprogramming becomes
 more malleable too, because you only need to handle a single homogenous
 structure (a list); you do not need to deal with an intimidating variety
 of syntactic forms your host language accomodates.</p>
-<p>To come back to our muttons, s-expressions facilitate syntactical
-consistency too. Consider this: everything is composed of s-expressions,
-and your macros perfectly deal with them; therefore, you can easily
-imitate any language construction. Everything will look the same. Even
-with so-called powerful Rusty macros, we cannot do this:</p>
+<p>To come back to our muttons, the nature of s-expressions is to
+facilitate syntactical consistency. Consider this: if there are only
+s-expressions and nothing more, you can imitate <em>any</em> language
+item with simple macros – everything will look the same. Even with
+so-called “powerful” Rusty macros, we cannot do this:</p>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1"></a><span class="pp">delegate!</span>(<span class="kw">self</span><span class="op">.</span>inner) <span class="op">{</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>    <span class="kw">pub</span> <span class="kw">fn</span> is_empty(<span class="op">&amp;</span><span class="kw">self</span>) <span class="op">-&gt;</span> <span class="dt">bool</span><span class="op">;</span></span>
@@ -468,10 +467,11 @@ Adapted from <a
 href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">the
 chapter of TRPL about pattern matching</a>.
 </p>
-<p>Even if it could be fixed, this example still demonstrates the white
-holes of communication of the main syntax and user-defined macros in
-Rust: sometimes, due to its multifaceted grammar, it just does not allow
-us to express things naturally. One possible solution is an <a
+<p>Even if it could be fixed, this example does still greatly
+demonstrate the white holes of communication of the main syntax and
+user-defined macros in Rust: sometimes, due to its multifaceted grammar,
+it just does not allow us to express things naturally. One possible
+solution is leveraging an <a
 href="https://en.wikipedia.org/wiki/Adaptive_grammar">adaptive
 grammar</a>:</p>
 <blockquote>
@@ -513,16 +513,16 @@ role="doc-noteref"><sup>9</sup></a>.</p>
 <p>This is all exciting and fun, but how to apply this knowledge in
 practice? I have an answer. Rather a long answer, full of peculiar
 details and techniques.</p>
-<p>I suggest you to start with a popular article of Simon Tatham <span
-class="citation" data-cites="metaprog-structures-c-article">(Simon
-Tatham, n.d.)</span> about metaprogramming custom control structures in
-C <a href="#fn10" class="footnote-ref" id="fnref10"
+<p>I suggest you to start with a <a
+href="https://www.chiark.greenend.org.uk/~sgtatham/mp/">popular
+article</a> of Simon Tatham about metaprogramming custom control
+structures in C <a href="#fn10" class="footnote-ref" id="fnref10"
 role="doc-noteref"><sup>10</sup></a>. If you are only interested in a
 working solution, consider <a
 href="https://github.com/Hirrolot/metalang99">Metalang99</a> <a
 href="#fn11" class="footnote-ref" id="fnref11"
 role="doc-noteref"><sup>11</sup></a> with its <a
-href="https://metalang99.readthedocs.io/en/latest/gen.html">statement
+href="https://metalang99.readthedocs.io/en/latest/stmt.html">statement
 chaining macros</a>. Seeing how pattern matching works in <a
 href="https://github.com/Hirrolot/datatype99">Datatype99</a> <span
 class="citation" data-cites="compiling-adt-c">(Hirrolot, n.d.)</span>
@@ -578,12 +578,6 @@ Leonardo Vencovsky. n.d. <span>“Easy to Use, Header Only, Macro
 Generated, Generic and Type-Safe Data Structures in C.”</span> <a
 href="https://github.com/LeoVen/C-Macro-Collections">https://github.com/LeoVen/C-Macro-Collections</a>.
 </div>
-<div id="ref-frunk" class="csl-entry" role="doc-biblioentry">
-Lloyd Chan. n.d. <span>“Funktional Generic Type-Level Programming in
-Rust: HList, Coproduct, Generic, LabelledGeneric, Validated, Monoid and
-Friends.”</span> <a
-href="https://github.com/lloydmeta/frunk">https://github.com/lloydmeta/frunk</a>.
-</div>
 <div id="ref-typenum" class="csl-entry" role="doc-biblioentry">
 Paho Lurie-Gregg, and Andre Bogus. n.d. <span>“Compile Time Numbers in
 Rust.”</span> <a
@@ -604,12 +598,6 @@ href="https://github.com/sdleffler/type-operators-rs">https://github.com/sdleffl
 role="doc-biblioentry">
 ———. n.d.b. <span>“Rust’s Type System Is Turing-Complete.”</span> <a
 href="https://sdleffler.github.io/RustTypeSystemTuringComplete/">https://sdleffler.github.io/RustTypeSystemTuringComplete/</a>.
-</div>
-<div id="ref-metaprog-structures-c-article" class="csl-entry"
-role="doc-biblioentry">
-Simon Tatham. n.d. <span>“Metaprogramming Custom Control Structures in
-C.”</span> <a
-href="https://www.chiark.greenend.org.uk/~sgtatham/mp/">https://www.chiark.greenend.org.uk/~sgtatham/mp/</a>.
 </div>
 <div id="ref-fortraith" class="csl-entry" role="doc-biblioentry">
 Szymon Mikulicz. n.d. <span>“Compile-Time Compiler That Compiles Forth
