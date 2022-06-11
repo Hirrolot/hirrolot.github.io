@@ -232,7 +232,7 @@ h3:hover {
 }
 
 #TOC ul {
-    width: max-content;
+    max-width: 450px;
     margin: 20px auto;
 }
 
