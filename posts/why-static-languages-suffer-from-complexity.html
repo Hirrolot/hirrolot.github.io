@@ -108,26 +108,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
-  
-  <!--
-  /**
-  * @license
-  * MyFonts Webfont Build ID 197334
-  *
-  * The fonts listed in this notice are subject to the End User License
-  * Agreement(s) entered into by the website owner. All other parties are
-  * explicitly restricted from using the Licensed Webfonts(s).
-  *
-  * You may obtain a valid license from one of MyFonts official sites.
-  * http://www.fonts.com
-  * http://www.myfonts.com
-  * http://www.linotype.com
-  *
-  */
-  -->
-
-  <link rel="stylesheet" type="text/css" href="../fonts/GoddessTitle.css">
-
   <link rel="shortcut icon" href="../myself.png" type="image/x-icon">
   <script src="../script.js"></script>
   <!--[if lt IE 9]>
@@ -509,10 +489,10 @@ formal correspondence on the type-level, in the computational sense.
 Every time you write some algorithm, it has its correspondence on the
 type-level, using conceptually equivalent constructions! If you are
 interested in <em>how</em>, the above article provides a
-<strong>mathematical proof</strong>: first, the author implements a
-so-called language Smallfuck using <em>dynamics</em>: a sum type,
-pattern matching, recursion, and then using <em>statics</em>: logic on
-traits, associated types, etc.</p>
+<strong>mathematical proof</strong>: first, the author implements
+so-called Smallfuck using <em>dynamics</em>: a sum type, pattern
+matching, recursion, and then using <em>statics</em>: logic on traits,
+associated types, etc.</p>
 <h2 id="recursion-type-level-induction">Recursion – Type-level
 induction</h2>
 <p>Let me show you one more example. But hold on tight this time (<a
@@ -789,13 +769,13 @@ docs of MPL</a>.
 <li>
 <p>[<strong>C</strong>] My own compile-time metaprogramming framework <a
 href="https://github.com/Hirrolot/metalang99">Metalang99</a> does the
-same by (ab)using the C preprocessor. It came to such extent that I was
-forced to <a
+same job by (ab)using the C preprocessor. It came to such extent that I
+was forced to literally <a
 href="https://github.com/Hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h">re-implement
 recursion</a> through the combination of a Lisp-like trampoline and <a
 href="https://en.wikipedia.org/wiki/Continuation-passing_style">Continuation-Passing
 Style (CPS)</a> techniques. In the end, I had a cornucopia of list
-manipulation functions in the standard library, such as <a
+functions in the standard library, such as <a
 href="https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listMap"><code>ML99_listMap</code></a>,
 <a
 href="https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listIntersperse"><code>ML99_listIntersperse</code></a>,
@@ -823,15 +803,14 @@ utility missing in <code>hlist</code>.</p>
 <li>
 <p>[<strong>Rust</strong>] <a
 href="https://docs.rs/typenum/latest/typenum/">Typenum</a> is yet
-another popular type-level library: it allows performing integral
-calculations at compile-time, by encoding integers as generics <a
-href="#fn6" class="footnote-ref" id="fnref6"
-role="doc-noteref"><sup>6</sup></a>. By doing this, the part of the
-language responsible for integers finds its counterpart in the statics,
-thereby introducing even more biformity <a href="#fn7"
-class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. We
-cannot just parameterise some type with <code>(2 + 2) * 5</code>, we
-have to write something like
+another popular type-level library: it performs integral calculations at
+compile-time, by encoding integers as generics <a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. By
+doing this, the part of the language responsible for integers finds its
+counterpart in the statics, thereby introducing even more biformity <a
+href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a>. We cannot just parameterise some
+type with <code>(2 + 2) * 5</code>, we have to write something like
 <code>&lt;&lt;P2 as Add&lt;P2&gt;&gt;::Output as Mul&lt;P5&gt;&gt;::Output</code>!
 The best thing you could do is to write a macro that does the dirty job
 for you, but it would only be syntax sugar – you would anyway see hordes
@@ -872,24 +851,26 @@ model</a>: <code>QObject</code>, <code>QNum</code>, <code>QNull</code>,
 href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">Greenspun’s
 tenth rule</a>, such handmade metalanguages are typically “ad-hoc,
 informally-specified, bug-ridden, and slow”, with quite vague semantics
-and awful documentation. The concept of a metalinguistic abstraction
-simply does not work, albeit the rationale of creating highly
-declarative, small domain-specific languages sounds so cool at first
-sight. When a problem domain (or some intermediate machinery) is
+and awful documentation. The concept of a <a
+href="https://en.wikipedia.org/wiki/Metalinguistic_abstraction">metalinguistic
+abstraction</a> simply does not work, albeit the rationale of creating
+highly declarative, small domain-specific languages sounds so cool at
+first sight. When a problem domain (or some intermediate machinery) is
 expressed in terms of a host language, you need to understand how to
-chain calls together to get things done – this is what we usually call
-an API; however, when this API is written in another language, then, in
-addition to the calling sequence, you need to understand the syntax and
-semantics of that language, which is very unfortunate for two reasons:
-the mental burden it lays upon developers and a very limited number of
-developers that can support such metalanguages. From my experience,
-handmade metalinguistics tend to quickly go out of hand and spread
-across the whole codebase, thereby making it harder to dig into. Not
-only reasoning is impaired but also compiler-developer interaction: have
-you ever tried to use a sophisticated type or macro API? If yes, then
-you should be perfectly acquainted with inscrutable compiler
-diagnostics, which can be summarised in the following screenshot <a
-href="#fn8" class="footnote-ref" id="fnref8"
+chain function calls together to get things done – this is what we
+usually call an API; however, when this API is written in another
+language, then, in addition to the calling sequence, you need to
+understand the syntax and semantics of that language, which is very
+unfortunate for two reasons: the mental burden it lays upon developers
+and a very limited number of developers that can support such
+metalanguages. From my experience, handmade metalinguistics tend to
+quickly go out of hand and spread across the whole codebase, thereby
+making it harder to dig into. Not only reasoning is impaired but also
+compiler-developer interaction: have you ever tried to use a
+sophisticated type or macro API? If yes, then you should be perfectly
+acquainted with inscrutable compiler diagnostics, which can be
+summarised in the following screenshot <a href="#fn8"
+class="footnote-ref" id="fnref8"
 role="doc-noteref"><sup>8</sup></a>:</p>
 <p><img
 src="../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg" /></p>
