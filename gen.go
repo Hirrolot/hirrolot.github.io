@@ -110,31 +110,7 @@ func checkPostMetadata(post *Post) {
 	}
 }
 
-func genPostHeader() {
-	htmlFilename := "post-header.html"
-	file, err := os.Create(htmlFilename)
-	defer file.Close()
-	if err != nil {
-		log.Fatalf("Cannot create '%s': %v.", htmlFilename, err)
-	}
-
-	w := bufio.NewWriter(file)
-	defer w.Flush()
-
-	t := template.Must(template.New("").
-		Funcs(preserveHtmlComments()).
-		ParseFiles(
-			"templates/post-header.tmpl", "templates/my-fonts-license.tmpl"))
-
-	err = t.ExecuteTemplate(w, "post-header.tmpl", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func genPostPages(posts []Post) {
-	genPostHeader()
-
 	for _, post := range posts {
 		if post.RedirectTo != "" {
 			genRedirectHtml(&post)
@@ -202,10 +178,7 @@ func genIndexHtml(posts []Post) {
 	w := bufio.NewWriter(file)
 	defer w.Flush()
 
-	t := template.Must(template.New("").
-		Funcs(preserveHtmlComments()).
-		ParseFiles(
-			"templates/index.tmpl", "templates/my-fonts-license.tmpl", "header.html"))
+	t := template.Must(template.ParseFiles("templates/index.tmpl", "header.html"))
 
 	sort.Slice(posts, func(i, j int) bool {
 		return posts[i].Date.After(posts[j].Date)
@@ -230,11 +203,4 @@ func readContacts() []Contact {
 	}
 
 	return contacts
-}
-
-// https://stackoverflow.com/a/34351058/13166656
-func preserveHtmlComments() template.FuncMap {
-	return template.FuncMap{
-		"safe": func(s string) template.HTML { return template.HTML(s) },
-	}
 }
