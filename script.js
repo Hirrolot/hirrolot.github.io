@@ -142,7 +142,7 @@ function decorateToc() {
 
     var tocTitle = document.createElement("h4");
     tocTitle.className = "toc-title";
-    tocTitle.textContent = "Contents";
+    tocTitle.textContent = "Table of Contents";
 
     if (toc) {
         toc.insertBefore(tocTitle, toc.firstChild);

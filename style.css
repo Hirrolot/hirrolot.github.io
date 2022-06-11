@@ -183,7 +183,6 @@ h3:hover {
     background-color: black;
 }
 
-#TOC,
 .posts-history {
     border-style: solid;
     border-width: 0px 0px 0px 10px;
@@ -227,8 +226,13 @@ h3:hover {
 
     background-color: #ededed;
     padding: 5px 0px;
-    margin: 40px auto;
-    max-width: 600px;
+
+    /* https://css-tricks.com/full-width-containers-limited-width-parents/#aa-no-calc-needed */
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin: 40px -50vw;
 }
 
 #TOC ul {
@@ -239,9 +243,15 @@ h3:hover {
 .toc-title {
     text-align: center;
     font-size: 28px;
-    font-family: "Goddess-Title";
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 100;
     margin: 5px 0px 0px 0px;
+}
+
+p,
+ul,
+ol {
+    text-align: justify;
 }
 
 .header-link {

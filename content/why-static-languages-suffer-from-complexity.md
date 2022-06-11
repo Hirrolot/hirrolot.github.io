@@ -304,7 +304,7 @@ const ThisIsFalse: <Negate<True> as Bool>::Value = False;
 const ThisIsTrue: <Negate<False> as Bool>::Value = True;
 ```
 
-In fact, the [Turing completeness of Rust's type system] is built upon this principle combined with type induction (which we shall see a bit later). Every time you see an ordinary value in terms of Rust, know that it has its formal correspondence on the type-level, in the computational sense. Every time you write some algorithm, it has its correspondence on the type-level, using conceptually equivalent constructions! If you are interested in _how_, the above article provides a **mathematical proof**: first, the author implements a so-called language Smallfuck using _dynamics_: a sum type, pattern matching, recursion, and then using _statics_: logic on traits, associated types, etc.
+In fact, the [Turing completeness of Rust's type system] is built upon this principle combined with type induction (which we shall see a bit later). Every time you see an ordinary value in terms of Rust, know that it has its formal correspondence on the type-level, in the computational sense. Every time you write some algorithm, it has its correspondence on the type-level, using conceptually equivalent constructions! If you are interested in _how_, the above article provides a **mathematical proof**: first, the author implements so-called Smallfuck using _dynamics_: a sum type, pattern matching, recursion, and then using _statics_: logic on traits, associated types, etc.
 
 [Turing completeness of Rust's type system]: https://sdleffler.github.io/RustTypeSystemTuringComplete/
 
@@ -536,7 +536,7 @@ BOOST_MPL_ASSERT_RELATION(
 </li>
 <li>
 
-[**C**] My own compile-time metaprogramming framework [Metalang99] does the same by (ab)using the C preprocessor. It came to such extent that I was forced to [re-implement recursion] through the combination of a Lisp-like trampoline and [Continuation-Passing Style (CPS)] techniques. In the end, I had a cornucopia of list manipulation functions in the standard library, such as [`ML99_listMap`], [`ML99_listIntersperse`], and [`ML99_listFoldr`], which arguably makes Metalang99, as a pure data transformation language, more expressive than C itself [^boost-preprocessor].
+[**C**] My own compile-time metaprogramming framework [Metalang99] does the same job by (ab)using the C preprocessor. It came to such extent that I was forced to literally [re-implement recursion] through the combination of a Lisp-like trampoline and [Continuation-Passing Style (CPS)] techniques. In the end, I had a cornucopia of list functions in the standard library, such as [`ML99_listMap`], [`ML99_listIntersperse`], and [`ML99_listFoldr`], which arguably makes Metalang99, as a pure data transformation language, more expressive than C itself [^boost-preprocessor].
 
 [Metalang99]: https://github.com/Hirrolot/metalang99
 [re-implement recursion]: https://github.com/Hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h
@@ -556,7 +556,7 @@ BOOST_MPL_ASSERT_RELATION(
 </li>
 <li>
 
-[**Rust**] [Typenum] is yet another popular type-level library: it allows performing integral calculations at compile-time, by encoding integers as generics [^recall-generics-correspondence]. By doing this, the part of the language responsible for integers finds its counterpart in the statics, thereby introducing even more biformity [^const-generics]. We cannot just parameterise some type with `(2 + 2) * 5`, we have to write something like `<<P2 as Add<P2>>::Output as Mul<P5>>::Output`! The best thing you could do is to write a macro that does the dirty job for you, but it would only be syntax sugar -- you would anyway see hordes of compile-time errors with the aforementioned traits.
+[**Rust**] [Typenum] is yet another popular type-level library: it performs integral calculations at compile-time, by encoding integers as generics [^recall-generics-correspondence]. By doing this, the part of the language responsible for integers finds its counterpart in the statics, thereby introducing even more biformity [^const-generics]. We cannot just parameterise some type with `(2 + 2) * 5`, we have to write something like `<<P2 as Add<P2>>::Output as Mul<P5>>::Output`! The best thing you could do is to write a macro that does the dirty job for you, but it would only be syntax sugar -- you would anyway see hordes of compile-time errors with the aforementioned traits.
 
 [Typenum]: https://docs.rs/typenum/latest/typenum/
 
@@ -583,9 +583,10 @@ Sometimes, software engineers find their languages too primitive to express thei
 
 [QEMU machine emulator]: https://github.com/qemu/qemu
 
-Recalling the famous [Greenspun's tenth rule], such handmade metalanguages are typically "ad-hoc, informally-specified, bug-ridden, and slow", with quite vague semantics and awful documentation. The concept of a metalinguistic abstraction simply does not work, albeit the rationale of creating highly declarative, small domain-specific languages sounds so cool at first sight. When a problem domain (or some intermediate machinery) is expressed in terms of a host language, you need to understand how to chain calls together to get things done -- this is what we usually call an API; however, when this API is written in another language, then, in addition to the calling sequence, you need to understand the syntax and semantics of that language, which is very unfortunate for two reasons: the mental burden it lays upon developers and a very limited number of developers that can support such metalanguages. From my experience, handmade metalinguistics tend to quickly go out of hand and spread across the whole codebase, thereby making it harder to dig into. Not only reasoning is impaired but also compiler-developer interaction: have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot [^teloxide-error-message]:
+Recalling the famous [Greenspun's tenth rule], such handmade metalanguages are typically "ad-hoc, informally-specified, bug-ridden, and slow", with quite vague semantics and awful documentation. The concept of a [metalinguistic abstraction] simply does not work, albeit the rationale of creating highly declarative, small domain-specific languages sounds so cool at first sight. When a problem domain (or some intermediate machinery) is expressed in terms of a host language, you need to understand how to chain function calls together to get things done -- this is what we usually call an API; however, when this API is written in another language, then, in addition to the calling sequence, you need to understand the syntax and semantics of that language, which is very unfortunate for two reasons: the mental burden it lays upon developers and a very limited number of developers that can support such metalanguages. From my experience, handmade metalinguistics tend to quickly go out of hand and spread across the whole codebase, thereby making it harder to dig into. Not only reasoning is impaired but also compiler-developer interaction: have you ever tried to use a sophisticated type or macro API? If yes, then you should be perfectly acquainted with inscrutable compiler diagnostics, which can be summarised in the following screenshot [^teloxide-error-message]:
 
 [Greenspun's tenth rule]: https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule
+[metalinguistic abstraction]: https://en.wikipedia.org/wiki/Metalinguistic_abstraction
 
 ![](../media/whats-the-point-of-the-c-preprocessor-actually/2.jpg)
 
