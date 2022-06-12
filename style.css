@@ -239,6 +239,7 @@ h3:hover {
 #TOC ul {
     max-width: 450px;
     margin: 20px auto;
+    padding-right: 10px;
 }
 
 .toc-title {
