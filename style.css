@@ -14,10 +14,9 @@ body:not(.index-body) {
 /* Badass pink: #c64d75 */
 
 .blog-title {
-    font-family: "Goddess-Title";
-    font-size: 34px;
+    font-family: "ChristelWagnerReg";
+    font-size: 38px;
     text-align: right;
-    margin-bottom: 10px;
 }
 
 .contacts,
