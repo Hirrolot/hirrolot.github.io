@@ -6,7 +6,8 @@
 }
 
 .index-header-content,
-body:not(.index-body) {
+body:not(.index-body),
+.posts-history {
     max-width: 800px;
 }
 
@@ -34,7 +35,7 @@ body:not(.index-body) {
     gap: 3px;
 }
 
-img:not(.redirect-icon, .contact-img, .myself) {
+img:not(.redirect-icon, .contact-img, .selfie) {
     display: block;
     margin: auto;
     max-width: 100%;
@@ -43,14 +44,18 @@ img:not(.redirect-icon, .contact-img, .myself) {
 }
 
 .myself {
-    display: block;
-    width: 380px;
-    max-width: 100%;
-    margin: 20px auto 20px auto;
+    max-width: 1000px;
+    margin: auto;
 }
 
-.index-body {
-    margin: 0px;
+.selfie {
+    display: block;
+    width: 380px;
+    margin: 20px auto;
+}
+
+.myself-description {
+    text-align: center;
 }
 
 body:not(.index-body) {
@@ -190,7 +195,6 @@ h3:hover {
 
     margin-top: 20px;
     margin-bottom: 20px;
-    max-width: 800px;
 
     font-weight: normal;
     font-style: italic;
