@@ -51,6 +51,7 @@ img:not(.redirect-icon, .contact-img, .selfie) {
 .selfie {
     display: block;
     width: 380px;
+    max-width: 100%;
     margin: 20px auto;
 }
 
