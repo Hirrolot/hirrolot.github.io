@@ -6,7 +6,6 @@
 }
 
 .index-header-content,
-.posts-history,
 body:not(.index-body) {
     max-width: 800px;
 }
@@ -185,18 +184,17 @@ h3:hover {
 }
 
 .posts-history {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 
     margin-top: 20px;
     margin-bottom: 20px;
+    max-width: 800px;
 
     font-weight: normal;
     font-style: italic;
     font-size: 20px;
-
-    border-style: solid;
-    border-width: 0px 0px 0px 10px;
-    border-color: PaleVioletRed;
 }
 
 .posts-history>.post-link {
@@ -204,7 +202,7 @@ h3:hover {
     padding: 10px 5px;
 }
 
-.posts-history>div:nth-child(odd) {
+.posts-history>div {
     background-color: #f2f2f2;
 }
 
