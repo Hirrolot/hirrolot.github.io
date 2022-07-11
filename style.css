@@ -6,8 +6,8 @@
 }
 
 .index-header-content,
-.posts-history,
-body:not(.index-body) {
+body:not(.index-body),
+.posts-history {
     max-width: 800px;
 }
 
@@ -35,7 +35,7 @@ body:not(.index-body) {
     gap: 3px;
 }
 
-img:not(.redirect-icon, .contact-img, .myself) {
+img:not(.redirect-icon, .contact-img, .selfie) {
     display: block;
     margin: auto;
     max-width: 100%;
@@ -44,14 +44,18 @@ img:not(.redirect-icon, .contact-img, .myself) {
 }
 
 .myself {
-    display: block;
-    width: 380px;
-    max-width: 100%;
-    margin: 20px auto 20px auto;
+    max-width: 1000px;
+    margin: auto;
 }
 
-.index-body {
-    margin: 0px;
+.selfie {
+    display: block;
+    width: 380px;
+    margin: 20px auto;
+}
+
+.myself-description {
+    text-align: center;
 }
 
 body:not(.index-body) {
@@ -185,7 +189,9 @@ h3:hover {
 }
 
 .posts-history {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 
     margin-top: 20px;
     margin-bottom: 20px;
@@ -193,10 +199,6 @@ h3:hover {
     font-weight: normal;
     font-style: italic;
     font-size: 20px;
-
-    border-style: solid;
-    border-width: 0px 0px 0px 10px;
-    border-color: PaleVioletRed;
 }
 
 .posts-history>.post-link {
@@ -204,7 +206,7 @@ h3:hover {
     padding: 10px 5px;
 }
 
-.posts-history>div:nth-child(odd) {
+.posts-history>div {
     background-color: #f2f2f2;
 }
 
