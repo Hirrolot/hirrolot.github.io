@@ -44,23 +44,25 @@ img:not(.redirect-icon, .contact-img, .selfie) {
     margin-bottom: 20px;
 }
 
-/* TODO: fix these magic numbers. */
+.inner-index-body {
+    padding: 0px 8px;
+}
 
-@media only screen and (min-width: 1220px) {
+.inner-index-body-container {
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (min-width: 850px) {
     .inner-index-body {
         display: grid;
-        grid-template-columns: 340px 800px;
+        grid-template-columns: 340px minmax(auto, 800px);
         grid-gap: 50px;
-        width: min-content;
-        margin: 0px auto;
+        margin: auto;
     }
 }
 
-@media only screen and (max-width: 1220px) {
-    .inner-index-body {
-        margin: 0px 8px;
-    }
-
+@media only screen and (max-width: 850px) {
     .selfie {
         width: 380px;
     }
@@ -98,12 +100,6 @@ body {
     font-family: 'Source Serif Pro', serif;
     font-size: 20px;
     line-height: 1.6;
-}
-
-html {
-    /* Fix right side overflow on mobile devices. */
-    overflow-x: hidden;
-    width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
