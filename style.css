@@ -43,20 +43,45 @@ img:not(.redirect-icon, .contact-img, .selfie) {
     margin-bottom: 20px;
 }
 
-.myself {
-    max-width: 1000px;
-    margin: auto;
+/* TODO: fix these magic numbers. */
+
+@media only screen and (min-width: 1220px) {
+    .inner-index-body {
+        display: grid;
+        grid-template-columns: 340px 800px;
+        grid-gap: 50px;
+        width: min-content;
+        margin: 0px auto;
+    }
+}
+
+@media only screen and (max-width: 1220px) {
+    .inner-index-body {
+        margin: 0px 8px;
+    }
+
+    .selfie {
+        width: 380px;
+    }
+
+    .posts-history,
+    .myself-description {
+        margin: 0px auto;
+    }
+
+    .myself-description {
+        max-width: 800px;
+    }
 }
 
 .selfie {
     display: block;
-    width: 380px;
     max-width: 100%;
     margin: 20px auto;
 }
 
 .myself-description {
-    text-align: center;
+    text-align: left;
 }
 
 body:not(.index-body) {
@@ -64,7 +89,6 @@ body:not(.index-body) {
 }
 
 body:not(.index-body),
-.posts-history,
 .index-header-content {
     margin: auto;
 }
@@ -82,7 +106,9 @@ html {
 }
 
 @media only screen and (max-width: 600px) {
-    body {
+
+    body,
+    .post-link {
         font-size: 18px !important;
     }
 
@@ -192,7 +218,7 @@ h3:hover {
 .posts-history {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-gap: 10px;
 
     margin-top: 20px;
     margin-bottom: 20px;
@@ -211,8 +237,6 @@ h3:hover {
     background-color: #f2f2f2;
 }
 
-.posts-history-container,
-.myself-container,
 .index-header-container {
     margin: 0px 8px;
 }
