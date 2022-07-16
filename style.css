@@ -234,6 +234,15 @@ h3:hover {
     background-color: #f2f2f2;
 }
 
+.post-link>a {
+    text-decoration: none;
+    color: black;
+}
+
+.post-date {
+    color: gray;
+}
+
 .index-header-container {
     margin: 0px 8px;
 }
@@ -297,6 +306,12 @@ h3:hover {
 
 a:hover {
     background-color: PaleVioletRed;
+}
+
+.post-link>a:hover {
+    background-color: transparent;
+    text-decoration: underline;
+    color: gray;
 }
 
 blockquote {
