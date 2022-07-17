@@ -219,28 +219,21 @@ h3:hover {
 
     margin-top: 20px;
     margin-bottom: 20px;
-
-    font-weight: normal;
-    font-style: italic;
-    font-size: 20px;
 }
 
-.posts-history>.post-link {
-    border: none;
+.post-link {
     padding: 10px 5px;
-}
-
-.posts-history>div {
+    font-size: 20px;
     background-color: #f2f2f2;
 }
 
 .post-link>a {
-    text-decoration: none;
     color: black;
 }
 
 .post-date {
     color: gray;
+    font-style: italic;
 }
 
 .index-header-container {
@@ -306,12 +299,6 @@ h3:hover {
 
 a:hover {
     background-color: PaleVioletRed;
-}
-
-.post-link>a:hover {
-    background-color: transparent;
-    text-decoration: underline;
-    color: gray;
 }
 
 blockquote {
