@@ -8,8 +8,8 @@ window.addEventListener("load", function (event) {
 });
 
 function moveTocDown() {
-    var introduction = document.querySelector(".introduction");
-    var toc = document.querySelector("#TOC");
+    const introduction = document.querySelector(".introduction");
+    const toc = document.querySelector("#TOC");
 
     if (toc && introduction) {
         toc.parentNode.insertBefore(introduction, toc);
@@ -20,10 +20,10 @@ function moveTocDown() {
 }
 
 function createClickableHeaders() {
-    var headers = document.querySelectorAll("h1:not(.blog-title), h2, h3");
+    const headers = document.querySelectorAll("h1:not(.blog-title), h2, h3");
 
     for (var i = headers.length - 1; i >= 0; i--) {
-        var headerLink = document.createElement("a");
+        const headerLink = document.createElement("a");
         headerLink.className = "header-link";
         headerLink.href = "#" + headers[i].id;
         headerLink.appendChild(headers[i].cloneNode(true));
@@ -39,22 +39,22 @@ function createPopupNotes() {
         return;
     }
 
-    var notes = document.querySelectorAll(".footnote-ref");
+    const notes = document.querySelectorAll(".footnote-ref");
 
     for (var i = notes.length - 1; i >= 0; i--) {
-        var sup = document.createElement("sup");
+        const sup = document.createElement("sup");
         sup.className = "note-sup";
         sup.textContent = "[^]";
 
-        var fnId = notes[i].href.slice(notes[i].href.lastIndexOf("#") + 1);
-        var fnContent = document.getElementById(fnId).firstChild;
+        const fnId = notes[i].href.slice(notes[i].href.lastIndexOf("#") + 1);
+        const fnContent = document.getElementById(fnId).firstChild;
         fnContent.querySelector(".footnote-back").remove();
 
-        var noteText = document.createElement("span");
+        const noteText = document.createElement("span");
         noteText.className = "note-text";
         noteText.innerHTML = fnContent.innerHTML;
 
-        var noteContainer = document.createElement("span");
+        const noteContainer = document.createElement("span");
         noteContainer.className = "note-container";
         noteContainer.appendChild(sup);
         noteContainer.appendChild(noteText);
@@ -70,14 +70,14 @@ function createPopupNotes() {
         notes[i].replaceWith(noteContainer);
     }
 
-    var footnotes = document.querySelector(".footnotes");
+    const footnotes = document.querySelector(".footnotes");
     if (footnotes) {
         footnotes.remove();
     }
 }
 
 function genAuthorEmoji() {
-    var emojis = [
+    const emojis = [
         "💋",
         "💄",
         "💅",
@@ -117,20 +117,20 @@ function genAuthorEmoji() {
         "🦄",
     ];
 
-    var randomEmoji = document.createElement("span");
+    const randomEmoji = document.createElement("span");
     randomEmoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     randomEmoji.innerHTML += "&nbsp;";
 
-    var blogLink = document.createElement("a");
+    const blogLink = document.createElement("a");
     blogLink.href = "..";
     blogLink.textContent = "Hirrolot's Blog";
 
-    var fancyAuthor = document.createElement("p");
+    const fancyAuthor = document.createElement("p");
     fancyAuthor.className = "author";
     fancyAuthor.appendChild(randomEmoji);
     fancyAuthor.appendChild(blogLink);
 
-    var author = document.querySelector(".author");
+    const author = document.querySelector(".author");
 
     if (author) {
         author.replaceWith(fancyAuthor);
@@ -138,9 +138,9 @@ function genAuthorEmoji() {
 }
 
 function decorateToc() {
-    var toc = document.querySelector("#TOC");
+    const toc = document.querySelector("#TOC");
 
-    var tocTitle = document.createElement("h4");
+    const tocTitle = document.createElement("h4");
     tocTitle.className = "toc-title";
     tocTitle.textContent = "Table of Contents";
 
@@ -150,13 +150,13 @@ function decorateToc() {
 }
 
 function createCodeAnnotationContainers() {
-    var codeAnnotations = document.querySelectorAll(".code-annotation");
+    const codeAnnotations = document.querySelectorAll(".code-annotation");
 
     for (var i = codeAnnotations.length - 1; i >= 0; i--) {
-        var container = document.createElement("div");
+        const container = document.createElement("div");
         container.className = "code-annotation-container";
 
         codeAnnotations[i].parentNode.insertBefore(container, codeAnnotations[i]);
         container.appendChild(codeAnnotations[i]);
     }
-}   
+}
