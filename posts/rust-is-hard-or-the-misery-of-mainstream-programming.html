@@ -137,7 +137,7 @@ href="https://github.com/rust-lang/rust/issues">rust/issues</a> and
 search for a solution for your problem. Suddenly, you find an issue with
 an explanation that it is theoretically impossible to design your API in
 this way, owing to some subtle language bug. The issue is <span
-style="background-color: rgb(35, 134, 54); color: white; display: inline-block; padding: 5px 12px; border-radius: 28px; font-size: 16px; font-family: sans-serif;"><svg style="vertical-align: middle; margin-bottom: 3px;" height="16" class="octicon octicon-issue-opened" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill="#FFFFFF" d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path><path fill="#FFFFFF" fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"></path></svg>
+style="background-color: rgb(35, 134, 54); color: white; display: inline-block; padding: 5px 12px; border-radius: 28px; font-size: 15.2px; font-family: sans-serif;"><svg style="vertical-align: middle; margin-bottom: 3px;" height="16" class="octicon octicon-issue-opened" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill="#FFFFFF" d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path><path fill="#FFFFFF" fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"></path></svg>
 Open</span> and dated Apr 5, 2017.</p>
 <p>I entered Rust four years ago. To this moment, I co-authored <a
 href="https://github.com/teloxide/teloxide">teloxide</a> and <a
@@ -145,8 +145,8 @@ href="https://github.com/teloxide/dptree">dptree</a>, wrote several
 publications and translated a number of language release announcements.
 I also managed to write some production code in Rust, and had a chance
 to speak at one online meetup dedicated to Rust. Still, from time to
-time I find myself disputing with Rust’s borrow checker and type system
-for no practical reason. Yes, I am no longer stupefied by such errors as
+time I find myself disputing with borrow checker and type system for no
+practical reason. Yes, I am no longer stupefied by such errors as
 <code>cannot return reference to temporary value</code> – over time, I
 developed multiple heuristic strategies to cope with lifetimes…</p>
 <p>But one recent situation has made me to <em>fail
@@ -192,8 +192,8 @@ class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><
 <span id="cb1-25"><a href="#cb1-25"></a>        <span class="pp">println!</span>(<span class="st">&quot;{:?}&quot;</span><span class="op">,</span> upd)<span class="op">;</span></span>
 <span id="cb1-26"><a href="#cb1-26"></a>    <span class="op">}</span>)<span class="op">;</span></span>
 <span id="cb1-27"><a href="#cb1-27"></a><span class="op">}</span></span></code></pre></div>
-<p>Here we represent each update handler using a dynamically typed
-<code>Fn</code> trait restricted by an <a
+<p>Here we represent each handler using a dynamically typed
+<code>Fn</code> restricted by an <a
 href="https://doc.rust-lang.org/nomicon/hrtb.html">HRTB lifetime</a>
 <code>for&lt;'a&gt;</code>, since we want a returning future to depend
 on some <code>'a</code> from the <code>&amp;'a Update</code> function
