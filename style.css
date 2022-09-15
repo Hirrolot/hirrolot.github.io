@@ -3,14 +3,15 @@
     padding: 10px 0px 20px 0px;
 }
 
-.inner-index-body-container {
-    background-color: #f3ecea;
-}
-
 .index-header-content,
 body:not(.index-body),
 .posts-history {
     max-width: 800px;
+}
+
+.myself-container {
+    position: relative;
+    top: -70px;
 }
 
 .contacts,
@@ -175,10 +176,15 @@ body:not(.index-body)>pre {
     content: ">> ";
 }
 
-h1,
-.blog-title {
+h1 {
     text-align: right;
     font-size: 2.5rem;
+}
+
+.blog-title {
+    font-family: 'Bebas Neue', cursive;
+    text-align: right;
+    font-size: 3rem;
 }
 
 h2:before {
@@ -192,8 +198,7 @@ h3,
 h4,
 h5,
 h6,
-.toc-title,
-.blog-title {
+.toc-title {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
