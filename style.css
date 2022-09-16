@@ -9,11 +9,6 @@ body:not(.index-body),
     max-width: 800px;
 }
 
-.myself-container {
-    position: relative;
-    top: -70px;
-}
-
 .contacts,
 .contact {
     display: flex;
@@ -68,6 +63,21 @@ img:not(.redirect-icon, .contact-img, .selfie) {
 
     .myself-description {
         max-width: 800px;
+    }
+
+    .posts-history {
+        grid-template-columns: 1fr !important;
+    }
+
+    .post-link {
+        background-color: transparent !important;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .myself-container {
+        position: relative;
+        top: -70px;
     }
 }
 
