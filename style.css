@@ -176,16 +176,12 @@ body:not(.index-body)>pre {
     content: ">> ";
 }
 
-h1 {
+h1,
+.blog-title {
     text-align: right;
     font-size: 2.5rem;
 }
 
-.blog-title {
-    font-family: 'Bebas Neue', cursive;
-    text-align: right;
-    font-size: 3rem;
-}
 
 h2:before {
     content: "¶ ";
@@ -198,7 +194,8 @@ h3,
 h4,
 h5,
 h6,
-.toc-title {
+.toc-title,
+.blog-title {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
@@ -226,6 +223,7 @@ h3:hover {
 .post-link {
     padding: 10px 5px;
     font-size: 19.2px;
+    background-color: #ededed;
 }
 
 .post-link>a {
