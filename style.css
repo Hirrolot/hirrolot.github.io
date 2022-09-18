@@ -9,6 +9,10 @@ body:not(.index-body),
     max-width: 800px;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .contacts,
 .contact {
     display: flex;
