@@ -1,7 +1,6 @@
 window.addEventListener("load", function (event) {
     moveTocDown();
     createClickableHeaders();
-    createPopupNotes();
     genAuthorEmoji();
     decorateToc();
     createCodeAnnotationContainers();
@@ -29,50 +28,6 @@ function createClickableHeaders() {
         headerLink.appendChild(headers[i].cloneNode(true));
 
         headers[i].replaceWith(headerLink);
-    }
-}
-
-function createPopupNotes() {
-    // Pop-up notes overflow screen size sometimes. This is a hack, I am noob at CSS/JS.
-    // TODO: Adjust notes dynamically.
-    if (window.innerWidth <= 600) {
-        return;
-    }
-
-    const notes = document.querySelectorAll(".footnote-ref");
-
-    for (var i = notes.length - 1; i >= 0; i--) {
-        const sup = document.createElement("sup");
-        sup.className = "note-sup";
-        sup.textContent = "[^]";
-
-        const fnId = notes[i].href.slice(notes[i].href.lastIndexOf("#") + 1);
-        const fnContent = document.getElementById(fnId).firstChild;
-        fnContent.querySelector(".footnote-back").remove();
-
-        const noteText = document.createElement("span");
-        noteText.className = "note-text";
-        noteText.innerHTML = fnContent.innerHTML;
-
-        const noteContainer = document.createElement("span");
-        noteContainer.className = "note-container";
-        noteContainer.appendChild(sup);
-        noteContainer.appendChild(noteText);
-
-        noteContainer.addEventListener("mouseover", function () {
-            this.querySelector(".note-text").classList.toggle("show-note");
-        });
-
-        noteContainer.addEventListener("mouseout", function () {
-            this.querySelector(".note-text").classList.remove("show-note");
-        });
-
-        notes[i].replaceWith(noteContainer);
-    }
-
-    const footnotes = document.querySelector(".footnotes");
-    if (footnotes) {
-        footnotes.remove();
     }
 }
 
