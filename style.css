@@ -336,8 +336,7 @@ blockquote::before {
 
 #refs,
 .contacts,
-.footnotes,
-.note-text {
+.footnotes {
     font-size: 17.2px;
 }
 
@@ -353,49 +352,6 @@ td {
 
 td {
     padding: 0px 5px;
-}
-
-.note {
-    position: absolute;
-    visibility: hidden;
-}
-
-.note-text {
-    position: absolute;
-    display: inline-block;
-    z-index: 1;
-    visibility: hidden;
-    width: 400px;
-    text-align: center;
-
-    font-style: normal;
-    font-weight: normal;
-
-    background-color: floralwhite;
-    padding: 5px 12px;
-
-    border-style: solid;
-    border-width: 1px;
-    border-color: gray;
-    border-radius: 3px;
-
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    right: -200px;
-    bottom: 30px;
-}
-
-.note-container {
-    position: relative;
-}
-
-.note-sup {
-    color: blue;
-    cursor: pointer;
-    font-size: smaller;
-}
-
-.show-note {
-    visibility: visible;
 }
 
 details:hover {
