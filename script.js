@@ -21,9 +21,6 @@ function rearrangePostStructure() {
         }
 
         document.body.appendChild(postBody);
-
-        // Previously it was "none". After we are done moving it, we make it visible.
-        toc.style.display = "block";
     }
 }
 
@@ -36,6 +33,9 @@ function decorateToc() {
 
     if (toc) {
         toc.insertBefore(tocTitle, toc.firstChild);
+
+        // Previously it was "none". After we are done moving it, we make it visible.
+        toc.style.display = "block";
     }
 }
 
