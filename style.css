@@ -4,13 +4,11 @@
 }
 
 .index-header-content,
-body:not(.index-body),
+body:not(.index-body)>header,
+body:not(.index-body)>.introduction,
+body:not(.index-body)>.post-body,
 .posts-history {
     max-width: 800px;
-}
-
-body {
-    overflow-x: hidden;
 }
 
 .contacts,
@@ -95,11 +93,15 @@ img:not(.redirect-icon, .contact-img, .selfie) {
     text-align: left;
 }
 
-body:not(.index-body) {
+body:not(.index-body)>header,
+body:not(.index-body)>.introduction,
+body:not(.index-body)>.post-body {
     padding: 0px 20px;
 }
 
-body:not(.index-body),
+body:not(.index-body)>header,
+body:not(.index-body)>.introduction,
+body:not(.index-body)>.post-body,
 .index-header-content {
     margin: auto;
 }
@@ -154,7 +156,7 @@ div.sourceCode,
     font-size: 15.2px;
 }
 
-body:not(.index-body)>pre {
+.post-body>pre {
     margin-top: 16px;
 }
 
@@ -265,13 +267,8 @@ h3:hover {
 
     background-color: #ededed;
     padding: 5px 0px;
-
-    /* https://css-tricks.com/full-width-containers-limited-width-parents/#aa-no-calc-needed */
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin: 40px -50vw;
+    margin-top: 40px;
+    width: 100%;
 }
 
 #TOC ul {

@@ -1,20 +1,41 @@
 window.addEventListener("load", function (event) {
-    moveTocDown();
+    rearrangePostStructure();
+    decorateToc();
     createClickableHeaders();
     genAuthorEmoji();
-    decorateToc();
     createCodeAnnotationContainers();
 });
 
-function moveTocDown() {
+function rearrangePostStructure() {
     const introduction = document.querySelector(".introduction");
     const toc = document.querySelector("#TOC");
 
     if (toc && introduction) {
-        toc.parentNode.insertBefore(introduction, toc);
+        document.body.insertBefore(introduction, toc);
+
+        const postBody = document.createElement("div");
+        postBody.className = "post-body";
+
+        for (let i = document.body.children.length - 1; i >= 3; i--) {
+            postBody.prepend(document.body.children[i]);
+        }
+
+        document.body.appendChild(postBody);
 
         // Previously it was "none". After we are done moving it, we make it visible.
         toc.style.display = "block";
+    }
+}
+
+function decorateToc() {
+    const toc = document.querySelector("#TOC");
+
+    const tocTitle = document.createElement("h4");
+    tocTitle.className = "toc-title";
+    tocTitle.textContent = "Table of Contents";
+
+    if (toc) {
+        toc.insertBefore(tocTitle, toc.firstChild);
     }
 }
 
@@ -89,18 +110,6 @@ function genAuthorEmoji() {
 
     if (author) {
         author.replaceWith(fancyAuthor);
-    }
-}
-
-function decorateToc() {
-    const toc = document.querySelector("#TOC");
-
-    const tocTitle = document.createElement("h4");
-    tocTitle.className = "toc-title";
-    tocTitle.textContent = "Table of Contents";
-
-    if (toc) {
-        toc.insertBefore(tocTitle, toc.firstChild);
     }
 }
 
