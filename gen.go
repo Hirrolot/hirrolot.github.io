@@ -27,6 +27,14 @@ type Post struct {
 	RedirectTo  string    // "" in case of a regular post.
 }
 
+func (post *Post) inputFilename() string {
+	return fmt.Sprintf("%s/%s.md", contentDir, post.Name)
+}
+
+func (post *Post) outputFilename() string {
+	return fmt.Sprintf("%s/%s.html", outputDir, post.Name)
+}
+
 func main() {
 	posts := collectPosts()
 	genPostPages(posts)
@@ -111,13 +119,18 @@ func checkPostMetadata(post *Post) {
 }
 
 func genPostPages(posts []Post) {
+	var outputFilenames []string
+
 	for _, post := range posts {
 		if post.RedirectTo != "" {
 			genRedirectHtml(&post)
 		} else {
 			invokePandoc(&post)
+			outputFilenames = append(outputFilenames, post.outputFilename())
 		}
 	}
+
+	transformDOM(outputFilenames)
 }
 
 func genRedirectHtml(post *Post) {
@@ -141,8 +154,8 @@ func genRedirectHtml(post *Post) {
 
 func invokePandoc(post *Post) {
 	cmd := exec.Command(
-		"pandoc", fmt.Sprintf("%s/%s.md", contentDir, post.Name),
-		"--output", fmt.Sprintf("%s/%s.html", outputDir, post.Name),
+		"pandoc", post.inputFilename(),
+		"--output", post.outputFilename(),
 		"--standalone",
 		"-H", "header.html",
 		"--table-of-contents",
@@ -150,6 +163,17 @@ func invokePandoc(post *Post) {
 		"--css", "../style.css",
 		"--include-after-body", "utterances.html",
 		"--include-in-header", "post-header.html")
+
+	output, err := cmd.CombinedOutput()
+	defer fmt.Print(string(output))
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func transformDOM(outputFilenames []string) {
+	args := append([]string{"transform.js"}, outputFilenames...)
+	cmd := exec.Command("node", args...)
 
 	output, err := cmd.CombinedOutput()
 	defer fmt.Print(string(output))
