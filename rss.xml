@@ -1,0 +1,58 @@
+<rss version="2.0">
+    <channel>
+        <title>Hirrolot's Blog</title>
+        <link>https://hirrolot.github.io/</link>
+        <description>Hirrolot's blog about programming and all the stuff.</description>
+        <language>en-us</language>
+        <item>
+            <title>Barebones Lambda Cube in OCaml</title>
+            <guid>https://hirrolot.github.io/posts/barebones-lambda-cube-in-ocaml.html</guid>
+            <pubDate>Tue, 16 Aug 2022 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Rust Is Hard, Or: The Misery of Mainstream Programming</title>
+            <guid>https://hirrolot.github.io/posts/rust-is-hard-or-the-misery-of-mainstream-programming.html</guid>
+            <pubDate>Thu, 2 Jun 2022 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Pretty-Printable Enumerations in Pure C</title>
+            <guid>https://hirrolot.github.io/posts/pretty-printable-enumerations-in-pure-c.html</guid>
+            <pubDate>Mon, 23 May 2022 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Why Static Languages Suffer From Complexity</title>
+            <guid>https://hirrolot.github.io/posts/why-static-languages-suffer-from-complexity.html</guid>
+            <pubDate>Mon, 3 Jan 2022 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming</title>
+            <guid>https://hirrolot.github.io/posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html</guid>
+            <pubDate>Thu, 22 Jul 2021 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Extend Your Language, Don't Alter It</title>
+            <guid>https://hirrolot.github.io/posts/extend-your-language-dont-alter-it.html</guid>
+            <pubDate>Tue, 6 Jul 2021 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Compiling Algebraic Data Types in Pure C99</title>
+            <guid>https://hirrolot.github.io/posts/compiling-algebraic-data-types-in-pure-c99.html</guid>
+            <pubDate>Tue, 25 May 2021 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Expression-Oriented Programming in C: The FMT Macro</title>
+            <guid>https://hirrolot.github.io/posts/expression-oriented-programming-in-c-the-fmt-macro.html</guid>
+            <pubDate>Fri, 14 May 2021 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Compile-Time Introspection of Sum Types in Pure C99</title>
+            <guid>https://hirrolot.github.io/posts/compile-time-introspection-of-sum-types-in-pure-c99.html</guid>
+            <pubDate>Sun, 25 Apr 2021 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Unleashing Sum Types in Pure C99</title>
+            <guid>https://hirrolot.github.io/posts/unleashing-sum-types-in-pure-c99.html</guid>
+            <pubDate>Sat, 6 Feb 2021 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>

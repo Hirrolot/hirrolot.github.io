@@ -1,0 +1,469 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Hirrolot’s Blog">
+  <meta name="dcterms.date" content="2022-05-23">
+  <title>Pretty-Printable Enumerations in Pure C</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&amp;display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../myself.png" type="image/x-icon">
+  <script src="../script.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<a class="header-link" href="#"><h1 class="title">Pretty-Printable Enumerations in Pure C</h1></a>
+<p class="author">Hirrolot’s Blog</p>
+<p class="date">May 23, 2022</p>
+</header>
+<div class="introduction">
+<p class="discussions">
+<a href="https://www.reddit.com/r/ProgrammingLanguages/comments/uw4o14/prettyprintable_enumerations_in_pure_c/">r/ProgrammingLanguages</a>
+· <a href="https://www.reddit.com/r/C_Programming/comments/uw4lk6/prettyprintable_enumerations_in_pure_c/">r/C_Programming</a>
+</p>
+<p>It is a notorious fact that the <code>enum</code> keyword in C is
+just another way to give integers names: by defining an
+<code>enum</code>, you perform a work similar to
+<code>#define</code>-ing integer macros or declaring <code>const</code>
+variables. However, sometimes we may want to give our enumerations a bit
+more high-level semantics, as in the following scenario:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    Red<span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    Green<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    Blue<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    Orange<span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    White<span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    Black<span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    Pink<span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    Yellow<span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="op">}</span> Colour<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>    printf<span class="op">(</span><span class="st">"Got '%s'!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> Colour_print<span class="op">(</span>Yellow<span class="op">));</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="op">}</span></span></code></pre></div>
+<p>We expect having <code>Got 'Yellow'!</code> printed to
+<code>stdout</code>. The tricky bit is the <code>Colour_print</code>
+function, which converts a <code>Colour</code> object to its
+corresponding textual representation. The reason behind this function is
+that we cannot just pass a <code>Colour</code> object to
+<code>printf</code> – it would then print a number like <code>7</code>
+(if a specifier like <code>%d</code> is used).</p>
+<p>In this post, I am to outline several alternatives that I saw or used
+by myself.</p>
+</div><nav id="TOC" role="doc-toc" style="display: block;"><h4 class="toc-title">Table of Contents</h4>
+<ul>
+<li><a href="#the-naive-solution">The naive solution</a></li>
+<li><a href="#x-macro">X-Macro</a></li>
+<li><a href="#macro-iteration">Macro iteration</a></li>
+<li><a href="#a-word-about-third-party-codegen">A word about third-party
+codegen</a></li>
+<li><a href="#final-words">Final words</a></li>
+<li><a href="#appendix-deriving-pretty-printers-via-datatype99">Appendix:
+Deriving pretty-printers via Datatype99</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="post-body"><a class="header-link" href="#the-naive-solution"><h2 id="the-naive-solution">The naive solution</h2></a><p>… would be just writing this damn function:</p><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>Colour_print<span class="op">(</span>Colour c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="cf">switch</span> <span class="op">(</span>c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="cf">case</span> Red<span class="op">:</span> <span class="cf">return</span> <span class="st">"Red"</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="cf">case</span> Green<span class="op">:</span> <span class="cf">return</span> <span class="st">"Green"</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="cf">case</span> Blue<span class="op">:</span> <span class="cf">return</span> <span class="st">"Blue"</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="cf">case</span> Orange<span class="op">:</span> <span class="cf">return</span> <span class="st">"Orange"</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>    <span class="cf">case</span> White<span class="op">:</span> <span class="cf">return</span> <span class="st">"White"</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="cf">case</span> Black<span class="op">:</span> <span class="cf">return</span> <span class="st">"Black"</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="cf">case</span> Pink<span class="op">:</span> <span class="cf">return</span> <span class="st">"Pink"</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="cf">case</span> Yellow<span class="op">:</span> <span class="cf">return</span> <span class="st">"Yellow"</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="cf">default</span><span class="op">:</span> <span class="cf">return</span> <span class="st">"Unknown"</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="op">}</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="op">}</span></span></code></pre></div><p>Damn nice.</p><p>But what if it changes?…</p><p>Look: every time you change your enumeration, this function must be
+updated accordingly. For example, if you change <code>Yellow</code> to
+<code>Foo</code>, you must update <code>return "Yellow";</code> to
+<code>return "Foo";</code>. To make matters worse, you may have several
+such functions scattered among many different places across your
+codebase, which is totally not fine. Besides the hassle associated with
+updating N different points instead of one (<code>O(N)</code>
+vs.&nbsp;<code>O(1)</code>), you are now in the risk of forgetting to update
+some line of code, thereby introducing a software bug that is ready to
+crash your working application.</p><a class="header-link" href="#x-macro"><h2 id="x-macro">X-Macro</h2></a><p>Some old folks may respond to this problem with a technique known as
+<a href="https://en.wikipedia.org/wiki/X_Macro">X-Macro</a>:</p><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="pp">#define COLOURS \</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="pp">    X(Red)      \</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="pp">    X(Green)    \</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="pp">    X(Blue)     \</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="pp">    X(Orange)   \</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="pp">    X(White)    \</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="pp">    X(Black)    \</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="pp">    X(Pink)     \</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="pp">    X(Yellow)</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="pp">#define X(c) c,</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span> COLOURS <span class="op">}</span> Colour<span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="pp">#undef X</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>Colour_print<span class="op">(</span>Colour c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    <span class="cf">switch</span> <span class="op">(</span>c<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="pp">#define X(c) case c: return #c;</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>        COLOURS<span class="op">;</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="pp">#undef X</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="cf">default</span><span class="op">:</span> <span class="cf">return</span> <span class="st">"Unknown"</span><span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="op">}</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="op">}</span></span></code></pre></div><p>This is a neat technique because it solves the aforementioned problem
+with updating N places at once: now you only need to update the
+<code>COLOURS</code> macro and you can expect all the other places to be
+updated automatically by the preprocessor. Going further, if we want to
+define several such enumerations without unnecessary boilerplate, we can
+generalise our X-Macro: instead of using the <code>X</code> convention
+inside <code>COLOURS</code>, we can parameterise <code>COLOURS</code>
+with the <code>f</code> parameter, thereby expressing a <em>higher-order
+macro</em>:</p><div class="code-annotation-container"><p class="code-annotation">
+<code>enum-printable.h</code>
+</p></div><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">#define ENUM_PRINTABLE(name, list) \</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="pp">    typedef enum { list(DEF_ENUM_VARIANT) } name; \</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="pp"> \</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="pp">    const char *name##_print(name val) { \</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="pp">        switch (val) { \</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="pp">            list(CASE_ENUM_VARIANT) \</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="pp">        default: return "Unknown"; \</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="pp">        } \</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="pp">    }</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="pp">#define DEF_ENUM_VARIANT(c)  c,</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="pp">#define CASE_ENUM_VARIANT(c) case c: return #c;</span></span></code></pre></div><div class="code-annotation-container"><p class="code-annotation">
+<code>colour.c</code>
+</p></div><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#include </span><span class="im">"enum-printable.h"</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="pp">#define COLOURS(f) \</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="pp">    f(Red)         \</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="pp">    f(Green)       \</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="pp">    f(Blue)        \</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="pp">    f(Orange)      \</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="pp">    f(White)       \</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="pp">    f(Black)       \</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="pp">    f(Pink)        \</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="pp">    f(Yellow)</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a>ENUM_PRINTABLE<span class="op">(</span>Colour<span class="op">,</span> COLOURS<span class="op">)</span></span></code></pre></div><div class="code-annotation-container"><p class="code-annotation">
+<code>apple.c</code>
+</p></div><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#include </span><span class="im">"enum-printable.h"</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="pp">#define APPLES(f) \</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="pp">    f(GodenDel)   \</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="pp">    f(Winesap)    \</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="pp">    f(Jonathan)   \</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="pp">    f(Cortland)</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a>ENUM_PRINTABLE<span class="op">(</span>Apple<span class="op">,</span> APPLES<span class="op">)</span></span></code></pre></div><p>Much better now! However, we can accomplish the same even without one
+macro per a user enumeration. Let me show you how.</p><a class="header-link" href="#macro-iteration"><h2 id="macro-iteration">Macro iteration</h2></a><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>ENUM_PRINTABLE<span class="op">(</span>Colour<span class="op">,</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    Red<span class="op">,</span> Green<span class="op">,</span> Blue<span class="op">,</span> Orange<span class="op">,</span> White<span class="op">,</span> Black<span class="op">,</span> Pink<span class="op">,</span> Yellow</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="op">)</span></span></code></pre></div><p>Excellent, but how this kind of <code>ENUM_PRINTABLE</code> is
+implemented? If you try to implement it by yourself, you will definitely
+be in trouble.</p><p>However, in this post, I will not borther you with all the details.
+Here is the definition:</p><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a><span class="pp">#include </span><span class="im">&lt;metalang99.h&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="pp">#define ENUM_PRINTABLE(name, ...) \</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="pp">    typedef enum { __VA_ARGS__ } name; \</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="pp"> \</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="pp">    const char *name##_print(name val) { \</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="pp">        switch (val) { \</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="pp">            ML99_EVAL(ML99_variadicsForEach(ML99_reify(v(CASE_ENUM_VARIANT)), \</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="pp">                                            v(__VA_ARGS__))) \</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="pp">        default: return "Unknown"; \</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="pp">        } \</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="pp">    }</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="pp">#define CASE_ENUM_VARIANT(c) case c: return #c;</span></span></code></pre></div><p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is a
+macro metaprogramming library for pure C99 (and C++11) that allows you
+to perform macro recursion and iteration. In this code snippet, we
+iterate on variadic arguments using <a href="https://metalang99.readthedocs.io/en/latest/variadics.html#c.ML99_variadicsForEach"><code>ML99_variadicsForEach</code></a>
+in order to generate a pretty-printing function for a particular
+enumeration. I developed Metalang99 in response to a <a href="c">number
+of use-cases</a> that require macro recursion and iteration; deriving
+pretty-printers is only one example of such a majestic superpower.</p><p>Why this approach is better than the previous one? It is more natural
+to C, easier to write, and causes less confusion at a caller site (“What
+is this mysterious <code>f</code>???”). E.g., you can just copy the
+comma-separated enumeration variants and paste them somewhere else, but
+with X-Macro you would need to remove the <code>f</code> invocations and
+intersperse commas between the variants in a proper manner.</p><p>What are the disadvantages? Now you <em>cannot</em> derive some stuff
+for an <code>enum</code> in a different source file. This is what I call
+the <em>locality of definition</em>: all necessary stuff must be defined
+in the same place as our enumeration. This might or might not be a
+dissapointment for you, but generally speaking, locality of definition
+reduces flexibility of code. For example, in Rust, I cannot put my own
+derive macro onto some type defined in a third-party library, which
+sometimes causes frustration and ass pain.</p><blockquote>
+<p>A program is a sort of publication. It’s meant to be read by the
+programmer, another programmer (perhaps yourself a few days, weeks or
+years later), and lastly a machine.</p>
+</blockquote><p class="quote-author">
+<a href="https://en.wikipedia.org/wiki/Rob_Pike">Rob Pike</a> <span class="citation" data-cites="pike-style">(Rob Pike, n.d.)</span>
+</p><a class="header-link" href="#a-word-about-third-party-codegen"><h2 id="a-word-about-third-party-codegen">A word about third-party
+codegen</h2></a><p>One may want to suggest using code generators like <a href="https://en.wikipedia.org/wiki/M4_(computer_language)">M4</a>
+instead of Metalang99, owing to the huge amount of <a href="https://github.com/Hirrolot/metalang99/tree/master/include/metalang99">macro
+machinery</a> involved in this library and/or incomprehensible
+compile-time errors (a false statement, we will come back to this
+later). Sure you can, but think about the consequences; you would then
+need to either:</p><ol type="1">
+<li>Separate codegen files from C files, or</li>
+<li>Embed special syntax to C files and fuck up IDE support, or</li>
+<li>Write code in comments and fuck up IDE support, or</li>
+<li>Do something else and fuck up IDE support.</li>
+</ol><p>Several projects adopted some of the aforementioned solutions
+(especially 3 and 4). The unfortunate consequences may not seem so
+severe if you invoke codegen only in a small amount of places, but
+declaring types, obviously, does not fall into this category of things.
+Therefore, we need a solution that does not require external machinery,
+and the only thing in pure C that can do the trick is its macro
+system.</p><p>Now about compilation errors: they are just fine, really. For
+example, if we accidentally make a mistake somewhere in the middle of
+<code>ENUM_PRINTABLE</code>:</p><div class="code-annotation-container"><p class="code-annotation">
+<code>test.c</code>
+</p></div><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a><span class="pp">#define ENUM_PRINTABLE(name, ...) \</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="pp">    typedef enum { __VA_ARGS__ } name; \</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="pp"> \</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="pp">    const char *name##_print(name val) { \</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="pp">        switch (val) { \</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="pp">            ML99_EVAL(ML99_variadicsForEach_BLAH( \</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="pp">                ML99_reify(v(CASE_ENUM_VARIANT)), v(__VA_ARGS__))) \</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="pp">        default: return "Unknown"; \</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="pp">        } \</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="pp">    }</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">// More code here...</span></span></code></pre></div><p>We would see the following compilation error:</p><div class="code-annotation-container"><p class="code-annotation">
+<code>/bin/sh</code>
+</p></div><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>$ gcc test.c -Imetalang99/include -ftrack-macro-expansion=0 </span>
+<span id="cb10-2"><a href="#cb10-2"></a>test.c: In function ‘Colour_print’:</span>
+<span id="cb10-3"><a href="#cb10-3"></a>test.c:20:1: error: static assertion failed: "invalid term `ML99_variadicsForEach_BLAH( (0args, ML99_reify, (0v, CASE_ENUM_VARIANT)), (0v, Red, Green, Blue, Orange, White, Black, Pink, Yellow))`"</span>
+<span id="cb10-4"><a href="#cb10-4"></a>   20 | ENUM_PRINTABLE(Colour, Red, Green, Blue, Orange, White, Black, Pink, Yellow)</span>
+<span id="cb10-5"><a href="#cb10-5"></a>      | ^~~~~~~~~~~~~~</span></code></pre></div><p>From which we easily conclude that
+<code>ML99_variadicsForEach_BLAH</code> is not really a macro and we
+need to change it to the proper <code>ML99_variadicsForEach</code>,
+after which the compilation succeeds. In fact, Metalang99 is built with
+developer experience in mind: it is equipped with a built-in syntax
+checker and panic invocation facilities, which makes macro development a
+much less painful process. For a more elaborated discussion on
+side-effects of macros and the nature of the C preprocessor, please see
+my blog post <a href="whats-the-point-of-the-c-preprocessor-actually.html"><em>“What’s
+the Point of the C Preprocessor, Actually?”</em></a></p><a class="header-link" href="#final-words"><h2 id="final-words">Final words</h2></a><p>So here are all three solutions that I saw throughout my experience
+as a C programmer. You can choose an approach to your own liking. Maybe
+you have learnt something new. Note that the above discussion can be
+applied not only to pretty-printing, but generally to any piece of code
+that needs to generate some other code depending on a symbolic
+representation of enumeration’s values. Cheers!</p><p>Links:</p><ul>
+<li><a href="https://github.com/Hirrolot/metalang99#getting-started">Installation
+instructions for Metalang99</a>.</li>
+<li><a href="https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">Q:
+Why use C instead of Rust/Zig/whatever else?</a></li>
+<li><a href="https://hirrolot.github.io/posts/whats-the-point-of-the-c-preprocessor-actually.html">Q:
+Why not third-party code generators?</a></li>
+</ul><p>For more information on Metalang99 and derived projects, see <a href="macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html">“<em>Macros
+on Steroids, Or: How Can Pure C Benefit From
+Metaprogramming</em>”</a>.</p><a class="header-link" href="#appendix-deriving-pretty-printers-via-datatype99"><h2 id="appendix-deriving-pretty-printers-via-datatype99">Appendix:
+Deriving pretty-printers via Datatype99</h2></a><p><a href="https://github.com/Hirrolot/datatype99">Datatype99</a> is a
+project derived from Metalang99, which allows you to define enumerations
+with payloads (a.k.a. <a href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data
+types (ADTs)</a>). It does also provide a functionality similar to
+Rust’s derive macros. Let us leverage Datatype99 and see how to achieve
+pretty-printing through compile-time type introspection:</p><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a><span class="pp">#include </span><span class="im">&lt;datatype99.h&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="pp">#define DATATYPE99_DERIVE_Print_IMPL(name, variants) \</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="pp">    ML99_call( \</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="pp">        derivePrint, \</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="pp">        v(name), \</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="pp">        ML99_listMapInPlace(ML99_compose(v(caseEnumVariant), v(ML99_untuple)), v(variants)))</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="pp">#define derivePrint_IMPL(name, ...) \</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="pp">    v(const char *name##_print(name val) { \</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="pp">        match(val) { \</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="pp">            __VA_ARGS__ \</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="pp">        } \</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="pp">        return "Unknown"; \</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="pp">    })</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="pp">#define caseEnumVariant_IMPL(tag, _sig) ML99_prefixedBlock(DATATYPE99_of(v(tag)), v(return #tag;))</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="pp">#define caseEnumVariant_ARITY           1</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a></span>
+<span id="cb11-21"><a href="#cb11-21"></a>datatype<span class="op">(</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a>    derive<span class="op">(</span>Print<span class="op">),</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a>    Colour<span class="op">,</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a>    <span class="op">(</span>Red<span class="op">),</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a>    <span class="op">(</span>Green<span class="op">),</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a>    <span class="op">(</span>Blue<span class="op">),</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a>    <span class="op">(</span>Orange<span class="op">),</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a>    <span class="op">(</span>White<span class="op">),</span></span>
+<span id="cb11-29"><a href="#cb11-29"></a>    <span class="op">(</span>Black<span class="op">),</span></span>
+<span id="cb11-30"><a href="#cb11-30"></a>    <span class="op">(</span>Pink<span class="op">),</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a>    <span class="op">(</span>Yellow<span class="op">)</span></span>
+<span id="cb11-32"><a href="#cb11-32"></a><span class="op">);</span></span>
+<span id="cb11-33"><a href="#cb11-33"></a></span>
+<span id="cb11-34"><a href="#cb11-34"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-35"><a href="#cb11-35"></a>    printf<span class="op">(</span><span class="st">"Got '%s'!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> Colour_print<span class="op">(</span>Yellow<span class="op">()));</span></span>
+<span id="cb11-36"><a href="#cb11-36"></a><span class="op">}</span></span></code></pre></div><p>The neat thing is that you can list other derivers together with
+<code>Print</code> like this: <code>derive(Print, Foo, Bar)</code>,
+which adds some extensibility to the code. Note that this implementation
+does not account variant parameters (payload); <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/derive/print.c"><code>examples/derive/print.c</code></a>
+shows how to handle them. For more information on deriver macros, see my
+blog post <a href="compile-time-introspection-of-sum-types-in-pure-c99.html"><em>“Compile-Time
+Introspection of Sum Types in Pure C99”</em></a>.</p><a class="header-link" href="#references"><h2 class="unnumbered" id="references">References</h2></a><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-pike-style" class="csl-entry" role="doc-biblioentry">
+Rob Pike. n.d. <span>“Notes on Programming in C.”</span> <a href="http://www.literateprogramming.com/pikestyle.pdf">http://www.literateprogramming.com/pikestyle.pdf</a>.
+</div>
+</div><script src="https://utteranc.es/client.js" repo="hirrolot/hirrolot.github.io" issue-term="pathname" label="comments" theme="github-light" crossorigin="anonymous" async="">
+</script></div></body></html>
