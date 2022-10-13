@@ -6,15 +6,13 @@ const { JSDOM } = jsdom;
 
 fs = require('fs');
 
+const transformers = [rearrangePostStructure, decorateToc, createClickableHeaders, createCodeAnnotationContainers]
+
 for (let i = 2; i < process.argv.length; i++) {
     const inputFile = process.argv[i];
 
     JSDOM.fromFile(inputFile).then(dom => {
-        const document = dom.window.document;
-        rearrangePostStructure(document);
-        decorateToc(document);
-        createClickableHeaders(document);
-        createCodeAnnotationContainers(document);
+        transformers.forEach(transformer => transformer(dom.window.document));
         fs.writeFileSync(inputFile, dom.serialize());
     });
 }
