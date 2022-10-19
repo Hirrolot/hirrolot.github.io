@@ -103,26 +103,36 @@ html {
 
 .gsc-header,
 .gsc-reactions {
-    font-size: 19.2px !important;
-}
-
-.gsc-right-header>button {
-    font-size: 17.2px !important;
+    font-size: 18.8px !important;
 }
 
 .gsc-comment,
-.gsc-comment-footer {
-    font-size: 17.2px !important;
+.gsc-comment-footer,
+.gsc-right-header>button,
+.gsc-comment-box-textarea,
+.gsc-comment-box-preview,
+.gsc-reply-box>button {
+    font-size: 17px !important;
 }
 
 .gsc-comment {
     line-height: 1.6;
 }
 
-.gsc-comment-replies-count>span {
+.gsc-comment-replies-count>span,
+.gsc-comment-box-tabs>div>button,
+.gsc-comment-box-buttons>button,
+.gsc-upvote-button,
+.gsc-reactions-button,
+.gsc-reactions-popover,
+.gsc-direct-reaction-buttons>button {
     font-size: 15px !important;
 }
 
 pre {
     font-size: 13.5px !important;
+}
+
+.gsc-comment-box-markdown-hint {
+    font-size: 14px !important;
 }
