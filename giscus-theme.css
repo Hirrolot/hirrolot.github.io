@@ -106,7 +106,7 @@ html {
     font-size: 19.2px !important;
 }
 
-.gsc-right-header {
+.gsc-right-header>button {
     font-size: 17.2px !important;
 }
 
@@ -119,6 +119,6 @@ html {
     line-height: 1.6;
 }
 
-.gsc-comment-replies-count {
+.gsc-comment-replies-count>span {
     font-size: 15px !important;
 }
