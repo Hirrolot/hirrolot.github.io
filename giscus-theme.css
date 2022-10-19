@@ -101,7 +101,16 @@ html {
     font-family: 'Source Serif Pro', serif;
 }
 
-.gsc-comment {
+.gsc-header,
+.gsc-reactions {
+    font-size: 19.2px !important;
+}
+
+.gsc-comment,
+.gsc-comment-footer {
     font-size: 17.2px !important;
+}
+
+.gsc-comment {
     line-height: 1.6;
 }
