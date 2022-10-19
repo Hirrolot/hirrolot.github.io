@@ -99,6 +99,9 @@ main .gsc-loading-image {
 
 html {
     font-family: 'Source Serif Pro', serif;
-    font-size: 19.2px !important;
+}
+
+.gsc-comment {
+    font-size: 17.2px !important;
     line-height: 1.6;
 }
