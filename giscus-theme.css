@@ -96,5 +96,7 @@ main .gsc-loading-image {
 }
 
 html {
+    font-family: 'Source Serif Pro', serif;
     font-size: 19.2px;
+    line-height: 1.6;
 }
