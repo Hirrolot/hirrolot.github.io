@@ -108,7 +108,10 @@ html {
 
 .gsc-comment,
 .gsc-comment-footer,
-.gsc-right-header>button {
+.gsc-right-header>button,
+.gsc-comment-box-textarea,
+.gsc-comment-box-preview,
+.gsc-reply-box>button {
     font-size: 17px !important;
 }
 
@@ -116,7 +119,9 @@ html {
     line-height: 1.6;
 }
 
-.gsc-comment-replies-count>span {
+.gsc-comment-replies-count>span,
+.gsc-comment-box-tabs>div>button,
+.gsc-comment-box-buttons>button {
     font-size: 15px !important;
 }
 
