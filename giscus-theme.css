@@ -97,10 +97,6 @@ main .gsc-loading-image {
     background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
 }
 
-html {
-    font-family: 'Source Serif Pro', serif;
-}
-
 .gsc-header,
 .gsc-reactions {
     font-size: 18.8px !important;
