@@ -3,8 +3,6 @@
  * https://github.com/primer/primitives/blob/main/LICENSE
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap');
-
 main {
     --color-prettylights-syntax-comment: #6e7781;
     --color-prettylights-syntax-constant: #0550ae;
@@ -97,25 +95,28 @@ main .gsc-loading-image {
     background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
 }
 
-html {
-    font-family: 'Source Serif Pro', serif;
-}
-
-.gsc-header,
+.gsc-left-header,
 .gsc-reactions {
-    font-size: 18.8px !important;
+    font-size: 18px !important;
 }
 
-.gsc-comment,
+.gsc-left-header>.color-text-secondary,
+.gsc-right-header>button {
+    font-size: 16px !important;
+}
+
+.gsc-comment-header,
 .gsc-comment-footer,
-.gsc-right-header>button,
+.gsc-comment-content,
 .gsc-comment-box-textarea,
 .gsc-comment-box-preview,
 .gsc-reply-box>button {
     font-size: 17px !important;
 }
 
-.gsc-comment {
+.gsc-comment-content,
+.gsc-comment-box-textarea,
+.gsc-comment-box-preview {
     line-height: 1.6;
 }
 
