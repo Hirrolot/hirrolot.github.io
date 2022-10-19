@@ -122,3 +122,7 @@ html {
 .gsc-comment-replies-count>span {
     font-size: 15px !important;
 }
+
+pre {
+    font-size: 15px !important;
+}
