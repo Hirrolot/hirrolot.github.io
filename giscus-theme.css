@@ -103,16 +103,13 @@ html {
 
 .gsc-header,
 .gsc-reactions {
-    font-size: 19.2px !important;
-}
-
-.gsc-right-header>button {
-    font-size: 17.2px !important;
+    font-size: 18.8px !important;
 }
 
 .gsc-comment,
-.gsc-comment-footer {
-    font-size: 17.2px !important;
+.gsc-comment-footer,
+.gsc-right-header>button {
+    font-size: 17px !important;
 }
 
 .gsc-comment {
