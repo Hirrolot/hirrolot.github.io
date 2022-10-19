@@ -357,5 +357,6 @@ details:hover {
 
 .giscus,
 .giscus-frame {
-    font-size: 19.2px;
+    font-size: 30px;
+    background-color: red;
 }
