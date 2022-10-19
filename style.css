@@ -355,6 +355,7 @@ details:hover {
     cursor: pointer;
 }
 
-.giscus {
+.giscus,
+.giscus-frame {
     font-size: 19.2px;
 }
