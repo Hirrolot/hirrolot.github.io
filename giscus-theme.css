@@ -128,3 +128,7 @@ html {
 pre {
     font-size: 13.5px !important;
 }
+
+.gsc-comment-box-markdown-hint {
+    font-size: 14px !important;
+}
