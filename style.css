@@ -354,3 +354,7 @@ td {
 details:hover {
     cursor: pointer;
 }
+
+.giscus {
+    font-size: 19.2px;
+}
