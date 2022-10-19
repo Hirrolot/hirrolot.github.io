@@ -122,7 +122,9 @@ html {
 .gsc-comment-replies-count>span,
 .gsc-comment-box-tabs>div>button,
 .gsc-comment-box-buttons>button,
-.gsc-comment-reactions>* {
+.gsc-upvote-button,
+.gsc-reactions-menu,
+.gsc-direct-reaction-buttons>button {
     font-size: 15px !important;
 }
 
