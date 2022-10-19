@@ -123,7 +123,8 @@ html {
 .gsc-comment-box-tabs>div>button,
 .gsc-comment-box-buttons>button,
 .gsc-upvote-button,
-.gsc-reactions-menu,
+.gsc-reactions-button,
+.gsc-reactions-popover,
 .gsc-direct-reaction-buttons>button {
     font-size: 15px !important;
 }
