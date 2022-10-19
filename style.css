@@ -364,3 +364,8 @@ details:hover {
 .gsc-main {
     font-size: 19.2px;
 }
+
+.gsc-comment {
+    font-size: 30px;
+    background-color: red;
+}
