@@ -100,7 +100,8 @@ main .gsc-loading-image {
     font-size: 18.8px !important;
 }
 
-.gsc-left-header>.color-text-secondary .gsc-right-header>button {
+.gsc-left-header>.color-text-secondary,
+.gsc-right-header>button {
     font-size: 16px !important;
 }
 
