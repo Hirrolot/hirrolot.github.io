@@ -106,6 +106,10 @@ html {
     font-size: 19.2px !important;
 }
 
+.gsc-right-header {
+    font-size: 17.2px !important;
+}
+
 .gsc-comment,
 .gsc-comment-footer {
     font-size: 17.2px !important;
@@ -113,4 +117,8 @@ html {
 
 .gsc-comment {
     line-height: 1.6;
+}
+
+.gsc-comment-replies-count {
+    font-size: 15px !important;
 }
