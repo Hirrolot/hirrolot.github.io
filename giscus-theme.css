@@ -104,12 +104,19 @@ main .gsc-loading-image {
     font-size: 16px !important;
 }
 
-.gsc-comment,
+.gsc-comment-header,
 .gsc-comment-footer,
+.gsc-comment-content,
 .gsc-comment-box-textarea,
 .gsc-comment-box-preview,
 .gsc-reply-box>button {
     font-size: 17px !important;
+}
+
+.gsc-comment-content,
+.gsc-comment-box-textarea,
+.gsc-comment-box-preview {
+    line-height: 1.6;
 }
 
 .gsc-comment-replies-count>span,
