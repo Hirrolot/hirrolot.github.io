@@ -153,7 +153,7 @@ code:not([class]),
 div.sourceCode,
 .code-annotation,
 .code-annotation>code {
-    font-size: 15px;
+    font-size: 15.2px;
 }
 
 .post-body>pre {
@@ -334,7 +334,7 @@ blockquote::before {
 #refs,
 .contacts,
 .footnotes {
-    font-size: 17px;
+    font-size: 17.2px;
 }
 
 table {
