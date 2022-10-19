@@ -121,7 +121,8 @@ html {
 
 .gsc-comment-replies-count>span,
 .gsc-comment-box-tabs>div>button,
-.gsc-comment-box-buttons>button {
+.gsc-comment-box-buttons>button,
+.gsc-comment-reactions>* {
     font-size: 15px !important;
 }
 
