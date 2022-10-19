@@ -113,7 +113,7 @@ func invokePandoc(post *Post) {
 		"--table-of-contents",
 		"--citeproc",
 		"--css", "../style.css",
-		"--include-after-body", "utterances.html",
+		"--include-after-body", "giscus.html",
 		"--include-in-header", "post-header.html")
 
 	output, err := cmd.CombinedOutput()

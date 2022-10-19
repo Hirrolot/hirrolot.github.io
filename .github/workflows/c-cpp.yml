@@ -31,7 +31,8 @@ jobs:
           mv index.html \
             posts \
             media \
-            utterances.html \
+            giscus.html \
+            giscus-theme.css \
             style.css \
             script.js \
             rss.xml \
