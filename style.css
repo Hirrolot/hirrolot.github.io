@@ -108,7 +108,7 @@ body:not(.index-body)>.post-body,
 
 body {
     font-family: 'Source Serif Pro', serif;
-    font-size: 18.8px;
+    font-size: 19.2px;
     line-height: 1.6;
 }
 
@@ -238,7 +238,7 @@ h3:hover {
 
 .post-link {
     padding: 10px 5px;
-    font-size: 18.8px;
+    font-size: 19.2px;
     background-color: #ededed;
 }
 
