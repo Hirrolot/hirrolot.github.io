@@ -1,9 +1,3 @@
----
-title: "Rust Is Hard, Or: The Misery of Mainstream Programming"
-author: Hirrolot's Blog
-date: Jun 2, 2022
----
-
 <div class="introduction">
 
 <p class="discussions">[HN] · [r/rust] · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/v3clru/rust_is_hard_or_the_misery_of_mainstream/)</p>

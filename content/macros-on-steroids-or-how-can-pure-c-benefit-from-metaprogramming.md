@@ -1,8 +1,4 @@
 ---
-title: "Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming"
-author: Hirrolot's Blog
-date: Jul 22, 2021
-
 references:
   - id: bluepainting
     title: "C99 draft, section 6.10.3.4, paragraph 2 -- Rescanning and further replacement"

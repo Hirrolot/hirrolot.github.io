@@ -1,8 +1,4 @@
 ---
-title: "What's the Point of the C Preprocessor, Actually?"
-author: Hirrolot's Blog
-date: Aug 3, 2021
-
 references:
   - id: dt99-semantics
     title: "Datatype99 code generation semantics"

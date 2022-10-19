@@ -1,8 +1,4 @@
 ---
-title: "Why Static Languages Suffer From Complexity"
-author: Hirrolot's Blog
-date: Jan 19, 2022
-
 references:
   - id: type-dd-with-idris
     title: "Type-Driven Development with Idris"

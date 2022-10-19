@@ -1,0 +1,86 @@
+[
+    {
+        "name": "barebones-lambda-cube-in-ocaml",
+        "title": "Barebones Lambda Cube in OCaml",
+        "date": "Aug 16, 2022",
+        "redirect-to": "https://gist.github.com/Hirrolot/89c60f821270059a09c14b940b454fd6"
+    },
+    {
+        "name": "rust-is-hard-or-the-misery-of-mainstream-programming",
+        "title": "Rust Is Hard, Or: The Misery of Mainstream Programming",
+        "date": "Jun 2, 2022"
+    },
+    {
+        "name": "pretty-printable-enumerations-in-pure-c",
+        "title": "Pretty-Printable Enumerations in Pure C",
+        "date": "May 23, 2022"
+    },
+    {
+        "name": "why-static-languages-suffer-from-complexity",
+        "title": "Why Static Languages Suffer From Complexity",
+        "date": "Jan 19, 2022"
+    },
+    {
+        "name": "whats-the-point-of-the-c-preprocessor-actually",
+        "title": "What's the Point of the C Preprocessor, Actually?",
+        "date": "Aug 3, 2021"
+    },
+    {
+        "name": "macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming",
+        "title": "Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming",
+        "date": "Jul 22, 2021"
+    },
+    {
+        "name": "extend-your-language-dont-alter-it",
+        "title": "Extend Your Language, Don't Alter It",
+        "date": "Jul 6, 2021"
+    },
+    {
+        "name": "compiling-algebraic-data-types-in-pure-c99",
+        "title": "Compiling Algebraic Data Types in Pure C99",
+        "date": "May 25, 2021",
+        "redirect-to": "https://dev.to/hirrolot/compiling-algebraic-data-types-in-pure-c99-5225"
+    },
+    {
+        "name": "expression-oriented-programming-in-c-the-fmt-macro",
+        "title": "Expression-Oriented Programming in C: The FMT Macro",
+        "date": "May 14, 2021",
+        "redirect-to": "https://dev.to/hirrolot/expression-oriented-programming-in-c-the-fmt-macro-43jo"
+    },
+    {
+        "name": "compile-time-introspection-of-sum-types-in-pure-c99",
+        "title": "Compile-Time Introspection of Sum Types in Pure C99",
+        "date": "Apr 25, 2021",
+        "redirect-to": "https://hirrolot.medium.com/compile-time-introspection-of-sum-types-in-pure-c99-ffa523b60385"
+    },
+    {
+        "name": "unleashing-sum-types-in-pure-c99",
+        "title": "Unleashing Sum Types in Pure C99",
+        "date": "Feb 6, 2021",
+        "redirect-to": "https://hirrolot.medium.com/unleashing-sum-types-in-pure-c99-31544302d2ba"
+    },
+    {
+        "name": "async-in-rust-std-and-async-await",
+        "title": "Асинхронщина в Rust: Стандартная библиотека и async/.await",
+        "date": "Jun 1, 2020",
+        "redirect-to": "https://web.archive.org/web/20220528140545/https://habr.com/en/post/504020/"
+    },
+    {
+        "name": "cmake-the-complete-guide-3",
+        "title": "Полное руководство по CMake. Часть третья: Тестирование и пакетирование",
+        "date": "Dec 20, 2018",
+        "redirect-to": "https://web.archive.org/web/20220528140513/https://habr.com/en/post/433822/"
+    },
+    {
+        "name": "cmake-the-complete-guide-2",
+        "title": "Полное руководство по CMake. Часть вторая: Система сборки",
+        "date": "Dec 5, 2018",
+        "redirect-to": "https://web.archive.org/web/20220528140444/https://habr.com/en/post/432096/"
+    },
+    {
+        "name": "cmake-the-complete-guide-1",
+        "title": "Полное руководство по CMake. Часть первая: Синтаксис",
+        "date": "Nov 28, 2018",
+        "redirect-to": "https://web.archive.org/web/20220528140418/https://habr.com/en/post/431428/"
+    }
+]

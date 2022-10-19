@@ -5,13 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"sort"
-	"strings"
 	"time"
 )
 
@@ -22,9 +19,9 @@ const (
 )
 
 type Post struct {
-	Name, Title string    // Always present.
-	Date        time.Time // Always present.
-	RedirectTo  string    // "" in case of a regular post.
+	Name, Title string // Always present.
+	Date        string // Always present.
+	RedirectTo  string `json:"redirect-to"` // "" in case of a regular post.
 }
 
 func (post *Post) inputFilename() string {
@@ -35,87 +32,33 @@ func (post *Post) outputFilename() string {
 	return fmt.Sprintf("%s/%s.html", outputDir, post.Name)
 }
 
+func (post *Post) parseDate() time.Time {
+	date, err := time.Parse(postDateLayout, post.Date)
+	if err != nil {
+		log.Fatalf("Cannot parse date in '%s': %v.", post.Name, err)
+	}
+
+	return date
+}
+
 func main() {
-	posts := collectPosts()
+	posts := readPostsMetadata()
 	genPostPages(posts)
 	genIndexHtml(posts)
 }
 
-func collectPosts() (posts []Post) {
-	postNames, err := ioutil.ReadDir(contentDir)
+func readPostsMetadata() []Post {
+	postsData, err := os.ReadFile("metadata.json")
 	if err != nil {
-		log.Fatalf("Cannot read dir '%s': %v.", contentDir, err)
+		log.Fatalf("Cannot read 'metadata.json': %v.", err)
 	}
 
-	for _, postName := range postNames {
-		baseName := postName.Name()
-		extension := filepath.Ext(baseName)
-
-		var post Post
-		post.Name = strings.TrimSuffix(baseName, extension)
-		parseMetadata(readPostContent(baseName), &post)
-
-		posts = append(posts, post)
+	var posts []Post
+	if err := json.Unmarshal(postsData, &posts); err != nil {
+		log.Fatal(err)
 	}
 
 	return posts
-}
-
-func readPostContent(postBaseName string) string {
-	postFilename := fmt.Sprintf("%s/%s", contentDir, postBaseName)
-	content, err := os.ReadFile(postFilename)
-	if err != nil {
-		log.Fatalf("Cannot read file '%s': %v.", postFilename, err)
-	}
-
-	return string(content)
-}
-
-func parseMetadata(content string, post *Post) {
-	for _, line := range strings.Split(string(content), "\n") {
-		title := parseMetadataField(line, "title")
-		if title != "" {
-			titleWithoutDoubleQuotes := title[1 : len(title)-1]
-			post.Title = titleWithoutDoubleQuotes
-		}
-
-		if post.RedirectTo == "" {
-			post.RedirectTo = parseMetadataField(line, "redirect")
-		}
-
-		parsePostDate(post, line)
-	}
-
-	checkPostMetadata(post)
-}
-
-func parsePostDate(post *Post, line string) {
-	if dateStr := parseMetadataField(line, "date"); dateStr != "" {
-		date, err := time.Parse(postDateLayout, dateStr)
-		if err != nil {
-			log.Fatalf("Cannot parse date in '%s': %v.", post.Name, err)
-		}
-		post.Date = date
-	}
-}
-
-func parseMetadataField(line, fieldName string) string {
-	fieldPrefix := fmt.Sprintf("%s: ", fieldName)
-
-	if strings.HasPrefix(line, fieldPrefix) {
-		return strings.TrimPrefix(line, fieldPrefix)
-	}
-
-	return ""
-}
-
-func checkPostMetadata(post *Post) {
-	if post.Title == "" {
-		log.Fatalf("Cannot find a title in '%s'.", post.Name)
-	}
-	if post.Date.Year() == 0 {
-		log.Fatalf("Cannot find a date in '%s'.", post.Name)
-	}
 }
 
 func genPostPages(posts []Post) {
@@ -156,6 +99,9 @@ func invokePandoc(post *Post) {
 	cmd := exec.Command(
 		"pandoc", post.inputFilename(),
 		"--output", post.outputFilename(),
+		"--metadata", fmt.Sprint("author=Hirrolot's Blog"),
+		"--metadata", fmt.Sprintf("title=%s", post.Title),
+		"--metadata", fmt.Sprintf("date=%s", post.Date),
 		"--standalone",
 		"-H", "header.html",
 		"--table-of-contents",
@@ -165,7 +111,7 @@ func invokePandoc(post *Post) {
 		"--include-in-header", "post-header.html")
 
 	output, err := cmd.CombinedOutput()
-	defer fmt.Print(string(output))
+	fmt.Print(string(output))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -205,7 +151,9 @@ func genIndexHtml(posts []Post) {
 	t := template.Must(template.ParseFiles("templates/index.tmpl", "header.html"))
 
 	sort.Slice(posts, func(i, j int) bool {
-		return posts[i].Date.After(posts[j].Date)
+		date_i := posts[i].parseDate()
+		date_j := posts[j].parseDate()
+		return date_i.After(date_j)
 	})
 
 	err = t.ExecuteTemplate(w, "index.tmpl",

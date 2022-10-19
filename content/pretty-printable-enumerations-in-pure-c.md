@@ -1,8 +1,4 @@
 ---
-title: "Pretty-Printable Enumerations in Pure C"
-author: Hirrolot's Blog
-date: May 23, 2022
-
 references:
   - id: pike-style
     title: "Notes on Programming in C"
