@@ -54,9 +54,9 @@ func main() {
 }
 
 func readPostsMetadata() []Post {
-	postsData, err := os.ReadFile("metadata.json")
+	postsData, err := os.ReadFile("metadata/posts.json")
 	if err != nil {
-		log.Fatalf("Cannot read 'metadata.json': %v.", err)
+		log.Fatalf("Cannot read 'metadata/posts.json': %v.", err)
 	}
 
 	var posts []Post
@@ -170,9 +170,9 @@ func genIndexHtml(posts []Post) {
 }
 
 func readContacts() []Contact {
-	contactsData, err := os.ReadFile("contacts.json")
+	contactsData, err := os.ReadFile("metadata/contacts.json")
 	if err != nil {
-		log.Fatalf("Cannot read 'contacts.json': %v.", err)
+		log.Fatalf("Cannot read 'metadata/contacts.json': %v.", err)
 	}
 
 	var contacts []Contact
@@ -230,7 +230,7 @@ func newPost() {
 		log.Fatal(err)
 	}
 
-	if err := os.WriteFile("metadata.json", postsData, 0644); err != nil {
+	if err := os.WriteFile("metadata/posts.json", postsData, 0644); err != nil {
 		log.Fatal(err)
 	}
 
