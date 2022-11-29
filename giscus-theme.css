@@ -111,7 +111,7 @@ main .gsc-loading-image {
 .gsc-comment-box-textarea,
 .gsc-comment-box-preview,
 .gsc-reply-box>button {
-    font-size: 17px !important;
+    font-size: 18px !important;
 }
 
 .gsc-comment-content,
@@ -127,11 +127,11 @@ main .gsc-loading-image {
 .gsc-reactions-button,
 .gsc-reactions-popover,
 .gsc-direct-reaction-buttons>button {
-    font-size: 15px !important;
+    font-size: 16px !important;
 }
 
 pre {
-    font-size: 13.5px !important;
+    font-size: 14px !important;
 }
 
 .gsc-comment-box-markdown-hint {
