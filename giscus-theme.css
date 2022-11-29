@@ -119,17 +119,14 @@ main .gsc-loading-image {
 .gsc-reactions-popover,
 .gsc-direct-reaction-buttons>button,
 .gsc-left-header>.color-text-secondary,
-.gsc-right-header>button {
+.gsc-right-header>button,
+.markdown code {
     font-size: 16px !important;
 }
 
 pre,
 .gsc-comment-box-markdown-hint {
-    font-size: 14px !important;
-}
-
-.markdown code {
-    font-size: 15.5px !important;
+    font-size: 15px !important;
 }
 
 .gsc-reply-box>button {
