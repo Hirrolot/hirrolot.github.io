@@ -95,23 +95,15 @@ main .gsc-loading-image {
     background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
 }
 
-.gsc-left-header,
-.gsc-reactions {
-    font-size: 18px !important;
-}
-
-.gsc-left-header>.color-text-secondary,
-.gsc-right-header>button {
-    font-size: 16px !important;
-}
-
 .gsc-comment-header,
 .gsc-comment-footer,
 .gsc-comment-content,
 .gsc-comment-box-textarea,
 .gsc-comment-box-preview,
-.gsc-reply-box>button {
-    font-size: 18px !important;
+.gsc-reply-box>button,
+.gsc-left-header,
+.gsc-reactions {
+    font-size: 19px !important;
 }
 
 .gsc-comment-content,
@@ -126,14 +118,17 @@ main .gsc-loading-image {
 .gsc-upvote-button,
 .gsc-reactions-button,
 .gsc-reactions-popover,
-.gsc-direct-reaction-buttons>button {
+.gsc-direct-reaction-buttons>button,
+.gsc-left-header>.color-text-secondary,
+.gsc-right-header>button {
     font-size: 16px !important;
 }
 
-pre {
+pre,
+.gsc-comment-box-markdown-hint {
     font-size: 14px !important;
 }
 
-.gsc-comment-box-markdown-hint {
-    font-size: 14px !important;
+.markdown code {
+    font-size: 15.5px !important;
 }
