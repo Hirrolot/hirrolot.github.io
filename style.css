@@ -112,23 +112,6 @@ body {
     line-height: 1.6;
 }
 
-@media only screen and (max-width: 600px) {
-
-    body,
-    .post-link {
-        font-size: 18px !important;
-    }
-
-    div.sourceCode,
-    code:not([class]) {
-        font-size: 14px !important;
-    }
-
-    .footnotes {
-        font-size: 16px !important;
-    }
-}
-
 .discussions {
     text-align: right;
 }
