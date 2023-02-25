@@ -1,5 +1,11 @@
 [
     {
+        "name": "how-to-implement-dependent-types-in-80-lines-of-code",
+        "title": "How to Implement Dependent Types in 80 Lines of Code",
+        "date": "Feb 25, 2023",
+        "redirect-to": "https://gist.github.com/Hirrolot/27e6b02a051df333811a23b97c375196"
+    },
+    {
         "name": "barebones-lambda-cube-in-ocaml",
         "title": "Barebones Lambda Cube in OCaml",
         "date": "Aug 16, 2022",
