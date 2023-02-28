@@ -8,7 +8,7 @@ body:not(.index-body)>header,
 body:not(.index-body)>.introduction,
 body:not(.index-body)>.post-body,
 .posts-history {
-    max-width: 700px;
+    max-width: 800px;
 }
 
 .contacts,
@@ -47,7 +47,7 @@ img:not(.redirect-icon, .contact-img, .selfie) {
 @media only screen and (min-width: 850px) {
     .inner-index-body {
         display: grid;
-        grid-template-columns: 340px minmax(auto, 700px);
+        grid-template-columns: 340px minmax(auto, 800px);
         grid-gap: 50px;
         margin: auto;
     }
