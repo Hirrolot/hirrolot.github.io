@@ -8,7 +8,7 @@ body:not(.index-body)>header,
 body:not(.index-body)>.introduction,
 body:not(.index-body)>.post-body,
 .posts-history {
-    max-width: 800px;
+    max-width: 700px;
 }
 
 .contacts,
@@ -47,7 +47,7 @@ img:not(.redirect-icon, .contact-img, .selfie) {
 @media only screen and (min-width: 850px) {
     .inner-index-body {
         display: grid;
-        grid-template-columns: 340px minmax(auto, 800px);
+        grid-template-columns: 340px minmax(auto, 700px);
         grid-gap: 50px;
         margin: auto;
     }
@@ -65,10 +65,6 @@ img:not(.redirect-icon, .contact-img, .selfie) {
 
     .myself-description {
         max-width: 800px;
-    }
-
-    .posts-history {
-        grid-template-columns: 1fr !important;
     }
 
     .post-link {
@@ -211,16 +207,12 @@ h3:hover {
 }
 
 .posts-history {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .post-link {
-    padding: 10px 5px;
+    padding: 10px;
     background-color: #ededed;
 }
 
