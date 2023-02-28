@@ -67,10 +67,6 @@ img:not(.redirect-icon, .contact-img, .selfie) {
         max-width: 800px;
     }
 
-    .posts-history {
-        grid-template-columns: 1fr !important;
-    }
-
     .post-link {
         background-color: transparent !important;
     }
@@ -211,16 +207,12 @@ h3:hover {
 }
 
 .posts-history {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .post-link {
-    padding: 10px 5px;
+    padding: 10px;
     background-color: #ededed;
 }
 
