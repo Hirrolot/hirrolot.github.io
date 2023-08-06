@@ -5,6 +5,11 @@
         <description>Hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
+            <title>Compiler Development: Rust or OCaml?</title>
+            <guid>https://hirrolot.github.io/posts/compiler-development-rust-or-ocaml.html</guid>
+            <pubDate>Sun, 6 Aug 2023 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title>How to Keep Lambda Calculus Simple</title>
             <guid>https://hirrolot.github.io/posts/how-to-keep-lambda-calculus-simple.html</guid>
             <pubDate>Sat, 8 Jul 2023 00:00:00 GMT</pubDate>

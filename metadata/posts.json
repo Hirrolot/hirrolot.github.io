@@ -1,5 +1,10 @@
 [
     {
+        "name": "compiler-development-rust-or-ocaml",
+        "title": "Compiler Development: Rust or OCaml?",
+        "date": "Aug 6, 2023"
+    },
+    {
         "name": "how-to-keep-lambda-calculus-simple",
         "title": "How to Keep Lambda Calculus Simple",
         "date": "Jul 8, 2023"
