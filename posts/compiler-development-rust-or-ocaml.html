@@ -216,7 +216,7 @@ conversion <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><s
 making any conclusions. The general approach is borrowed from <a href="https://www.amazon.com/Compiling-Continuations-Andrew-W-Appel/dp/052103311X">“Compiling
 with Continuations”</a> by Andrew W. Appel. No worries if you are not
 familiar with the idea; the only thing to focus your attention on is
-<em>how</em> the idea is implemented in both Rust and OCaml.</p><p>Here is CPS conversion written in Rust:</p><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">use</span> <span class="pp">std::cell::</span>RefCell<span class="op">;</span></span>
+<em>how</em> the idea is implemented in both Rust and OCaml.</p><p>Here is CPS conversion written in Rust <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource rust numberLines"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">use</span> <span class="pp">std::cell::</span>RefCell<span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw">use</span> <span class="pp">std::ops::</span><span class="bu">Deref</span><span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw">use</span> <span class="pp">std::rc::</span>Rc<span class="op">;</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a></span>
@@ -360,7 +360,7 @@ familiar with the idea; the only thing to focus your attention on is
 <span id="cb1-142"><a href="#cb1-142"></a>            <span class="op">.</span>collect()<span class="op">,</span></span>
 <span id="cb1-143"><a href="#cb1-143"></a>        convert(gen<span class="op">,</span> <span class="op">|</span>m_cps<span class="op">|</span> CAppl(k<span class="op">,</span> <span class="pp">vec!</span>[m_cps])<span class="op">,</span> m)<span class="op">,</span></span>
 <span id="cb1-144"><a href="#cb1-144"></a>    )</span>
-<span id="cb1-145"><a href="#cb1-145"></a><span class="op">}</span></span></code></pre></div><p>The code is 145 lines long, including comments and blank lines.</p><p>The same algorithm in idiomatic OCaml <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">(* A variable identifier of the lambda language [term]. *)</span></span>
+<span id="cb1-145"><a href="#cb1-145"></a><span class="op">}</span></span></code></pre></div><p>The code is 145 lines long, including comments and blank lines.</p><p>The same algorithm in idiomatic OCaml <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">(* A variable identifier of the lambda language [term]. *)</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="kw">type</span> var = <span class="dt">string</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">(* The lambda language; direct style. *)</span></span>
@@ -446,7 +446,7 @@ summary:</p><ol type="1">
 natively.</li>
 <li><strong>Rust</strong>: we need to imitate data recursion by wrapping
 recursive occurences of <code>TermTree</code> and <code>CpsTerm</code>
-into <code>Rc</code>s <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and <code>Box</code>es.</li>
+into <code>Rc</code>s <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and <code>Box</code>es.</li>
 </ol></li>
 <li>Complex data transformation:
 <ol type="1">
@@ -456,7 +456,7 @@ into <code>Rc</code>s <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-
 <a href="https://v2.ocaml.org/manual/tail_mod_cons.html">“Tail Modulo
 Constructor (TMC)”</a> optimization.</li>
 <li>Pattern matching is made very ergonomic. With <code>function</code>,
-we can pattern-match the “last parameter” <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> of
+we can pattern-match the “last parameter” <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> of
 a function without introducing any extra indentation.
 (<code>function</code> also lets us omit the last parameter with
 oftentimes a dummy name like <code>term</code>; if you think the
@@ -503,10 +503,10 @@ to the algorithm itself.</p><p>Even mutation can be more challenging in Rust:</p
 mutable reference to a value at any given time. This is a very
 reasonable requirement in multithreaded code, but we do not use more
 than one thread in our algorithm. We need <code>RefCell</code> just to
-circumvent this superfluous limitation.</p><p>The last thing to note is the implementation of
+circumvent this superfluous limitation <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p><p>The last thing to note is the implementation of
 <code>convert_list</code> in Rust. Since <code>fn</code>s are inherently
 no more than code pointers, we need to pass <code>gen</code> and
-<code>finish</code> explicitly on each call to <code>go</code> <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. In turn, this leads us to
+<code>finish</code> explicitly on each call to <code>go</code> <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. In turn, this leads us to
 duplicating the types of these variables in the signature of
 <code>go</code> (in Rust, there is no type inference of function
 parameters). In contrast, OCaml captures <code>gen</code> and
@@ -775,16 +775,26 @@ tutorial</a> (can be read in an evening!)</li>
 <ol>
 <li id="fn1" role="doc-endnote"><p>CPS is the central representation of
 the compiler Standard ML of New Jersey.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>You can access the code itself and
-accompanying tests <a href="https://gist.github.com/Hirrolot/d16dc5e78639db6e546b5054afefd142">here</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p><code>Rc</code> was chosen to avoid
-expensive cloning of <code>TermTree</code>s in some places.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>To be precise, all functions are
+<li id="fn2" role="doc-endnote"><p><em>Update: several people have
+suggested to use arenas (regions) instead of the approach I have
+demonstrated. I am well aware of the technique; however, I do not think
+that arenas would make a significant difference in code clarity and
+ergonomics. Flattening an AST has many performance benefits, such as
+spatial locality and cheap allocation and deallocation, but they add a
+little value to the overall discussion.</em><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>You can access the code itself and
+accompanying tests <a href="https://gist.github.com/Hirrolot/d16dc5e78639db6e546b5054afefd142">here</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p><code>Rc</code> was chosen to avoid
+expensive cloning of <code>TermTree</code>s in some places.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>To be precise, all functions are
 curried in OCaml, so <code>function</code> just “defines” a function
-with a single parameter and pattern-matches on it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Unfortunately, closures provide us
+with a single parameter and pattern-matches on it.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p><em>Update: this is actually not true
+that this requirement is only needed in multithreaded code. However, I
+do still think it is superfluous in the code I have suggested.</em><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>Unfortunately, closures provide us
 with no solution here: they cannot be called recursively, at least
-without prior hoodoo.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+without prior hoodoo.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>
