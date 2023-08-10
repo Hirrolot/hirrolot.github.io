@@ -11,7 +11,7 @@ Before presenting my actual argument, I will show two analogous implementations 
 [CPS]: https://en.wikipedia.org/wiki/Continuation-passing_style
 ["Compiling with Continuations"]: https://www.amazon.com/Compiling-Continuations-Andrew-W-Appel/dp/052103311X
 
-Here is CPS conversion written in Rust:
+Here is CPS conversion written in Rust [^update-rust-arenas]:
 
 ```{.rust .numberLines}
 use std::cell::RefCell;
@@ -292,7 +292,7 @@ let gensym i =
   x
 ```
 
-Why `RefCell<u32>` instead of `&mut u32`? Because Rust requires us to have a single mutable reference to a value at any given time. This is a very reasonable requirement in multithreaded code, but we do not use more than one thread in our algorithm. We need `RefCell` just to circumvent this superfluous limitation.
+Why `RefCell<u32>` instead of `&mut u32`? Because Rust requires us to have a single mutable reference to a value at any given time. This is a very reasonable requirement in multithreaded code, but we do not use more than one thread in our algorithm. We need `RefCell` just to circumvent this superfluous limitation [^update-refcell].
 
 The last thing to note is the implementation of `convert_list` in Rust. Since `fn`s are inherently no more than code pointers, we need to pass `gen` and `finish` explicitly on each call to `go` [^rec-closures]. In turn, this leads us to duplicating the types of these variables in the signature of `go` (in Rust, there is no type inference of function parameters). In contrast, OCaml captures `gen` and `finish` automatically.
 
@@ -639,10 +639,14 @@ If you know Rust, you will find OCaml very familiar. I recommend the following r
 
 [^cps-compiler]: CPS is the central representation of the compiler Standard ML of New Jersey.
 
+[^update-rust-arenas]: _Update: several people have suggested to use arenas (regions) instead of the approach I have demonstrated. I am well aware of the technique; however, I do not think that arenas would make a significant difference in code clarity and ergonomics. Flattening an AST has many performance benefits, such as spatial locality and cheap allocation and deallocation, but they add a little value to the overall discussion._
+
 [^cps-ocaml]: You can access the code itself and accompanying tests [here](https://gist.github.com/Hirrolot/d16dc5e78639db6e546b5054afefd142).
 
 [^rc-wrap]: `Rc` was chosen to avoid expensive cloning of `TermTree`s in some places.
 
 [^currying-ocaml]: To be precise, all functions are curried in OCaml, so `function` just "defines" a function with a single parameter and pattern-matches on it.
+
+[^update-refcell]: _Update: this is actually not true that this requirement is only needed in multithreaded code. However, I do still think it is superfluous in the code I have suggested._
 
 [^rec-closures]: Unfortunately, closures provide us with no solution here: they cannot be called recursively, at least without prior hoodoo.
