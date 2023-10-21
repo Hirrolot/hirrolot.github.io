@@ -528,6 +528,7 @@ If you still want to create a PL of the future, I wish you good luck and strong 
  - _"[Garbage Collection Makes Rust Easier to Use: A Randomized Controlled Trial of the Bronze Garbage Collector](https://arxiv.org/pdf/2110.01098.pdf)"_
  - _"[Shifgrethor I: Garbage collection as a Rust library](https://boats.gitlab.io/blog/post/shifgrethor-i/)"_
  - _"[Revisiting a 'smaller Rust'](https://without.boats/blog/revisiting-a-smaller-rust/)"_
+ - _"[The Rust I Wanted Had No Future](https://graydon2.dreamwidth.org/307291.html)"_
 
 Feel free to contact me if you wish to extend this list.
 
