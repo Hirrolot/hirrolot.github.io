@@ -16,7 +16,7 @@ Now I am writing this post for those who are in the same situation as I was. I w
 
 Let us start with the AST definitions. Terms are represented as follows [^sources]:
 
-```haskell
+```{.haskell .numberLines}
 data ITerm
   = Ann CTerm Type
   | Bound Int
@@ -51,7 +51,7 @@ The second kind of variables can divide into three subkinds: `Global`, `Local` a
 
 Now, terms must evaluate to something. Evaluated terms are called _values_:
 
-```haskell
+```{.haskell .numberLines}
 data Value
   = VLam (Value -> Value)
   | VNeutral Neutral
@@ -68,7 +68,7 @@ Values are either fully evaluated lambda abstractions `VLam` or neutral terms `V
 
 The evaluation algorithm itself:
 
-```haskell
+```{.haskell .numberLines}
 type Env = [Value]
 
 type NameEnv v = [(Name, v)]
@@ -99,7 +99,7 @@ Since we have two kinds of terms, the evaluation function is divided into two ki
 
 To be able to see the result of evaluation, we need a mechanism for printing values. Since Haskell cannot derive `Show` for `VLam (Value -> Value)`, we need to implement the mechanism on our own. The approach taken in the paper is to define a conversion function `quote` that takes a value back to a (printable) term:
 
-```haskell
+```{.haskell .numberLines}
 quote0 :: Value -> CTerm
 quote0 = quote 0
 
@@ -133,7 +133,7 @@ To see how it works, take our lovely K combinator as an example:
 
 Finally, let us move on to type checking. The type and data definitions are:
 
-```haskell
+```{.haskell .numberLines}
 type Context = [(Name, Info)]
 
 data Info
@@ -156,7 +156,7 @@ type Result a = Either String a
 
 The type checking algorithm is defined as follows [^monad-except]:
 
-```haskell
+```{.haskell .numberLines}
 cKind :: Context -> Type -> Kind -> Result ()
 cKind g (TFree x) Star =
   case lookup x g of
@@ -216,7 +216,7 @@ The only interesting case of `cType` is `cType ii g (Lam e) (Fun ty ty')`. To ch
 
 Here are the definitions of `iSubst` and `cSubst`:
 
-```haskell
+```{.haskell .numberLines}
 iSubst :: Int -> ITerm -> ITerm -> ITerm
 iSubst ii r (Ann e ty) = Ann (cSubst ii r e) ty
 iSubst ii r (Bound j) = if ii == j then r else Bound j
@@ -232,7 +232,7 @@ The function is pretty boring: all it does is just substituting a selected `Boun
 
 Let us complete the section with some examples:
 
-```haskell
+```{.haskell .numberLines}
 id' = Lam (Inf (Bound 0))
 const' = Lam (Lam (Inf (Bound 1)))
 
@@ -304,7 +304,7 @@ Also, let us erase the distinction between checkable and inferrable terms. The c
 
 The new data definitions are:
 
-```haskell
+```{.haskell .numberLines}
 data Term
   = Ann Term Type
   | Free Name
@@ -324,7 +324,7 @@ data Type
 
 The key change is that `Lam` is now a Haskell function `Term -> Term`. The `eval` algorithm is now even simpler:
 
-```haskell
+```{.haskell .numberLines}
 eval :: Term -> NameEnv Term -> Term
 eval (Ann e _) env = eval e env
 eval (Free x) env = case lookup x env of Nothing -> Free x; Just v -> v
@@ -340,7 +340,7 @@ Notice how we evaluate `Lam f`: we return a new `Lam` that accepts a value `x` a
 
 The data definitions for type checking are the same. The type checker is now:
 
-```haskell
+```{.haskell .numberLines}
 cKind :: Context -> Type -> Kind -> Result ()
 cKind g (TFree x) Star =
   case lookup x g of
@@ -393,7 +393,7 @@ The key change here is that instead of calling `cSubst` in `cType`, we just appl
 
 Finally, we need a way to print terms. "As we mentioned earlier, the use of higher-order abstract syntax requires us to define a _quote_ function that takes a `Value` back to a term." -- this is not true. Of course, quoting to a printable term is a way to go, but it is not the only option. Instead, we can derive `Show` for `Term` ourselves:
 
-```haskell
+```{.haskell .numberLines}
 instance Show Term where
   show = go 0
     where
@@ -413,7 +413,7 @@ instance Show Name where
 
 Let us test our new implementation:
 
-```haskell
+```{.haskell .numberLines}
 id' = Lam (\x -> x)
 const' = Lam (\x -> Lam (\_ -> x))
 
@@ -465,7 +465,7 @@ All in all, our new implementation uses only three naming schemes: higher-order 
 
 Perhaps surprisingly, we can use a first-order [^first-order] encoding for both terms and values without implementing substitution by term traversal. The trick is to use De Bruijn _indices_ for terms and De Bruijn _levels_ for values:
 
-```haskell
+```{.haskell .numberLines}
 data Term
   = Ann Term Type
   | Bound Int
@@ -506,7 +506,7 @@ The `Bound` constructor is a De Bruijn index, whereas `NVar` is a De Bruijn leve
 
 Here is the evaluation algorithm:
 
-```haskell
+```{.haskell .numberLines}
 type NameEnv v = [(Name, v)]
 
 eval :: Term -> (NameEnv Value, Env) -> Value
@@ -528,7 +528,7 @@ There are two interesting cases:
 
 Since we have the term-value separation again, we can implement `quote` [^quote-first-order]:
 
-```haskell
+```{.haskell .numberLines}
 quote0 :: Value -> Term
 quote0 = quote [] 0
 
@@ -546,7 +546,7 @@ To quote `VLam d m`, we first evaluate `m` in the environment `d` extended with 
 
 The data definitions for type checking are:
 
-```haskell
+```{.haskell .numberLines}
 type GlobalContext = [(Name, Info)]
 
 type Context = [Type]
@@ -568,7 +568,7 @@ In addition to `Info`, `Kind`, and `Result` we have already seen, we introduce `
 
 The type checking algorithm is:
 
-```haskell
+```{.haskell .numberLines}
 cKind :: (GlobalContext, Context) -> Type -> Kind -> Result ()
 cKind g (TFree x) Star =
   case lookup x (fst g) of
@@ -621,7 +621,7 @@ The interesting cases are:
 
 As usual, let us test our implementation:
 
-```haskell
+```{.haskell .numberLines}
 id' = Lam (Bound 0)
 const' = Lam (Lam (Bound 1))
 
