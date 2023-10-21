@@ -1,5 +1,7 @@
 <div class="introduction">
 
+<p class="discussions">[HN](https://news.ycombinator.com/item?id=36645356) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/14u5o1n/how_to_keep_lambda_calculus_simple/)</p>
+
 Once upon a time, my curiosity of dependent types transitioned into an endeavour to learn how they work under the bonnet. Then I found the paper called ["A Tutorial Implementation of a Dependently Typed Lambda Calculus"] or just "Simply Easy" -- and began reading it. However, the affairs happening there were so complex and hard that I gave up eventually and postponed it for later.
 
 ["A Tutorial Implementation of a Dependently Typed Lambda Calculus"]: https://www.andres-loeh.de/LambdaPi/

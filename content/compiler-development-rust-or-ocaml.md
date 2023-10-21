@@ -1,5 +1,7 @@
 <div class="introduction">
 
+<p class="discussions">[HN](https://news.ycombinator.com/item?id=37026757) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/15jpmxe/compiler_development_rust_or_ocaml/) · [Lobsters](https://lobste.rs/s/yfyub2/compiler_development_rust_ocaml)</p>
+
 The question of which language suits best for compiler development is a frequent one amongst language enthusiasts (e.g., see discussions [here](https://www.reddit.com/r/ProgrammingLanguages/comments/k3zgjy/which_language_to_write_a_compiler_in/), [here](https://www.reddit.com/r/ProgrammingLanguages/comments/13eztdp/good_languages_for_writing_compilers_in/), and [here](https://www.reddit.com/r/ProgrammingLanguages/comments/15gz8rb/how_good_is_go_for_writing_a_compiler/)). Sadly, most of the commenters either 1) just answer with their language of choice without any explanation, or 2) provide a vague explanation without any specific examples to prove their point of view. Both types of answers serve little to no purpose for the person asking the question. In this essay, I will try to provide a more detailed perspective on the topic by comparing two languages: Rust and OCaml.
 
 </div>
