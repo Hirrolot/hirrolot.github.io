@@ -250,7 +250,7 @@ The code is 74 lines long, including comments and blank lines. This is ~2.0 time
 
 Compiler development is characterized by:
 
- 1. a lot of recursively defined data structured,
+ 1. a lot of recursively defined data structures,
  2. a lot of complex data transformation.
 
 How do Rust and OCaml handle these two aspects? Below is a brief summary:
