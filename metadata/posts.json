@@ -1,5 +1,11 @@
 [
     {
+        "name": "f-omega",
+        "title": "Higher-order polymorphic lambda calculus (Fω)",
+        "date": "Mar 31, 2023",
+        "redirect-to": "https://gist.github.com/Hirrolot/505901460f131da1f0cd8b118e46a7bc"
+    },
+    {
         "name": "compiler-development-rust-or-ocaml",
         "title": "Compiler Development: Rust or OCaml?",
         "date": "Aug 6, 2023"
