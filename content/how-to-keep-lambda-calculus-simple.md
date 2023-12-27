@@ -663,7 +663,7 @@ test_type2 = iType0 env2 term2
 
 The approach we have taken here is called _Normalization by Evaluation_, abbreviated as _NbE_. Over time, it has become a standard way of implementing dependent type theories, as it is both reasonably efficient and easy to implement. An interested reader can find more information from these sources:
 
- - [AndrasKovacs/elaboration-zoo](https://github.com/AndrasKovacs/elaboration-zoo) András Kovács.
+ - [AndrasKovacs/elaboration-zoo](https://github.com/AndrasKovacs/elaboration-zoo) by András Kovács.
  - ["Checking Dependent Types with Normalization by Evaluation: A Tutorial (Haskell Version)"](https://davidchristiansen.dk/tutorials/implementing-types-hs.pdf) by David Thrane Christiansen.
 
 ## Final words
