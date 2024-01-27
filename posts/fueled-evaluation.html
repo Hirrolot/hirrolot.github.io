@@ -1,0 +1,754 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Hirrolot's Blog">
+  <title>Fueled Evaluation for Decidable Type Checking</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&amp;display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../myself.png" type="image/x-icon">
+  <script src="../script.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<a class="header-link" href="#"><h1 class="title">Fueled Evaluation for Decidable Type Checking</h1></a>
+<p class="author">Hirrolot's Blog</p>
+<p class="date">Jan 27, 2024</p>
+</header>
+<div class="introduction">
+<p>Beta normalization in lambda calculus is a procedure that reduces a
+lambda term to its beta normal form. Here are some examples:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Beta normal form</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>(\x -&gt; x y) z</code></td>
+<td><code>z y</code></td>
+</tr>
+<tr class="even">
+<td><code>\x -&gt; (\y -&gt; x y) z</code></td>
+<td><code>\x -&gt; x z</code></td>
+</tr>
+<tr class="odd">
+<td><code>x y</code></td>
+<td><code>x y</code></td>
+</tr>
+</tbody>
+</table>
+<p>A beta normal form of a term is characterized by the fact that it
+cannot be “reduced further” – even if we look under lambdas, as in the
+second example.</p>
+<p>In ordinary functional languages, complete beta normalization is
+typically not implemented; for example, if you type the following into
+<code>ghci</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>ghci&gt; (\x -&gt; (\y -&gt; y) 42)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>&lt;interactive&gt;:3:1: error:</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    • No instance for (Show (p0 -&gt; Integer))</span>
+<span id="cb1-5"><a href="#cb1-5"></a>        arising from a use of ‘print’</span>
+<span id="cb1-6"><a href="#cb1-6"></a>        (maybe you haven't applied a function to enough arguments?)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    • In a stmt of an interactive GHCi command: print it</span></code></pre></div>
+<p>You will get a complaint from Haskell that it cannot print a function
+body! Moreover, beta normalization permits <em>symbolic
+computation</em>, which is a very crucial point, as we will see shortly.
+Let us test our first example in <code>ghci</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>ghci&gt; (\x -&gt; x y) z</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>&lt;interactive&gt;:4:10: error: Variable not in scope: y</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>&lt;interactive&gt;:4:13: error: Variable not in scope: z :: t0 -&gt; t</span></code></pre></div>
+<p>The errors happen because Haskell’s REPL requires a <em>concrete
+value</em> for every variable in scope! In contrast, beta normalization
+is free from such a restriction – if the value of a variable is unknown
+at some point, it just uses its <em>symbolic name</em> and proceeds with
+the computation. The transition from ordinary computation to symbolic
+computation is akin to the transition from arithmetic to algebra.</p>
+<p>Perhaps the most frequent use case of beta normalization lies in
+dependently typed languages, such as Idris, Agda, Coq, Lean, and others.
+The reason is that dependent types require a type checker to perform an
+“equality check” between two types, which may contain arbitrary terms;
+beta normalization is used to obtain normal forms of the two types and
+then compare them syntactically <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Here comes the problem of ensuring termination of type checking.
+Since the untyped lambda calculus is Turing-complete, evaluation of a
+lambda term will not terminate, and since dependent type checking may
+involve evaluation of arbitrary terms, it becomes undecidable. Existing
+dependently typed languages are designed in such a way that they are
+<em>not</em> Turing-complete, thus solving the issue. However, what if
+we deliberately plan to perform <em>any</em> conceivable
+computation?</p>
+<p>Then, we need some way of ensuring termination of evaluation. In this
+essay, I am to suggest a simple technique called <em>fueled
+evaluation</em>, which amounts to annotating every term with a maximum
+number of times it can be evaluated.</p>
+</div><nav id="TOC" role="doc-toc" style="display: block;"><h4 class="toc-title">Table of Contents</h4>
+<ul>
+<li><a href="#vanilla-normalization-by-evaluation">Vanilla Normalization
+by Evaluation</a></li>
+<li><a href="#fueled-evaluation">Fueled evaluation</a></li>
+<li><a href="#testing-termination">Testing termination</a></li>
+<li><a href="#informal-reasoning">Informal reasoning</a></li>
+<li><a href="#the-type-checker-sketch">The type checker sketch</a></li>
+<li><a href="#final-words">Final words</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="post-body"><a class="header-link" href="#vanilla-normalization-by-evaluation"><h2 id="vanilla-normalization-by-evaluation">Vanilla Normalization by
+Evaluation</h2></a><p>Let me first lay out the foundation upon which I will demonstrate
+fueled evaluation. We are going to use an approach of normalizing
+higher-order terms called <em>Normalization by Evaluation (NbE)</em>.
+Simply speaking, we are going to have two functions, <code>eval</code>
+and <code>quote</code>: the former evaluates the input term up to
+lambdas (i.e., it does look into lambda bodies), whereas the latter
+function pushes evaluation under lambdas, thereby obtaining the normal
+form. By combining the two functions, roughly <code>quote . eval</code>,
+we would obtain a full lambda calculus normalizer.</p><p>The following is the definition of a lambda term, in OCaml:</p><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">type</span> term = Lam <span class="kw">of</span> term | Var <span class="kw">of</span> <span class="dt">int</span> | Appl <span class="kw">of</span> term * term</span>
+<span id="cb3-2"><a href="#cb3-2"></a>[@@deriving show { with_path = <span class="kw">false</span> }]</span></code></pre></div><p>We use the first-order representation of lambda abstractions, forcing
+<code>Var</code> to contain a De Bruijn <em>index</em> (starting at 0)
+following the <a href="https://en.wikipedia.org/wiki/De_Bruijn_index">well-known
+scheme</a>.</p><p>To be able to write a sequence of applications conveniently, we
+define the following shortcut function:</p><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">let</span> appl (f, <span class="dt">list</span>) = <span class="dt">List</span>.fold_left (<span class="kw">fun</span> m n -&gt; Appl (m, n)) f <span class="dt">list</span></span></code></pre></div><p>Next, here is the representation of values:</p><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">type</span> value = VClosure <span class="kw">of</span> value <span class="dt">list</span> * term | VNt <span class="kw">of</span> neutral</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">and</span> neutral = NVar <span class="kw">of</span> <span class="dt">int</span> | NAppl <span class="kw">of</span> neutral * value</span></code></pre></div><p>Here we use <code>VClosure</code> to represent a closure function; it
+contains a lambda body that <em>closes</em> over the environment of
+values. We also use <code>VNt</code> to represent computations blocked
+on a value of some unknown variable. This is an essential piece of NbE:
+while ordinary computation requires variables to hold <em>concrete</em>
+values at any point, NbE permits variables to be unknown during
+evaluation.</p><p>We define some shortcut functions for convenience:</p><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">let</span> vvar lvl = VNt (NVar lvl)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">let</span> vappl (m, n) = VNt (NAppl (m, n))</span></code></pre></div><p>Now we define the evaluator itself, which throws <code>term</code>
+under <code>rho:value list</code> into <code>value</code>:</p><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">let</span> <span class="kw">rec</span> eval ~rho = <span class="kw">function</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  | Lam m -&gt; VClosure (rho, m)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  | Var idx -&gt; <span class="dt">List</span>.nth rho idx</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  | Appl (m, n) -&gt; (</span>
+<span id="cb7-5"><a href="#cb7-5"></a>      <span class="kw">let</span> m_val = eval ~rho m <span class="kw">in</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>      <span class="kw">let</span> n_val = eval ~rho n <span class="kw">in</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>      <span class="kw">match</span> m_val <span class="kw">with</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>      | VClosure (rho, m) -&gt; eval ~rho:(n_val :: rho) m</span>
+<span id="cb7-9"><a href="#cb7-9"></a>      | VNt neut -&gt; vappl (neut, n_val))</span></code></pre></div><p>The code is pretty self-explanatory. The only thing to note is that
+values in the environment <code>rho</code> (pronounced as “row” <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>) are indexed via De Bruijn indices
+(see the case of <code>Var idx</code>), making access as easy as
+possible.</p><p>The next piece of code is the <code>quote</code> function, which
+throws <code>value</code> under <code>lvl:int</code> back into
+<code>term</code>:</p><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">let</span> <span class="kw">rec</span> quote ~lvl = <span class="kw">function</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>  | VClosure (rho, m) -&gt;</span>
+<span id="cb8-3"><a href="#cb8-3"></a>      <span class="kw">let</span> m_nf = normalize_at ~lvl ~rho m <span class="kw">in</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>      Lam m_nf</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  | VNt neut -&gt; quote_neut ~lvl neut</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="kw">and</span> quote_neut ~lvl = <span class="kw">function</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  | NVar var -&gt; Var (lvl - var - <span class="dv">1</span>)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>  | NAppl (neut, n_val) -&gt;</span>
+<span id="cb8-10"><a href="#cb8-10"></a>      <span class="kw">let</span> m_nf = quote_neut ~lvl neut <span class="kw">in</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>      <span class="kw">let</span> n_nf = quote ~lvl n_val <span class="kw">in</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>      Appl (m_nf, n_nf)</span></code></pre></div><p>In the case of <code>NVar var</code>, we convert a De Bruijn
+<em>level</em> <code>var</code> into a corresponding De Bruijn
+<em>index</em> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>; this is what the formula
+<code>lvl - var - 1</code> does. In the case of
+<code>VClosure (rho, m)</code>, we explicitly push evaluation under
+binders by calling <code>normalize_at ~lvl ~rho m</code>. The function
+<code>normalize_at</code> is defined as follows:</p><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">and</span> normalize ~lvl ~rho term = quote ~lvl (eval ~rho term)</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw">and</span> normalize_at ~lvl ~rho term =</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  normalize ~lvl:(lvl + <span class="dv">1</span>) ~rho:(vvar lvl :: rho) term</span></code></pre></div><p>Hooray, we have our vanilla NbE ready! Let us test it with some
+trivial examples.</p><p>Applying <code>id</code> to itself:</p><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">(* (Lam (Var 0)) *)</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">let</span> id = Lam (Var <span class="dv">0</span>) <span class="kw">in</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>normalize ~lvl:<span class="dv">0</span> ~rho:[] @@ Appl (id, id)</span></code></pre></div><p>Computing a boolean expression
+<code>if true then false else true</code>:</p><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">(* (Lam (Lam (Var 0))) *)</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">let</span> t = Lam (Lam (Var <span class="dv">1</span>)) <span class="kw">in</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw">let</span> f = Lam (Lam (Var <span class="dv">0</span>)) <span class="kw">in</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">let</span> if_then_else = Lam (Lam (Lam (Appl (Appl (Var <span class="dv">2</span>, Var <span class="dv">1</span>), Var <span class="dv">0</span>)))) <span class="kw">in</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>normalize ~lvl:<span class="dv">0</span> ~rho:[] @@ appl (if_then_else, [ t; f; t ])</span></code></pre></div><p>Computing <code>SKSK</code> (from the <a href="https://en.wikipedia.org/wiki/SKI_combinator_calculus">SKI
+calculus</a>):</p><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">(* (Lam (Lam (Var 1))) *)</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">let</span> k = Lam (Lam (Var <span class="dv">1</span>)) <span class="kw">in</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">let</span> s = Lam (Lam (Lam (Appl (Appl (Var <span class="dv">2</span>, Var <span class="dv">0</span>), Appl (Var <span class="dv">1</span>, Var <span class="dv">0</span>))))) <span class="kw">in</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>normalize ~lvl:<span class="dv">0</span> ~rho:[] @@ appl (s, [ k; s; k ])</span></code></pre></div><p>All the results are correct. Now, let us extend the code to support
+fueled evaluation.</p><a class="header-link" href="#fueled-evaluation"><h2 id="fueled-evaluation">Fueled evaluation</h2></a><p>Before expounding on the idea, let me show the actual code <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p><p>As per term representation, we need to augment every term (including
+all of its subterms) with a mutable integer called <em>fuel</em>. We
+could do something like this:</p><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">type</span> term = term_def * <span class="dt">int</span> <span class="dt">ref</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">and</span> term_def = Lam <span class="kw">of</span> term | Var <span class="kw">of</span> <span class="dt">int</span> | Appl <span class="kw">of</span> term * term</span>
+<span id="cb13-4"><a href="#cb13-4"></a>[@@deriving show { with_path = <span class="kw">false</span> }]</span></code></pre></div><p>However, this approach involves a few maintenance problems. First,
+besides the type checker and the evaluator, there may be more moving
+parts in the compiler that manipulate terms – and they do not care a
+little about fuel! Second, if we already have these moving parts, and we
+want to extend our evaluation mechanism to support fueled evaluation, we
+need to scrupulously modify all of them. Third, in a real
+implementation, we may want to write <em>a lot</em> of unit tests, and
+manually inserting fuel into every term and subterm is going to be a
+very tedious task.</p><p>The solution is to use ML modules – they really shine in this case.
+We begin by defining the following functor <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">module</span> Make_term (S : <span class="kw">sig</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="kw">type</span> 'a t [@@deriving show]</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">end</span>) =</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="kw">struct</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="kw">type</span> t = def S.t</span>
+<span id="cb14-6"><a href="#cb14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="kw">and</span> def = Lam <span class="kw">of</span> t | Var <span class="kw">of</span> <span class="dt">int</span> | Appl <span class="kw">of</span> t * t</span>
+<span id="cb14-8"><a href="#cb14-8"></a>  [@@deriving show { with_path = <span class="kw">false</span> }]</span>
+<span id="cb14-9"><a href="#cb14-9"></a></span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="kw">let</span> _ = S.show</span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="kw">end</span></span></code></pre></div><p>(The <code>let _ = S.show</code> line just suppresses a compiler
+warning, ignore it.)</p><p>The functor <code>Make_term</code> takes a module with a polymorphic
+type component <code>t</code> and outputs a new module that contains a
+(different) type <code>t</code> that specializes <code>S.t</code> to
+<code>def</code>, which is the term definition itself. Inside
+<code>def</code>, we refer to the previously defined <code>t</code> so
+that not only the upper level of a term is annotated but also all of its
+subterms.</p><p>We can now define two versions of terms, the first being called
+<code>T</code>:</p><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">module</span> T = Make_term (<span class="kw">struct</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="kw">type</span> 'a t = 'a [@@deriving show]</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">end</span>)</span></code></pre></div><p>And the second being called <code>Nbe_term</code>:</p><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">module</span> Nbe_term = Make_term (<span class="kw">struct</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="kw">type</span> 'a t = 'a * <span class="dt">int</span> <span class="dt">ref</span> [@@deriving show]</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">end</span>)</span></code></pre></div><p>The difference between these two should be pretty clear: while
+<code>T</code> is the regular term representation we had in the previous
+section, <code>Nbe_term</code> possesses the additional fuel component.
+Besides the evaluator, code that used to deal with terms can be left
+untouched – save a few lines of auxiliary code.</p><p>Moving further, we need a way to turn <code>T.def</code> into
+<code>Nbe_term.def</code>. This can be accomplished quite
+straightforwardly:</p><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">let</span> limit = <span class="dv">1000</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">let</span> tank =</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="kw">let</span> <span class="kw">open</span> Nbe_term <span class="kw">in</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="kw">let</span> <span class="kw">rec</span> go term = (go_def term, <span class="dt">ref</span> limit)</span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="kw">and</span> go_def = <span class="kw">function</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>    | T.Lam m -&gt; Lam (go m)</span>
+<span id="cb17-8"><a href="#cb17-8"></a>    | T.Var idx -&gt; Var idx</span>
+<span id="cb17-9"><a href="#cb17-9"></a>    | T.Appl (m, n) -&gt; Appl (go m, go n)</span>
+<span id="cb17-10"><a href="#cb17-10"></a>  <span class="kw">in</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>  go</span></code></pre></div><p>The <code>limit</code> constant is the maximum number of times a
+certain term can be passed to the evaluator, as we will see shortly. The
+<code>tank</code> function just recurses over the structure of an input
+term, annotating every subterm with <code>ref limit</code>.</p><p>The key change lies in the evaluator code:</p><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">exception</span> Out_of_fuel <span class="kw">of</span> Nbe_term.def</span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="kw">let</span> check_limit_exn (term, fuel) =</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="kw">if</span> !fuel &gt; <span class="dv">0</span> <span class="kw">then</span> <span class="dt">decr</span> fuel <span class="kw">else</span> <span class="dt">raise</span> (Out_of_fuel term)</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="kw">let</span> <span class="kw">rec</span> eval ~rho (term, fuel) =</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="kw">let</span> <span class="kw">open</span> Nbe_term <span class="kw">in</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>  check_limit_exn (term, fuel);</span>
+<span id="cb18-9"><a href="#cb18-9"></a>  <span class="kw">match</span> term <span class="kw">with</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>  | Lam m -&gt; VClosure (rho, m)</span>
+<span id="cb18-11"><a href="#cb18-11"></a>  | Var idx -&gt; <span class="dt">List</span>.nth rho idx</span>
+<span id="cb18-12"><a href="#cb18-12"></a>  | Appl (m, n) -&gt; (</span>
+<span id="cb18-13"><a href="#cb18-13"></a>      <span class="kw">let</span> m_val = eval ~rho m <span class="kw">in</span></span>
+<span id="cb18-14"><a href="#cb18-14"></a>      <span class="kw">let</span> n_val = eval ~rho n <span class="kw">in</span></span>
+<span id="cb18-15"><a href="#cb18-15"></a>      <span class="kw">match</span> m_val <span class="kw">with</span></span>
+<span id="cb18-16"><a href="#cb18-16"></a>      | VClosure (rho, m) -&gt; eval ~rho:(n_val :: rho) m</span>
+<span id="cb18-17"><a href="#cb18-17"></a>      | VNt neut -&gt; vappl (neut, n_val))</span></code></pre></div><p>The only needed change is to add the extra
+<code>check_limit_exn (term, fuel)</code> line to the beginning of the
+function. If the fuel variable is zero, we raise an exception called
+<code>Out_of_fuel</code>; otherwise, we merely decrement the fuel and
+proceed with the evaluation.</p><p>The rest of the code is concerned with quotation and full
+normalization. Unlike <code>eval</code>, it need not be changed at all,
+but let me include it for reference:</p><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">let</span> <span class="kw">rec</span> quote ~lvl = <span class="kw">function</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  | VClosure (rho, m) -&gt;</span>
+<span id="cb19-3"><a href="#cb19-3"></a>      <span class="kw">let</span> m_nf = normalize_at ~lvl ~rho m <span class="kw">in</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>      T.Lam m_nf</span>
+<span id="cb19-5"><a href="#cb19-5"></a>  | VNt neut -&gt; quote_neut ~lvl neut</span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="kw">and</span> quote_neut ~lvl = <span class="kw">function</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a>  | NVar var -&gt; T.Var (lvl - var - <span class="dv">1</span>)</span>
+<span id="cb19-9"><a href="#cb19-9"></a>  | NAppl (neut, n_val) -&gt;</span>
+<span id="cb19-10"><a href="#cb19-10"></a>      <span class="kw">let</span> m_nf = quote_neut ~lvl neut <span class="kw">in</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>      <span class="kw">let</span> n_nf = quote ~lvl n_val <span class="kw">in</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a>      T.Appl (m_nf, n_nf)</span>
+<span id="cb19-13"><a href="#cb19-13"></a></span>
+<span id="cb19-14"><a href="#cb19-14"></a><span class="kw">and</span> normalize ~lvl ~rho term = quote ~lvl (eval ~rho term)</span>
+<span id="cb19-15"><a href="#cb19-15"></a></span>
+<span id="cb19-16"><a href="#cb19-16"></a><span class="kw">and</span> normalize_at ~lvl ~rho term =</span>
+<span id="cb19-17"><a href="#cb19-17"></a>  normalize ~lvl:(lvl + <span class="dv">1</span>) ~rho:(vvar lvl :: rho) term</span></code></pre></div><p>One thing to note is that the inferred types are going to be
+different. Previously, <code>normalize</code> and
+<code>normalize_at</code> both had the following function type:</p><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb20-1"><a href="#cb20-1"></a>lvl:<span class="dt">int</span> -&gt; rho:value <span class="dt">list</span> -&gt; term -&gt; term</span></code></pre></div><p>But now, the type of <code>normalize</code> and
+<code>normalize_at</code> is:</p><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb21-1"><a href="#cb21-1"></a>lvl:<span class="dt">int</span> -&gt; rho:value <span class="dt">list</span> -&gt; Nbe_term.t -&gt; T.def</span></code></pre></div><p>As you can observe, the new input term type is
+<code>Nbe_term.t</code> instead of <code>T.t</code>. This is quite
+correct because, in <code>quote</code>, we still need to call
+<code>normalize_at</code> with <code>m : Nbe_term.t</code> coming from
+<code>VClosure (rho, m)</code>; however, for the sake of convenience of
+usage, we should be able to <em>redefine</em> <code>normalize</code> as
+follows <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>:</p><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">let</span> normalize term = normalize ~lvl:<span class="dv">0</span> ~rho:[] (tank term)</span></code></pre></div><p>As expected, the final type of <code>normalize</code> is
+<code>T.def -&gt; T.def</code>.</p><a class="header-link" href="#testing-termination"><h2 id="testing-termination">Testing termination</h2></a><p>The new implementation is able to detect potentially non-terminating
+computation. The following function tests a term:</p><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">let</span> test term =</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="kw">try</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>    <span class="kw">let</span> _nf = normalize term <span class="kw">in</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>    <span class="dt">print_endline</span> <span class="st">"Ok."</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="kw">with</span> Out_of_fuel term -&gt;</span>
+<span id="cb23-6"><a href="#cb23-6"></a>    <span class="dt">Printf</span>.printf <span class="st">"The computational limit is reached for %s.</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>      (Nbe_term.show_def term)</span></code></pre></div><p>Let us define some <a href="https://en.wikipedia.org/wiki/Church_encoding#Church_numerals">Church
+numerals</a> for testing:</p><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">let</span> zero = T.(Lam (Lam (Var <span class="dv">0</span>)))</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">let</span> <span class="dt">succ</span> = T.(Lam (Lam (Lam (Appl (Var <span class="dv">1</span>, Appl (Appl (Var <span class="dv">2</span>, Var <span class="dv">1</span>), Var <span class="dv">0</span>))))))</span>
+<span id="cb24-3"><a href="#cb24-3"></a></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="kw">let</span> mul =</span>
+<span id="cb24-5"><a href="#cb24-5"></a>  T.(Lam (Lam (Lam (Lam (Appl (Appl (Var <span class="dv">3</span>, Appl (Var <span class="dv">2</span>, Var <span class="dv">1</span>)), Var <span class="dv">0</span>))))))</span>
+<span id="cb24-6"><a href="#cb24-6"></a></span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="kw">let</span> appl (f, <span class="dt">list</span>) = <span class="dt">List</span>.fold_left (<span class="kw">fun</span> m n -&gt; T.Appl (m, n)) f <span class="dt">list</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="kw">let</span> one = appl (<span class="dt">succ</span>, [ zero ])</span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="kw">let</span> two = appl (<span class="dt">succ</span>, [ one ])</span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="kw">let</span> three = appl (<span class="dt">succ</span>, [ two ])</span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="kw">let</span> four = appl (<span class="dt">succ</span>, [ three ])</span>
+<span id="cb24-12"><a href="#cb24-12"></a><span class="kw">let</span> five = appl (<span class="dt">succ</span>, [ four ])</span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="kw">let</span> ten = appl (mul, [ five; two ])</span>
+<span id="cb24-14"><a href="#cb24-14"></a><span class="kw">let</span> hundred = appl (mul, [ ten; ten ])</span>
+<span id="cb24-15"><a href="#cb24-15"></a><span class="kw">let</span> thousand = appl (mul, [ hundred; ten ])</span></code></pre></div><p>If we apply <code>id</code> to itself, the console output will be
+<code>Ok.</code>:</p><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">let</span> id_appl = T.(Appl (Lam (Var <span class="dv">0</span>), Lam (Var <span class="dv">0</span>))) <span class="kw">in</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>test id_appl</span></code></pre></div><p>If we try to compute 5000 using Church numerals, the output will be
+<code>Ok.</code> as well:</p><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">let</span> n5k = appl (mul, [ thousand; five ]) <span class="kw">in</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>test n5k</span></code></pre></div><p>However, normalization of the <code>omega</code> combinator yields a
+failure:</p><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">let</span> self_appl = T.(Lam (Appl (Var <span class="dv">0</span>, Var <span class="dv">0</span>))) <span class="kw">in</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="kw">let</span> omega = T.Appl (self_appl, self_appl) <span class="kw">in</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>test omega</span></code></pre></div><p>The output is
+<code>The computational limit is reached for (Appl (((Var 0), ref (0)), ((Var 0), ref (0))))</code>,
+as expected.</p><a class="header-link" href="#informal-reasoning"><h2 id="informal-reasoning">Informal reasoning</h2></a><p>Why is fueled evaluation implemented exactly as it is?</p><p>The informal reasoning behind this approach is as follows. Usually,
+time complexity of an algorithm depends on the size of input (the
+so-called “Big O notation”); in this case, the bigger the input, the
+more computation steps the algorithm will perform. For example, if the
+time complexity is O(n^2), the number of steps for some input of size 5
+is 25, whereas if the input size is 10, the number of steps increases to
+100.</p><p>Of course, for a language to be Turing-complete, it must permit terms
+whose time complexity cannot be described as a function of an input
+size. Therefore, we cannot determine the complexity of
+<code>eval</code>, but we can instead approximate the number of
+invocations of <code>eval</code> by augmenting each input term with some
+suitable integer: the bigger the term, the more times <code>eval</code>
+can be (recursively) invoked <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p><p>Termination of <code>eval ~rho term</code> for any <code>rho</code>
+and <code>term : Nbe_term.t</code> follows from the following
+observations:</p><ul>
+<li>All terms passed to <code>eval</code> are drawn from the finite set
+of all subterms of <code>term</code>.</li>
+<li>The number of times a certain term can be passed to
+<code>eval</code> is limited.</li>
+</ul><p>However, this does not <em>guarantee</em> termination (i.e.,
+decidability) of type checking. For example, if you do some
+sophisticated machinery during type checking, such as certain forms of
+unification, you may still end up with an undecidable type system. Thus,
+the only thing that the aforestated property guarantees is that the type
+checker will not be undecidable <em>due to</em> the evaluation
+mechanism.</p><p>There are several advantages of fueled evaluation over more
+traditional approaches:</p><ul>
+<li><p>In contrast to the <a href="https://coq.inria.fr/doc/v8.9/refman/language/cic.html">Calculus
+of Inductive Constructions (CIC)</a>, which only allows arguments to be
+reduced structurally to ensure termination, the advantage of our
+approach is that it does not exclude any programming techniques – it is
+always possible to adjust the fuel constant for specific needs.</p></li>
+<li><p>In contrast to termination checking with homeomorphic embedding
+<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, which requires
+accumulating a history of computation and performing a structural check
+for every previous term in the history, our checking conditions possess
+very little performance penalty. This is very crucial for any
+dependently typed language. In addition, the homeomorphic embedding
+relation requires a form of small-step operational semantics in order to
+have a traceable history of computation, whereas our NbE algorithm more
+resembles big-step semantics.</p></li>
+<li><p>We can extend the language with more constructions without
+worrying about introducing potential non-termination. This is because
+fueled evaluation considers only the size metric of terms, not their
+actual contents.</p></li>
+</ul><p>Limiting potentially infinite computations with a configurable
+constant is widely used in practical compiler implementations:</p><ul>
+<li><p>GCC and Clang have the <code>-ftemplate-depth</code> option
+(resp. <a href="https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html#index-ftemplate-depth">GCC</a>
+and <a href="https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-ftemplate-depth">Clang</a>)
+to “set the maximum instantiation depth for template classes”.</p></li>
+<li><p>Rust has the <a href="https://doc.rust-lang.org/reference/attributes/limits.html#the-recursion_limit-attribute"><code>recursion_limit</code>
+attribute</a> to “set the maximum depth for potentially
+infinitely-recursive compile-time operations like macro expansion or
+auto-dereference”.</p></li>
+<li><p>Scala 3 has the <a href="https://docs.scala-lang.org/scala3/guides/migration/options-new.html#advanced-settings"><code>-Xmax-inlines</code>
+option</a> described as the “maximal number of successive
+inlines”.</p></li>
+<li><p>Lean 4 has the <a href="https://github.com/leanprover/lean4/blob/ec39de8caed5f86604cec2b4b788d917aaebbe34/src/Init/Prelude.lean#L4365"><code>maxRecDepth</code>
+option</a> described as the “maximum recursion depth” (for macros and
+regular computation).</p></li>
+</ul><p>This provides empirical evidence that the suggested approach should
+work well in practice. Note that we could just as well fix
+<em>globally</em> the limit for <code>eval</code>, but such a solution
+would be strictly less flexible. The key idea behind fueled evaluation
+is to expand and shrink the freedom of evaluation according to the given
+input – the bigger the term, the more freedom is granted to
+<code>eval</code> <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</p><a class="header-link" href="#the-type-checker-sketch"><h2 id="the-type-checker-sketch">The type checker sketch</h2></a><p>Although the type checking algorithm is out of the scope of the
+current writing, I briefly sketch how it could be adapted to fueled
+evaluation.</p><p>It is reasonable to give the end user the right to configure the
+<code>limit</code> constant at will. Therefore, the <code>Typing</code>
+module should contain the <code>Make</code> functor that accepts
+<code>limit</code> as a run-time parameter. This situation can roughly
+look as follows <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>:</p><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">module</span> <span class="kw">type</span> Opts = <span class="kw">sig</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="kw">val</span> fuel : <span class="dt">int</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="kw">end</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="kw">module</span> Make (_ : Opts) : <span class="kw">sig</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>  <span class="kw">val</span> infer</span>
+<span id="cb28-7"><a href="#cb28-7"></a>    :  rho:Value.t <span class="dt">list</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>    -&gt; gamma:Gamma.t</span>
+<span id="cb28-9"><a href="#cb28-9"></a>    -&gt; Raw_term.t</span>
+<span id="cb28-10"><a href="#cb28-10"></a>    -&gt; (Term.t * Value.t, Report.t) result</span>
+<span id="cb28-11"><a href="#cb28-11"></a></span>
+<span id="cb28-12"><a href="#cb28-12"></a>  <span class="kw">val</span> check</span>
+<span id="cb28-13"><a href="#cb28-13"></a>    :  rho:Value.t <span class="dt">list</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>    -&gt; gamma:Gamma.t</span>
+<span id="cb28-15"><a href="#cb28-15"></a>    -&gt; Raw_term.t * Value.t</span>
+<span id="cb28-16"><a href="#cb28-16"></a>    -&gt; (Term.t, Report.t) result</span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="kw">end</span></span></code></pre></div><p>The implementation of <code>Typing</code> would then look as:</p><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">module</span> <span class="kw">type</span> Opts = <span class="kw">sig</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="kw">val</span> fuel : <span class="dt">int</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="kw">end</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a></span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="kw">module</span> Make (Opts : Opts) = <span class="kw">struct</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="kw">let</span> eval ~rho term = Nbe.eval ~rho (Value.Term'.tank ~fuel:Opts.fuel term)</span>
+<span id="cb29-7"><a href="#cb29-7"></a></span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="kw">let</span> <span class="kw">rec</span> infer ~(rho : Value.t <span class="dt">list</span>) ~(gamma : Gamma.t) = <span class="kw">function</span> <span class="co">(* ... *)</span></span>
+<span id="cb29-9"><a href="#cb29-9"></a>  <span class="kw">and</span> check ~(rho : Value.t <span class="dt">list</span>) ~(gamma : Gamma.t) = <span class="kw">function</span> <span class="co">(* ... *)</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a><span class="kw">end</span></span></code></pre></div><p>Whenever we elaborate a new term, we can submit it to the inner
+<code>eval</code> function (from within <code>Make</code>) to obtain a
+value. The <code>Term'</code> submodule of the module <code>Value</code>
+is a functor application of the following form:</p><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">module</span> Term' = <span class="kw">struct</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="kw">include</span> Term.Make (<span class="kw">struct</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>      <span class="kw">type</span> 'a t = 'a * <span class="dt">int</span> <span class="dt">ref</span> [@@deriving show]</span>
+<span id="cb30-4"><a href="#cb30-4"></a>    <span class="kw">end</span>)</span>
+<span id="cb30-5"><a href="#cb30-5"></a></span>
+<span id="cb30-6"><a href="#cb30-6"></a>  <span class="kw">let</span> tank ~fuel = <span class="co">(* ... *)</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="kw">end</span></span></code></pre></div><p>With the following signature:</p><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">module</span> Term' : <span class="kw">sig</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="kw">include</span> <span class="kw">module</span> <span class="kw">type</span> <span class="kw">of</span> Term.Make (<span class="kw">struct</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>      <span class="kw">type</span> 'a t = 'a * <span class="dt">int</span> <span class="dt">ref</span> [@@deriving show]</span>
+<span id="cb31-4"><a href="#cb31-4"></a>    <span class="kw">end</span>)</span>
+<span id="cb31-5"><a href="#cb31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="kw">val</span> tank : fuel:<span class="dt">int</span> -&gt; Term.t -&gt; t</span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="kw">end</span></span></code></pre></div><p>In turn, the <code>Term</code> module signature must include the
+<code>Make</code> functor that defines the term:</p><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">module</span> Make (S : <span class="kw">sig</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>    <span class="kw">type</span> 'a t [@@deriving show]</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="kw">end</span>) : <span class="kw">sig</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="kw">type</span> t = def S.t</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="kw">and</span> def = <span class="co">(* ... *)</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>  [@@deriving show]</span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="kw">end</span></span></code></pre></div><p>And apply it as follows (in the same signature):</p><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">include</span> <span class="kw">module</span> <span class="kw">type</span> <span class="kw">of</span> Make (<span class="kw">struct</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>    <span class="kw">type</span> 'a t = 'a [@@deriving show]</span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="kw">end</span>)</span></code></pre></div><p>The implementation of <code>Term</code> would be:</p><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw">module</span> Make (S : <span class="kw">sig</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>    <span class="kw">type</span> 'a t [@@deriving show]</span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="kw">end</span>) =</span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="kw">struct</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="kw">type</span> t = def S.t</span>
+<span id="cb34-6"><a href="#cb34-6"></a></span>
+<span id="cb34-7"><a href="#cb34-7"></a>  <span class="kw">and</span> def = <span class="co">(* ... *)</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>  [@@deriving show]</span>
+<span id="cb34-9"><a href="#cb34-9"></a></span>
+<span id="cb34-10"><a href="#cb34-10"></a>  <span class="kw">let</span> _ = S.show</span>
+<span id="cb34-11"><a href="#cb34-11"></a><span class="kw">end</span></span>
+<span id="cb34-12"><a href="#cb34-12"></a></span>
+<span id="cb34-13"><a href="#cb34-13"></a><span class="kw">include</span> Make (<span class="kw">struct</span></span>
+<span id="cb34-14"><a href="#cb34-14"></a>    <span class="kw">type</span> 'a t = 'a [@@deriving show]</span>
+<span id="cb34-15"><a href="#cb34-15"></a>  <span class="kw">end</span>)</span></code></pre></div><p>To use the <code>Typing</code> module, all we need is to instantiate
+the functor <code>Typing.Make</code> with the constant
+<code>cli_fuel</code> coming as a run-time CLI parameter <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">let</span> <span class="kw">module</span> Typing =</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  Typing.Make (<span class="kw">struct</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>    <span class="kw">let</span> fuel = cli_fuel</span>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="kw">end</span>)</span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="kw">in</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="co">(* ... *)</span></span></code></pre></div><p>Then, writing <code>Typing.infer ~rho ~gamma prog</code> (same with
+<code>check</code>) would launch the type checking process for
+<code>prog : Raw_term.t</code>.</p><p>Finally, it would make practical sense to do these two things:</p><ul>
+<li>Exception handling. Do not forget to handle the
+<code>Out_of_fuel</code> exception and properly signal the error to the
+end user.</li>
+<li>Source code tracking. Add the <code>SrcPos</code> variant to
+<code>Term.Make.def</code>. Include a term and a source segment for it
+(can be a pair of <code>Lexing.position</code>). If
+<code>Out_of_fuel</code> is caught up, highlight the source text that
+raised the exception.</li>
+</ul><a class="header-link" href="#final-words"><h2 id="final-words">Final words</h2></a><p>Although the demonstrated approach is concerned with pure untyped
+lambda calculus, the same reasoning applies to various typed lambda
+calculi, which can be non-terminating for many reasons, starting from
+unrestricted recursion using a built-in fixed-point combinator and
+ending with <a href="https://en.wikipedia.org/wiki/System_U#Girard's_paradox">Girard’s
+paradox</a>.</p><p>There is a paper from Neil D. Jones called <em>“Call-by-value
+Termination in the Untyped lambda-calculus”</em> <a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>.
+The paper suggests an <em>offline</em> approach to termination checking,
+i.e., checking termination before actually executing the program. In
+contrast, fueled evaluation is an <em>online</em> checking algorithm –
+it checks termination <em>during</em> execution. The approach from the
+paper rests on the fact from pure lambda calculus that the set of
+subexpressions of the evaluated term is a subset of subexpressions of
+the input program (see lemma 3.6, definition 3.7, and lemma 3.8).
+Unfortunately, this surprising property breaks after adding built-ins to
+the language: consider an expression <code>!true</code> resulting in
+<code>false</code>, which is not a subexpression of <code>!true</code>
+(same for integers, strings, etc.) Whether the approach demonstrated in
+the paper can be generalized to a more practical language than pure
+lambda calculus is a matter of further research.</p><p>What is left to do is to apply the technique to a real-world
+implementation of a dependently typed programming language. I am
+currently working on one, which is not made public yet. As far as things
+go, the technique works well enough – it is sufficiently <em>simple,
+stupid</em> to reason about, test, and maintain.</p><p>If I do not forget, I will link an open-sourced repository someday
+here.</p><a class="header-link" href="#references"><h2 id="references">References</h2></a><section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Note that it is typically not
+implemented in such a brutal way. A more practical approach is to write
+a <a href="https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/02-typecheck-closures-debruijn/Main.hs#L138">beta
+conversion checker</a> that <em>gradually</em> evaluates a pair of terms
+until either there is no more left to evaluate or equality fails.
+However, full normalization is still used when <a href="https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/03-holes/Main.hs#L662">inferring
+dependent function types</a> or <a href="https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/02-typecheck-closures-debruijn/Main.hs#L189">printing
+terms</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>The naming is borrowed from Thierry
+Coquand’s paper <em>“An algorithm for type-checking dependent
+types”</em> (1996).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Contrary to a De Bruijn index, a De
+Bruijn level is a natural number indicating the number of binders
+between the variable’s binder and the term’s <em>root</em>. For example,
+the term <code>\x -&gt; \y -&gt; x</code> is represented as
+<code>\_ -&gt; \_ -&gt; 0</code>, where <code>0</code> is the De Bruijn
+level of <code>x</code>. The De Bruijn level of <code>y</code> would be
+<code>1</code> if we used it instead of <code>x</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>The complete code for fueled
+evaluation can be accessed as a <a href="https://gist.github.com/Hirrolot/0cbf1d44fab5a265ac3fd891d20fc1c4">GitHub
+gist</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>You can think of a functor as a
+module-level function: a function that maps a module expression to
+another module expression. A more thorough explanation can be found in
+the <a href="https://dev.realworldocaml.org/functors.html">corresponding
+chapter</a> of <em>“Real World OCaml”</em>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>The redefinition of
+<code>normalize</code> is a good example of name shadowing. We could
+name the first version of <code>normalize</code> as
+<code>normalize_nbe</code>, but 1) the code would need to be changed, 2)
+the longer name would be less convenient to use, and 3) it would pollute
+the whole namespace, causing confusion between the two versions.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>According to the <a href="https://en.wikipedia.org/wiki/Halting_problem">halting
+problem</a>, it is generally impossible to tell if an arbitrary program
+will finish running – so we are doomed to use one or another
+approximation in any case. However, it is not that bad as it may seem to
+be: type systems are <em>already</em> approximations of operationally
+sound programs.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>Robert Glück and Morten Heine
+Sørensen. 1996. A Roadmap to Metacomputation by Supercompilation. In
+Selected Papers from the International Seminar on Partial Evaluation.
+Springer-Verlag, Berlin, Heidelberg, 137–160.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Sørensen, M.H.B. (1998). Convergence
+of program transformers in the metric space of trees. In: Jeuring, J.
+(eds) Mathematics of Program Construction. MPC 1998. Lecture Notes in
+Computer Science, vol 1422. Springer, Berlin, Heidelberg.
+https://doi.org/10.1007/BFb0054297<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>As I have mentioned earlier, this is
+only an approximation. For example, <code>omega</code> from the previous
+section is pretty small, but it requires an infinite number of steps to
+normalize. On the other hand, a huge term can be quickly normalizable if
+most of its subterms are never executed (i.e., it contains many “dead
+paths”).<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>The <code>infer</code> and
+<code>check</code> functions manifest a <a href="https://davidchristiansen.dk/tutorials/bidirectional.pdf">bidirectional
+typing</a> algorithm – a <em>de facto</em> standard for dependent type
+checking.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>The instantiation of
+<code>Typing.Make</code> on <code>cli_fuel</code> provides a good
+example of <em>run-time configuration of ML modules</em>. Rudimentary
+module systems of most programming languages make this pattern
+impossible. The best we could do in Haskell, Rust, Java, or C# is to
+have a sort of record or class that accepts fuel as a parameter,
+together with the methods <code>infer</code> and <code>check</code>.
+With ML modules, we did not need to alter the structure of our code –
+the transition from static modules to configurable functors happened
+<em>naturally</em>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>Jones, N., &amp; Bohr, N. (2008).
+Call-by-value Termination in the Untyped lambda-calculus. Logical
+Methods in Computer Science, Volume 4, Issue 1.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+</script></div></body></html>
