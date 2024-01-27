@@ -525,12 +525,12 @@ of all subterms of <code>term</code>.</li>
 </ul><p>Since <code>quote</code>, <code>normalize</code>, and
 <code>normalize_at</code> only call <code>eval</code> and reduce their
 arguments structurally, they terminate as well.</p><p>However, this does not <em>guarantee</em> termination (i.e.,
-decidability) of type checking. For example, if you do some
-sophisticated machinery during type checking, such as certain forms of
-unification, you may still end up with an undecidable type system. Thus,
-the only thing that the aforestated property guarantees is that the type
-checker will not be undecidable <em>due to</em> the evaluation
-mechanism.</p><p>There are several advantages of fueled evaluation over more
+decidability <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>) of type checking. For example, if
+you do some sophisticated machinery during type checking, such as
+certain forms of unification, you may still end up with an undecidable
+type system. Thus, the only thing that the aforestated property
+guarantees is that the type system will not be undecidable <em>due
+to</em> the evaluation mechanism.</p><p>There are several advantages of fueled evaluation over more
 traditional approaches:</p><ul>
 <li><p>In contrast to the <a href="https://coq.inria.fr/doc/v8.9/refman/language/cic.html">Calculus
 of Inductive Constructions (CIC)</a>, which only allows arguments to be
@@ -538,7 +538,7 @@ reduced structurally to ensure termination, the advantage of our
 approach is that it does not exclude any programming techniques – it is
 always possible to adjust the fuel constant for specific needs.</p></li>
 <li><p>In contrast to termination checking with homeomorphic embedding
-<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, which requires
+<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>, which requires
 accumulating a history of computation and performing a structural check
 for every previous term in the history, our checking conditions possess
 very little performance penalty. This is very crucial for any
@@ -572,13 +572,13 @@ work well in practice. Note that we could just as well fix
 would be strictly less flexible. The key idea behind fueled evaluation
 is to expand and shrink the freedom of evaluation according to the given
 input – the bigger the term, the more freedom is granted to
-<code>eval</code> <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</p><a class="header-link" href="#the-type-checker-sketch"><h2 id="the-type-checker-sketch">The type checker sketch</h2></a><p>Although the type checking algorithm is out of the scope of the
+<code>eval</code> <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p><a class="header-link" href="#the-type-checker-sketch"><h2 id="the-type-checker-sketch">The type checker sketch</h2></a><p>Although the type checking algorithm is out of the scope of the
 current writing, I briefly sketch how it could be adapted to fueled
 evaluation.</p><p>It is reasonable to give the end user the right to configure the
 <code>limit</code> constant at will. Therefore, the <code>Typing</code>
 module should contain the <code>Make</code> functor that accepts
 <code>limit</code> as a run-time parameter. This situation can roughly
-look as follows <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>:</p><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">module</span> <span class="kw">type</span> Opts = <span class="kw">sig</span></span>
+look as follows <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">module</span> <span class="kw">type</span> Opts = <span class="kw">sig</span></span>
 <span id="cb28-2"><a href="#cb28-2"></a>  <span class="kw">val</span> fuel : <span class="dt">int</span></span>
 <span id="cb28-3"><a href="#cb28-3"></a><span class="kw">end</span></span>
 <span id="cb28-4"><a href="#cb28-4"></a></span>
@@ -644,7 +644,7 @@ is a functor application of the following form:</p><div class="sourceCode" id="c
 <span id="cb34-14"><a href="#cb34-14"></a>    <span class="kw">type</span> 'a t = 'a [@@deriving show]</span>
 <span id="cb34-15"><a href="#cb34-15"></a>  <span class="kw">end</span>)</span></code></pre></div><p>To use the <code>Typing</code> module, all we need is to instantiate
 the functor <code>Typing.Make</code> with the constant
-<code>cli_fuel</code> coming as a run-time CLI parameter <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">let</span> <span class="kw">module</span> Typing =</span>
+<code>cli_fuel</code> coming as a run-time CLI parameter <a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>:</p><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">let</span> <span class="kw">module</span> Typing =</span>
 <span id="cb35-2"><a href="#cb35-2"></a>  Typing.Make (<span class="kw">struct</span></span>
 <span id="cb35-3"><a href="#cb35-3"></a>    <span class="kw">let</span> fuel = cli_fuel</span>
 <span id="cb35-4"><a href="#cb35-4"></a>  <span class="kw">end</span>)</span>
@@ -666,7 +666,7 @@ calculi, which can be non-terminating for many reasons, starting from
 unrestricted recursion using a built-in fixed-point combinator and
 ending with <a href="https://en.wikipedia.org/wiki/System_U#Girard's_paradox">Girard’s
 paradox</a>.</p><p>There is a paper from Neil D. Jones called <em>“Call-by-value
-Termination in the Untyped lambda-calculus”</em> <a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>.
+Termination in the Untyped lambda-calculus”</em> <a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>.
 The paper suggests an <em>offline</em> approach to termination checking,
 i.e., checking termination before actually executing the program. In
 contrast, fueled evaluation is an <em>online</em> checking algorithm –
@@ -725,26 +725,33 @@ will finish running – so we are doomed to use one or another
 approximation in any case. However, it is not that bad as it may seem to
 be: type systems are <em>already</em> approximations of operationally
 sound programs.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>Robert Glück and Morten Heine
+<li id="fn8" role="doc-endnote"><p><em>Update: As people have <a href="https://www.reddit.com/r/functionalprogramming/comments/1ac9iqp/comment/kjtd5kx/?utm_source=share&amp;utm_medium=web2x&amp;context=3">pointed
+out</a>, the word “decidability” is for an algorithmic problem, whereas
+termination is a property of a concrete algorithm. Therefore, it is more
+correct to refer to a type system as decidable or undecidable, and refer
+to a type checker as terminating or non-terminating. By restricting
+evaluation with fuel, we make the (hypothetical) type system decidable
+and the type checker terminating.</em><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Robert Glück and Morten Heine
 Sørensen. 1996. A Roadmap to Metacomputation by Supercompilation. In
 Selected Papers from the International Seminar on Partial Evaluation.
-Springer-Verlag, Berlin, Heidelberg, 137–160.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Sørensen, M.H.B. (1998). Convergence
+Springer-Verlag, Berlin, Heidelberg, 137–160.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Sørensen, M.H.B. (1998). Convergence
 of program transformers in the metric space of trees. In: Jeuring, J.
 (eds) Mathematics of Program Construction. MPC 1998. Lecture Notes in
 Computer Science, vol 1422. Springer, Berlin, Heidelberg.
-https://doi.org/10.1007/BFb0054297<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>As I have mentioned earlier, this is
+https://doi.org/10.1007/BFb0054297<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>As I have mentioned earlier, this is
 only an approximation. For example, <code>omega</code> from the previous
 section is pretty small, but it requires an infinite number of steps to
 normalize. On the other hand, a huge term can be quickly normalizable if
 most of its subterms are never executed (i.e., it contains many “dead
-paths”).<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>The <code>infer</code> and
+paths”).<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>The <code>infer</code> and
 <code>check</code> functions manifest a <a href="https://davidchristiansen.dk/tutorials/bidirectional.pdf">bidirectional
 typing</a> algorithm – a <em>de facto</em> standard for dependent type
-checking.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12" role="doc-endnote"><p>The instantiation of
+checking.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>The instantiation of
 <code>Typing.Make</code> on <code>cli_fuel</code> provides a good
 example of <em>run-time configuration of ML modules</em>. Rudimentary
 module systems of most programming languages make this pattern
@@ -753,10 +760,10 @@ have a sort of record or class that accepts fuel as a parameter,
 together with the methods <code>infer</code> and <code>check</code>.
 With ML modules, we did not need to alter the structure of our code –
 the transition from static modules to configurable functors happened
-<em>naturally</em>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p>Jones, N., &amp; Bohr, N. (2008).
+<em>naturally</em>.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>Jones, N., &amp; Bohr, N. (2008).
 Call-by-value Termination in the Untyped lambda-calculus. Logical
-Methods in Computer Science, Volume 4, Issue 1.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+Methods in Computer Science, Volume 4, Issue 1.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>
