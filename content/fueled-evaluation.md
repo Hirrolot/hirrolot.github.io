@@ -1,6 +1,6 @@
 <div class="introduction">
 
-<p class="discussions">[r/dependent_types](https://reddit.com/r/dependent_types/comments/1ac9gw0/fueled_evaluation_for_decidable_type_checking/)</p>
+<p class="discussions">[r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/1ac9gpw/fueled_evaluation_for_decidable_type_checking/) · [r/functionalprogramming](https://www.reddit.com/r/functionalprogramming/comments/1ac9iqp/fueled_evaluation_for_decidable_type_checking/) · [r/dependent_types](https://reddit.com/r/dependent_types/comments/1ac9gw0/fueled_evaluation_for_decidable_type_checking/)</p>
 
 Beta normalization in lambda calculus is a procedure that reduces a lambda term to its beta normal form. Here are some examples:
 
