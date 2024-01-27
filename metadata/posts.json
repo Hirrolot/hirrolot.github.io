@@ -1,5 +1,10 @@
 [
     {
+        "name": "fueled-evaluation",
+        "title": "Fueled Evaluation for Decidable Type Checking",
+        "date": "Jan 27, 2024"
+    },
+    {
         "name": "f-omega",
         "title": "Higher-Order Polymorphic Lambda Calculus (Fω)",
         "date": "Mar 31, 2023",
