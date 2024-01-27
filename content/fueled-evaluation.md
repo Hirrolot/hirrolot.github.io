@@ -368,7 +368,7 @@ Termination of `eval ~rho term` for any `rho` and `term : Nbe_term.t` follows fr
 
 Since `quote`, `normalize`, and `normalize_at` only call `eval` and reduce their arguments structurally, they terminate as well.
 
-However, this does not _guarantee_ termination (i.e., decidability) of type checking. For example, if you do some sophisticated machinery during type checking, such as certain forms of unification, you may still end up with an undecidable type system. Thus, the only thing that the aforestated property guarantees is that the type checker will not be undecidable _due to_ the evaluation mechanism.
+However, this does not _guarantee_ termination (i.e., decidability [^termination-decidability]) of type checking. For example, if you do some sophisticated machinery during type checking, such as certain forms of unification, you may still end up with an undecidable type system. Thus, the only thing that the aforestated property guarantees is that the type system will not be undecidable _due to_ the evaluation mechanism.
 
 There are several advantages of fueled evaluation over more traditional approaches:
 
@@ -557,6 +557,8 @@ If I do not forget, I will link an open-sourced repository someday here.
 [^halting-problem]: According to the [halting problem], it is generally impossible to tell if an arbitrary program will finish running -- so we are doomed to use one or another approximation in any case. However, it is not that bad as it may seem to be: type systems are _already_ approximations of operationally sound programs.
 
 [halting problem]: https://en.wikipedia.org/wiki/Halting_problem
+
+[^termination-decidability]: _Update: As people have [pointed out](https://www.reddit.com/r/functionalprogramming/comments/1ac9iqp/comment/kjtd5kx/?utm_source=share&utm_medium=web2x&context=3), the word "decidability" is for an algorithmic problem, whereas termination is a property of a concrete algorithm. Therefore, it is more correct to refer to a type system as decidable or undecidable, and refer to a type checker as terminating or non-terminating. By restricting evaluation with fuel, we make the (hypothetical) type system decidable and the type checker terminating._
 
 [^MetacompBySupercomp]: Robert Glück and Morten Heine Sørensen. 1996. A Roadmap to Metacomputation by Supercompilation. In Selected Papers from the International Seminar on Partial Evaluation. Springer-Verlag, Berlin, Heidelberg, 137–160.
 
