@@ -294,6 +294,7 @@ by Evaluation</a></li>
 
 
 
+
 <div class="post-body"><a class="header-link" href="#vanilla-normalization-by-evaluation"><h2 id="vanilla-normalization-by-evaluation">Vanilla Normalization by
 Evaluation</h2></a><p>Let me first lay out the foundation upon which I will demonstrate
 fueled evaluation. We are going to use an approach of normalizing
@@ -516,7 +517,9 @@ observations:</p><ul>
 of all subterms of <code>term</code>.</li>
 <li>The number of times a certain term can be passed to
 <code>eval</code> is limited.</li>
-</ul><p>However, this does not <em>guarantee</em> termination (i.e.,
+</ul><p>Since <code>quote</code>, <code>normalize</code>, and
+<code>normalize_at</code> only call <code>eval</code> and reduce their
+arguments structurally, they terminate as well.</p><p>However, this does not <em>guarantee</em> termination (i.e.,
 decidability) of type checking. For example, if you do some
 sophisticated machinery during type checking, such as certain forms of
 unification, you may still end up with an undecidable type system. Thus,
