@@ -694,7 +694,10 @@ conversion checker</a> that <em>gradually</em> evaluates a pair of terms
 until either there is no more left to evaluate or equality fails.
 However, full normalization is still used when <a href="https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/03-holes/Main.hs#L662">inferring
 dependent function types</a> or <a href="https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/02-typecheck-closures-debruijn/Main.hs#L189">printing
-terms</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+terms</a>. <em>Update: As people have <a href="https://www.reddit.com/r/ProgrammingLanguages/comments/1ac9gpw/comment/kjv64gi/?utm_source=share&amp;utm_medium=web2x&amp;context=3">pointed
+out</a>, full normalization should be avoided in production-ready
+implementations. For example, see <a href="https://agda.readthedocs.io/en/latest/language/opaque-definitions.html">Agda’s
+opaque definitions</a> for controlling unfolding.</em><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>The naming is borrowed from Thierry
 Coquand’s paper <em>“An algorithm for type-checking dependent
 types”</em> (1996).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
