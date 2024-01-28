@@ -536,7 +536,9 @@ If I do not forget, I will link an open-sourced repository someday here.
 
 ## References
 
-[^beta-conv]: Note that it is typically not implemented in such a brutal way. A more practical approach is to write a [beta conversion checker] that _gradually_ evaluates a pair of terms until either there is no more left to evaluate or equality fails. However, full normalization is still used when [inferring dependent function types] or [printing terms].
+[^beta-conv]: Note that it is typically not implemented in such a brutal way. A more practical approach is to write a [beta conversion checker] that _gradually_ evaluates a pair of terms until either there is no more left to evaluate or equality fails. However, full normalization is still used when [inferring dependent function types] or [printing terms]. _Update: As people have [pointed out](https://www.reddit.com/r/ProgrammingLanguages/comments/1ac9gpw/comment/kjv64gi/?utm_source=share&utm_medium=web2x&context=3), full normalization should be avoided in production-ready implementations. For example, see [Agda's opaque definitions] for controlling unfolding._
+
+[Agda's opaque definitions]: https://agda.readthedocs.io/en/latest/language/opaque-definitions.html
 
 [beta conversion checker]: https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/02-typecheck-closures-debruijn/Main.hs#L138
 [inferring dependent function types]: https://github.com/AndrasKovacs/elaboration-zoo/blob/2cbde286207f3b4bf24631b40656aa63d717ce10/03-holes/Main.hs#L662
