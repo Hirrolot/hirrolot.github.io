@@ -564,8 +564,7 @@ If I do not forget, I will link an open-sourced repository someday here.
 
 [^MetacompBySupercomp]: Robert Glück and Morten Heine Sørensen. 1996. A Roadmap to Metacomputation by Supercompilation. In Selected Papers from the International Seminar on Partial Evaluation. Springer-Verlag, Berlin, Heidelberg, 137–160.
 
-[^ConvergenceSorensen]: 
-Sørensen, M.H.B. (1998). Convergence of program transformers in the metric space of trees. In: Jeuring, J. (eds) Mathematics of Program Construction. MPC 1998. Lecture Notes in Computer Science, vol 1422. Springer, Berlin, Heidelberg. https://doi.org/10.1007/BFb0054297
+[^ConvergenceSorensen]: Sørensen, M.H.B. (1998). Convergence of program transformers in the metric space of trees. In: Jeuring, J. (eds) Mathematics of Program Construction. MPC 1998. Lecture Notes in Computer Science, vol 1422. Springer, Berlin, Heidelberg. https://doi.org/10.1007/BFb0054297
 
 [^eval-freedom]: As I have mentioned earlier, this is only an approximation. For example, `omega` from the previous section is pretty small, but it requires an infinite number of steps to normalize. On the other hand, a huge term can be quickly normalizable if most of its subterms are never executed (i.e., it contains many "dead paths").
 
