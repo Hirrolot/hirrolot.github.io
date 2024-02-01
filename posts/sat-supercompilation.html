@@ -529,7 +529,7 @@ expression, which is equivalent to solving the SAT problem! As I have
 mentioned in the previous section, if there is at least one
 <code>T</code> leaf in the final tree, the formula is satisfiable
 because this <code>T</code> is reachable from the root. Otherwise (if
-there is no <code>T</code>), the formula is unsatisfiable.</p><p>Here is a complete SAT solver written in SLL:</p><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>or(Var(x), rest) = If(x, T, rest);</span>
+there is no <code>T</code>), the formula is unsatisfiable <a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>.</p><p>Here is a complete SAT solver written in SLL:</p><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>or(Var(x), rest) = If(x, T, rest);</span>
 <span id="cb11-2"><a href="#cb11-2"></a>or(Not(x), rest) = If(x, rest, T);</span>
 <span id="cb11-3"><a href="#cb11-3"></a></span>
 <span id="cb11-4"><a href="#cb11-4"></a>and(If(x, m, n), rest) = If(x, and(m, rest), and(n, rest));</span>
@@ -969,7 +969,7 @@ supercompilation is a general method rather than a particular algorithm,
 it should always be possible to restrict the expressive power of a
 <em>particular</em> supercompiler to make it more predictable – albeit
 less smart. See the technique of <em>speculative supercompilation</em>
-from <a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>.
+from <a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>.
 <ul>
 <li>The SLL solver demonstrated in the previous section can serve as a
 good stress test for a practical supercompiler.</li>
@@ -1042,10 +1042,13 @@ because <code>x</code> must be the first argument in a syntactically
 correct SLL expression. So in reality, the process tree would have three
 branches: one for <code>x</code>, the other two for <code>x=T</code> and
 <code>x=F</code>.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18" role="doc-endnote"><p>Jonsson, P. A. (2011). Time- and
+<li id="fn18" role="doc-endnote"><p>Of course, a residual task is not
+“officially” an answer to a decision problem (yes/no), but the answer
+can be mechanically extracted from it.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>Jonsson, P. A. (2011). Time- and
 size-efficient supercompilation (PhD dissertation, Luleå tekniska
 universitet). Retrieved from
-https://urn.kb.se/resolve?urn=urn:nbn:se:ltu:diva-26651<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+https://urn.kb.se/resolve?urn=urn:nbn:se:ltu:diva-26651<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>
