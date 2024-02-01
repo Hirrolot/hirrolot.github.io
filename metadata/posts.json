@@ -1,5 +1,10 @@
 [
     {
+        "name": "sat-supercompilation",
+        "title": "Solving SAT via Positive Supercompilation",
+        "date": "Feb 1, 2024"
+    },
+    {
         "name": "fueled-evaluation",
         "title": "Fueled Evaluation for Decidable Type Checking",
         "date": "Jan 27, 2024"
