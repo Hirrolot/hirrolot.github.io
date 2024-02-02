@@ -1,6 +1,6 @@
 <div class="introduction">
 
-<p class="discussions">[HN](https://news.ycombinator.com/item?id=39218173)</p>
+<p class="discussions">[HN](https://news.ycombinator.com/item?id=39218173) · [r/ProgrammingLanguages](https://www.reddit.com/r/ProgrammingLanguages/comments/1agb940/solving_sat_via_positive_supercompilation/)</p>
 
 The [boolean satisfiability problem] ("SAT" for short) is arguably the most famous NP-complete problem in theoretical computer science. According to Wikipedia, it is "the problem of determining if there exists an [interpretation] that satisfies a given [Boolean] [formula]"; or, in simpler terms, if there is at least one assignment of boolean variables to TRUE or FALSE such that the whole formula becomes TRUE.
 
