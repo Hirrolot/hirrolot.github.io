@@ -529,6 +529,7 @@ If you still want to create a PL of the future, I wish you good luck and strong 
  - _"[Shifgrethor I: Garbage collection as a Rust library](https://boats.gitlab.io/blog/post/shifgrethor-i/)"_
  - _"[Revisiting a 'smaller Rust'](https://without.boats/blog/revisiting-a-smaller-rust/)"_
  - _"[The Rust I Wanted Had No Future](https://graydon2.dreamwidth.org/307291.html)"_
+ - _"[Dada, an Experiement by the Creators of Rust](https://news.ycombinator.com/item?id=39614433)"_
 
 Feel free to contact me if you wish to extend this list.
 
