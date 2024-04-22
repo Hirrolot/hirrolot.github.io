@@ -3,7 +3,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="author" content="Hirrolot's Blog">
-  <title>Announcing Lolita: A finally tagless, dependently typed, self-aware programming language</title>
+  <title>Announcing Beatrice: A finally tagless, dependently typed, self-aware programming language</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -95,18 +95,18 @@
 </head>
 <body>
 <header id="title-block-header">
-<a class="header-link" href="#"><h1 class="title">Announcing Lolita: A finally tagless, dependently
+<a class="header-link" href="#"><h1 class="title">Announcing Beatrice: A finally tagless, dependently
 typed, self-aware programming language</h1></a>
 <p class="author">Hirrolot's Blog</p>
 <p class="date">Apr 22, 2024</p>
 </header>
 <div class="introduction">
-<p>In celebration of the 125<sup>th</sup> anniversary of the birth of <a href="https://en.wikipedia.org/wiki/Vladimir_Nabokov">Vladimir
-Nabokov</a>, I am pleased to announce <a href="https://github.com/lolita-lang/lolita">Lolita</a>: a <em>finally
-tagless</em>, <em>dependently typed</em>, <em>self-aware</em>
-programming language. In what follows, I will demonstrate its most
-prominent features and contrast them to those of mainstream programming
-languages.</p>
+<p>Today I am pleased to announce <a href="https://github.com/beatrice-lang/beatrice">Beatrice</a>, which is
+a <em>finally tagless</em>, <em>dependently typed</em>,
+<em>self-aware</em> functional programming language that I have been
+working on for quite a while. In this short blog post, I will
+demonstrate its most prominent features and contrast them to those of
+mainstream programming languages.</p>
 </div><nav id="TOC" role="doc-toc" style="display: block;"><h4 class="toc-title">Table of Contents</h4>
 <ul>
 <li><a href="#dependent-types">Dependent types</a></li>
@@ -159,16 +159,16 @@ metaprogramming</a></li>
 
 
 
-<div class="post-body"><a class="header-link" href="#dependent-types"><h2 id="dependent-types">Dependent types</h2></a><p>In Lolita, types can <a href="https://en.wikipedia.org/wiki/Dependent_type">depend on
+<div class="post-body"><a class="header-link" href="#dependent-types"><h2 id="dependent-types">Dependent types</h2></a><p>In Beatrice, types can <a href="https://en.wikipedia.org/wiki/Dependent_type">depend on
 values</a>. This allows many real-world patterns to be expressed as
 ordinary functions. Consider the <code>String.format</code> function
-from the standard library, which can be used as follows:</p><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>import { "std/src/String.lo" }</span>
+from the standard library, which can be used as follows:</p><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>import { "std/src/String.bea" }</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>// "Lo. Lee. Ta."</span>
+<span id="cb1-3"><a href="#cb1-3"></a>// "Be-a-trice"</span>
 <span id="cb1-4"><a href="#cb1-4"></a>export</span>
 <span id="cb1-5"><a href="#cb1-5"></a>main: string =</span>
-<span id="cb1-6"><a href="#cb1-6"></a>    let speak = String.format(via="%s. %s. %s.");</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    speak(x="Lo", x="Lee", x="Ta");</span></code></pre></div><p>The type of <code>speak</code> is
+<span id="cb1-6"><a href="#cb1-6"></a>    let speak = String.format(via="%s-%s-%s");</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    speak(x="Be", x="a", x="trice");</span></code></pre></div><p>The type of <code>speak</code> is
 <code>(x: string, x: string, x: string) -&gt; string</code>. If we were
 to call <code>String.format</code> with <code>via="%s %b %i32"</code>,
 the type would be
@@ -177,21 +177,21 @@ first-class functions, we can even store the application of
 <code>String.format</code> to <code>via</code> as an ordinary
 let-binding.</p><p>Most often, string formatting is expressed either as an unsafe
 variadic function or macro. In some situations, extra compiler magic is
-required. In Lolita, string formatting is just an ordinary function
+required. In Beatrice, string formatting is just an ordinary function
 whose type can be statically inferred and checked. For example, if we
-attempt to pass a boolean instead of a string:</p><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>import { "std/src/String.lo" }</span>
+attempt to pass a boolean instead of a string:</p><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>import { "std/src/String.bea" }</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a>// "Lo. Lee. Ta."</span>
+<span id="cb2-3"><a href="#cb2-3"></a>// "Be-a-trice"</span>
 <span id="cb2-4"><a href="#cb2-4"></a>export</span>
 <span id="cb2-5"><a href="#cb2-5"></a>main: string =</span>
-<span id="cb2-6"><a href="#cb2-6"></a>    let speak = String.format(via="%s. %s. %s.");</span>
-<span id="cb2-7"><a href="#cb2-7"></a>    speak(x=true, x="Lee", x="Ta");</span></code></pre></div><p>we will receive the following compilation error:</p><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>error: src/Main.lo:7:13: Expected type `string`, got `boolean`:</span>
-<span id="cb3-2"><a href="#cb3-2"></a>7 |     speak(x=true, x="Lee", x="Ta");</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    let speak = String.format(via="%s-%s-%s");</span>
+<span id="cb2-7"><a href="#cb2-7"></a>    speak(x=true, x="a", x="trice");</span></code></pre></div><p>we will receive the following compilation error:</p><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>error: src/Main.bea:7:13: Expected type `string`, got `boolean`:</span>
+<span id="cb3-2"><a href="#cb3-2"></a>7 |     speak(x=true, x="a", x="trice");</span>
 <span id="cb3-3"><a href="#cb3-3"></a>                ^^^^</span></code></pre></div><p>This example manifests the ability of our type system to embed
 domain-specific languages with custom syntax in a typed manner. I invite
-you to study <a href="https://github.com/lolita-lang/lolita/blob/master/imports/std/src/String/Format.lo">the
+you to study <a href="https://github.com/beatrice-lang/beatrice/blob/master/imports/std/src/String/Format.bea">the
 implementation</a> of <code>String.format</code> to see how it is
-done.</p><a class="header-link" href="#tagless-final"><h2 id="tagless-final">Tagless-final</h2></a><p>In Lolita, <a href="https://okmij.org/ftp/tagless-final/">functions
+done.</p><a class="header-link" href="#tagless-final"><h2 id="tagless-final">Tagless-final</h2></a><p>In Beatrice, <a href="https://okmij.org/ftp/tagless-final/">functions
 are composed directly</a>, and if there are several interrelated
 functions, they are stored in a record. This style is called
 <em>tagless-final</em>.</p><p>Consider our encoding of a functional list:</p><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>List(a: type) -&gt; type = {</span>
@@ -221,7 +221,7 @@ and <code>map</code> can be defined as follows:</p><div class="sourceCode" id="c
 <span id="cb6-8"><a href="#cb6-8"></a>    [ "a", "ab", "abc", "abcd", "abcde" ] with pipeline;</span></code></pre></div><p>This mechanism allows us to throw out algebraic data types from the
 language. In return, we obtain 1) a simpler core language, 2) less
 interpretive overhead, 3) a more compositional style of programming, 4)
-<a href="https://github.com/lolita-lang/lolita/blob/master/examples/expression-problem/src/Main.lo">extensibility
+<a href="https://github.com/beatrice-lang/beatrice/blob/master/examples/expression-problem/src/Main.bea">extensibility
 in both axes</a>, and 5) apparentness of termination of algorithms. We
 pay the price by losing the ability to do nested pattern matching in a
 direct way; however, it can still be done by <a href="https://okmij.org/ftp/tagless-final/course/lecture.pdf">explicating
@@ -250,10 +250,10 @@ follows:</p><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource
 <span id="cb8-9"><a href="#cb8-9"></a>main: string =</span>
 <span id="cb8-10"><a href="#cb8-10"></a>    let state = new(s=i32, a=string);</span>
 <span id="cb8-11"><a href="#cb8-11"></a>    ((test -&gt; state)) @ 5;</span></code></pre></div><a class="header-link" href="#typed-tagless-metaprogramming"><h2 id="typed-tagless-metaprogramming">Typed tagless
-metaprogramming</h2></a><p>Lolita can represent its typed abstract syntax <a href="https://github.com/lolita-lang/lolita/blob/master/imports/std/src/Metacode.lo">within
-itself</a>. This allows us to manipulate Lolita programs within
-Lolita.</p><p>For example, if we are to invert every control flow condition in a
-program:</p><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>import { "std/src/Metacode.lo", "std/src/Metasystem/Demetacoder.lo" }</span>
+metaprogramming</h2></a><p>Beatrice can represent its typed abstract syntax <a href="https://github.com/beatrice-lang/beatrice/blob/master/imports/std/src/Metacode.bea">within
+itself</a>. This allows us to manipulate Beatrice programs within
+Beatrice.</p><p>For example, if we are to invert every control flow condition in a
+program:</p><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>import { "std/src/Metacode.bea", "std/src/Metasystem/Demetacoder.bea" }</span>
 <span id="cb9-2"><a href="#cb9-2"></a></span>
 <span id="cb9-3"><a href="#cb9-3"></a>pass: Metacode.T = Demetacoder.run;</span>
 <span id="cb9-4"><a href="#cb9-4"></a></span>
@@ -295,39 +295,41 @@ program:</p><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource
 <span id="cb9-40"><a href="#cb9-40"></a>        (x != 5) -&gt; if { ((x * 2) = 30) -&gt; "Success"; _ -&gt; "Failure" };</span>
 <span id="cb9-41"><a href="#cb9-41"></a>        _ -&gt; "Failure"</span>
 <span id="cb9-42"><a href="#cb9-42"></a>    }</span>
-<span id="cb9-43"><a href="#cb9-43"></a>} with invertConditions;</span></code></pre></div><p><code>Demetacoder.run</code> is a simple <a href="https://github.com/lolita-lang/lolita/blob/master/imports/std/src/Metasystem/Demetacoder.lo">metacircular
-evaluator</a> of Lolita. By reusing it everywhere except for
+<span id="cb9-43"><a href="#cb9-43"></a>} with invertConditions;</span></code></pre></div><p><code>Demetacoder.run</code> is a simple <a href="https://github.com/beatrice-lang/beatrice/blob/master/imports/std/src/Metasystem/Demetacoder.bea">metacircular
+evaluator</a> of Beatrice. By reusing it everywhere except for
 <code>IfThenElse</code>, we were able to compositionally process each
 language form in the input program. The result of this processing is
 guaranteed to be a syntactically correct, well-scoped, and well-typed
-Lolita program.</p><p>A similar feature can be found in almost every modern general-purpose
+Beatrice program.</p><p>A similar feature can be found in almost every modern general-purpose
 programming language. However, the crucial difference is that our
 approach allows us to catch metaprogramming bugs at the time of
 definition of the program transformer, not its usage. For example, if we
-write the following:</p><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>    IfThenElse(_a, cond, m, n) = if { !cond -&gt; "oops"; _ -&gt; n },</span></code></pre></div><p>we will receive the following compilation error:</p><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>error: src/Main.lo:22:53: Expected type `_a`, got `string`:</span>
+write the following:</p><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>    IfThenElse(_a, cond, m, n) = if { !cond -&gt; "oops"; _ -&gt; n },</span></code></pre></div><p>we will receive the following compilation error:</p><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>error: src/Main.bea:22:53: Expected type `_a`, got `string`:</span>
 <span id="cb11-2"><a href="#cb11-2"></a>22 |     IfThenElse(_a, cond, m, n) = if { !cond -&gt; "oops"; _ -&gt; n },</span></code></pre></div><p>Our treatment of metaprogramming is partly inspired by a cybernetical
 programming language called <a href="http://www.botik.ru/~scp/book/">Refal-5</a>. Manipulating
 program’s code (which we call <em>metacode</em>) can be seen as an
 example of <a href="http://pespmc1.vub.ac.be/MST.html"><em>metasystem
-transition</em></a>.</p><a class="header-link" href="#final-words"><h2 id="final-words">Final words</h2></a><p>There are many other interesting examples of Lolita, such as <a href="https://github.com/lolita-lang/lolita/blob/master/examples/church-factorial/src/Main.lo">ad-hoc
-polymorphism</a>, <a href="https://github.com/lolita-lang/lolita/blob/master/examples/futamura-1/src/Main.lo">partial
-computation</a>, and <a href="https://github.com/lolita-lang/lolita/blob/master/examples/stlc/src/Main.lo">embedding
-typed higher-order calculi</a>. <a href="https://github.com/lolita-lang/lolita/blob/master/docs/taste.md">This
+transition</em></a>.</p><a class="header-link" href="#final-words"><h2 id="final-words">Final words</h2></a><p>There are many other interesting examples of Beatrice, such as <a href="https://github.com/beatrice-lang/beatrice/blob/master/examples/church-factorial/src/Main.bea">ad-hoc
+polymorphism</a>, <a href="https://github.com/beatrice-lang/beatrice/blob/master/examples/futamura-1/src/Main.bea">partial
+computation</a>, and <a href="https://github.com/beatrice-lang/beatrice/blob/master/examples/stlc/src/Main.bea">embedding
+typed higher-order calculi</a>. <a href="https://github.com/beatrice-lang/beatrice/blob/master/docs/taste.md">This
 page</a> will give you a more comprehensive overview of the
-language.</p><p>In designing Lolita, I attempted to combine every significant aspect
-of the language with symbolic execution (that can work in the presence
-of unknown values). Thus, 1) Lolita’s abstract syntax can be manipulated
-by <em>executing</em> the transformer’s methods, 2) Lolita’s terms can
-be evaluated during type checking, and 3) partial computation can be
-used to obtain more efficient target programs. The full power, as well
-as consequences, of this design approach are yet to be explored.</p><p>For a diligent reader, I have prepared a comprehensive <a href="https://github.com/lolita-lang/lolita/blob/master/docs/design.md">design
+language.</p><p>In designing Beatrice, I attempted to combine every significant
+aspect of the language with symbolic execution (that can work in the
+presence of unknown values). Thus, 1) Beatrice’s abstract syntax can be
+manipulated by <em>executing</em> the transformer’s methods, 2)
+Beatrice’s terms can be evaluated during type checking, and 3) partial
+computation can be used to obtain more efficient target programs. The
+full power, as well as consequences, of this design approach are yet to
+be explored.</p><p>For a diligent reader, I have prepared a comprehensive <a href="https://github.com/beatrice-lang/beatrice/blob/master/docs/design.md">design
 document</a> that explains and discusses nearly every design choice
-behind Lolita. A mathematically inclined reader is invited to study the
-<a href="https://github.com/lolita-lang/lolita/blob/master/spec/Lolita_the_Language.pdf">formal
-semantics</a> of Lolita.</p><a class="header-link" href="#acknowledgments"><h2 id="acknowledgments">Acknowledgments</h2></a><p>I would like to thank <a href="https://github.com/cppenjoy">@cppenjoy</a> for testing the
+behind Beatrice. A mathematically inclined reader is invited to study
+the <a href="https://github.com/beatrice-lang/beatrice/blob/master/spec/Beatrice_the_Language.pdf">formal
+semantics</a> of Beatrice.</p><a class="header-link" href="#acknowledgments"><h2 id="acknowledgments">Acknowledgments</h2></a><p>I would like to thank <a href="https://github.com/cppenjoy">@cppenjoy</a> for testing the
 compiler, helping to write the <code>System</code> standard library
-module, and provoking useful discussions regarding the language. Lolita
-is built on prior art of many researchers and programming language
-enthusiasts, including Oleg Kiselyov, Thierry Coquand, Valentin Turchin,
-Lennart Augustsson, András Kovács, Edwin Brady, and many others.</p><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+module, and provoking useful discussions regarding the language.
+Beatrice is built on prior art of many researchers and programming
+language enthusiasts, including Oleg Kiselyov, Thierry Coquand, Valentin
+Turchin, Lennart Augustsson, András Kovács, Edwin Brady, and many
+others.</p><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>
