@@ -20,6 +20,7 @@ jobs:
 
       - name: Install NodeJS
         run: |
+          sudo apt update
           sudo apt install nodejs
           npm install jsdom
 
