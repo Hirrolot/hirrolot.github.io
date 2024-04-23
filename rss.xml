@@ -5,11 +5,6 @@
         <description>Hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
-            <title>Announcing Beatrice: A finally tagless, dependently typed, self-aware programming language</title>
-            <guid>https://hirrolot.github.io/posts/announcing-beatrice.html</guid>
-            <pubDate>Mon, 22 Apr 2024 00:00:00 GMT</pubDate>
-        </item>
-        <item>
             <title>Solving SAT via Positive Supercompilation</title>
             <guid>https://hirrolot.github.io/posts/sat-supercompilation.html</guid>
             <pubDate>Thu, 1 Feb 2024 00:00:00 GMT</pubDate>
