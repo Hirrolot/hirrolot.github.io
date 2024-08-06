@@ -59,10 +59,12 @@ Let the object language of supercompilation be a simple first-order functional l
 
 Suppose that natural numbers are represented as `Z`, `S(Z)`, `S(S(Z))`, and so on [^peano-arithmetic]. Then, we can define addition as the following g-function (from [^supercomp-main-principles]):
 
-```{.code .numberLines}
-add(Z, y) = y;
-add(S(x), y) = S(add(x, y));
-```
+$$
+\begin{aligned}
+add(Z, y) &= y; \\
+add(S(x), y) &= S(add(x, y));
+\end{aligned}
+$$
 
 A supercompiler's input is a pair of an expression and program, the latter being a set of definitions of f- and g-functions. This pair is usually called a _task_.
 
@@ -106,40 +108,50 @@ Hooray, the supercompilation of `add(a, 2)` is now complete!
 
 What is left is to perform _residualization_ -- the process of converting a process tree to an SLL task, a _self-sufficient model_ of the initial program. Every node in the graph (except for leaf nodes) is transformed into a function whose parameters are the set of free variables from the node expression; each function is given a unique name. For example, if we see the node `add(a, 2)` pointing to `2` and `S(add(v1, 2))`, we must generate a new g-function of the following form:
 
-```{.code .numberLines}
-g1(Z) = ...;
-g1(S(v1)) = ...;
-```
+$$
+\begin{aligned}
+g1(Z) &= \dots; \\
+g1(S(v1)) &= \dots;
+\end{aligned}
+$$
 
 We can complete the first branch by inserting `2` in place of `...`:
 
-```{.code .numberLines}
-g1(Z) = 2;
-g1(S(v1)) = ...;
-```
+$$
+\begin{aligned}
+g1(Z) &= 2; \\
+g1(S(v1)) &= \dots;
+\end{aligned}
+$$
 
 Since the second branch leads to a node that decomposes a constructor, we generate a new f-function and call it inside `S`:
 
-```{.code .numberLines}
-g1(Z) = 2;
-g1(S(v1)) = S(f1(v1));
-f1(v1) = ...;
-```
+$$
+\begin{aligned}
+g1(Z) &= 2; \\
+g1(S(v1)) &= S(f1(v1)); \\
+f1(v1) &= \dots;
+\end{aligned}
+$$
 
 According to the graph, the body of `f1` should be `add(v1, 2)`, but since now `add` stands for `g1`, the body will be `g1(v1)`:
 
-```{.code .numberLines}
-g1(Z) = 2;
-g1(S(v1)) = S(f1(v1));
-f1(v1) = g1(v1);
-```
+$$
+\begin{aligned}
+g1(Z) &= 2; \\
+g1(S(v1)) &= S(f1(v1)); \\
+f1(v1) &= g1(v1);
+\end{aligned}
+$$
 
 Since `f1` is redundant, we can inline it as follows:
 
-```{.code .numberLines}
-g1(Z) = 2;
-g1(S(v1)) = S(g1(v1));
-```
+$$
+\begin{aligned}
+g1(Z) &= 2; \\
+g1(S(v1)) &= S(g1(v1));
+\end{aligned}
+$$
 
 This is the final residual _program_; the residual _expression_ will be `g1(a)`, since `a` is the only free variable from the initial expression. As you can see, the definition of `g1` is simpler than the original function `add` in the sense that it accepts only one argument; the second argument has been specialized to `2` during supercompilation.
 
@@ -147,27 +159,31 @@ Perhaps a more interesting example would be specializing an interpreter to a con
 
 Consider the following interpreter `eq` (also from [^supercomp-main-principles]):
 
-```{.code .numberLines}
-eq(Z, y) = eqZ(y);
-eq(S(x), y) = eqS(y, x);
-eqZ(Z) = True;
-eqZ(S(x)) = False;
-eqS(Z, x) = False;
-eqS(S(y), x) = eq(x, y);
-```
+$$
+\begin{aligned}
+eq(Z, y) &= eqZ(y); \\
+eq(S(x), y) &= eqS(y, x); \\
+eqZ(Z) &= True; \\
+eqZ(S(x)) &= False; \\
+eqS(Z, x) &= False; \\
+eqS(S(y), x) &= eq(x, y);
+\end{aligned}
+$$
 
 which compares two Peano numbers for equality, resulting in either `True` or `False`.
 
 Now consider the expression `eq(S(S(Z)), x)` with the above definition of `eq`; supercompilation will produce the following residual program:
 
-```{.code .numberLines}
-eqZ3(Z) = True;
-eqZ3(S(v)) = False;
-eqS2(Z) = False;
-eqS2(S(v)) = eqZ3(v);
-eqS1(Z) = False;
-eqS1(S(v)) = eqS2(v);
-```
+$$
+\begin{aligned}
+eqZ3(Z) &= True; \\
+eqZ3(S(v)) &= False; \\
+eqS2(Z) &= False; \\
+eqS2(S(v)) &= eqZ3(v); \\
+eqS1(Z) &= False; \\
+eqS1(S(v)) &= eqS2(v);
+\end{aligned}
+$$
 
 together with the residual expression `eqS1(x)`. In a sense, we have obtained a compiled version of `eq` specialized to `S(S(Z))`, because `eqS1` pattern-matches only on an unknown variable `x` instead of the known "program" `S(S(Z))`.
 
@@ -206,10 +222,12 @@ Consider a language whose expressions are:
 
 This language is enough to encode any SAT problem. We can encode each clause in the formula as follows (in pseudocode):
 
-```{.code .numberLines}
-OR(x, ...) = If (x, T, ...);
-OR(NOT x, ...) = If (x, ..., T);
-```
+$$
+\begin{aligned}
+OR(x, \dots) &= If (x, T, \dots); \\
+OR(NOT \ x, \dots) &= If (x, \dots, T);
+\end{aligned}
+$$
 
 Then `OR(x, OR(y, OR(NOT z, F)))` would correspond to "x OR y OR NOT z":
 
@@ -219,11 +237,13 @@ Then `OR(x, OR(y, OR(NOT z, F)))` would correspond to "x OR y OR NOT z":
 
 Now consider the encoding of a conjunction of clauses [^and-blowup]:
 
-```{.code .numberLines}
-AND(If(x, m, n), ...) = If(x, AND(m, ...), AND(n, ...));
-AND(T, ...) = ...;
-AND(F, ...) = F;
-```
+$$
+\begin{aligned}
+AND(If(x, m, n), \dots) &= If(x, AND(m, \dots), AND(n, \dots)); \\
+AND(T, \dots) &= \dots; \\
+AND(F, \dots) &= F;
+\end{aligned}
+$$
 
 Then `AND(OR(x, F), AND(OR(NOT y, F), T))` would correspond to "x AND NOT y":
 
@@ -285,21 +305,23 @@ What if we somehow launch analysis of the whole if-tree? If so, we would essenti
 
 Here is a complete SAT solver written in SLL:
 
-```{.code .numberLines}
-or(Var(x), rest) = If(x, T, rest);
-or(Not(x), rest) = If(x, rest, T);
-
-and(If(x, m, n), rest) = If(x, and(m, rest), and(n, rest));
-and(T, rest) = rest;
-and(F, rest) = F;
-
-solve(If(x, m, n)) = analyze(x, solve(m), solve(n));
-solve(T) = T;
-solve(F) = F;
-
-analyze(T, m, n) = m;
-analyze(F, m, n) = n;
-```
+$$
+\begin{aligned}
+or(Var(x), rest) &= If(x, T, rest); \\
+or(Not(x), rest) &= If(x, rest, T); \\
+\\
+and(If(x, m, n), rest) &= If(x, and(m, rest), and(n, rest)); \\
+and(T, rest) &= rest; \\
+and(F, rest) &= F; \\
+\\
+solve(If(x, m, n)) &= analyze(x, solve(m), solve(n)); \\
+solve(T) &= T; \\
+solve(F) &= F; \\
+\\
+analyze(T, m, n) &= m; \\
+analyze(F, m, n) &= n;
+\end{aligned}
+$$
 
 Without blank lines, it is 10 lines of code! This is probably the simplest (and the slowest!) SAT solver in the history of humanity.
 

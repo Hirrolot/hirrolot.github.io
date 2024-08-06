@@ -109,6 +109,7 @@ func invokePandoc(post *Post) {
 		"--metadata", fmt.Sprintf("title=%s", post.Title),
 		"--metadata", fmt.Sprintf("date=%s", post.Date),
 		"--standalone",
+		"--mathjax",
 		"-H", "header.html",
 		"--table-of-contents",
 		"--citeproc",

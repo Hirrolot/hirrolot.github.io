@@ -122,10 +122,14 @@ div.sourceCode {
     display: block;
     margin: auto;
     max-width: 700px;
-    padding: 16px;
     line-height: 25px;
     background-color: Linen;
     border: 1px dotted LightGray;
+}
+
+div.sourceCode,
+.MathJax {
+    padding: 16px;
 }
 
 code:not([class]),
