@@ -213,6 +213,8 @@ h3:hover {
 .posts-history {
     margin-top: 20px;
     margin-bottom: 20px;
+    border: 4px solid;
+    border-image: linear-gradient(95deg, #b0261f, #7a7c33) 1;
 }
 
 .post-link {
