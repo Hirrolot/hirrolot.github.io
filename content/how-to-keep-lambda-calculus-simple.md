@@ -123,13 +123,15 @@ boundfree ii x = Free x
     1. `neutralQuote ii (NFree x)`: in `boundfree`, 1) if `x` is a `Quote k` variable (that has been applied to `f` while converting `VLam f`), then we can convert it to a `Bound` variable using the formula `ii - k - 1`. By doing so, we essentially convert a De Bruijn _level_ `k` to a proper De Bruijn _index_. 2) If `x` is any other kind of a variable, we just return it without changes.
     2. `neutralQuote ii (NApp n v)`: nothing interesting here; we just push the conversion to `neutralQuote` and `quote` recursively.
 
-To see how it works, take our lovely K combinator as an example:
+To see how it works, take our lovely K combinator as an example [^update-k-combinator]:
 
  1. `quote 0 (VLam (\x -> VLam (\y -> x)))`
- 2. `Lam (quote 1 (VLam (\y -> vfree (Quote 0))))`
- 3. `Lam (Lam (quote 2 (vfree (Quote 0))))`
- 4. `Lam (Lam (neutralQuote 2 (NFree (Quote 0))))`
- 5. `Lam (Lam (Bound 1))`
+ 1. `Lam (quote 1 (VLam (\y -> vfree (Quote 0))))`
+ 1. `Lam (Lam (quote 2 (vfree (Quote 0))))`
+ 1. `Lam (Lam (quote 2 (VNeutral (NFree (Quote 0)))))`
+ 1. `Lam (Lam (Inf (neutralQuote 2 (NFree (Quote 0)))))`
+ 1. `Lam (Lam (Inf (boundfree 2 (Quote 0))))`
+ 1. `Lam (Lam (Inf (Bound 1)))`
 
 Finally, let us move on to type checking. The type and data definitions are:
 
@@ -683,6 +685,8 @@ If you feel confused about anything, feel free to ask in the comments.
 [the official implementation]: https://www.andres-loeh.de/LambdaPi/LambdaPi.hs
 
 [^de-bruijn-level]: Contrary to a De Bruijn index, a De Bruijn level is a natural number indicating the number of binders between the variable's binder and the term's _root_. For example, the term `\x -> \y -> x` is represented as `\_ -> \_ -> 0`, where `0` is the De Bruijn level of `x`. The De Bruijn level of `y` would be `1` if we used it instead of `x`.
+
+[^update-k-combinator]: _Update: the reduction sequence missed the `Inf` constructor; see [this comment](https://github.com/Hirrolot/hirrolot.github.io/discussions/11#discussioncomment-10445137)._
 
 [^monad-except]: The code requires `import Control.Monad.Except`.
 
