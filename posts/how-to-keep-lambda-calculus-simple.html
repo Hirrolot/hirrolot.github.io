@@ -372,12 +372,14 @@ without changes.</li>
 we just push the conversion to <code>neutralQuote</code> and
 <code>quote</code> recursively.</li>
 </ol></li>
-</ol><p>To see how it works, take our lovely K combinator as an example:</p><ol type="1">
+</ol><p>To see how it works, take our lovely K combinator as an example <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><ol type="1">
 <li><code>quote 0 (VLam (\x -&gt; VLam (\y -&gt; x)))</code></li>
 <li><code>Lam (quote 1 (VLam (\y -&gt; vfree (Quote 0))))</code></li>
 <li><code>Lam (Lam (quote 2 (vfree (Quote 0))))</code></li>
-<li><code>Lam (Lam (neutralQuote 2 (NFree (Quote 0))))</code></li>
-<li><code>Lam (Lam (Bound 1))</code></li>
+<li><code>Lam (Lam (quote 2 (VNeutral (NFree (Quote 0)))))</code></li>
+<li><code>Lam (Lam (Inf (neutralQuote 2 (NFree (Quote 0)))))</code></li>
+<li><code>Lam (Lam (Inf (boundfree 2 (Quote 0))))</code></li>
+<li><code>Lam (Lam (Inf (Bound 1)))</code></li>
 </ol><p>Finally, let us move on to type checking. The type and data
 definitions are:</p><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">type</span> <span class="dt">Context</span> <span class="ot">=</span> [(<span class="dt">Name</span>, <span class="dt">Info</span>)]</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
@@ -397,7 +399,7 @@ variable.</li>
 <li><code>HasType ty</code> means that a variable is a term variable of
 the type <code>ty</code>.</li>
 </ul><p><code>Result</code> is just the <code>Either</code> monad with
-<code>String</code> used as the error type.</p><p>The type checking algorithm is defined as follows <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="ot">cKind ::</span> <span class="dt">Context</span> <span class="ot">-&gt;</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Kind</span> <span class="ot">-&gt;</span> <span class="dt">Result</span> ()</span>
+<code>String</code> used as the error type.</p><p>The type checking algorithm is defined as follows <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="ot">cKind ::</span> <span class="dt">Context</span> <span class="ot">-&gt;</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Kind</span> <span class="ot">-&gt;</span> <span class="dt">Result</span> ()</span>
 <span id="cb6-2"><a href="#cb6-2"></a>cKind g (<span class="dt">TFree</span> x) <span class="dt">Star</span> <span class="ot">=</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="kw">case</span> <span class="fu">lookup</span> x g <span class="kw">of</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a>    <span class="dt">Just</span> (<span class="dt">HasKind</span> <span class="dt">Star</span>) <span class="ot">-&gt;</span> <span class="fu">return</span> ()</span>
@@ -452,7 +454,7 @@ uninteresting.</p><p>Then two functions follow, <code>iType</code> and <code>cTy
 They are the reason why we separated the representation of terms into
 inferrable and checkable: while certain terms can be inferred
 (variables, applications, and type annotations), some can only be
-checked (lambda abstractions and <code>Inf</code>) <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p><p>To type-check such a language, we employ <em>bidirectional type
+checked (lambda abstractions and <code>Inf</code>) <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p><p>To type-check such a language, we employ <em>bidirectional type
 checking</em>. In detail, we have the function <code>iType</code> that
 <em>infers</em> a type of a term and <code>cType</code> that checks a
 term against a given type. These functions are mutually recursive:
@@ -541,7 +543,7 @@ the evaluation and quoting code, we can just apply a Haskell function
 obvious desire would be to employ the same technique for terms, thereby
 making them <a href="https://cstheory.stackexchange.com/a/20075"><em>higher-order</em></a>.</p><p>Our decision leads to several consequences:</p><ul>
 <li>Since terms and values will now use the same representation of
-functions, there is no need to distinguish between them <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</li>
+functions, there is no need to distinguish between them <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</li>
 <li><code>Bound</code> variables can be removed from the representation,
 since Haskell is now in charge of substitution.</li>
 <li><code>quote</code> can be removed, since we now only have
@@ -705,7 +707,7 @@ higher-order <code>Lam</code>, <code>Global</code> variables, and De
 Bruijn levels <code>Local</code>. We could also remove global variables
 and use <code>Local</code> instead, but this would make the examples
 less readable.</p><a class="header-link" href="#the-second-alternative-first-order-style"><h2 id="the-second-alternative-first-order-style">The second
-alternative, first-order style</h2></a><p>Perhaps surprisingly, we can use a first-order <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+alternative, first-order style</h2></a><p>Perhaps surprisingly, we can use a first-order <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>
 encoding for both terms and values without implementing substitution by
 term traversal. The trick is to use De Bruijn <em>indices</em> for terms
 and De Bruijn <em>levels</em> for values:</p><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">data</span> <span class="dt">Term</span></span>
@@ -749,7 +751,7 @@ The <code>Env</code> contains values for all unbound variables in
 <code>Term</code>, except for the variable <code>Bound 0</code>, which
 is the lambda binder. Later, when we should apply <code>VLam</code> to
 some argument <code>v</code>, we will extend the environment with
-<code>v</code> by prepending it <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p><p>Here is the evaluation algorithm:</p><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">type</span> <span class="dt">NameEnv</span> v <span class="ot">=</span> [(<span class="dt">Name</span>, v)]</span>
+<code>v</code> by prepending it <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p><p>Here is the evaluation algorithm:</p><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">type</span> <span class="dt">NameEnv</span> v <span class="ot">=</span> [(<span class="dt">Name</span>, v)]</span>
 <span id="cb15-2"><a href="#cb15-2"></a></span>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="ot">eval ::</span> <span class="dt">Term</span> <span class="ot">-&gt;</span> (<span class="dt">NameEnv</span> <span class="dt">Value</span>, <span class="dt">Env</span>) <span class="ot">-&gt;</span> <span class="dt">Value</span></span>
 <span id="cb15-4"><a href="#cb15-4"></a>eval (<span class="dt">Ann</span> e _) d <span class="ot">=</span> eval e d</span>
@@ -773,7 +775,7 @@ implementations, where we called <code>eval</code> under a
 contain values for <em>all</em> free variables in <code>m</code>,
 including <code>Bound 0</code>.</li>
 </ol><p>Since we have the term-value separation again, we can implement
-<code>quote</code> <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>:</p><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1"></a><span class="ot">quote0 ::</span> <span class="dt">Value</span> <span class="ot">-&gt;</span> <span class="dt">Term</span></span>
+<code>quote</code> <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>:</p><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1"></a><span class="ot">quote0 ::</span> <span class="dt">Value</span> <span class="ot">-&gt;</span> <span class="dt">Term</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a>quote0 <span class="ot">=</span> quote [] <span class="dv">0</span></span>
 <span id="cb16-3"><a href="#cb16-3"></a></span>
 <span id="cb16-4"><a href="#cb16-4"></a><span class="ot">quote ::</span> <span class="dt">NameEnv</span> <span class="dt">Value</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Value</span> <span class="ot">-&gt;</span> <span class="dt">Term</span></span>
@@ -940,32 +942,35 @@ the term <code>\x -&gt; \y -&gt; x</code> is represented as
 <code>\_ -&gt; \_ -&gt; 0</code>, where <code>0</code> is the De Bruijn
 level of <code>x</code>. The De Bruijn level of <code>y</code> would be
 <code>1</code> if we used it instead of <code>x</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>The code requires
-<code>import Control.Monad.Except</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>The sole reason for this separation
+<li id="fn3" role="doc-endnote"><p><em>Update: the reduction sequence
+missed the <code>Inf</code> constructor; see <a href="https://github.com/Hirrolot/hirrolot.github.io/discussions/11#discussioncomment-10445137">this
+comment</a>.</em><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>The code requires
+<code>import Control.Monad.Except</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>The sole reason for this separation
 is that in our language, the syntax of binders does not possess typing
 information: for example, we cannot tell algorithmically whether
 <code>\x -&gt; x</code> is a function from integers to integers, from
 strings to strings, and etc. – there are infinitely many possibilities.
 By annotating functions, we can always tell their exact types. A more
 proper introduction to bidirectional type checking can be found in <a href="https://davidchristiansen.dk/tutorials/bidirectional.pdf">“Bidirectional
-Typing Rules: A Tutorial”</a> by David Raymond Christiansen.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Separating terms and values can
+Typing Rules: A Tutorial”</a> by David Raymond Christiansen.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Separating terms and values can
 facilitate type safety, but our language is so small that this does not
-make any sense.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>An encoding is first-order iff it
-does not contain Haskell functions.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>That being said, the <em>i</em>-th
+make any sense.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>An encoding is first-order iff it
+does not contain Haskell functions.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>That being said, the <em>i</em>-th
 value of <code>Env</code> corresponds to the <em>i+1</em>-th variable in
 the lambda body. Prepending an argument to <code>Env</code> works
 because indices of all the previous values of <code>Env</code> will be
-“incremented” automatically!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>Strictly speaking, printing does not
+“incremented” automatically!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Strictly speaking, printing does not
 require <code>quote</code> if values are already first-order. However,
 our new <code>quote</code> is algorithmically different from the
 previous ones: it pushes evaluation under a binder, essentially serving
 as a beta-normalizer. Thus, if we want to print a fully normalized term,
-we still need to implement <code>quote</code>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+we still need to implement <code>quote</code>.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>
