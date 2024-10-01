@@ -1,8 +1,8 @@
 <rss version="2.0">
     <channel>
-        <title>Hirrolot's Blog</title>
+        <title>hirrolot's Blog</title>
         <link>https://hirrolot.github.io/</link>
-        <description>Hirrolot's blog about programming and all the stuff.</description>
+        <description>hirrolot's blog about programming and all the stuff.</description>
         <language>en-us</language>
         <item>
             <title>Solving SAT via Positive Supercompilation</title>

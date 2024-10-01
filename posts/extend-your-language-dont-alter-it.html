@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Hirrolot's Blog">
+  <meta name="author" content="hirrolot's Blog">
   <title>Extend Your Language, Don't Alter It</title>
   <style>
     code{white-space: pre-wrap;}
@@ -114,7 +114,7 @@
 <body>
 <header id="title-block-header">
 <a class="header-link" href="#"><h1 class="title">Extend Your Language, Don't Alter It</h1></a>
-<p class="author">Hirrolot's Blog</p>
+<p class="author">hirrolot's Blog</p>
 <p class="date">Jul 6, 2021</p>
 </header>
 <div class="introduction">
@@ -281,7 +281,7 @@ pragmatics!</p><a class="header-link" href="#syntactical-consistency"><h2 id="sy
 <span id="cb1-11"><a href="#cb1-11"></a>    <span class="op">}</span></span>
 <span id="cb1-12"><a href="#cb1-12"></a></span>
 <span id="cb1-13"><a href="#cb1-13"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="op">}</span></span></code></pre></div><p>What is this? This is how good old C looks like with <a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library
+<span id="cb1-14"><a href="#cb1-14"></a><span class="op">}</span></span></code></pre></div><p>What is this? This is how good old C looks like with <a href="https://github.com/hirrolot/datatype99">Datatype99</a>, a library
 that provides us with the full support for <a href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data
 types</a>. Please pay your attention to the pattern matching syntax.
 Does it feel alright? Does it feel natural, like it has always been
@@ -335,7 +335,7 @@ whereas the latter one does not. Another example:</p><div class="sourceCode" id=
 <span id="cb3-16"><a href="#cb3-16"></a>    <span class="op">((</span>Num <span class="op">*)</span>self<span class="op">)-&gt;</span>x <span class="op">=</span> x<span class="op">;</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="op">}</span></span>
 <span id="cb3-18"><a href="#cb3-18"></a></span>
-<span id="cb3-19"><a href="#cb3-19"></a>impl<span class="op">(</span>State<span class="op">,</span> Num<span class="op">);</span></span></code></pre></div><p>This time you see pure ISO C99 augmented with <a href="https://github.com/Hirrolot/interface99">Interface99</a>, a
+<span id="cb3-19"><a href="#cb3-19"></a>impl<span class="op">(</span>State<span class="op">,</span> Num<span class="op">);</span></span></code></pre></div><p>This time you see pure ISO C99 augmented with <a href="https://github.com/hirrolot/interface99">Interface99</a>, a
 library that provides the software interface pattern. Notice that the
 function definition syntax remains the same (albeit <code>iFn</code> is
 somewhat less common), and <code>impl</code> just deduces these
@@ -472,8 +472,8 @@ practice? I have an answer. Rather a long answer, full of peculiar
 details and techniques.</p><p>I suggest you to start with a <a href="https://www.chiark.greenend.org.uk/~sgtatham/mp/">popular
 article</a> of Simon Tatham about metaprogramming custom control
 structures in C <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. If you are only interested in a
-working solution, consider <a href="https://github.com/Hirrolot/metalang99">Metalang99</a> <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> with its <a href="https://metalang99.readthedocs.io/en/latest/stmt.html">statement
-chaining macros</a>. Seeing how pattern matching works in <a href="https://github.com/Hirrolot/datatype99">Datatype99</a> <span class="citation" data-cites="compiling-adt-c">(Hirrolot, n.d.)</span>
+working solution, consider <a href="https://github.com/hirrolot/metalang99">Metalang99</a> <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> with its <a href="https://metalang99.readthedocs.io/en/latest/stmt.html">statement
+chaining macros</a>. Seeing how pattern matching works in <a href="https://github.com/hirrolot/datatype99">Datatype99</a> <span class="citation" data-cites="compiling-adt-c">(hirrolot, n.d.)</span>
 can also give you some insight.</p><a class="header-link" href="#final-words"><h2 id="final-words">Final words</h2></a><p>Some languages are more malleable to user extension than the others.
 Some employ adaptive grammars (<a href="https://www.idris-lang.org/">Idris</a>), some employ syntax-aware
 macros (Rust), some employ Lisp-style s-expressions. Surely, there are a
@@ -497,7 +497,7 @@ Edwin Brady. n.d. <em>Type-Driven Development with Idris</em>. <a href="https://
 Haskell Wiki. n.d. <span>“GADTs for Dummies.”</span> <a href="https://wiki.haskell.org/GADTs_for_dummies">https://wiki.haskell.org/GADTs_for_dummies</a>.
 </div>
 <div id="ref-compiling-adt-c" class="csl-entry" role="doc-biblioentry">
-Hirrolot. n.d. <span>“Compiling Algebraic Data Types in Pure
+hirrolot. n.d. <span>“Compiling Algebraic Data Types in Pure
 C99.”</span> <a href="https://hirrolot.github.io/posts/compiling-algebraic-data-types-in-pure-c99.html">https://hirrolot.github.io/posts/compiling-algebraic-data-types-in-pure-c99.html</a>.
 </div>
 <div id="ref-preprocessing-tokens" class="csl-entry" role="doc-biblioentry">
@@ -582,10 +582,10 @@ implemented in libraries.<a href="#fnref9" class="footnote-back" role="doc-backl
 Tatham was first to formulate the term <em>statement prefix</em>. He
 described precisely how to build custom control flow operators via
 regular <code>#define</code> macros, and make them look natural.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is an
+<li id="fn11" role="doc-endnote"><p><a href="https://github.com/hirrolot/metalang99">Metalang99</a> is an
 advanced metaprogramming system for C99. It is implemented as a purely
 functional programming language, with partial applications, recursion,
 algebraic data types, cons-lists, and all the stuff.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+</section><script src="https://giscus.app/client.js" data-repo="hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>

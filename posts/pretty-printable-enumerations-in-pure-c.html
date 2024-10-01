@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Hirrolot's Blog">
+  <meta name="author" content="hirrolot's Blog">
   <meta name="dcterms.date" content="2022-05-23">
   <title>Pretty-Printable Enumerations in Pure C</title>
   <style>
@@ -115,7 +115,7 @@
 <body>
 <header id="title-block-header">
 <a class="header-link" href="#"><h1 class="title">Pretty-Printable Enumerations in Pure C</h1></a>
-<p class="author">Hirrolot's Blog</p>
+<p class="author">hirrolot's Blog</p>
 <p class="date">May 23, 2022</p>
 </header>
 <div class="introduction">
@@ -327,7 +327,7 @@ Here is the definition:</p><div class="sourceCode" id="cb8"><pre class="sourceCo
 <span id="cb8-11"><a href="#cb8-11"></a><span class="pp">        } \</span></span>
 <span id="cb8-12"><a href="#cb8-12"></a><span class="pp">    }</span></span>
 <span id="cb8-13"><a href="#cb8-13"></a></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="pp">#define CASE_ENUM_VARIANT(c) case c: return #c;</span></span></code></pre></div><p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is a
+<span id="cb8-14"><a href="#cb8-14"></a><span class="pp">#define CASE_ENUM_VARIANT(c) case c: return #c;</span></span></code></pre></div><p><a href="https://github.com/hirrolot/metalang99">Metalang99</a> is a
 macro metaprogramming library for pure C99 (and C++11) that allows you
 to perform macro recursion and iteration. In this code snippet, we
 iterate on variadic arguments using <a href="https://metalang99.readthedocs.io/en/latest/variadics.html#c.ML99_variadicsForEach"><code>ML99_variadicsForEach</code></a>
@@ -354,7 +354,7 @@ years later), and lastly a machine.</p>
 <a href="https://en.wikipedia.org/wiki/Rob_Pike">Rob Pike</a> <span class="citation" data-cites="pike-style">(Rob Pike, n.d.)</span>
 </p><a class="header-link" href="#a-word-about-third-party-codegen"><h2 id="a-word-about-third-party-codegen">A word about third-party
 codegen</h2></a><p>One may want to suggest using code generators like <a href="https://en.wikipedia.org/wiki/M4_(computer_language)">M4</a>
-instead of Metalang99, owing to the huge amount of <a href="https://github.com/Hirrolot/metalang99/tree/master/include/metalang99">macro
+instead of Metalang99, owing to the huge amount of <a href="https://github.com/hirrolot/metalang99/tree/master/include/metalang99">macro
 machinery</a> involved in this library and/or incomprehensible
 compile-time errors (a false statement, we will come back to this
 later). Sure you can, but think about the consequences; you would then
@@ -405,16 +405,16 @@ you have learnt something new. Note that the above discussion can be
 applied not only to pretty-printing, but generally to any piece of code
 that needs to generate some other code depending on a symbolic
 representation of enumeration’s values. Cheers!</p><p>Links:</p><ul>
-<li><a href="https://github.com/Hirrolot/metalang99#getting-started">Installation
+<li><a href="https://github.com/hirrolot/metalang99#getting-started">Installation
 instructions for Metalang99</a>.</li>
-<li><a href="https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">Q:
+<li><a href="https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">Q:
 Why use C instead of Rust/Zig/whatever else?</a></li>
 <li><a href="https://hirrolot.github.io/posts/whats-the-point-of-the-c-preprocessor-actually.html">Q:
 Why not third-party code generators?</a></li>
 </ul><p>For more information on Metalang99 and derived projects, see <a href="macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html">“<em>Macros
 on Steroids, Or: How Can Pure C Benefit From
 Metaprogramming</em>”</a>.</p><a class="header-link" href="#appendix-deriving-pretty-printers-via-datatype99"><h2 id="appendix-deriving-pretty-printers-via-datatype99">Appendix:
-Deriving pretty-printers via Datatype99</h2></a><p><a href="https://github.com/Hirrolot/datatype99">Datatype99</a> is a
+Deriving pretty-printers via Datatype99</h2></a><p><a href="https://github.com/hirrolot/datatype99">Datatype99</a> is a
 project derived from Metalang99, which allows you to define enumerations
 with payloads (a.k.a. <a href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data
 types (ADTs)</a>). It does also provide a functionality similar to
@@ -457,12 +457,12 @@ pretty-printing through compile-time type introspection:</p><div class="sourceCo
 <span id="cb11-36"><a href="#cb11-36"></a><span class="op">}</span></span></code></pre></div><p>The neat thing is that you can list other derivers together with
 <code>Print</code> like this: <code>derive(Print, Foo, Bar)</code>,
 which adds some extensibility to the code. Note that this implementation
-does not account variant parameters (payload); <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/derive/print.c"><code>examples/derive/print.c</code></a>
+does not account variant parameters (payload); <a href="https://github.com/hirrolot/datatype99/blob/master/examples/derive/print.c"><code>examples/derive/print.c</code></a>
 shows how to handle them. For more information on deriver macros, see my
 blog post <a href="compile-time-introspection-of-sum-types-in-pure-c99.html"><em>“Compile-Time
 Introspection of Sum Types in Pure C99”</em></a>.</p><a class="header-link" href="#references"><h2 class="unnumbered" id="references">References</h2></a><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-pike-style" class="csl-entry" role="doc-biblioentry">
 Rob Pike. n.d. <span>“Notes on Programming in C.”</span> <a href="http://www.literateprogramming.com/pikestyle.pdf">http://www.literateprogramming.com/pikestyle.pdf</a>.
 </div>
-</div><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+</div><script src="https://giscus.app/client.js" data-repo="hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>

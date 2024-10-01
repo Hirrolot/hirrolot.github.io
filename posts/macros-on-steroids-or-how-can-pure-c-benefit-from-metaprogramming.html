@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Hirrolot's Blog">
+  <meta name="author" content="hirrolot's Blog">
   <title>Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming</title>
   <style>
     code{white-space: pre-wrap;}
@@ -115,7 +115,7 @@
 <header id="title-block-header">
 <a class="header-link" href="#"><h1 class="title">Macros on Steroids, Or: How Can Pure C Benefit From
 Metaprogramming</h1></a>
-<p class="author">Hirrolot's Blog</p>
+<p class="author">hirrolot's Blog</p>
 <p class="date">Jul 22, 2021</p>
 </header>
 <div class="introduction">
@@ -132,12 +132,12 @@ improve the correctness, clarity, and overall maintainability of your
 code, when used sanely?</p>
 <p>I did. And I have done everything dependent on me to make it
 real.</p>
-<p>Meet <a href="https://github.com/Hirrolot/metalang99">Metalang99</a>,
+<p>Meet <a href="https://github.com/hirrolot/metalang99">Metalang99</a>,
 a simple functional language that allows you to create complex
 metaprograms. It represents a header-only macro library, so everything
 you need to set it up is <code>-Imetalang99/include</code> and a C99
 compiler <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. However, today I shall focus only
-on two accompanying libraries – <a href="https://github.com/Hirrolot/datatype99">Datatype99</a> and <a href="https://github.com/Hirrolot/interface99">Interface99</a>. Being
+on two accompanying libraries – <a href="https://github.com/hirrolot/datatype99">Datatype99</a> and <a href="https://github.com/hirrolot/interface99">Interface99</a>. Being
 implemented atop of Metalang99, they unleash the potential of
 preprocessor metaprogramming at the full scale, and therefore are more
 useful for an average C programmer.</p>
@@ -361,7 +361,7 @@ macro iteration. This possibility has given rise to the complete support
 for <a href="https://en.wikipedia.org/wiki/Algebraic_data_type">algebraic data
 types</a> and software interfaces, both of which we shall discuss in the
 next two sections. Reader, follow me!</p><a class="header-link" href="#algebraic-data-types"><h2 id="algebraic-data-types">Algebraic data types</h2></a><p>Recall to the aforementioned <code>BinaryTree</code> tagged union.
-With the aid of <a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library
+With the aid of <a href="https://github.com/hirrolot/datatype99">Datatype99</a>, a library
 implemented atop of Metalang99, it can be defined as follows:</p><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a><span class="pp">#include </span><span class="im">&lt;datatype99.h&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a>datatype<span class="op">(</span></span>
@@ -382,7 +382,7 @@ the variable <code>rhs</code> merely has not been introduced to the
 scope after <code>of(Leaf, x)</code>), or construct
 <code>BinaryTree</code> with <code>.tag = Leaf</code> and data for
 <code>Node</code>.</p><p>If you want to observe the generated code, please follow <a href="https://godbolt.org/z/3TKn8T3Gj">godbolt</a>.</p><a class="header-link" href="#software-interfaces"><h2 id="software-interfaces">Software interfaces</h2></a><p>The same holds for the aforementioned <code>AirplaneVTable</code>.
-Here is how easy you can define it with <a href="https://github.com/Hirrolot/interface99">Interface99</a>:</p><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a><span class="pp">#define Airplane_IFACE                             \</span></span>
+Here is how easy you can define it with <a href="https://github.com/hirrolot/interface99">Interface99</a>:</p><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a><span class="pp">#define Airplane_IFACE                             \</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="pp">    vfunc(void, move_forward, VSelf, int distance) \</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="pp">    vfunc(void, move_back, VSelf, int distance)    \</span></span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="pp">    vfunc(void, move_up, VSelf, int distance)      \</span></span>
@@ -496,7 +496,7 @@ specifications of Datatype99 and Interface99 come into play: even in the
 expanded code, I will not see something unexpected since the code
 generation semantics are fixed and laid out in their corresponding
 <code>README.md</code>s.</p><a class="header-link" href="#the-compilation-times"><h2 id="the-compilation-times">The compilation times?</h2></a><p>The compilation times are not really an issue. Let us see how much it
-takes to compile <a href="https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c"><code>datatype99/examples/binary_tree.c</code></a>:</p><div class="code-annotation-container"><p class="code-annotation">
+takes to compile <a href="https://github.com/hirrolot/datatype99/blob/master/examples/binary_tree.c"><code>datatype99/examples/binary_tree.c</code></a>:</p><div class="code-annotation-container"><p class="code-annotation">
 <code>/bin/sh</code> <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>
 </p></div><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource code numberLines"><code class="sourceCode"><span id="cb24-1"><a href="#cb24-1"></a>$ time gcc examples/binary_tree.c -Imetalang99/include -I. -ftrack-macro-expansion=0</span>
 <span id="cb24-2"><a href="#cb24-2"></a></span>
@@ -509,7 +509,7 @@ intermediate representation and then put into a cache instead of being
 unnecessarily re-compiled on each file inclusion.</p><a class="header-link" href="#final-words"><h2 id="final-words">Final words</h2></a><p>As it usually goes in software engineering, macros are a trade-off:
 <em>will you continue writing boilerplate code, thereby slowing down the
 development process and increasing the risk of bugs, or will you start
-using powerful macros at the cost of the <a href="https://github.com/Hirrolot/metalang99#q-how-does-it-work">great
+using powerful macros at the cost of the <a href="https://github.com/hirrolot/metalang99#q-how-does-it-work">great
 implementation complexity</a> <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and slightly less
 comprehensible errors?</em></p><p>If you stick to the first choice, are you sure that it would be
 easier to figure out what is wrong with the code at runtime rather than
@@ -524,12 +524,12 @@ not every programmer can/want to review Metalang99. Not to be
 misunderstood, I have made Metalang99, Datatype99, and Interface99 in
 the most simple and clean way I could, but the very nature of the
 preprocessor really makes itself felt <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</p><p>The choice is up to you.</p><p>Links:</p><ul>
-<li>Installation instructions for <a href="https://github.com/Hirrolot/metalang99#getting-started">Metalang99</a>,
-<a href="https://github.com/Hirrolot/datatype99#installation">Datatype99</a>,
-<a href="https://github.com/Hirrolot/interface99#installation">Interface99</a>.</li>
-<li><a href="https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">Q:
+<li>Installation instructions for <a href="https://github.com/hirrolot/metalang99#getting-started">Metalang99</a>,
+<a href="https://github.com/hirrolot/datatype99#installation">Datatype99</a>,
+<a href="https://github.com/hirrolot/interface99#installation">Interface99</a>.</li>
+<li><a href="https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">Q:
 Why use C instead of Rust/Zig/whatever else?</a></li>
-<li><a href="https://github.com/Hirrolot/metalang99#q-why-not-third-party-code-generators">Q:
+<li><a href="https://github.com/hirrolot/metalang99#q-why-not-third-party-code-generators">Q:
 Why not third-party code generators?</a></li>
 <li>The <a href="https://lists.sr.ht/~hirrolot/metalang99">mailing
 list</a> for the above libraries. Join and talk with us!</li>
@@ -584,7 +584,7 @@ language theory</a>; at least, a reviewer should understand such terms
 as an <a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">EBNF
 grammar</a>, <a href="https://en.wikipedia.org/wiki/Operational_semantics">operational
 semantics</a>, <a href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda
-calculus</a>, and so on, in order to read the <a href="https://github.com/Hirrolot/metalang99/blob/master/spec/spec.pdf">specification</a>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+calculus</a>, and so on, in order to read the <a href="https://github.com/hirrolot/metalang99/blob/master/spec/spec.pdf">specification</a>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+</section><script src="https://giscus.app/client.js" data-repo="hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>

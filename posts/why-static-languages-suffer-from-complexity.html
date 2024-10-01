@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Hirrolot's Blog">
+  <meta name="author" content="hirrolot's Blog">
   <title>Why Static Languages Suffer From Complexity</title>
   <style>
     code{white-space: pre-wrap;}
@@ -114,7 +114,7 @@
 <body>
 <header id="title-block-header">
 <a class="header-link" href="#"><h1 class="title">Why Static Languages Suffer From Complexity</h1></a>
-<p class="author">Hirrolot's Blog</p>
+<p class="author">hirrolot's Blog</p>
 <p class="date">Jan 19, 2022</p>
 </header>
 <div class="introduction">
@@ -770,9 +770,9 @@ docs of MPL</a>.
 </p>
 </li>
 <li>
-<p>[<strong>C</strong>] My own compile-time metaprogramming framework <a href="https://github.com/Hirrolot/metalang99">Metalang99</a> does the
+<p>[<strong>C</strong>] My own compile-time metaprogramming framework <a href="https://github.com/hirrolot/metalang99">Metalang99</a> does the
 same job by (ab)using the C preprocessor. It came to such extent that I
-was forced to literally <a href="https://github.com/Hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h">re-implement
+was forced to literally <a href="https://github.com/hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h">re-implement
 recursion</a> through the combination of a Lisp-like trampoline and <a href="https://en.wikipedia.org/wiki/Continuation-passing_style">Continuation-Passing
 Style (CPS)</a> techniques. In the end, I had a cornucopia of list
 functions in the standard library, such as <a href="https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listMap"><code>ML99_listMap</code></a>,
@@ -1136,7 +1136,7 @@ wet fantasies.</p><p>If we omit <code>42</code>, Zig will report a compilation e
 <span id="cb26-8"><a href="#cb26-8"></a>/tmp/playground2454631537/play.zig:32:21: note: called from here</span>
 <span id="cb26-9"><a href="#cb26-9"></a>pub fn main() !void {</span>
 <span id="cb26-10"><a href="#cb26-10"></a>                    ^</span></code></pre></div><p>The only inconvenience I experienced during the development of
-<code>printf</code> is <a href="https://gist.github.com/Hirrolot/504dfe97627895c9f8f82697e27bb142">massive
+<code>printf</code> is <a href="https://gist.github.com/hirrolot/504dfe97627895c9f8f82697e27bb142">massive
 errors…</a> Much like C++ templates. However, I admit that this can be
 solved (or at least workarounded) by more explicit type constraints.
 Overall, the design of Zig’s type system seems reasonable: there is a
@@ -1245,7 +1245,7 @@ manipulate the syntax, but you have no idea about the semantics. Of
 course, Rust’s macros are far more convenient than those of C, but the
 very concept is almost the same in both cases.</em><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11" role="doc-endnote"><p>It is even more of comedy that
-initially, I wrote a third-party crate called <a href="https://github.com/Hirrolot/tokio-either">tokio-either</a>, which
+initially, I wrote a third-party crate called <a href="https://github.com/hirrolot/tokio-either">tokio-either</a>, which
 just contained that <code>Either</code> with several trait
 implementations. Only later, the Tokio maintainers <a href="https://github.com/tokio-rs/tokio/pull/2821">decided</a> to move
 it to <code>tokio-util</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1258,7 +1258,7 @@ simple dynamic language. In the <a href="https://terralang.org/#simplicity">“S
 show how features of static PLs can be implemented as libraries in
 dynamic languages.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn14" role="doc-endnote"><p>Multiple personality disorder? 🤨<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15" role="doc-endnote"><p>The full code can be found at <a href="https://gist.github.com/Hirrolot/b5b23af0dcb68cf7e87e72baf6da6ef6">my
+<li id="fn15" role="doc-endnote"><p>The full code can be found at <a href="https://gist.github.com/hirrolot/b5b23af0dcb68cf7e87e72baf6da6ef6">my
 gist</a>. I use Idris2, which you can download <a href="https://idris2.readthedocs.io/en/latest/tutorial/starting.html">here</a>.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn16" role="doc-endnote"><p>For our purposes, a language runtime
 is some hidden machinery responsible for mapping the semantics of a
@@ -1272,5 +1272,5 @@ not alter what I have said initially: when designing or writing in a
 systems language, you still need to account problems that are trivial in
 high-level languages.</em><a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+</section><script src="https://giscus.app/client.js" data-repo="hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>

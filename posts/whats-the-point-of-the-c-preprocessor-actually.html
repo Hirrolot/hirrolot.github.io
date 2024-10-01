@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Hirrolot's Blog">
+  <meta name="author" content="hirrolot's Blog">
   <title>What's the Point of the C Preprocessor, Actually?</title>
   <style>
     code{white-space: pre-wrap;}
@@ -114,7 +114,7 @@
 <body>
 <header id="title-block-header">
 <a class="header-link" href="#"><h1 class="title">What's the Point of the C Preprocessor, Actually?</h1></a>
-<p class="author">Hirrolot's Blog</p>
+<p class="author">hirrolot's Blog</p>
 <p class="date">Aug 3, 2021</p>
 </header>
 <div class="introduction">
@@ -224,7 +224,7 @@ or recurse. Therefore, without loops or recursion at our disposal, we
 could not generate something from a series of functions comprising some
 software interface, or from a series of variants comprising some tagged
 union. But we can enrich the preprocessor in such a way that it becomes
-possible. Read on.</p><p><a href="https://github.com/Hirrolot/metalang99">Metalang99</a> is
+possible. Read on.</p><p><a href="https://github.com/hirrolot/metalang99">Metalang99</a> is
 the solution I came up with.</p><p><del>Metalang99 is a language to write macros.</del> Sorry, it is a
 language to write recursive macros!</p><p>What was previously impossible soon became possible:</p><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource c numberLines"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>datatype<span class="op">(</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>    BinaryTree<span class="op">,</span></span>
@@ -240,7 +240,7 @@ language to write recursive macros!</p><p>What was previously impossible soon be
 <span id="cb1-12"><a href="#cb1-12"></a></span>
 <span id="cb1-13"><a href="#cb1-13"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb1-14"><a href="#cb1-14"></a><span class="op">}</span></span></code></pre></div><p class="adapted-from">
-Adapted from <a href="https://github.com/Hirrolot/datatype99">Datatype99</a>, a library
+Adapted from <a href="https://github.com/hirrolot/datatype99">Datatype99</a>, a library
 for tagged unions.
 </p><p>Oh, sorry again, I am a bit sleepy today. I forgot one crucial
 detail: to make the following code work, you must
@@ -270,7 +270,7 @@ time:</p><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource c 
 <span id="cb2-23"><a href="#cb2-23"></a><span class="dt">void</span> Triangle_scale<span class="op">(</span>VSelf<span class="op">,</span> <span class="dt">int</span> factor<span class="op">)</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span></span>
 <span id="cb2-24"><a href="#cb2-24"></a></span>
 <span id="cb2-25"><a href="#cb2-25"></a>impl<span class="op">(</span>Shape<span class="op">,</span> Triangle<span class="op">);</span></span></code></pre></div><p class="adapted-from">
-Adapted from <a href="https://github.com/Hirrolot/interface99">Interface99</a>, a
+Adapted from <a href="https://github.com/hirrolot/interface99">Interface99</a>, a
 library for software interfaces.
 </p><p>Everything is correct now.</p><p>Everything you need to make it work is a one-liner
 <code>#include &lt;interface99.h&gt;</code>.</p><p>Believe it or not, <strong>this little detail is the exact purpose of
@@ -308,8 +308,8 @@ linguistic constructions cooperate with each other. When you write
 you apparently write <code>datatype(T, ...)</code> in a separate file
 when it is also a linguistic construction? Elaborating further, why
 should we treat software interfaces as an alien spacecraft fallen to
-Earth?</p><p>With <a href="https://github.com/Hirrolot/datatype99">Datatype99</a>
-and <a href="https://github.com/Hirrolot/interface99">Interface99</a>,
+Earth?</p><p>With <a href="https://github.com/hirrolot/datatype99">Datatype99</a>
+and <a href="https://github.com/hirrolot/interface99">Interface99</a>,
 you generate the stuff in-place. Tagged unions and software interfaces
 are those kinds of abstractions to be considered as parts of the host
 language, i.e., C. Therefore, they should be treated in the same way as
@@ -318,7 +318,7 @@ and variables.</p><p>No, I am not claiming that external codegen is useless. It 
 applications in a build process and other areas; for example, sometimes
 it is perfectly fine to separate files <span class="citation" data-cites="openssl-safestack">(OpenSSL, n.d.)</span>. What I am trying
 to convey is to use the right tool for the job. But wait, the suggested
-libraries rely on <a href="https://github.com/Hirrolot/metalang99#q-how-does-it-work">some
+libraries rely on <a href="https://github.com/hirrolot/metalang99#q-how-does-it-work">some
 heavy-duty macros</a>, and it is crystal clear that the vanilla C
 preprocessor is not meant for such kind of abuse, right?</p><p>This is the turning point of our spontaneous discussion.</p><a class="header-link" href="#the-side-effects-of-aggressive-macros"><h2 id="the-side-effects-of-aggressive-macros">The side effects of
 aggressive macros</h2></a><p>Instead of thinking philosophically, I encourage you to think
@@ -417,9 +417,9 @@ conveniently interleaved with the rest of your code.</p><p>The purpose of the pr
 which linguistic abstractions cooperate with each other.</p><p><strong>The purpose of the preprocessor is to be
 natural</strong>…<br> and this is what external codegen cannot suggest,
 no matter how you try.</p><p>Links:</p><ul>
-<li>Installation instructions for <a href="https://github.com/Hirrolot/metalang99#getting-started">Metalang99</a>,
-<a href="https://github.com/Hirrolot/datatype99#installation">Datatype99</a>,
-<a href="https://github.com/Hirrolot/interface99#installation">Interface99</a>.</li>
+<li>Installation instructions for <a href="https://github.com/hirrolot/metalang99#getting-started">Metalang99</a>,
+<a href="https://github.com/hirrolot/datatype99#installation">Datatype99</a>,
+<a href="https://github.com/hirrolot/interface99#installation">Interface99</a>.</li>
 <li>The <a href="../posts/macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html">motivational
 post</a> for the above libraries.</li>
 <li>The <a href="https://lists.sr.ht/~hirrolot/metalang99">mailing
@@ -437,7 +437,7 @@ just compare how the same functionality is done using this approach and
 using Datatype99. Additionally, I made Datatype99 minimalistic, meaning
 that it provides <em>only</em> ADTs and nothing more – adt4c, on the
 contrary, comes with a type polymorphism implementation.</p></li>
-<li><p>Before I started to implement Metalang99, I tried to use <a href="http://boost.org/libs/preprocessor">Boost/Preprocessor</a> <span class="citation" data-cites="poica">(Hirrolot, n.d.a)</span>. Owing to
+<li><p>Before I started to implement Metalang99, I tried to use <a href="http://boost.org/libs/preprocessor">Boost/Preprocessor</a> <span class="citation" data-cites="poica">(hirrolot, n.d.a)</span>. Owing to
 its fundamental limitations, I abandoned the project. These drawbacks
 include macro bluepainting (when the preprocessor blocks macro
 recursion) and very poor diagnostics. I fixed both of them in
@@ -445,7 +445,7 @@ Metalang99.</p></li>
 <li><p>Some people state that these macros (Datatype99 &amp;
 Interface99) are opaque, meaning you do not know what they generate. It
 is simply not true; from the very beginning, I stated explicitly what
-they do generate <span class="citation" data-cites="dt99-semantics if99-semantics">(Hirrolot, n.d.b,
+they do generate <span class="citation" data-cites="dt99-semantics if99-semantics">(hirrolot, n.d.b,
 n.d.d)</span>; I do not try to fool you with a nifty interface and a
 bloody cannibalic massacre under the hood. I designed these libraries in
 such a way that they even do not require libc, they are FFI-friendly,
@@ -465,24 +465,24 @@ your language”; please, do not.</p></li>
 <li><p>If you ask me, “Why use C if there are Zig/Rust/C++/etc?”, you
 can afford another language; this is cool but not always possible – you
 can find the information elsewhere in the Internet <span class="citation" data-cites="so-why-use-c dt99-why-use-c devault">(Simucal, n.d.;
-Hirrolot, n.d.c; Drew DeVault, n.d.)</span>.</p></li>
+hirrolot, n.d.c; Drew DeVault, n.d.)</span>.</p></li>
 </ul><a class="header-link" href="#references"><h2 class="unnumbered" id="references">References</h2></a><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-devault" class="csl-entry" role="doc-biblioentry">
 Drew DeVault. n.d. <span>“Rust Is Not a Good C Replacement.”</span> <a href="https://drewdevault.com/2019/03/25/Rust-is-not-a-good-C-replacement.html">https://drewdevault.com/2019/03/25/Rust-is-not-a-good-C-replacement.html</a>.
 </div>
 <div id="ref-poica" class="csl-entry" role="doc-biblioentry">
-Hirrolot. n.d.a. <span>“A Research Programming Language on Top of C
-Macros.”</span> <a href="https://github.com/Hirrolot/poica">https://github.com/Hirrolot/poica</a>.
+hirrolot. n.d.a. <span>“A Research Programming Language on Top of C
+Macros.”</span> <a href="https://github.com/hirrolot/poica">https://github.com/hirrolot/poica</a>.
 </div>
 <div id="ref-dt99-semantics" class="csl-entry" role="doc-biblioentry">
-———. n.d.b. <span>“Datatype99 Code Generation Semantics.”</span> <a href="https://github.com/Hirrolot/datatype99#semantics">https://github.com/Hirrolot/datatype99#semantics</a>.
+———. n.d.b. <span>“Datatype99 Code Generation Semantics.”</span> <a href="https://github.com/hirrolot/datatype99#semantics">https://github.com/hirrolot/datatype99#semantics</a>.
 </div>
 <div id="ref-dt99-why-use-c" class="csl-entry" role="doc-biblioentry">
 ———. n.d.c. <span>“FAQ: Why Use C Instead of Rust/Zig/Whatever
-Else?”</span> <a href="https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else</a>.
+Else?”</span> <a href="https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else">https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else</a>.
 </div>
 <div id="ref-if99-semantics" class="csl-entry" role="doc-biblioentry">
-———. n.d.d. <span>“Interface99 Code Generation Semantics.”</span> <a href="https://github.com/Hirrolot/interface99#semantics">https://github.com/Hirrolot/interface99#semantics</a>.
+———. n.d.d. <span>“Interface99 Code Generation Semantics.”</span> <a href="https://github.com/hirrolot/interface99#semantics">https://github.com/hirrolot/interface99#semantics</a>.
 </div>
 <div id="ref-openssl-safestack" class="csl-entry" role="doc-biblioentry">
 OpenSSL. n.d. <span>“A Use Case for Generics in OpenSSL.”</span> <a href="https://github.com/openssl/openssl/blob/aff636a4893e24bdc686a00a13ae6199dd38d6aa/include/openssl/safestack.h.in">https://github.com/openssl/openssl/blob/aff636a4893e24bdc686a00a13ae6199dd38d6aa/include/openssl/safestack.h.in</a>.
@@ -503,5 +503,5 @@ but back in the 70’s, it was unclear how to solve such problems.<a href="#fnre
 compilers should have the same option as well (probably under a
 different name).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section><script src="https://giscus.app/client.js" data-repo="Hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
+</section><script src="https://giscus.app/client.js" data-repo="hirrolot/hirrolot.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzMTQ4MzI2NDA=" data-category="Announcements" data-category-id="DIC_kwDOEsP3AM4CSEqw" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://hirrolot.github.io/giscus-theme.css" data-lang="en" data-loading="lazy" crossorigin="anonymous" async="">
 </script></div></body></html>
