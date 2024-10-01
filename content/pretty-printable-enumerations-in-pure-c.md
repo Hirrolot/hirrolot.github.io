@@ -178,7 +178,7 @@ However, in this post, I will not borther you with all the details. Here is the 
 
 [Metalang99] is a macro metaprogramming library for pure C99 (and C++11) that allows you to perform macro recursion and iteration. In this code snippet, we iterate on variadic arguments using [`ML99_variadicsForEach`] in order to generate a pretty-printing function for a particular enumeration. I developed Metalang99 in response to a [number of use-cases] that require macro recursion and iteration; deriving pretty-printers is only one example of such a majestic superpower.
 
-[Metalang99]: https://github.com/Hirrolot/metalang99
+[Metalang99]: https://github.com/hirrolot/metalang99
 [`ML99_variadicsForEach`]: https://metalang99.readthedocs.io/en/latest/variadics.html#c.ML99_variadicsForEach
 [number of use-cases]: c
 
@@ -197,7 +197,7 @@ What are the disadvantages? Now you _cannot_ derive some stuff for an `enum` in 
 One may want to suggest using code generators like [M4] instead of Metalang99, owing to the huge amount of [macro machinery] involved in this library and/or incomprehensible compile-time errors (a false statement, we will come back to this later). Sure you can, but think about the consequences; you would then need to either:
 
 [M4]: https://en.wikipedia.org/wiki/M4_(computer_language)
-[macro machinery]: https://github.com/Hirrolot/metalang99/tree/master/include/metalang99
+[macro machinery]: https://github.com/hirrolot/metalang99/tree/master/include/metalang99
 
  1. Separate codegen files from C files, or
  2. Embed special syntax to C files and fuck up IDE support, or
@@ -245,8 +245,8 @@ So here are all three solutions that I saw throughout my experience as a C progr
 
 Links:
 
- - [Installation instructions for Metalang99](https://github.com/Hirrolot/metalang99#getting-started).
- - [Q: Why use C instead of Rust/Zig/whatever else?](https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else)
+ - [Installation instructions for Metalang99](https://github.com/hirrolot/metalang99#getting-started).
+ - [Q: Why use C instead of Rust/Zig/whatever else?](https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else)
  - [Q: Why not third-party code generators?](https://hirrolot.github.io/posts/whats-the-point-of-the-c-preprocessor-actually.html)
 
 For more information on Metalang99 and derived projects, see ["_Macros on Steroids, Or: How Can Pure C Benefit From Metaprogramming_"](macros-on-steroids-or-how-can-pure-c-benefit-from-metaprogramming.html).
@@ -255,7 +255,7 @@ For more information on Metalang99 and derived projects, see ["_Macros on Steroi
 
 [Datatype99] is a project derived from Metalang99, which allows you to define enumerations with payloads (a.k.a. [algebraic data types (ADTs)]). It does also provide a functionality similar to Rust's derive macros. Let us leverage Datatype99 and see how to achieve pretty-printing through compile-time type introspection:
 
-[Datatype99]: https://github.com/Hirrolot/datatype99
+[Datatype99]: https://github.com/hirrolot/datatype99
 [algebraic data types (ADTs)]: https://en.wikipedia.org/wiki/Algebraic_data_type
 
 ```{.c .numberLines}
@@ -299,6 +299,6 @@ int main(void) {
 
 The neat thing is that you can list other derivers together with `Print` like this: `derive(Print, Foo, Bar)`, which adds some extensibility to the code. Note that this implementation does not account variant parameters (payload); [`examples/derive/print.c`] shows how to handle them. For more information on deriver macros, see my blog post [_"Compile-Time Introspection of Sum Types in Pure C99"_](compile-time-introspection-of-sum-types-in-pure-c99.html).
 
-[`examples/derive/print.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/derive/print.c
+[`examples/derive/print.c`]: https://github.com/hirrolot/datatype99/blob/master/examples/derive/print.c
 
 ## References

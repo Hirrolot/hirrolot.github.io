@@ -105,7 +105,7 @@ func invokePandoc(post *Post) {
 	cmd := exec.Command(
 		"pandoc", post.inputFilename(),
 		"--output", post.outputFilename(),
-		"--metadata", fmt.Sprint("author=Hirrolot's Blog"),
+		"--metadata", fmt.Sprint("author=hirrolot's Blog"),
 		"--metadata", fmt.Sprintf("title=%s", post.Title),
 		"--metadata", fmt.Sprintf("date=%s", post.Date),
 		"--standalone",

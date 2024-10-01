@@ -643,7 +643,7 @@ If you know Rust, you will find OCaml very familiar. I recommend the following r
 
 [^update-rust-arenas]: _Update: several people have suggested to use arenas (regions) instead of the approach I have demonstrated. I am well aware of the technique; however, I do not think that arenas would make a significant difference in code clarity and ergonomics. Flattening an AST has many performance benefits, such as spatial locality and cheap allocation and deallocation, but they add a little value to the overall discussion._
 
-[^cps-ocaml]: You can access the code itself and accompanying tests [here](https://gist.github.com/Hirrolot/d16dc5e78639db6e546b5054afefd142).
+[^cps-ocaml]: You can access the code itself and accompanying tests [here](https://gist.github.com/hirrolot/d16dc5e78639db6e546b5054afefd142).
 
 [^rc-wrap]: `Rc` was chosen to avoid expensive cloning of `TermTree`s in some places.
 

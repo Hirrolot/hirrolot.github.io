@@ -550,7 +550,7 @@ If I do not forget, I will link an open-sourced repository someday here.
 
 [^gist]: The complete code for fueled evaluation can be accessed as a [GitHub gist].
 
-[GitHub gist]: https://gist.github.com/Hirrolot/0cbf1d44fab5a265ac3fd891d20fc1c4
+[GitHub gist]: https://gist.github.com/hirrolot/0cbf1d44fab5a265ac3fd891d20fc1c4
 
 [^functor]: You can think of a functor as a module-level function: a function that maps a module expression to another module expression. A more thorough explanation can be found in the [corresponding chapter](https://dev.realworldocaml.org/functors.html) of _"Real World OCaml"_.
 

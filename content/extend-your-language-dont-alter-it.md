@@ -76,7 +76,7 @@ references:
   - id: compiling-adt-c
     title: "Compiling Algebraic Data Types in Pure C99"
     type: article-journal
-    author: Hirrolot
+    author: hirrolot
     URL: "https://hirrolot.github.io/posts/compiling-algebraic-data-types-in-pure-c99.html"
 
   - id: idris-book
@@ -153,7 +153,7 @@ int sum(const BinaryTree *tree) {
 
 What is this? This is how good old C looks like with [Datatype99], a library that provides us with the full support for [algebraic data types]. Please pay your attention to the pattern matching syntax. Does it feel alright? Does it feel natural, like it has always been there? Absolutely. Now gaze upon this imaginary piece of code:
 
-[Datatype99]: https://github.com/Hirrolot/datatype99
+[Datatype99]: https://github.com/hirrolot/datatype99
 [algebraic data types]: https://en.wikipedia.org/wiki/Algebraic_data_type
 
 ```{.c .numberLines}
@@ -211,7 +211,7 @@ impl(State, Num);
 
 This time you see pure ISO C99 augmented with [Interface99], a library that provides the software interface pattern. Notice that the function definition syntax remains the same (albeit `iFn` is somewhat less common), and `impl` just deduces these definitions (`Num_State_get` & `Num_State_set`) from the context. Now consider this:
 
-[Interface99]: https://github.com/Hirrolot/interface99
+[Interface99]: https://github.com/hirrolot/interface99
 
 ```{.c .numberLines}
 impl(
@@ -415,4 +415,4 @@ I encourage you to **extend, not to alter**.
 
 [^metalang99]: [Metalang99] is an advanced metaprogramming system for C99. It is implemented as a purely functional programming language, with partial applications, recursion, algebraic data types, cons-lists, and all the stuff.
 
-[Metalang99]: https://github.com/Hirrolot/metalang99
+[Metalang99]: https://github.com/hirrolot/metalang99

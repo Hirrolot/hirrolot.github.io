@@ -2,13 +2,13 @@
 references:
   - id: dt99-semantics
     title: "Datatype99 code generation semantics"
-    author: Hirrolot
-    URL: "https://github.com/Hirrolot/datatype99#semantics"
+    author: hirrolot
+    URL: "https://github.com/hirrolot/datatype99#semantics"
 
   - id: if99-semantics
     title: "Interface99 code generation semantics"
-    author: Hirrolot
-    URL: "https://github.com/Hirrolot/interface99#semantics"
+    author: hirrolot
+    URL: "https://github.com/hirrolot/interface99#semantics"
 
   - id: so-why-use-c
     title: "Why would anybody use C over C++?"
@@ -17,8 +17,8 @@ references:
 
   - id: dt99-why-use-c
     title: "FAQ: Why use C instead of Rust/Zig/whatever else?"
-    author: Hirrolot
-    URL: "https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else"
+    author: hirrolot
+    URL: "https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else"
 
   - id: devault
     title: "Rust is not a good C replacement"
@@ -32,8 +32,8 @@ references:
 
   - id: poica
     title: "A research programming language on top of C macros"
-    author: Hirrolot
-    URL: "https://github.com/Hirrolot/poica"
+    author: hirrolot
+    URL: "https://github.com/hirrolot/poica"
 ---
 
 <div class="introduction">
@@ -63,7 +63,7 @@ In C, the only way to do metaprogramming is to use macros. Perhaps the reason we
 
 [Metalang99] is the solution I came up with.
 
-[Metalang99]: https://github.com/Hirrolot/metalang99
+[Metalang99]: https://github.com/hirrolot/metalang99
 
 ~~Metalang99 is a language to write macros.~~ Sorry, it is a language to write recursive macros!
 
@@ -88,7 +88,7 @@ int sum(const BinaryTree *tree) {
 
 <p class="adapted-from">Adapted from [Datatype99], a library for tagged unions.</p>
 
-[Datatype99]: https://github.com/Hirrolot/datatype99
+[Datatype99]: https://github.com/hirrolot/datatype99
 
 Oh, sorry again, I am a bit sleepy today. I forgot one crucial detail: to make the following code work, you must `#include <datatype99.h>`. Let me mend myself this time:
 
@@ -122,7 +122,7 @@ impl(Shape, Triangle);
 
 <p class="adapted-from">Adapted from [Interface99], a library for software interfaces.</p>
 
-[Interface99]: https://github.com/Hirrolot/interface99
+[Interface99]: https://github.com/hirrolot/interface99
 
 Everything is correct now.
 
@@ -144,7 +144,7 @@ With [Datatype99] and [Interface99], you generate the stuff in-place. Tagged uni
 
 No, I am not claiming that external codegen is useless. It has applications in a build process and other areas; for example, sometimes it is perfectly fine to separate files [@openssl-safestack]. What I am trying to convey is to use the right tool for the job. But wait, the suggested libraries rely on [some heavy-duty macros], and it is crystal clear that the vanilla C preprocessor is not meant for such kind of abuse, right?
 
-[some heavy-duty macros]: https://github.com/Hirrolot/metalang99#q-how-does-it-work
+[some heavy-duty macros]: https://github.com/hirrolot/metalang99#q-how-does-it-work
 
 This is the turning point of our spontaneous discussion.
 
@@ -291,7 +291,7 @@ and this is what external codegen cannot suggest, no matter how you try.
 
 Links:
 
- - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
+ - Installation instructions for [Metalang99](https://github.com/hirrolot/metalang99#getting-started), [Datatype99](https://github.com/hirrolot/datatype99#installation), [Interface99](https://github.com/hirrolot/interface99#installation).
  - The [motivational post] for the above libraries.
  - The [mailing list] for the above libraries. Join and talk with us!
 

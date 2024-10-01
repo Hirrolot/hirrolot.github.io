@@ -22,8 +22,8 @@ references:
 
   - id: metalang99-iterative-debug
     title: "Q: What about compile-time errors?"
-    author: Hirrolot
-    URL: "https://github.com/Hirrolot/metalang99#q-what-about-compile-time-errors"
+    author: hirrolot
+    URL: "https://github.com/hirrolot/metalang99#q-what-about-compile-time-errors"
 ---
 
 <div class="introduction">
@@ -42,9 +42,9 @@ Meet [Metalang99], a simple functional language that allows you to create comple
 
 I shall also address a few captious questions regarding compilation times, compilation errors, and applicability of my method to the real world.
 
-[Metalang99]: https://github.com/Hirrolot/metalang99
-[Datatype99]: https://github.com/Hirrolot/datatype99
-[Interface99]: https://github.com/Hirrolot/interface99
+[Metalang99]: https://github.com/hirrolot/metalang99
+[Datatype99]: https://github.com/hirrolot/datatype99
+[Interface99]: https://github.com/hirrolot/interface99
 
 Nuff said, let us dive into it!
 
@@ -401,7 +401,7 @@ When a macro failed, and I do not get what is wrong just by looking at the conso
 
 The compilation times are not really an issue. Let us see how much it takes to compile [`datatype99/examples/binary_tree.c`]:
 
-[`datatype99/examples/binary_tree.c`]: https://github.com/Hirrolot/datatype99/blob/master/examples/binary_tree.c
+[`datatype99/examples/binary_tree.c`]: https://github.com/hirrolot/datatype99/blob/master/examples/binary_tree.c
 
 <p class="code-annotation">`/bin/sh` [^ftrack-macro-expansion]</p>
 
@@ -421,7 +421,7 @@ This might be an issue only if you have a lot of macro stuff in header files. If
 
 As it usually goes in software engineering, macros are a trade-off: _will you continue writing boilerplate code, thereby slowing down the development process and increasing the risk of bugs, or will you start using powerful macros at the cost of the [great implementation complexity] [^leaky-abstractions] and slightly less comprehensible errors?_
 
-[great implementation complexity]: https://github.com/Hirrolot/metalang99#q-how-does-it-work
+[great implementation complexity]: https://github.com/hirrolot/metalang99#q-how-does-it-work
 
 If you stick to the first choice, are you sure that it would be easier to figure out what is wrong with the code at runtime rather than at compile-time, especially when unreified abstractions got intertwined with your business logic? Are you okay with the fact that more bugs will end up being hidden in deployed production code instead of being intelligently found by a compiler (as in static vs. dynamic typing)?
 
@@ -431,9 +431,9 @@ The choice is up to you.
 
 Links:
 
- - Installation instructions for [Metalang99](https://github.com/Hirrolot/metalang99#getting-started), [Datatype99](https://github.com/Hirrolot/datatype99#installation), [Interface99](https://github.com/Hirrolot/interface99#installation).
- - [Q: Why use C instead of Rust/Zig/whatever else?](https://github.com/Hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else)
- - [Q: Why not third-party code generators?](https://github.com/Hirrolot/metalang99#q-why-not-third-party-code-generators)
+ - Installation instructions for [Metalang99](https://github.com/hirrolot/metalang99#getting-started), [Datatype99](https://github.com/hirrolot/datatype99#installation), [Interface99](https://github.com/hirrolot/interface99#installation).
+ - [Q: Why use C instead of Rust/Zig/whatever else?](https://github.com/hirrolot/datatype99#q-why-use-c-instead-of-rustzigwhatever-else)
+ - [Q: Why not third-party code generators?](https://github.com/hirrolot/metalang99#q-why-not-third-party-code-generators)
  - The [mailing list] for the above libraries. Join and talk with us!
 
 [mailing list]: https://lists.sr.ht/~hirrolot/metalang99
@@ -466,7 +466,7 @@ Links:
 
 [^trusted-libs]: Except for so-called "trusted" libraries such as OpenSSL or glibc.
 
-[^metalang99-plt]: A reviewer of Metalang99 should also has some basic familiarity with [programming language theory]; at least, a reviewer should understand such terms as an [EBNF grammar], [operational semantics], [lambda calculus], and so on, in order to read the [specification](https://github.com/Hirrolot/metalang99/blob/master/spec/spec.pdf).
+[^metalang99-plt]: A reviewer of Metalang99 should also has some basic familiarity with [programming language theory]; at least, a reviewer should understand such terms as an [EBNF grammar], [operational semantics], [lambda calculus], and so on, in order to read the [specification](https://github.com/hirrolot/metalang99/blob/master/spec/spec.pdf).
 
 [programming language theory]: https://en.wikipedia.org/wiki/Programming_language_theory
 [EBNF grammar]: https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form

@@ -686,7 +686,7 @@ If you feel confused about anything, feel free to ask in the comments.
 
 [^de-bruijn-level]: Contrary to a De Bruijn index, a De Bruijn level is a natural number indicating the number of binders between the variable's binder and the term's _root_. For example, the term `\x -> \y -> x` is represented as `\_ -> \_ -> 0`, where `0` is the De Bruijn level of `x`. The De Bruijn level of `y` would be `1` if we used it instead of `x`.
 
-[^update-k-combinator]: _Update: the reduction sequence missed the `Inf` constructor; see [this comment](https://github.com/Hirrolot/hirrolot.github.io/discussions/11#discussioncomment-10445137)._
+[^update-k-combinator]: _Update: the reduction sequence missed the `Inf` constructor; see [this comment](https://github.com/hirrolot/hirrolot.github.io/discussions/11#discussioncomment-10445137)._
 
 [^monad-except]: The code requires `import Control.Monad.Except`.
 

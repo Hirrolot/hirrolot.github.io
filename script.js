@@ -11,7 +11,7 @@ function genAuthorEmoji() {
 
     const blogLink = document.createElement("a");
     blogLink.href = "..";
-    blogLink.textContent = "Hirrolot's Blog";
+    blogLink.textContent = "hirrolot's Blog";
 
     const fancyAuthor = document.createElement("p");
     fancyAuthor.className = "author";

@@ -13,7 +13,7 @@
         "name": "f-omega",
         "title": "Higher-Order Polymorphic Lambda Calculus (Fω)",
         "date": "Mar 31, 2023",
-        "redirect-to": "https://gist.github.com/Hirrolot/505901460f131da1f0cd8b118e46a7bc"
+        "redirect-to": "https://gist.github.com/hirrolot/505901460f131da1f0cd8b118e46a7bc"
     },
     {
         "name": "compiler-development-rust-or-ocaml",
@@ -29,13 +29,13 @@
         "name": "how-to-implement-dependent-types-in-80-lines-of-code",
         "title": "How to Implement Dependent Types in 80 Lines of Code",
         "date": "Feb 25, 2023",
-        "redirect-to": "https://gist.github.com/Hirrolot/27e6b02a051df333811a23b97c375196"
+        "redirect-to": "https://gist.github.com/hirrolot/27e6b02a051df333811a23b97c375196"
     },
     {
         "name": "barebones-lambda-cube-in-ocaml",
         "title": "Barebones Lambda Cube in OCaml",
         "date": "Aug 16, 2022",
-        "redirect-to": "https://gist.github.com/Hirrolot/89c60f821270059a09c14b940b454fd6"
+        "redirect-to": "https://gist.github.com/hirrolot/89c60f821270059a09c14b940b454fd6"
     },
     {
         "name": "rust-is-hard-or-the-misery-of-mainstream-programming",

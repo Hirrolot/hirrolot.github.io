@@ -534,8 +534,8 @@ BOOST_MPL_ASSERT_RELATION(
 
 [**C**] My own compile-time metaprogramming framework [Metalang99] does the same job by (ab)using the C preprocessor. It came to such extent that I was forced to literally [re-implement recursion] through the combination of a Lisp-like trampoline and [Continuation-Passing Style (CPS)] techniques. In the end, I had a cornucopia of list functions in the standard library, such as [`ML99_listMap`], [`ML99_listIntersperse`], and [`ML99_listFoldr`], which arguably makes Metalang99, as a pure data transformation language, more expressive than C itself [^boost-preprocessor].
 
-[Metalang99]: https://github.com/Hirrolot/metalang99
-[re-implement recursion]: https://github.com/Hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h
+[Metalang99]: https://github.com/hirrolot/metalang99
+[re-implement recursion]: https://github.com/hirrolot/metalang99/blob/master/include/metalang99/eval/rec.h
 [Continuation-Passing Style (CPS)]: https://en.wikipedia.org/wiki/Continuation-passing_style
 [`ML99_listMap`]: https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listMap
 [`ML99_listIntersperse`]: https://metalang99.readthedocs.io/en/latest/list.html#c.ML99_listIntersperse
@@ -814,7 +814,7 @@ pub fn main() !void {
 
 The only inconvenience I experienced during the development of `printf` is [massive errors...] Much like C++ templates. However, I admit that this can be solved (or at least workarounded) by more explicit type constraints. Overall, the design of Zig's type system seems reasonable: there is a type of all types called `type`, and using `comptime`, we can [compute types] at compile-time via regular variables, loops, procedures, etc. We can even perform type reflection through the [`@typeInfo`], [`@typeName`], and [`@TypeOf`] built-ins! Yes, we can no longer depend on run-time values, but if you do not need a theorem prover, probably full-blown dependent types are a bit of overkill.
 
-[massive errors...]: https://gist.github.com/Hirrolot/504dfe97627895c9f8f82697e27bb142
+[massive errors...]: https://gist.github.com/hirrolot/504dfe97627895c9f8f82697e27bb142
 [compute types]: https://ikrima.dev/dev-notes/zig/zig-metaprogramming/
 [`@typeInfo`]: https://ziglang.org/documentation/master/#typeInfo
 [`@typeName`]: https://ziglang.org/documentation/master/#typeName
@@ -873,7 +873,7 @@ Programming languages ought to be rethought.
 
 [^my-tokio-either]: It is even more of comedy that initially, I wrote a third-party crate called [tokio-either], which just contained that `Either` with several trait implementations. Only later, the Tokio maintainers [decided](https://github.com/tokio-rs/tokio/pull/2821) to move it to `tokio-util`.
 
-[tokio-either]: https://github.com/Hirrolot/tokio-either
+[tokio-either]: https://github.com/hirrolot/tokio-either
 
 [^tokio-either-update]: _Update: I have no idea why Tokio does not implement its traits for `either::Either` in the same way as it does for `tokio-either`. Anyway, it would not eliminate the mess of hand-made "deriving" that must be done._
 
@@ -881,7 +881,7 @@ Programming languages ought to be rethought.
 
 [^concept-disorder]: Multiple personality disorder? 🤨
 
-[^idris-gist-link]: The full code can be found at [my gist](https://gist.github.com/Hirrolot/b5b23af0dcb68cf7e87e72baf6da6ef6). I use Idris2, which you can download [here](https://idris2.readthedocs.io/en/latest/tutorial/starting.html).
+[^idris-gist-link]: The full code can be found at [my gist](https://gist.github.com/hirrolot/b5b23af0dcb68cf7e87e72baf6da6ef6). I use Idris2, which you can download [here](https://idris2.readthedocs.io/en/latest/tutorial/starting.html).
 
 [^runtime-definition]: For our purposes, a language runtime is some hidden machinery responsible for mapping the semantics of a language (i.e., its abstract machine) to the semantics of a real executor.
 

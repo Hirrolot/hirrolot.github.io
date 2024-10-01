@@ -329,7 +329,7 @@ The functions `or` and `and` are the encodings of the logical OR and AND operati
 
 To test the solver, I will use my own [positive supercompiler written in OCaml]. The definitions of `or`, `and`, `solve`, and `analyze` will be:
 
-[positive supercompiler written in OCaml]: https://gist.github.com/Hirrolot/35e3c40e49e01cfb11d67b6bcc67b23e
+[positive supercompiler written in OCaml]: https://gist.github.com/hirrolot/35e3c40e49e01cfb11d67b6bcc67b23e
 
 ```{.ocaml .numberLines}
 let g_rules =
